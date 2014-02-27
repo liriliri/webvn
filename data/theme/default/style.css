@@ -1,0 +1,83 @@
+/* 颜色搭配
+ * 蓝色：#357cc7
+ * 浅灰：#a7a7a7
+ * 橙色：#e56437
+ */
+
+/* 窗口 */
+body {
+    background-color: #000; /* 背景 */
+}
+
+/* 顶部菜单栏 */
+#nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+    z-index: 10;
+    overflow: hidden;
+    opacity: 1;
+    transition: all 0.3s;
+}
+
+#nav.hide {
+    height: 0;
+    opacity: 0;
+}
+
+#nav li {
+    float: left;
+    line-height: 40px;
+    margin: 5px;
+    padding: 0 25px;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #a7a7a7;
+    transition: all 0.3s;
+    font-size: 18px;
+}
+
+#nav li:hover {
+    color: #fff;
+    background-color: #357cc7;
+}
+
+#nav li:active {
+    color: #fff;
+    background-color: #e56437;
+}
+
+/* 主菜单 */
+#mainmenu {
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
+#mainmenu ul {
+    position: absolute;
+    left: 0;
+    bottom: 35%;
+    width: 100%;
+}
+
+#mainmenu ul li {
+    display: block;
+    width: 100px;
+    margin: 5px auto;
+    color: #a7a7a7;
+    cursor: pointer;
+    font-size: 25px;
+    text-align: center;
+    transition: all 0.3s;
+    border-radius: 5px;
+    padding: 5px 25px;
+}
+
+#mainmenu ul li:hover {
+    color: #fff;
+    background-color: #357cc7;
+}

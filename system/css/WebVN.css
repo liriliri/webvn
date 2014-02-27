@@ -1,0 +1,42 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+div {
+    box-sizing: border-box;
+}
+
+ul {
+    list-style: none;
+}
+
+.center {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.stretch {
+    width: 100%;
+    height: 100%;
+}
+
+#game-container {
+    position: absolute;
+    background-color: #000;
+}
+
+#mainmenu {
+    background: url(../../data/bg/mainmenu.jpg) no-repeat center center;
+}

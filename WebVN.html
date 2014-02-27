@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 字符编码 -->
+    <meta charset="utf-8" />
+    <!-- 标题 -->
+    <title></title>
+    <!-- 系统样式 -->
+    <link rel="stylesheet" href="system/css/WebVN.css" />
+    <!-- 主题 -->
+    <link rel="stylesheet" href="data/theme/default/style.css" />
+    <!-- JQuery -->
+    <script src="system/lib/jquery.js"></script>
+    <!-- Requirejs用于动态加载js文件 -->
+    <script data-main="system/js/main" src="system/lib/require.js"></script>
+</head>
+<body>
+    <!-- 菜单 -->
+    <div id="nav" class="hide">
+        <ul>
+            <li id="window-mode">全屏</li>
+            <li id="game-option">选项</li>
+            <li id="load-game">读档</li>
+            <li id="save-game">存档</li>
+        </ul>
+    </div>
+    <!-- 游戏屏幕 -->
+    <div class="center">
+        <div id="game-container">
+            <div id="mainmenu" class="hidden stretch">
+                <ul>
+                    <li>开始游戏</li>
+                    <li>CG鉴赏</li>
+                    <li>音乐鉴赏</li>
+                </ul>
+            </div>
+            <img id="logo" class="hidden stretch" src="data/bg/logo.jpg">
+            <video id="video" class="hidden"></video>
+        </div>
+    </div>
+    <!-- 背景音 -->
+    <audio id="bgm"></audio>
+    <!-- 音效 -->
+    <audio id="se"></audio>
+    <!-- 配音 -->
+    <audio id="voice"></audio>
+</body>
+</html>
