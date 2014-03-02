@@ -7,6 +7,8 @@
     <title></title>
     <!-- 系统样式 -->
     <link rel="stylesheet" href="system/css/WebVN.css" />
+    <!-- 过渡效果 -->
+    <link rel="stylesheet" href="system/css/transition.css" />
     <!-- 主题 -->
     <link rel="stylesheet" href="data/theme/default/style.css" />
     <!-- JQuery -->
@@ -27,15 +29,25 @@
     <!-- 游戏屏幕 -->
     <div class="center">
         <div id="game-container">
-            <div id="mainmenu" class="hidden stretch">
+            <!-- LOGO -->
+            <img id="logo" class="hidden fill" src="data/bg/logo.jpg">
+            <!-- 视频 -->
+            <video id="video" class="hidden"></video>
+            <!-- 主菜单 -->
+            <div id="mainmenu" class="hidden fill">
                 <ul>
-                    <li>开始游戏</li>
+                    <li id="start-game">开始游戏</li>
                     <li>CG鉴赏</li>
                     <li>音乐鉴赏</li>
                 </ul>
             </div>
-            <img id="logo" class="hidden stretch" src="data/bg/logo.jpg">
-            <video id="video" class="hidden"></video>
+            <!-- 游戏点击区 -->
+            <div class="fill" id="clickArea">
+                <!-- 背景 -->
+                <div id="bg" class="fill">
+                    <img class="fill" src="data/bg/street.jpg">
+                </div>
+            </div>
         </div>
     </div>
     <!-- 背景音 -->

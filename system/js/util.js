@@ -12,8 +12,19 @@ var ceil = function(num, precision) {
     return Math.ceil(num * multiplier) /multiplier;
 }
 
+// 提取命令及其参数
+var getCmdAndParam = function (cmdParam) {
+    var bracketLeft = cmdParam.indexOf('（'),
+        bracketRight = cmdParam.indexOf('）'),
+        result = [];
+    result[0] = cmdParam.slice(0, bracketLeft);
+    result[1] = cmdParam.slice(bracketLeft + 1, bracketRight);
+    return result;
+}
+
 return {
-    ceil: ceil
+    ceil: ceil,
+    getCmdAndParam: getCmdAndParam
 }
 
 });

@@ -1,15 +1,12 @@
 // 背景乐模块
-define(['sound/sound', 'config'], function(Sound, config) {
+define(['sound/sound', 'config', 'game/url'], function(Sound, config, url) {
 
 var exports = new Sound('bgm');
 
-exports.path = config.BGM_PATH;
-exports.extention = config.BGM_EXTENTION;
 exports.setLoop(true);
 
 exports.load = function(name) {
-    var url = this.path + name + this.extention;
-    this.audio.src = url;
+    this.audio.src = url.bgm(name);
 }
 
 exports.loadAndPlay = function(name) {
