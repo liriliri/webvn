@@ -5,6 +5,8 @@ var bgPath = config.BG_PATH,
     bgType = config.BG_TYPE,
     bgmPath = config.BGM_PATH,
     bgmType = config.BGM_TYPE,
+    sePath = config.SE_PATH,
+    seType = config.SE_TYPE,
     result;
 
 function bg(name) {
@@ -23,9 +25,18 @@ function bgm(name) {
     }
 }
 
+function se(name) {
+    if (macro.SE[name]) {
+        return sePath + macro.SE[name] + seType;
+    } else {
+        return sePath + name + seType;
+    }
+}
+
 return {
     bg: bg,
-    bgm: bgm
+    bgm: bgm,
+    se: se
 }
 
 });

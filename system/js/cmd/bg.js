@@ -1,20 +1,7 @@
 // 背景命令
-define(['game/bg', 'util'], function(bg, util) {
+define(['game/bg', 'cmd/cmd'], function(bg, CMD) {
 
-var exports = {};
-
-exports.name = '背景';
-
-exports.run = function (cmdParam) {
-    // 查看命令是否带有参数
-    if (cmdParam.match('（.*）')) {
-        var cmd = util.getCmdAndParam(cmdParam);
-        this.runWithParam(cmd[0], cmd[1]);
-    } else {
-        this.runWithNoParam(cmdParam);
-    }
-    return true;
-}
+var exports = new CMD('背景');
 
 exports.runWithNoParam = function (cmdParam) {
     switch(cmdParam) {
@@ -23,6 +10,7 @@ exports.runWithNoParam = function (cmdParam) {
         bg.load(cmdParam);
         break;
     }
+    return true; // 继续执行下条命令
 }
 
 exports.runWithParam = function (subCmd, param) {
@@ -36,6 +24,7 @@ exports.runWithParam = function (subCmd, param) {
     default:
         break;
     }
+    return true;
 }
 
 return exports;

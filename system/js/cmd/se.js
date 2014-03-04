@@ -1,28 +1,28 @@
 // 声音命令
-define(['sound/bgm', 'cmd/cmd'], function (bgm, CMD) {
+define(['sound/se', 'cmd/cmd'], function (se, CMD) {
 
-var exports = new CMD('背景乐');
+var exports = new CMD('音效');
 
 exports.runWithNoParam = function (cmdParam) {
     switch(cmdParam) {
     case '停止':
-        bgm.stop();
+        se.stop();
         break;
     case '暂停':
-        bgm.pause();
+        se.pause();
         break;
     case '播放':
-        bgm.play();
+        se.play();
         break;
     case '单曲':
-        bgm.setLoop(false);
+        se.setLoop(false);
         break;
     case '循环':
-        bgm.setLoop(true);
+        se.setLoop(true);
         break;
     default:
         // 加载音乐
-        bgm.loadAndPlay(cmdParam);
+        se.loadAndPlay(cmdParam);
         break;
     }
     return true;
@@ -31,7 +31,7 @@ exports.runWithNoParam = function (cmdParam) {
 exports.runWithParam = function (subCmd, param) {
     switch(subCmd) {
     case '音量':
-        bgm.setVolume(param / 100);
+        se.setVolume(param / 100);
         break;
     default:
         break;
