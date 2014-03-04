@@ -19,6 +19,10 @@ p.setLoop = function(flag) {
     this.audio.loop = flag;
 }
 
+p.setVolume = function (volume) {
+	this.audio.volume = volume;
+}
+
 p.stop = function() {
     this.pause();
     this.audio.currentTime = 0;

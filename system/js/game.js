@@ -43,9 +43,14 @@ function execute(num) {
     nextCmd = num + 1;
     loadCommand(num);
     console.log(cmd, cmdParam);
-    // 执行命令，如果返回结果为true则继续执行下一语句
-    if (executor.run(cmd, cmdParam) === true) {
+    var result = executor.run(cmd, cmdParam);
+    /* 执行命令，如果返回结果为true则继续执行下一语句
+     * 如果返回的是一个函数，则执行函数
+     */
+    if (result === true) {
         execute();
+    } else if (typeof result === 'function') {
+        result();
     }
 }
 

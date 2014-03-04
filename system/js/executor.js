@@ -1,5 +1,5 @@
 // 命令执行
-define(['cmd/bg'], function() {
+define(['cmd/bg', 'cmd/bgm'], function() {
 
 var cmdNum = arguments.length, // 支持的命令数目
     exports = {},

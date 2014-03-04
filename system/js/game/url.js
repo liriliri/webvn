@@ -15,16 +15,17 @@ function bg(name) {
     }
 }
 
-function bgm() {
+function bgm(name) {
     if (macro.BGM[name]) {
-        return bgmPath + macro.BG[name] + bgmType;
+        return bgmPath + macro.BGM[name] + bgmType;
     } else {
         return bgmPath + name + bgmType;
     }
 }
 
 return {
-    bg: bg
+    bg: bg,
+    bgm: bgm
 }
 
 });
