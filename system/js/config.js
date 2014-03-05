@@ -7,6 +7,7 @@ define({
     BG_TYPE: '.jpg', // 背景文件类型
     BGM_PATH: 'data/bgm/', // 背景乐路径
     BGM_TYPE: '.ogg', // 背景乐文件类型
+    CMD_SEPARATOR: '：', // 命令与参数间的分隔符
     FRAME_RATE: 60, // 帧速率
     LOGO_OR_NOT: false, // 是否有LOGO
     LOGO_DURATION: 5000, // LOGO持续时间，单位毫秒

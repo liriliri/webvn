@@ -1,9 +1,10 @@
 // 游戏脚本
-define(['executor', 'script/0', 'script/1'], function (executor) {
+define(['executor', 'config', 'script/0', 'script/1'], function (executor, config) {
 
 var cmdNum, // 命令总数
     cmd, // 命令
     cmdParam, // 命令参数
+    cmdSeparator = config.CMD_SEPARATOR, // 命令分隔符
     nextCmd = 0, // 当前正在执行的脚本序号
     i,
     labels = {}, // 标签
@@ -13,7 +14,7 @@ var cmdNum, // 命令总数
     seperatorPos; // 分割符位置
 
 // 加载脚本
-for (i = 1; i < scriptNum; i++) {
+for (i = 2; i < scriptNum; i++) {
     script = script.concat(arguments[i]);
 }
 
@@ -33,7 +34,7 @@ for (i = 0; i < cmdNum; i++) {
  * @param {Number} num 脚本号
  */
 function execute(num) {
-    if (typeof num !== 'Number') {
+    if (isNaN(Number(num))) {
         num = nextCmd;
     }
     // 如果脚本达到末尾则跳转到主菜单
@@ -50,8 +51,15 @@ function execute(num) {
     if (result === true) {
         execute();
     } else if (typeof result === 'function') {
-        result();
+        result.call(exports);
     }
+}
+
+// 跳转到标签
+function jumpToLabel(labelName) {
+	if (labels[labelName]) {
+		execute(labels[labelName]);
+	}
 }
 
 /**
@@ -60,7 +68,7 @@ function execute(num) {
  */
 function loadCommand(num) {
     line = script[num];
-    seperatorPos = line.indexOf('：');
+    seperatorPos = line.indexOf(cmdSeparator);
     cmd = $.trim(line.slice(0, seperatorPos));
     cmdParam = $.trim(line.slice(seperatorPos + 1));
 }
@@ -70,9 +78,12 @@ function start() {
     execute(0);
 }
 
-return {
+var exports = {
     execute: execute,
+    jumpToLabel: jumpToLabel,
     start: start
 };
+
+return exports;
 
 });

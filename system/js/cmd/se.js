@@ -1,4 +1,4 @@
-// 声音命令
+// 音效命令
 define(['sound/se', 'cmd/cmd'], function (se, CMD) {
 
 var exports = new CMD('音效');
