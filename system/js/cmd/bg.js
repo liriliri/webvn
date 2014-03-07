@@ -5,6 +5,12 @@ var exports = new CMD('背景');
 
 exports.runWithNoParam = function (cmdParam) {
     switch(cmdParam) {
+    case '显示':
+        bg.show();
+        break;
+    case '隐藏':
+        bg.hide();
+        break;
     default:
         // 加载图片
         bg.load(cmdParam);

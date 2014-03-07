@@ -7,6 +7,10 @@ define({
     BGM: {
         '主菜单背景乐': 'mainmenu'
     },
+    DIALOG_STYLE: {
+        '默认': 'dialog',
+        '大屏': 'dialog2'
+    },
     SE: {
         '风声': '05080'
     }

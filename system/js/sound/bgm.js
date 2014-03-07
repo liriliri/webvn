@@ -1,5 +1,5 @@
 // 背景乐模块
-define(['sound/sound', 'config', 'game/url'], function(Sound, config, url) {
+define(['sound/sound', 'config', 'game/name'], function(Sound, config, url) {
 
 var exports = new Sound('bgm');
 

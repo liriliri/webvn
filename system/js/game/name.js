@@ -25,6 +25,14 @@ function bgm(name) {
     }
 }
 
+function dialogStyle(name) {
+    if (macro.DIALOG_STYLE[name]) {
+        return macro.DIALOG_STYLE[name];
+    } else {
+        return name;
+    }
+}
+
 function se(name) {
     if (macro.SE[name]) {
         return sePath + macro.SE[name] + seType;
@@ -36,6 +44,7 @@ function se(name) {
 return {
     bg: bg,
     bgm: bgm,
+    dialogStyle: dialogStyle,
     se: se
 }
 

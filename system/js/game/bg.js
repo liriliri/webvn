@@ -1,5 +1,5 @@
 // 背景
-define(['game/url', 'game/transition', 'config'], function(url, Transition, config) {
+define(['game/name', 'game/transition', 'config'], function(url, Transition, config) {
 
 var $bg = $('#bg'),
     $img = $bg.find('img'),
@@ -7,6 +7,11 @@ var $bg = $('#bg'),
 
 // 初始化过渡器
 trans.init(config.BG_TRANS_TIME, config.BG_TRANS_TYPE);
+
+// 隐藏
+function hide() {
+	$bg.addClass('hidden');
+}
 
 // 加载图片
 function load(name) {
@@ -23,10 +28,17 @@ function setTransType(type) {
     trans.setType(type);
 }
 
+// 显示
+function show() {
+	$bg.removeClass('hidden');
+}
+
 return {
+	hide: hide,
     load: load,
     setTransTime: setTransTime,
-    setTransType: setTransType
+    setTransType: setTransType,
+    show: show
 }
 
 });
