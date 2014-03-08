@@ -114,6 +114,15 @@ body {
     background-color: #fff;
     border-radius: 0 5px 5px 5px;
     border: 10px solid #357cc7;
+    overflow: hidden;
+}
+
+.dialog #dialog-face {
+    display: inline-block;
+    width: 155px;
+    height: 155px;
+    float: left;
+    margin-right: 20px;
 }
 
 .dialog2 {
@@ -138,4 +147,8 @@ body {
     background-color: #fff;
     border-radius: 5px;
     border: 10px solid #357cc7;
+}
+
+.dialog2 #dialog-face {
+    display: none;
 }
