@@ -15,7 +15,7 @@ $startGame.on('click', function() {
 
 // 显示
 function fadeIn() {
-    $mainmenu.removeClass('hidden').fadeIn(animationDuration);
+    $mainmenu.fadeIn(animationDuration);
     playBgm();
 }
 

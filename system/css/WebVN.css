@@ -30,7 +30,7 @@ ul {
 }
 
 .hidden {
-    display: none !important;
+    display: none;
 }
 
 #bg {
@@ -42,12 +42,46 @@ ul {
     display: block;
 }
 
+#click-area {
+    z-index: 600;
+}
+
+#click-area #bg {
+    position: absolute;
+    z-index: 510;
+}
+
+#click-area #dialog {
+    z-index: 540;
+}
+
+#click-area #effect {
+    position: absolute;
+    z-index: 530;
+}
+
 #game-container {
     position: absolute;
     background-color: #000;
     overflow: hidden;
 }
 
+#logo {
+    position: absolute;
+    z-index: 900;
+}
+
 #mainmenu {
+    position: absolute;
+    z-index: 700;
     background: url(../../data/bg/mainmenu.jpg) no-repeat center center;
+}
+
+#nav {
+    z-index: 10000;
+}
+
+#video {
+    position: absolute;
+    z-index: 800;
 }
