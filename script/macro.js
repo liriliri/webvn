@@ -3,12 +3,20 @@ define({
     // 背景
     BG: {
         '宫殿': 'palace',
-        '街道': 'street'
+        '街道': 'street',
+        '圣女下棋': 'cg1',
+        '圣女祈祷': 'cg2',
     },
     // 前景乐
     BGM: {
         '主菜单背景乐': 'mainmenu'
     },
+    // CG
+    CG: [
+        'cg1',
+        'cg2',
+        'cg3'
+    ],
     // 角色
     CH: {
         '菲欧奈': 'Fione'

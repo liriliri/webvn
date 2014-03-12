@@ -1,5 +1,5 @@
 // 命令执行
-define(['cmd/bg', 'cmd/bgm', 'cmd/comment', 'cmd/dialog',
+define(['cmd/bg', 'cmd/bgm', 'cmd/comment', 'cmd/default', 'cmd/dialog',
 	'cmd/face', 'cmd/jump', 'cmd/se', 'cmd/weather'], function() {
 
 var cmdNum = arguments.length, // 支持的命令数目
@@ -14,6 +14,8 @@ exports.run = function (cmd, cmdParam) {
     if (this[cmd]) {
         // 执行并返回结果
         return this[cmd].run(cmdParam);
+    } else {
+    	return this['默认'].run(cmd, cmdParam);
     }
 }
 

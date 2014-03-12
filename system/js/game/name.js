@@ -27,6 +27,10 @@ function bgm(name) {
     }
 }
 
+function cg(name) {
+    return bgPath + name + bgType;
+}
+
 function dialogStyle(name) {
     if (macro.DIALOG_STYLE[name]) {
         return macro.DIALOG_STYLE[name];
@@ -56,6 +60,7 @@ function se(name) {
 return {
     bg: bg,
     bgm: bgm,
+    cg: cg,
     dialogStyle: dialogStyle,
     face: face,
     se: se

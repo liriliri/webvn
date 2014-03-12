@@ -15,7 +15,6 @@ p.run = function (cmdParam) {
     } else {
         return this.runWithNoParam(cmdParam);
     }
-    return true;
 }
 
 p.runWithNoParam = function () {};

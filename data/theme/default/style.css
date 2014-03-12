@@ -4,6 +4,21 @@
  * 橙色：#e56437
  */
 
+/* 滚动条 */
+::-webkit-scrollbar-thumb{
+   background-color:#357cc7;  
+   height:50px;
+}  
+
+::-webkit-scrollbar-thumb:hover{
+   background-color:#e56437;  
+}  
+ 
+::-webkit-scrollbar {
+   width:5px;
+   background-color: #a7a7a7;
+}
+
 /* 窗口 */
 body {
     background-color: #000; /* 背景 */
@@ -77,6 +92,67 @@ body {
 #mainmenu ul li:hover {
     color: #fff;
     background-color: #357cc7;
+}
+
+/* CG鉴赏窗口 */
+#cg-viewer {
+    background-color: #fff;
+    padding: 10px 30px;
+}
+
+#cg-viewer .title {
+    color: #a7a7a7;
+    font-size: 45px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #357cc7;
+}
+
+#cg-viewer .close {
+    display: inline-block;
+    line-height: 40px;
+    padding: 0 25px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s;
+    font-size: 18px;
+    margin-top: 5px;
+    color: #fff;
+    background-color: #357cc7;
+}
+
+#cg-viewer .close:hover {
+    color: #a7a7a7;
+    background-color: #fff;
+}
+
+#cg-container {
+    height: 400px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#cg-container li {
+    display: block;
+    float: left;
+    width: 22%;
+    margin: 5px 0;
+    margin-right: 4%;
+    box-shadow: 1px 1px 2px #a7a7a7;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+#cg-container li:nth-child(4n) {
+    margin-right: 0;
+}
+
+#cg-container li:hover {
+    opacity: 1;
+}
+
+#cg-container li img {
+    display: block;
+    width: 100%;
 }
 
 /* 对话框 */

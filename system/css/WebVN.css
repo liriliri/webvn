@@ -42,6 +42,17 @@ ul {
     display: block;
 }
 
+#cg-picture {
+    position: absolute;
+    z-index: 810;
+    cursor: pointer;
+}
+
+#cg-viewer {
+    position: absolute;
+    z-index: 800;
+}
+
 #click-area {
     z-index: 600;
 }
@@ -68,7 +79,7 @@ ul {
 
 #logo {
     position: absolute;
-    z-index: 900;
+    z-index: 1000;
 }
 
 #mainmenu {
@@ -83,5 +94,5 @@ ul {
 
 #video {
     position: absolute;
-    z-index: 800;
+    z-index: 900;
 }
