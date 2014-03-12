@@ -9,6 +9,8 @@ var bgPath = config.BG_PATH,
     faceType = config.FACE_TYPE,
     sePath = config.SE_PATH,
     seType = config.SE_TYPE,
+    voicePath = config.VOICE_PATH,
+    voiceType = config.VOICE_TYPE,
     result;
 
 function bg(name) {
@@ -57,13 +59,20 @@ function se(name) {
     }
 }
 
+function voice(ch, name) {
+    if (macro.CH[ch]) {
+        return voicePath + macro.CH[ch] + '/' + name + voiceType;
+    }
+}
+
 return {
     bg: bg,
     bgm: bgm,
     cg: cg,
     dialogStyle: dialogStyle,
     face: face,
-    se: se
+    se: se,
+    voice: voice
 }
 
 });
