@@ -10,6 +10,9 @@ define({
     CMD_SEPARATOR: '：', // 命令与参数间的分隔符
     FACE_PATH: 'data/face/', // 表情目录
     FACE_TYPE: '.png', // 表情文件类型
+    FIGURE_NUM: 2, // 立绘数目
+    FIGURE_PATH: 'data/fg/', // 立绘目录
+    FIGURE_TYPE: '.png', // 立绘文件类型
     FRAME_RATE: 60, // 帧速率
     LOGO_OR_NOT: false, // 是否有LOGO
     LOGO_DURATION: 5000, // LOGO持续时间，单位毫秒

@@ -71,6 +71,15 @@ ul {
     z-index: 530;
 }
 
+#click-area #figure {
+    position: absolute;
+    z-index: 520;
+}
+
+#click-area #figure img {
+    position: absolute;
+}
+
 #game-container {
     position: absolute;
     background-color: #000;

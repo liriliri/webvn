@@ -7,6 +7,8 @@ var bgPath = config.BG_PATH,
     bgmType = config.BGM_TYPE,
     facePath = config.FACE_PATH,
     faceType = config.FACE_TYPE,
+    fgPath = config.FIGURE_PATH,
+    fgType = config.FIGURE_TYPE,
     sePath = config.SE_PATH,
     seType = config.SE_TYPE,
     voicePath = config.VOICE_PATH,
@@ -51,6 +53,16 @@ function face(name, type) {
     }
 }
 
+function fg(name, type) {
+    var result = macro.CH[name];
+    if (result) {
+        result = fgPath + result + '/';
+        if (macro.FG[name][type]) {
+            return result + macro.FG[name][type] + fgType;
+        }
+    }
+}
+
 function se(name) {
     if (macro.SE[name]) {
         return sePath + macro.SE[name] + seType;
@@ -71,6 +83,7 @@ return {
     cg: cg,
     dialogStyle: dialogStyle,
     face: face,
+    fg: fg,
     se: se,
     voice: voice
 }
