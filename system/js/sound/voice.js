@@ -7,6 +7,7 @@ exports.setLoop(false);
 
 exports.load = function(ch, name) {
     this.audio.src = url.voice(ch, name);
+    this.loaded = true;
 }
 
 exports.loadAndPlay = function(ch, name) {

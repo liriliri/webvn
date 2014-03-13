@@ -6,11 +6,11 @@ var $cgViewer = $('#cg-viewer'),
 	$cgContainer = $('#cg-container'),
 	$cgPicture = $('#cg-picture'),
 	append = '',
-	cg = macro.CG, i
+	cg = macro.CG, i, len,
 	animationDuration = config.ANIMATION_DURATION;
 
 // 载入CG
-for (i = 0; i < cg.length; i++) {
+for (i = 0, len = cg.length; i < len; i++) {
 	append += '<li><img src="' + url.cg(cg[i]) + '"/></li>';
 }
 $cgContainer.html(append);

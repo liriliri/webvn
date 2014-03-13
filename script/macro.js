@@ -9,7 +9,8 @@ define({
     },
     // 前景乐
     BGM: {
-        '主菜单背景乐': 'mainmenu'
+        '主菜单背景乐': 'mainmenu',
+        'Musa - Active Planets': 'bgm_0910_loop'
     },
     // CG
     CG: [

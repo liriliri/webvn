@@ -94,6 +94,75 @@ body {
     background-color: #357cc7;
 }
 
+/* 音乐鉴赏窗口 */
+#music-player {
+    background-color: #fff;
+    padding: 10px 30px;
+}
+
+#music-player .title {
+    color: #a7a7a7;
+    font-size: 45px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #357cc7;
+}
+
+#music-container {
+    height: 350px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+#music-container li {
+    cursor: pointer;
+    font-size: 15px;
+    padding: 15px 5px;
+    transition: background-color 0.3s, color 0.3s;
+    color: #357cc7;
+}
+
+#music-container li:hover {
+    background-color: #357cc7;
+    color: #fff;
+}
+
+#music-container li.playing {
+    background-color: #357cc7;
+    color: #fff;
+}
+
+#music-progress {
+    height: 20px;
+    background-color: #a7a7a7;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+#music-progress span {
+    background-color: #e56437;
+    height: 100%;
+    display: inline-block;
+}
+
+#music-player .close {
+    display: inline-block;
+    line-height: 40px;
+    padding: 0 25px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s;
+    font-size: 18px;
+    margin-top: 5px;
+    color: #fff;
+    background-color: #357cc7;
+}
+
+#music-player .close:hover {
+    color: #a7a7a7;
+    background-color: #fff;
+}
+
 /* CG鉴赏窗口 */
 #cg-viewer {
     background-color: #fff;

@@ -7,6 +7,7 @@ exports.setLoop(true);
 
 exports.load = function(name) {
     this.audio.src = url.bgm(name);
+    this.loaded = true;
 }
 
 exports.loadAndPlay = function(name) {

@@ -7,6 +7,7 @@ exports.setLoop(false);
 
 exports.load = function(name) {
     this.audio.src = url.se(name);
+    this.loaded = true;
 }
 
 exports.loadAndPlay = function(name) {

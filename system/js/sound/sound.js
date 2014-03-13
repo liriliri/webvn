@@ -5,6 +5,7 @@ var p = Sound.prototype;
 
 function Sound(id) {
     this.audio = document.getElementById(id);
+    this.loaded = false;
 }
 
 p.play = function() {
@@ -13,6 +14,12 @@ p.play = function() {
 
 p.pause = function() {
     this.audio.pause();
+}
+
+p.setCurrentTime = function (time) {
+	if (this.loaded === true) {
+		this.audio.currentTime = time;
+	}
 }
 
 p.setLoop = function(flag) {
@@ -24,8 +31,8 @@ p.setVolume = function (volume) {
 }
 
 p.stop = function() {
+	this.setCurrentTime(0);
     this.pause();
-    this.audio.currentTime = 0;
 }
 
 return Sound;

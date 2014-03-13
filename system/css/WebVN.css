@@ -44,13 +44,13 @@ ul {
 
 #cg-picture {
     position: absolute;
-    z-index: 810;
+    z-index: 910;
     cursor: pointer;
 }
 
 #cg-viewer {
     position: absolute;
-    z-index: 800;
+    z-index: 900;
 }
 
 #click-area {
@@ -79,7 +79,7 @@ ul {
 
 #logo {
     position: absolute;
-    z-index: 1000;
+    z-index: 1100;
 }
 
 #mainmenu {
@@ -88,11 +88,16 @@ ul {
     background: url(../../data/bg/mainmenu.jpg) no-repeat center center;
 }
 
+#music-player {
+    position: absolute;
+    z-index: 800;
+}
+
 #nav {
     z-index: 10000;
 }
 
 #video {
     position: absolute;
-    z-index: 900;
+    z-index: 1000;
 }

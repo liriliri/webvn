@@ -22,9 +22,24 @@ var getCmdAndParam = function (cmdParam) {
     return result;
 }
 
+// 获取对象名及其值
+var getValue = function (o) {
+	var i, result = [];
+	for (i in o) {
+		if (o.hasOwnProperty(i)) {
+			result.push({
+				name: i,
+				value: o[i]
+			});
+;		}
+	}
+	return result;
+}
+
 return {
     ceil: ceil,
-    getCmdAndParam: getCmdAndParam
+    getCmdAndParam: getCmdAndParam,
+    getValue: getValue
 }
 
 });
