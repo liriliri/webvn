@@ -18,13 +18,16 @@ define({
     LOGO_DURATION: 5000, // LOGO持续时间，单位毫秒
     MAINMENU_BGM_OR_NOT: false, // 主菜单是否有背景乐
     MAINMENU_BGM_NAME: 'mainmenu', // 主菜单背景乐
-    OP_OR_NOT: false, // 是否有场动画
+    OP: 'opening', // 开场动画文件名
+    OP_OR_NOT: false, // 是否有开场动画
     SE_PATH: 'data/se/', // 音效文件目录
     SE_TYPE: '.ogg', // 音效文件类型
     SCREEN_WIDTH: 960, // 游戏画面宽度
     SCREEN_HEIGHT: 540, // 游戏画面高度
     TEXT_SPEED: 200, // 值越高速度越快
     TITLE: '秽翼的尤斯蒂亚', // 窗口标题
+    VIDEO_PATH: 'data/video/', // 视频目录
+    VIDEO_TYPE: '.mp4', // 视频文件类型
     VOICE_PATH: 'data/voice/', // 配音路径
     VOICE_TYPE: '.ogg' // 配音文件类型
 });

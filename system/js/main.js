@@ -14,9 +14,11 @@ define(['nav', 'screen', 'game/logo', 'game/video',
 function showOp() {
     video
     .show()
-    .loadAndPlay('data/video/opening.mp4')
+    .loadAndPlay(config.OP)
     .setFinishCallback(function() {
-        video.hide();
+        video.hide().setFinishCallback(function() {
+            video.hide();
+        });
         mainmenu.fadeIn();
     })
     .setClickHandler(function() {

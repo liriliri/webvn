@@ -1,6 +1,7 @@
 // 命令执行
 define(['cmd/bg', 'cmd/bgm', 'cmd/comment', 'cmd/default', 'cmd/dialog',
-	'cmd/face', 'cmd/fg', 'cmd/jump', 'cmd/se', 'cmd/voice', 'cmd/weather'], function() {
+	'cmd/face', 'cmd/fg', 'cmd/jump', 'cmd/se', 'cmd/video',
+    'cmd/voice', 'cmd/weather'], function() {
 
 var cmdNum = arguments.length, // 支持的命令数目
     exports = {},

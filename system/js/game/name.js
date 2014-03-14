@@ -11,6 +11,8 @@ var bgPath = config.BG_PATH,
     fgType = config.FIGURE_TYPE,
     sePath = config.SE_PATH,
     seType = config.SE_TYPE,
+    videoPath = config.VIDEO_PATH,
+    videoType = config.VIDEO_TYPE,
     voicePath = config.VOICE_PATH,
     voiceType = config.VOICE_TYPE,
     result;
@@ -71,6 +73,14 @@ function se(name) {
     }
 }
 
+function video(name) {
+    if (macro.VID[name]) {
+        return videoPath + macro.VID[name] + videoType;
+    } else {
+        return videoPath + name + videoType;
+    }
+}
+
 function voice(ch, name) {
     if (macro.CH[ch]) {
         return voicePath + macro.CH[ch] + '/' + name + voiceType;
@@ -85,7 +95,8 @@ return {
     face: face,
     fg: fg,
     se: se,
-    voice: voice
+    voice: voice,
+    video: video
 }
 
 });

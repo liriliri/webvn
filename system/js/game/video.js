@@ -1,5 +1,5 @@
 // 视频模块
-define(function() {
+define(['game/name'], function(url) {
 
 var clickHandler = null,
     finishCallBack = null,
@@ -9,16 +9,17 @@ var clickHandler = null,
 // 隐藏
 function hide() {
     $video.addClass('hidden');
+    return this;
 }
 
 // 加载
-function load(url) {
-    video.src = url;
+function load(name) {
+    video.src = url.video(name);
 }
 
 // 加载并播放
-function loadAndPlay(url) {
-    load(url);
+function loadAndPlay(name) {
+    load(name);
     play();
     return this;
 }
@@ -43,6 +44,13 @@ function setFinishCallback(callback) {
     $video.on('ended', callback);
     return this;
 }
+setFinishCallback(function() {
+    hide();
+});
+
+function setVolume(volume) {
+    video.volume = volume;
+}
 
 // 显示
 function show() {
@@ -65,6 +73,7 @@ return {
     play: play,
     setClickHandler: setClickHandler,
     setFinishCallback: setFinishCallback,
+    setVolume: setVolume,
     show: show,
     stop: stop
 }

@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
     border: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 a {
