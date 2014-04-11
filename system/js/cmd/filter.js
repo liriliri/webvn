@@ -47,7 +47,6 @@ exports.runWithParam = function (subCmd, param) {
     default:
         break;
     }
-    console.dir(filter);
     filter.setFilter(filterName, param);
     return true;
 }

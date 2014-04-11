@@ -1,45 +1,93 @@
 .bounceOut {
     -webkit-animation-name: bounceOut;
+    -webkit-animation-fill-mode: forwards;
 }
 
 .fadeOut {
     -webkit-animation-name: fadeOut;
+    -webkit-animation-fill-mode: forwards;
 }
 
 .fadeOutDown {
     -webkit-animation-name: fadeOutDown;
+    -webkit-animation-fill-mode: forwards;
 }
 
 .fadeOutLeft {
     -webkit-animation-name: fadeOutLeft;
+    -webkit-animation-fill-mode: forwards;
 }
 
 .fadeOutRight {
     -webkit-animation-name: fadeOutRight;
+    -webkit-animation-fill-mode: forwards;
 }
 
 .fadeOutUp {
     -webkit-animation-name: fadeOutUp;
+    -webkit-animation-fill-mode: forwards;
 }
 
 .flipOutX {
     -webkit-animation-name: flipOutX;
+    -webkit-animation-fill-mode: forwards;
 }
 
 .flipOutY {
     -webkit-animation-name: flipOutY;
+    -webkit-animation-fill-mode: forwards;
+}
+
+.gradientCircle {
+    -webkit-animation-name: gradientCircle;
+    -webkit-mask-image: -webkit-radial-gradient(center center, circle, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,0) 50%, rgba(0,0,0,0) 100%);
+    -webkit-animation-fill-mode: forwards;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center center;
+    -webkit-mask-size: 200% 200%;
+}
+
+.gradientDown {
+    -webkit-animation-name: gradientDown;
+    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.00, rgba(0,0,0,0)), color-stop(0.50, rgba(0,0,0,0)), color-stop(0.65, rgba(0,0,0,1)), color-stop(1.00, rgba(0,0,0,1)));
+    -webkit-mask-size: 100% 200%;
+    -webkit-animation-fill-mode: forwards;
+}
+
+.gradientLeft {
+    -webkit-animation-name: gradientLeft;
+    -webkit-mask-image: -webkit-gradient(linear, left top, right top, color-stop(0.00, rgba(0,0,0,1)), color-stop(0.35, rgba(0,0,0,1)), color-stop(0.50, rgba(0,0,0,0)), color-stop(1.00, rgba(0,0,0,0)));
+    -webkit-mask-size: 200%;
+    -webkit-animation-fill-mode: forwards;
+}
+
+.gradientRight {
+    -webkit-animation-name: gradientRight;
+    -webkit-mask-image: -webkit-gradient(linear, left top, right top, color-stop(0.00, rgba(0,0,0,0)), color-stop(0.50, rgba(0,0,0,0)), color-stop(0.65, rgba(0,0,0,1)), color-stop(1.00, rgba(0,0,0,1)));
+    -webkit-mask-size: 200%;
+    -webkit-animation-fill-mode: forwards;
+}
+
+.gradientUp {
+    -webkit-animation-name: gradientUp;
+    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.00, rgba(0,0,0,1)), color-stop(0.35, rgba(0,0,0,1)), color-stop(0.50, rgba(0,0,0,0)), color-stop(1.00, rgba(0,0,0,0)));
+    -webkit-mask-size: 100% 200%;
+    -webkit-animation-fill-mode: forwards;
 }
 
 .hinge {
     -webkit-animation-name: hinge;
+    -webkit-animation-fill-mode: forwards;
 }
 
 .lightSpeedOut {
     -webkit-animation-name: lightSpeedOut;
+    -webkit-animation-fill-mode: forwards;
 }
 
 .rotateOut {
     -webkit-animation-name: rotateOut;
+    -webkit-animation-fill-mode: forwards;
 }
 
 @-webkit-keyframes bounceOut {
@@ -134,6 +182,51 @@
     100% {
         -webkit-transform: perspective(400px) rotateY(90deg);
         opacity: 0;
+    }
+}
+
+@-webkit-keyframes gradientCircle {
+    0% {
+        -webkit-mask-size: 200% 200%;
+    }
+    100% {
+        -webkit-mask-size: 0;
+    }
+}
+
+@-webkit-keyframes gradientDown {
+    0% {
+        -webkit-mask-position: 0 100%;
+    }
+    100% {
+        -webkit-mask-position: 0 0;
+    }
+}
+
+@-webkit-keyframes gradientLeft {
+    0% {
+        -webkit-mask-position: 0 0;
+    }
+    100% {
+        -webkit-mask-position: 100% 0;
+    }
+}
+
+@-webkit-keyframes gradientRight {
+    0% {
+        -webkit-mask-position: 100% 0;
+    }
+    100% {
+        -webkit-mask-position: 0 0;
+    }
+}
+
+@-webkit-keyframes gradientUp {
+    0% {
+        -webkit-mask-position: 0 0;
+    }
+    100% {
+        -webkit-mask-position: 0 100%;
     }
 }
 

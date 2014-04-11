@@ -7,6 +7,7 @@ var cmdNum, // 命令总数
     cmdSeparator = config.CMD_SEPARATOR, // 命令分隔符
     nextCmd = 0, // 当前正在执行的脚本序号
     i,
+    isClickenabled = true, // 是否允许点击
     labels = {}, // 标签
     line, // 单行脚本
     scriptNum = arguments.length, // 脚本数目
@@ -55,6 +56,18 @@ function execute(num) {
     }
 }
 
+// 点击时触的事件
+function handleClick() {
+    if (isClickenabled === true) {
+        execute();
+        // 限制点击次数
+        isClickenabled = false;
+        setTimeout(function () {
+            isClickenabled = true;
+        }, 500);
+    }
+}
+
 // 跳转到标签
 function jumpToLabel(labelName) {
 	if (labels[labelName]) {
@@ -80,6 +93,7 @@ function start() {
 
 var exports = {
     execute: execute,
+    handleClick: handleClick,
     jumpToLabel: jumpToLabel,
     start: start
 };
