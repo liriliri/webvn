@@ -24,7 +24,7 @@ define({
     SE_TYPE: '.ogg', // 音效文件类型
     SCREEN_WIDTH: 960, // 游戏画面宽度
     SCREEN_HEIGHT: 540, // 游戏画面高度
-    TEXT_SPEED: 200, // 值越高速度越快
+    TEXT_SPEED: 100, // 值越高速度越快
     TITLE: '秽翼的尤斯蒂亚', // 窗口标题
     VIDEO_PATH: 'data/video/', // 视频目录
     VIDEO_TYPE: '.mp4', // 视频文件类型

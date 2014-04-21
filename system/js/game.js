@@ -56,6 +56,11 @@ function execute(num) {
     }
 }
 
+// 回退
+function goBack(num) {
+    nextCmd -= num;
+}
+
 // 点击时触的事件
 function handleClick() {
     if (isClickenabled === true) {
@@ -93,6 +98,7 @@ function start() {
 
 var exports = {
     execute: execute,
+    goBack: goBack,
     handleClick: handleClick,
     jumpToLabel: jumpToLabel,
     start: start
