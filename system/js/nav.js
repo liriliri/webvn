@@ -1,7 +1,11 @@
 // 顶部菜单栏
-define(['screen'], function(screen) {
+define(['config', 'screen'], function(config, screen) {
 
-var $nav = $('#nav');
+var $nav = $('#nav'),
+    $windowMode = $('#window-mode'),
+    $gameOption = $('#game-option'),
+    $loadGame = $('#load-game'),
+    $saveGame = $('#save-game');
 
 // 右键显示隐藏菜单栏
 function toggleNav(e) {
@@ -20,6 +24,18 @@ function toggleFullscreen() {
     }
     $nav.toggleClass('hide');
 }
-$nav.on('click', '#window-mode', toggleFullscreen);
+
+if (config.NAV_WINDOW_MODE) {
+    $windowMode.removeClass('hidden').on('click', toggleFullscreen);
+}
+if (config.NAV_GAME_OPTION) {
+    $gameOption.removeClass('hidden');
+}
+if (config.NAV_LOAD_GAME) {
+    $loadGame.removeClass('hidden');
+}
+if (config.NAV_SAVE_GAME) {
+    $saveGame.removeClass('hidden');
+}
 
 });

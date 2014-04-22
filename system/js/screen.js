@@ -4,6 +4,7 @@ define(['config', 'util'], function(config, util) {
 var $gameContainer = $('#game-container'), // 游戏容器
     $title = $('title'),
     $window = $(window),
+    autoScale = config.AUTO_SCALE,
     screenWidth = config.SCREEN_WIDTH,
     screenHeight = config.SCREEN_HEIGHT,
     screenRatio = screenWidth / screenHeight;
@@ -59,11 +60,13 @@ function resizeScreen() {
         var scale = height / screenHeight;
     }
     scale = util.ceil(scale, 3);
-    $gameContainer.css({'-webkit-transform':'scale(' + scale + ')',
-        'transform':'scale(' + scale + ')'});
+    $gameContainer.css({'zoom': scale});
 }
-resizeScreen();
-$(window).on('resize', resizeScreen);
+
+if (autoScale === true) {
+    resizeScreen();
+    $(window).on('resize', resizeScreen);
+}
 
 return {
     $gameContainer: $gameContainer,
