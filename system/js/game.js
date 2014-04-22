@@ -1,5 +1,6 @@
 // 游戏脚本
-define(['executor', 'config', 'script/0', 'script/1'], function (executor, config) {
+define(['executor', 'config', 'connector', 'script/0', 'script/1'],
+    function (executor, config, connector) {
 
 var cmdNum, // 命令总数
     cmd, // 命令
@@ -15,7 +16,7 @@ var cmdNum, // 命令总数
     seperatorPos; // 分割符位置
 
 // 加载脚本
-for (i = 2; i < scriptNum; i++) {
+for (i = 3; i < scriptNum; i++) {
     script = script.concat(arguments[i]);
 }
 
@@ -35,26 +36,24 @@ for (i = 0; i < cmdNum; i++) {
  * @param {Number} num 脚本号
  */
 function execute(num) {
-    if (isNaN(Number(num))) {
+    if (isNaN(num)) {
         num = nextCmd;
     }
     // 如果脚本达到末尾则跳转到主菜单
     if (num >= cmdNum) {
+        connector.trigger('showMainmenu');
         return;
     }
     nextCmd = num + 1;
     loadCommand(num);
     console.log(cmd, cmdParam);
     var result = executor.run(cmd, cmdParam);
-    /* 执行命令，如果返回结果为true则继续执行下一语句
-     * 如果返回的是一个函数，则执行函数
-     */
+    // 执行命令，如果返回结果为true则继续执行下一语句
     if (result === true) {
         execute();
-    } else if (typeof result === 'function') {
-        result.call(exports);
     }
 }
+connector.publish('execute', execute);
 
 // 回退
 function goBack(num) {
@@ -72,6 +71,7 @@ function handleClick() {
         }, 500);
     }
 }
+connector.publish('gameClicked', handleClick);
 
 // 跳转到标签
 function jumpToLabel(labelName) {
@@ -79,6 +79,7 @@ function jumpToLabel(labelName) {
 		execute(labels[labelName]);
 	}
 }
+connector.publish('jumpToLabel', jumpToLabel);
 
 /**
  * 解析命令参数

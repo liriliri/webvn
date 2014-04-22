@@ -17,7 +17,7 @@ define({
     FRAME_RATE: 60, // 帧速率
     LOGO_OR_NOT: false, // 是否有LOGO
     LOGO_DURATION: 5000, // LOGO持续时间，单位毫秒
-    MAINMENU_BGM_OR_NOT: false, // 主菜单是否有背景乐
+    MAINMENU_BGM_OR_NOT: true, // 主菜单是否有背景乐
     MAINMENU_BGM_NAME: 'mainmenu', // 主菜单背景乐
     NAV_GAME_OPTION: true, // 是否开启导航栏游戏选项
     NAV_LOAD_GAME: true, // 是否开启导航栏读档选项

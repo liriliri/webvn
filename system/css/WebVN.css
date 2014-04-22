@@ -109,6 +109,16 @@ ul {
     z-index: 10000;
 }
 
+#selection {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 610;
+}
+
+#selection ul {
+    margin: 0 auto;
+}
+
 #video {
     position: absolute;
     z-index: 1000;

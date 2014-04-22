@@ -1,5 +1,6 @@
 // 主菜单
-define(['config', 'sound/bgm', 'game', 'cg', 'music'], function(config, bgm, game, cg, music) {
+define(['config', 'sound/bgm', 'game', 'cg', 'music', 'connector', 'game/reset'],
+    function(config, bgm, game, cg, music, connector, reset) {
 
 var $mainmenu = $('#mainmenu'),
     $startGame = $('#start-game'),
@@ -28,9 +29,13 @@ $musicMode.on('click', function () {
 
 // 显示
 function fadeIn() {
+    // 先将游戏的所有内容进行重置
+    reset();
     $mainmenu.fadeIn(animationDuration);
     playBgm();
 }
+
+connector.publish('showMainmenu', fadeIn);
 
 // 隐藏
 function fadeOut() {

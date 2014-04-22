@@ -1,11 +1,23 @@
 // 元素事件连接器
-define(['game'], function (game) {
+define(function () {
 
-var $clickArea = $('#click-area');
+var events = {};
 
-// 绑定点击画面事件
-$clickArea.on('click', function () {
-    game.handleClick();
-});
+// 发布事件
+function publish(event, func) {
+    events[event] = func;
+}
+
+// 触发事件
+function trigger(event) {
+    if (events[event]) {
+        events[event].apply(null, [].splice.call(arguments, 1, 1));
+    }
+}
+
+return {
+    publish: publish,
+    trigger: trigger
+}
 
 });

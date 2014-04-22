@@ -293,3 +293,28 @@ body {
 .dialog2 #dialog-face {
     display: none;
 }
+
+/* 选择框 */
+#selection ul {
+    margin-top: 150px;
+    padding: 15px;
+    padding-bottom: 0;
+    width: 400px;
+    background-color: #fff;
+    border-radius: 0 5px 5px 5px;
+    border: 10px solid #357cc7;
+}
+
+#selection ul li {
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 15px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#selection ul li:hover {
+    color: #fff;
+    background-color: #357cc7;
+}

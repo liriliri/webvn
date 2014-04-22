@@ -25,6 +25,10 @@ function Figure(i) {
 
 p = Figure.prototype;
 
+p.clear = function () {
+	this.source.attr('src', 'system/img/blank.gif');
+}
+
 p.load = function (name, type) {
 	this.image.src = url.fg(name, type);
 }
@@ -68,6 +72,13 @@ for (i = 0; i < figureNum; i++) {
 	figures[i] = new Figure(i);
 }
 
+// 清除所有产绘
+function resetAll() {
+	for (var i = 0; i < figureNum; i++) {
+		figures[i].clear();
+	}
+}
+
 // 加载
 function load(name, type) {
 	figures[current].load(name, type);
@@ -96,6 +107,7 @@ function setPosition(x) {
 }
 
 return {
+	resetAll: resetAll,
 	fadeIn: fadeIn,
 	fadeOut: fadeOut,
 	load: load,
