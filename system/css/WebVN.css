@@ -109,6 +109,11 @@ ul {
     z-index: 10000;
 }
 
+#option-panel {
+    position: absolute;
+    z-index: 2100;
+}
+
 #selection {
     position: absolute;
     background-color: rgba(0, 0, 0, 0.8);

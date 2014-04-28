@@ -53,7 +53,7 @@ function execute(num) {
         execute();
     }
 }
-connector.publish('execute', execute);
+connector.on('execute', execute);
 
 // 回退
 function goBack(num) {
@@ -71,7 +71,7 @@ function handleClick() {
         }, 500);
     }
 }
-connector.publish('gameClicked', handleClick);
+connector.on('gameClicked', handleClick);
 
 // 跳转到标签
 function jumpToLabel(labelName) {
@@ -79,7 +79,7 @@ function jumpToLabel(labelName) {
 		execute(labels[labelName]);
 	}
 }
-connector.publish('jumpToLabel', jumpToLabel);
+connector.on('jumpToLabel', jumpToLabel);
 
 /**
  * 解析命令参数

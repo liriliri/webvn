@@ -4,7 +4,7 @@ define(function () {
 var events = {};
 
 // 发布事件
-function publish(event, func) {
+function on(event, func) {
     events[event] = func;
 }
 
@@ -16,7 +16,7 @@ function trigger(event) {
 }
 
 return {
-    publish: publish,
+    on: on,
     trigger: trigger
 }
 

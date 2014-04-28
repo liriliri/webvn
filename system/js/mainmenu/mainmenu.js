@@ -1,5 +1,5 @@
 // 主菜单
-define(['config', 'sound/bgm', 'game', 'cg', 'music', 'connector', 'game/reset'],
+define(['config', 'sound/bgm', 'game', 'mainmenu/cg', 'mainmenu/music', 'connector', 'game/reset'],
     function(config, bgm, game, cg, music, connector, reset) {
 
 var $mainmenu = $('#mainmenu'),
@@ -35,7 +35,7 @@ function fadeIn() {
     playBgm();
 }
 
-connector.publish('showMainmenu', fadeIn);
+connector.on('showMainmenu', fadeIn);
 
 // 隐藏
 function fadeOut() {

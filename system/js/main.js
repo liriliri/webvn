@@ -7,8 +7,8 @@ require.config({
 });
 
 // 程序主入口
-define(['nav', 'screen', 'game/logo', 'game/video', 'game/clickArea',
-    'config', 'mainmenu'], function(nav, screen, logo, video, clickArea, config, mainmenu) {
+define(['nav/nav', 'screen', 'game/logo', 'game/video', 'game/clickArea',
+    'config', 'mainmenu/mainmenu'], function(nav, screen, logo, video, clickArea, config, mainmenu) {
 
 // 显示OP
 function showOp() {

@@ -1,11 +1,16 @@
 // 顶部菜单栏
-define(['config', 'screen'], function(config, screen) {
+define(['config', 'screen', 'nav/option'], function(config, screen, option) {
 
 var $nav = $('#nav'),
     $windowMode = $('#window-mode'),
     $gameOption = $('#game-option'),
     $loadGame = $('#load-game'),
     $saveGame = $('#save-game');
+
+// 绑定游戏选项按钮
+$gameOption.on('click', function () {
+    option.toggle();
+});
 
 // 右键显示隐藏菜单栏
 function toggleNav(e) {

@@ -31,6 +31,37 @@
         <div id="game-container">
             <!-- LOGO -->
             <img id="logo" class="hidden fill" src="data/bg/logo.jpg">
+			<!-- 选项 -->
+			<div id="option-panel" class="fill">
+				<div class="title">游戏选项</div>
+				<ul id="option-container">
+					<li>
+						<span>字体：</span>
+						<select>
+							<option>黑体</option>
+							<option>宋体</option>
+						</select>
+					</li>
+					<li>
+						<span>音量：</span>
+					</li>
+					<li>
+						<span>人声：</span>
+						<div class="checkbox">
+							<input id="t" type="checkbox">
+							<label for="t"></label>
+						</div>
+					</li>
+					<li>
+						<span>文字显示速度：</span>
+						<input type="range">
+					</li>
+					<li>
+						<span>背景乐：</span>
+					</li>
+				</ul>
+                <div class="close">关闭</div>
+			</div>
             <!-- 视频 -->
             <video id="video" class="hidden"></video>
             <!-- CG鉴赏 -->
