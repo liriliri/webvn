@@ -32,32 +32,44 @@
             <!-- LOGO -->
             <img id="logo" class="hidden fill" src="data/bg/logo.jpg">
 			<!-- 选项 -->
-			<div id="option-panel" class="fill">
+			<div id="option-panel" class="hidden fill">
 				<div class="title">游戏选项</div>
 				<ul id="option-container">
 					<li>
-						<span>字体：</span>
+						<span>文字显示速度：</span>
+						<input type="range">
+					</li>
+					<li>
+						<span>字体样式：</span>
 						<select>
 							<option>黑体</option>
 							<option>宋体</option>
 						</select>
 					</li>
 					<li>
-						<span>音量：</span>
-					</li>
-					<li>
-						<span>人声：</span>
-						<div class="checkbox">
-							<input id="t" type="checkbox">
-							<label for="t"></label>
-						</div>
-					</li>
-					<li>
-						<span>文字显示速度：</span>
+						<span>自动推进速度：</span>
 						<input type="range">
 					</li>
 					<li>
-						<span>背景乐：</span>
+						<span>自动推进：</span>
+						<div class="checkbox">
+							<input id="setting-auto" type="checkbox">
+							<label for="setting-auto"></label>
+						</div>
+					</li>
+					<li>
+						<span>背景音乐大小：</span>
+						<input type="range">
+					</li>
+					<li></li>
+					<li>
+						<span>效果音量大小：</span>
+						<input type="range">
+					</li>
+					<li></li>
+					<li>
+						<span>语音音量大小：</span>
+						<input type="range">
 					</li>
 				</ul>
                 <div class="close">关闭</div>

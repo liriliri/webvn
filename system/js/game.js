@@ -9,6 +9,7 @@ var cmdNum, // 命令总数
     nextCmd = 0, // 当前正在执行的脚本序号
     i,
     isClickenabled = true, // 是否允许点击
+	isPlaying = false, // 是否正在执行游戏
     labels = {}, // 标签
     line, // 单行脚本
     scriptNum = arguments.length, // 脚本数目
@@ -30,6 +31,26 @@ for (i = 0; i < cmdNum; i++) {
         labels[cmdParam] = i;
     }
 }
+
+// 禁止点击或按键时执行脚本
+function noClick(num) {
+	// 必须使用定时以确保不被覆写
+	setTimeout(function () {
+		isClickenabled = false;
+	}, 150);
+	if (num !== 0) {
+		setTimeout(function () {
+            isClickenabled = true;
+        }, num);
+	}
+}
+connector.on('noClick', noClick);
+
+// 允许点击
+function enableClick() {
+	isClickenabled = true;
+}
+connector.on('enableClick', enableClick);
 
 /**
  * 执行脚本
@@ -62,13 +83,13 @@ function goBack(num) {
 
 // 点击时触的事件
 function handleClick() {
-    if (isClickenabled === true) {
+    if (isClickenabled === true && isPlaying === true) {
         execute();
         // 限制点击次数
         isClickenabled = false;
-        setTimeout(function () {
+        clickTimer = setTimeout(function () {
             isClickenabled = true;
-        }, 500);
+        }, 100);
     }
 }
 connector.on('gameClicked', handleClick);
@@ -94,7 +115,13 @@ function loadCommand(num) {
 
 // 开始游戏
 function start() {
+	isPlaying = true;
     execute(0);
+}
+
+// 结束游戏
+function stop() {
+	isPlaying = false;
 }
 
 var exports = {
@@ -102,7 +129,8 @@ var exports = {
     goBack: goBack,
     handleClick: handleClick,
     jumpToLabel: jumpToLabel,
-    start: start
+    start: start,
+	stop: stop
 };
 
 return exports;

@@ -31,6 +31,7 @@ $musicMode.on('click', function () {
 function fadeIn() {
     // 先将游戏的所有内容进行重置
     reset();
+    game.stop();
     $mainmenu.fadeIn(animationDuration);
     playBgm();
 }

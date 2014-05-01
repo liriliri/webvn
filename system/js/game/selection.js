@@ -9,6 +9,7 @@ var $selection = $('#selection'),
 // 显示
 function fadeIn() {
     $selection.fadeIn(animationDuration);
+    connector.trigger('noClick', 0);
 }
 
 // 隐藏
@@ -28,6 +29,9 @@ function setSelections(selections) {
 
 $selectionContainer.on('click', 'li', function () {
     target = $(this).attr('data-target');
+    
+    // 允许点击
+    connector.trigger('enableClick');
 
     switch (target) {
     case '主菜单':
