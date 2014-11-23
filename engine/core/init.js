@@ -5,11 +5,17 @@
 // Load core
 loader.prefix('engine/core/');
 loader.script([
-    'log.js',
-    'util.js',
-    'class.js',
-    'config.js',
-    'script.js'
+    'log',
+    'util',
+    'class',
+    'config',
+    'script'
+]);
+
+// Load command
+loader.prefix('engine/cmd/');
+loader.script([
+    'console'
 ]);
 
 })(webvn, webvn.loader);

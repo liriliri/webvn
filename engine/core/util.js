@@ -84,6 +84,18 @@ util.keys = function (o) {
 
 };
 
+// Check if a string startsWith a specific string
+util.startsWith = function (str, text) {
+    return str.indexOf(text) === 0;
+};
+
+// Trim strings
+util.trim = function(text) {
+
+    return text.replace(/^\s+|\s+$/g, '');
+
+};
+
 // Private function
 
 function _mix(a, b, p) {

@@ -20,21 +20,21 @@ var colors = {
 // Wrapper of console.error
 log.err = function (str) {
 
-    console.error('%c ' + str, 'color: ' + colors.err);
+    console.error('%c' + str, 'color: ' + colors.err);
 
 };
 
 // Wrapper of console.info
 log.info = function (str) {
 
-    console.info('%c ' + str, 'color: ' + colors.info);
+    console.info('%c' + str, 'color: ' + colors.info);
 
 };
 
 // Wrapper of console.warn
 log.warn = function (str) {
 
-    console.warn('%c ' + str, 'color: ' + colors.warning);
+    console.warn('%c' + str, 'color: ' + colors.warning);
 
 };
 

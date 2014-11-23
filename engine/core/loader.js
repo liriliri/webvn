@@ -34,7 +34,7 @@ loader.script = function (scripts) {
 
     // Push scripts into container and excute them
     for (var i = 0, len = scripts.length; i < len; i++) {
-        scriptList.push(prefix + scripts[i]);
+        scriptList.push(prefix + scripts[i] + '.js');
     }
 
     loadScript();
@@ -93,13 +93,10 @@ s.add = function (name, requires, module) {
         requires = [];
     }
 
-    for (var i = 0, len = requires.length; i < len; i++) {
-        if (s[requires[i]]) {
-            requires[i] = s[requires[i]];
-        } else {
-            console.error('Module ' + requires[i] + " does'nt exist");
-            return;
-        }
+    try {
+        requires = getModules(requires);
+    } catch (e) {
+        console.error(e);
     }
 
     // The first param that parsed is the webvn global namespace
@@ -113,5 +110,35 @@ s.add = function (name, requires, module) {
     }
 
 };
+
+// Making it easier use different parts of the webvn
+s.use = function (requires, module) {
+
+    try {
+        requires = getModules(requires);
+    } catch (e) {
+        console.error(e);
+    }
+
+    requires.unshift(s);
+
+    module.apply(null, requires);
+
+};
+
+// Change the name of the requires to be actual functions.
+function getModules(requires) {
+
+    for (var i = 0, len = requires.length; i < len; i++) {
+        if (s[requires[i]]) {
+            requires[i] = s[requires[i]];
+        } else {
+            throw new Error('Module ' + requires[i] + " does'nt exist");
+        }
+    }
+
+    return requires;
+
+}
 
 })(webvn);
