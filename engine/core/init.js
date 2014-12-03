@@ -8,6 +8,7 @@ loader.script([
     'log',
     'util',
     'class',
+    'storage',
     'config',
     'script'
 ]);
