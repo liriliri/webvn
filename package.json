@@ -1,0 +1,30 @@
+{
+  "name": "WebVN",
+  "version": "0.0.1",
+  "description": "Html5 visual novel engine",
+  "main": "Gruntfile.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/surunzi/WebVN.git"
+  },
+  "keywords": [
+    "html5",
+    "galgame"
+  ],
+  "author": "surunzi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/surunzi/WebVN/issues"
+  },
+  "homepage": "https://github.com/surunzi/WebVN",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-connect": "^0.9.0"
+  }
+}

@@ -11,7 +11,11 @@ var head = document.getElementsByTagName('head')[0],
 // Prefix of all url
     prefix = '',
 // Container of all scripts
-    scriptList = [];
+    scriptList = [],
+// Function called when all scripts are loaded
+    onReady = null;
+// Whether is loading script
+    isScriptLoading = false;
 
 // Set prefix of the url
 loader.prefix = function (pre) {
@@ -20,7 +24,14 @@ loader.prefix = function (pre) {
 
     return loader;
 
-}
+};
+
+// Trigger when all scripts are loaded
+loader.ready = function (cb) {
+
+    onReady = cb;
+
+};
 
 /* Load scripts
  * Param script can be either a string or an array.
@@ -37,7 +48,9 @@ loader.script = function (scripts) {
         scriptList.push(prefix + scripts[i] + '.js');
     }
 
-    loadScript();
+    if (isScriptLoading === false) {
+        loadScript();
+    }
 
     return loader;
 
@@ -55,12 +68,20 @@ function isArray(arr) {
 function loadScript() {
 
     if (scriptList.length === 0) {
+        if (onReady) {
+            onReady();
+            onReady = null;
+        }
         return;
     }
+
+    isScriptLoading = true;
 
     var script = document.createElement('script');
     script.src = scriptList.shift();
     script.onload = function () {
+
+        isScriptLoading = false;
 
         if (script.readyState && 
             script.readyState != "complete" &&

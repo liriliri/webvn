@@ -3,18 +3,19 @@
 (function (s, loader) {
 
 // Load core
-loader.prefix('engine/core/');
+loader.prefix('/engine/core/');
 loader.script([
     'log',
     'util',
     'class',
     'storage',
     'config',
-    'script'
+    'script',
+    'audio'
 ]);
 
 // Load command
-loader.prefix('engine/cmd/');
+loader.prefix('/engine/cmd/');
 loader.script([
     'console'
 ]);

@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Test</title>
+<script src="../core/webvn.js"></script>
+<script src="../core/loader.js"></script>
+<script src="../core/init.js"></script>
+</head>
+<body>
+<script>
+webvn.loader.ready(function () {
+
+webvn.use(['audio'], function (s, audio) {
+
+var bgm = audio.create('bgm');
+
+bgm.load('/asset/audio/test_bgm.ogg');
+
+});
+
+});
+</script>
+</body>
+</html>
