@@ -11,7 +11,8 @@ loader.script([
     'storage',
     'config',
     'script',
-    'audio'
+    'audio',
+    'select'
 ]);
 
 // Load command

@@ -2,20 +2,22 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Test</title>
+<title>Select</title>
 <script src="../core/webvn.js"></script>
 <script src="../core/loader.js"></script>
 <script src="../core/init.js"></script>
 </head>
 <body>
+<div class="a"></div>
+<div class="a"></div>
 <script>
 webvn.loader.ready(function () {
 
-webvn.use(['audio'], function (s, audio) {
+webvn.use(['select'], function (s, select) {
 
-var bgm = audio.create('bgm');
+var a = select('.a');
 
-bgm.load('/asset/test/test_bgm.ogg');
+a.html('<span>Come on!</span>');
 
 });
 

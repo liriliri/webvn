@@ -33,6 +33,25 @@ util.each = function(obj, iteratee) {
 
 };
 
+// Simple method of object merging, just like the one in backbone.
+util.extend = function (obj) {
+
+    // Not going to do anything if it is not an object
+    if (!util.isObj(obj)) {
+        return obj;
+    }
+
+    var source, prop;
+    for (var i = 1, len = arguments.length; i < len; i++) {
+        source = arguments[i];
+        for (prop in source) {
+            obj[prop] = source[prop];
+        }
+    }
+
+    return obj;
+};
+
 /* Copy properties of b into a
  * Notice that if they both have the same property,
  * the one inside a is going to be overwriten.
@@ -68,6 +87,17 @@ util.isObj = function (obj) {
     return type === 'function' || type === 'object' && !!obj;
 
 };
+
+// isType methods
+util.each(['String', 'Number'], function(name) {
+
+    util['is' + name] = function(obj) {
+
+        return toString.call(obj) === '[object ' + name + ']';
+        
+    };
+
+});
 
 // Get keys of an object.
 util.keys = function (o) {
