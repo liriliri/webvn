@@ -22,12 +22,7 @@ kclass.add = function (name, value) {
  */
 kclass.create = function (px, sx) {
 
-    var _class = create(px, sx);
-
-    // Set prototype
-    _class.prototype = px;
-
-    return _class;
+    return Base.extend(px, sx);
 
 };
 
@@ -58,6 +53,16 @@ function create(px, sx) {
         px.constructor = _class;
     }
 
+    // Atach __name__ and __owner__ to each prototype method
+    util.each(px, function (obj, key) {
+
+        if (util.isFunc(obj)) {
+            obj.__name__ = key;
+            obj.__owner__ = _class;
+        }
+
+    });
+
     // Set statics
     util.each(sx, function (value, p) {
 
@@ -71,6 +76,8 @@ function create(px, sx) {
         return extend.apply(null, [_class, px, sx]);
 
     };
+
+    _class.prototype = px;
 
     return _class;
 
@@ -104,13 +111,45 @@ function extend(superClass, px, sx) {
     var _class = create(px, sx);
     newPx = createObj(superClass.prototype, _class);
 
-    util.mix(newPx, px);
+    util.extend(newPx, px);
 
     _class.prototype = newPx;
+    _class.superclass = superClass.prototype;
 
     return _class;
 
 }
+
+// A basic class inherited by all class
+var Base = create({
+    constructor: function Base () {},
+    /* Call parent function
+     * It will get the current method which is calling it,
+     * Then get the constructor, then the superclass prototype
+     * Finally execute function with the same name in superclass's prototype
+     */
+    callSuper: function () {
+
+        var method, obj,
+            self = this,
+            args = arguments;
+
+        method = arguments.callee.caller;
+        obj = self;
+
+        var name = method.__name__;
+        if (!name) {
+            return undefined;
+        }
+        var member = method.__owner__.superclass[name];
+        if (!member) {
+            return undefined;
+        }
+
+        return member.apply(obj, args || []);
+
+    }
+});
 
 return kclass;
 

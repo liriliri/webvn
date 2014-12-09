@@ -5,19 +5,23 @@
 <title>Class Test</title>
 <script src="../core/webvn.js"></script>
 <script src="../core/loader.js"></script>
-<script src="../core/log.js"></script>
-<script src="../core/util.js"></script>
-<script src="../core/class.js"></script>
+<script src="../core/init.js"></script>
 </head>
 <body>
 <script>
-    var s = webvn;
-    var Person = s.class.create({
+webvn.loader.ready(function () {
+
+webvn.use(['class'], function (s, kclass) {
+
+    var Person = kclass.create({
         constructor: function Person () {
             this.name = 'unknown';
         },
         setName: function (str) {
             this.name = str;
+        },
+        getClass: function () {
+            console.log('Person');
         }
     }, {
         Test: function () {
@@ -31,18 +35,23 @@
         },
         getStuId: function () {
 
+        },
+        getClass: function () {
+            this.callSuper();
+            console.log('Student');
         }
     }, {
 
     });
 
-    var SubStudent = Student.extend({
-        constructor: function SubStudent () {
+    a = new Student;
+    console.dir(Student);
 
-        }
-    });
-    a = new SubStudent;
-    console.dir(a);
+    a.getClass();
+
+});
+
+});
 </script>
 </body>
 </html>
