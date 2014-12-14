@@ -12,7 +12,9 @@ loader.script([
     'config',
     'script',
     'audio',
-    'select'
+    'event',
+    'anim',
+    'select',
 ]);
 
 // Load command
