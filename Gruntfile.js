@@ -6,7 +6,7 @@ grunt.initConfig({
             options: {
                 keepalive: true,
                 hostname: 'localhost',
-                port: 80
+                port: 8002
             }
         }
     }
