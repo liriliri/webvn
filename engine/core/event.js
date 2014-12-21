@@ -50,17 +50,33 @@ event.add = function (elem, type, handler, selector) {
 
 };
 
+// Remove event on elem
+event.remove = function () {
+
+};
+
 // Controls the execution of the right handler
 function dispatch(event) {
 
 	var handlers = this.events[event.type];
 
+	var handlerQueue = getHandlerQueue.call(this, event, handlers);
 
+	for (var i = 0, len = handlerQueue.length; i < len; i++) {
+		var matched = handlerQueue[i];
+		var handlers = matched.handlers;
+		for (var j = 0, len2 = handlers.length; j < len2; j++) {
+			var handleObj = handlers[j];
+			handleObj.handler.apply(matched.elem, [event]);
+		}
+	}
+
+	return event.result;
 
 }
 
 // Return handler queue
-function handlers(event, handlers) {
+function getHandlerQueue(event, handlers) {
 
 	var hanlerQueue = [], handleObj,
 		delegateCount = handlers.delegateCount,
@@ -73,10 +89,10 @@ function handlers(event, handlers) {
 				handleObj = handlers[i];
 				var sel = handleObj.selector;
 				if (sel) {
-					matches[sel] = this.querySlectorAll(sel);
+					matches[sel] = this.querySelectorAll(sel);
 				}
-				if (matches[el]) {
-					matches
+				if (matches[sel]) {
+					matches.push(handleObj);
 				}
 			}
 			if (matches.length) {
