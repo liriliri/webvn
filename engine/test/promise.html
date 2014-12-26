@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Promise</title>
+<script src="../core/webvn.js"></script>
+<script src="../core/loader.js"></script>
+<script src="../core/init.js"></script>
+</head>
+<body>
+<script>
+webvn.loader.ready(function () {
+
+webvn.use(['promise'], function (s, Promise) {
+
+var p = new Promise(function () {
+	console.log('promise 1');
+});
+
+p.then(function () {
+	console.log('promise 2');
+}).then(function () {
+	console.log('promise 3');
+	bb();
+	throw Error('Break in here');
+}).then(function () {
+	console.log('promise 4');
+}).error(function (err) {
+	console.log(err);
+});
+
+});
+
+});
+</script>
+</body>
+</html>

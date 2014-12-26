@@ -9,7 +9,7 @@ var PENDING = 0,
 	FULFILLED = 1,
 	REJECTED = 2;
 
-function Promise() {
+function Promise(fn) {
 
 	var state = PENDING;
 	var value = null;
@@ -160,5 +160,7 @@ function doResolve(fn, onFulfilled, onRejected) {
 	}
 
 }
+
+return Promise;
 
 });
