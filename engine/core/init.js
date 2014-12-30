@@ -9,6 +9,7 @@ loader.script([
     'util',
     'class',
     'promise',
+    'ajax',
     'storage',
     'config',
     'script',

@@ -3,163 +3,167 @@
  * It's just created for fun at this momment
  */
 
-webvn.add('promise', function (s) {
+webvn.add('promise', ['class', 'util'], function (s, kclass, util) {
 
 var PENDING = 0,
 	FULFILLED = 1,
 	REJECTED = 2;
 
-function Promise(fn) {
+var Promise = kclass.create({
+	constructor: function Promise(resolver) {
 
-	var state = PENDING;
-	var value = null;
-	var handlers = [];
+		// store state which can be PENDING, FULFILLED or REJECTED
+		this.state = PENDING;
+		// store value or error once FULFILLED or REJECTED
+		this.value = null;
+		// store sucess & failure handlers attached by calling .then or .done
+		this.handlers = [];
 
-	function fulfill(result) {
+		this._init(resolver);
 
-		state = FULFILLED;
-		value = result;
-		handlers.forEach(handle);
-		handlers = null;
+	},
+	done: function (onFulfilled, onRejected) {
 
-	}
-
-	function reject(error) {
-
-		state = REJECTED;
-		value = error;
-		handlers.forEach(handle);
-		handlers = null;
-
-	}
-
-	function resolve(result) {
-
-		try {
-			var then = getThen(result);
-			if (then) {
-				doResolve(then.bind(result), resolve, reject);
-				return;
-			}
-			fulfill(result);
-		} catch (e) {
-			reject(e);
-		}
-
-	}
-
-	function handle(handler) {
-
-		if (state === PENDING) {
-			handlers.push(handler);
-		} else {
-			if (state === FULFILLED &&
-				typeof handlers.onFulfilled === 'function') {
-				handler.onFulfilled(value);
-			}
-			if (state === REJECTED &&
-				typeof handlers.onRejected === 'function') {
-				handler.onRejected(value);
-			}
-		}
-
-	}
-
-	this.done = function (onFulfilled, onRejected) {
+		var self = this;
 
 		setTimeout(function () {
 
-			handle({
+			self._handle({
 				onFulfilled: onFulfilled,
 				onRejected: onRejected
 			});
 
-		}, 0);
+		}, 0)
 
-	}
-
-	this.then = function (onFulfilled, onRejected) {
+	},
+	then: function (onFulfilled, onRejected) {
 
 		var self = this;
 
-		return new Promise(function (result) {
+		return new Promise(function (resolve, reject) {
 
-			if (typeof onFulfilled === 'function') {
-				try {
-					return resolve(onFulfilled(result));
-				} catch (ex) {
-					return reject(ex);
+			return self.done(function (result) {
+
+				if (util.isFunc(onFulfilled)) {
+					try {
+						return resolve(onFulfilled(result));
+					} catch (e) {
+						return reject(e);
+					}
+				} else {
+					return resolve(result);
 				}
-			} else {
-				return resolve(result);
-			}
 
-		}, function (error) {
+			}, function (error) {
 
-			if (typeof onRejected === 'function') {
-				try {
-					return resolve(onRejected(error));
-				} catch (ex) {
-					return reject(ex);
+				if (util.isFunc(onRejected)) {
+					try {
+						return resolve(onRejected(error));
+					} catch (e) {
+						return reject(e);
+					}
+				} else {
+					return reject(error);
 				}
-			} else {
-				return reject(error);
-			}
+
+			});
 
 		});
 
-	}
+	},
+	/* Top method built on _fulfill
+	 * If the result is a promise, wait for it to be complete
+	 */
+	_resolve: function (result) {
 
-	doResolve(fn, resolve, reject);
-
-}
-
-function getThen(value) {
-
-	var t = typeof value;
-
-	if (value && (t === 'object' || t === 'function')) {
-		var then = value.then;
-		if (typeof then === 'function') {
-			return then;
-		}
-	}
-
-	return null;
-
-}
-
-function doResolve(fn, onFulfilled, onRejected) {
-
-	var done = false;
-
-	try {
-		fn(function (value) {
-
-			if (done) {
+		try {
+			var then = this._getThen(result);
+			if (then) {
+				this._init(then.bind(result));
 				return;
 			}
-			done = true;
-			onFulfilled(value);
-
-		}, function (reason) {
-
-			if (done) {
-				return;
-			}
-			done = true;
-			onRejected(reason);
-
-		});
-	} catch (ex) {
-		if (done) {
-			return;
+			this._fulfill(result);
+		} catch (e) {
+			this._reject(e);
 		}
-		done = true;
-		onRejected(ex);
-	}
 
-}
+	},
+	// Change state to be fulfilling
+	_fulfill: function (result) {
+
+		this.state = FULFILLED;
+		this.value = result;
+		this.handlers.forEach(this._handle.bind(this));
+		this.handlers = null;
+
+	},
+	/* Check if a value is a Promise and, if it is,
+	 * return the `then` method of that promise.
+	 */
+	_getThen: function (value) {
+
+		if (util.isObj(value)) {
+			var then = value.then;
+			if (util.isFunc(then)) {
+				return then;
+			}
+		}
+
+	},
+	_handle: function (handler) {
+
+		if (this.state === PENDING) {
+			this.handlers.push(handler);
+		} else {
+			if (this.state === FULFILLED &&
+				util.isFunc(handler.onFulfilled)) {
+				handler.onFulfilled(this.value);
+			}
+			if (this.state === REJECTED &&
+				util.isFunc(handler.onRejected)) {
+				handler.onRejected(this.value);
+			}
+		}
+
+	},
+	_init: function (resolver) {
+
+		var resolved = false,
+			self = this;
+
+		try {
+			resolver(function (value) {
+
+				if (resolved) {
+					return;
+				}
+				resolved = true;
+				self._resolve(value);
+
+			}, function (reason) {
+
+				if (resolved) {
+					return;
+				}
+				resolved = true;
+				self._reject(reason);
+
+			});
+		} catch (e) {
+			self._reject(e);
+		}
+
+	},
+	// Change state to be rejecting
+	_reject: function (error) {
+
+		this.state = REJECTED;
+		this.value = error;
+		this.handlers.forEach(this._handle.bind(this));
+		this.handlers = null;
+
+	}
+});
 
 return Promise;
 

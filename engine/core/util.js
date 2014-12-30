@@ -10,6 +10,17 @@ var util = {};
 var ObjProto = Object.prototype;
 var toString = ObjProto.toString;
 
+// Create a (shallow-cloned) duplicate of an object.
+util.clone = function (obj) {
+
+    if (!util.isObj(obj)) {
+        return obj;
+    }
+
+    return util.isArray(obj) ? obj.slice() : _.extend({}, obj);
+
+};
+
 // Iterate an object or an array
 util.each = function(obj, iteratee) {
 
@@ -146,8 +157,6 @@ function _mix(a, b, p) {
     }
 
 };
-
-function Empty () {}
 
 return util;
 

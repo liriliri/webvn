@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Promise</title>
+<title>Ajax</title>
 <script src="../core/webvn.js"></script>
 <script src="../core/loader.js"></script>
 <script src="../core/init.js"></script>
@@ -11,20 +11,12 @@
 <script>
 webvn.loader.ready(function () {
 
-webvn.use(['promise'], function (s, Promise) {
+webvn.use(['ajax'], function (s, ajax) {
 
-var p = new Promise(function (fullfill, reject) {
-	fullfill('a');
-});
+ajax.get('ajax_plain.txt').then(function (value) {
+	
+	console.log(value);
 
-p.then(function (value) {
-	console.log(value);
-	return 'b';
-}).then(function (value) {
-	console.log(value);
-	return 'c';
-}).then(function (value) {
-	console.log(value);
 });
 
 });
