@@ -54,8 +54,23 @@ select.extend({
 
         return first;
 
-    }
+    },
+    // Convert html string to actural dom element
+    parseHTML: function (data) {
 
+        // Div for creating nodes
+        var div = document.createElement('div');
+
+        if ( !data || !util.isString(data)) {
+            return null;
+        }
+
+        div.innerHTML = data;
+        var elements = div.childNodes;
+
+        return select.merge([], elements);
+
+    }
 });
 
 // Multifunctional method to get and set values of a collection
@@ -103,16 +118,24 @@ select.fn.init = function (selector, context) {
         return this;
     }
 
+    // Handle html string
+    if (selector[0] === "<" &&
+        selector[selector.length - 1] === ">" &&
+        selector.length >= 3 ) {
+        return this.pushStack(select.parseHTML(selector));
+    }
+
+    // Handle: #a .b
     if (util.isString(selector)) {
         if (!context) {
             return rootSelect.find(selector);
         }
+    // Handle: dom
     } else if (selector.nodeType) {
         this.context = this[0] = selector;
         this.length = 1;
         return this;
     }
-    this.find(selector, document);
 
 };
 

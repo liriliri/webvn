@@ -2,24 +2,20 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Select</title>
+<title>UI</title>
 <script src="../core/webvn.js"></script>
 <script src="../core/loader.js"></script>
 <script src="../core/init.js"></script>
 </head>
 <body>
-<div class="a">
-	<div class="b"></div>
-</div>
-<div class="a"></div>
 <script>
 webvn.loader.ready(function () {
 
-webvn.use(['select'], function (s, select) {
+webvn.use(['ui'], function (s, ui) {
 
-var a = select('.a');
+console.dir(ui.get('background'));
 
-a.find('.b').html('Come on again');
+console.dir(ui.get('rain').getContext2d());
 
 });
 

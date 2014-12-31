@@ -1,13 +1,13 @@
 // Manager of ui component
 
-webvn.add('ui', ['class', 'selector'], function (s, kclass, $) {
+webvn.add('ui', ['class', 'select'], function (s, kclass, $) {
 
 var ui = {},
 	uiContainer = {}, // Store all the ui components
 	$container = $('body');
 
-// Add ui component
-ui.add = function (name, type) {
+// Create and add ui component
+ui.create = function (name, type) {
 
 	var newUi;
 
@@ -51,6 +51,7 @@ var DivUi = BaseUi.extend({
     constructor: function DivUI() {
 
     	this.callSuper();
+    	this.ele = $('<div>');
 
     }
 });
@@ -60,6 +61,14 @@ var CanvasUi = BaseUi.extend({
 	constructor: function CanvasUi() {
 
 		this.callSuper();
+		this.ele = $('<canvas>');
+		this.ctx = this.ele[0].getContext('2d');
+
+	},
+	// 获取2d绘图对象
+	getContext2d: function () {
+
+		return this.ctx;
 
 	}
 });
@@ -70,6 +79,7 @@ var SvgUi = BaseUi.extend({
 	constructor: function SvgUi() {
 
 		this.callSuper();
+		this.ele = $('<svg>');
 
 	}
 

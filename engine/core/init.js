@@ -17,6 +17,14 @@ loader.script([
     'event',
     'anim',
     'select',
+    'ui'
+]);
+
+// Load Ui
+loader.prefix('/engine/ui/');
+loader.script([
+    'background',
+    'rain'
 ]);
 
 // Load command
