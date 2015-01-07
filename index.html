@@ -80,7 +80,6 @@ index: true
 <div id="index-disqus-container" class="container">
     <div id="disqus_thread"></div>
 </div>
-{% if site.baseurl != '' %}
 <script type="text/javascript">
 var disqus_shortname = 'webvn';
 var disqus_url = '{{ site.disqusurl }}/index.html';
@@ -89,5 +88,4 @@ var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.as
 dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
 (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
-{% endif %}
 </script>
