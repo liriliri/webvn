@@ -13,13 +13,13 @@ ui.create = function (name, type) {
 
 	switch (type) {
 		case 'canvas':
-			newUi = new CanvasUi;
+			newUi = new CanvasUi();
 			break;
 		case 'svg':
-			newUi = new SvgUi;
+			newUi = new SvgUi();
 			break;
 		default:
-			newUi = new DivUi;
+			newUi = new DivUi();
 			break;
 	}
 

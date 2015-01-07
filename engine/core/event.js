@@ -23,7 +23,7 @@ event.add = function (elem, type, handler, selector) {
 	if (!(eventHandle = elem.handle)) {
 		eventHandle = elem.handle = function (e) {
 			return dispatch.apply(elem, arguments);
-		}
+		};
 	}
 
 	var handleObj = {
@@ -64,7 +64,7 @@ function dispatch(event) {
 
 	for (var i = 0, len = handlerQueue.length; i < len; i++) {
 		var matched = handlerQueue[i];
-		var handlers = matched.handlers;
+		handlers = matched.handlers;
 		for (var j = 0, len2 = handlers.length; j < len2; j++) {
 			var handleObj = handlers[j];
 			handleObj.handler.apply(matched.elem, [event]);
@@ -118,4 +118,4 @@ function getHandlerQueue(event, handlers) {
 
 return event;
 
-})
+});

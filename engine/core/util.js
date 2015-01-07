@@ -24,18 +24,18 @@ util.clone = function (obj) {
 // Iterate an object or an array
 util.each = function(obj, iteratee) {
 
-    var len = obj.length;
+    var len = obj.length, i;
 
     /* Check if the object is an array or an obect
      * And do different stuff according to the result
      */
     if (len === +len) {
-      for (var i = 0; i < len; i++) {
+      for (i = 0; i < len; i++) {
         iteratee(obj[i], i, obj);
       }
     } else {
       var keys = util.keys(obj);
-      for (var i = 0, len = keys.length; i < len; i++) {
+      for (i = 0, len = keys.length; i < len; i++) {
         iteratee(obj[keys[i]], keys[i], obj);
       }
     }
@@ -89,7 +89,7 @@ util.isFunc = function (obj) {
 
     return typeof obj == 'function' || false;
 
-}
+};
 
 util.isObj = function (obj) {
 
@@ -156,7 +156,7 @@ function _mix(a, b, p) {
         a[p] = src;
     }
 
-};
+}
 
 return util;
 

@@ -101,7 +101,7 @@ function createObj(proto, constructor) {
 
     return newProto;
 
-};
+}
 
 /* Extend a class that already exist.
  * All it does is just to set the superClass's prototype into px's __proto__.

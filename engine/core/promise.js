@@ -33,7 +33,7 @@ var Promise = kclass.create({
 				onRejected: onRejected
 			});
 
-		}, 0)
+		}, 0);
 
 	},
 	then: function (onFulfilled, onRejected) {

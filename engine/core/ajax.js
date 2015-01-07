@@ -55,7 +55,7 @@ ajax.post = function () {
 
 // So far, I do not consider the older browers
 function getXHR() {
-	return new window.XMLHttpRequest;
+	return new window.XMLHttpRequest();
 }
 
 return ajax;

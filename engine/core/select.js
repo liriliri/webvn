@@ -36,7 +36,7 @@ select.fn.extend = function (obj) {
 
     util.extend(select.fn, obj);
 
-}
+};
 
 // Static methods
 select.extend({
@@ -78,7 +78,7 @@ var access = select.access = function (elems, fn, key, value, chainable, emptyGe
 
     var len = elems.length,
         // Whether key is null
-        bulk = key == null;
+        bulk = key === null;
 
     if (value !== undefined) {
 

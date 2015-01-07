@@ -68,8 +68,8 @@ script.Command = kclass.create({
 // Execute command
 script.execute = function (cmd) {
 
-    var cmd = parse(cmd);
-        command = cmd.command;
+    cmd = parse(cmd);
+    command = cmd.command;
 
     command.execute(cmd.option, cmd.value);
 
@@ -159,7 +159,7 @@ function parse(cmd) {
         s.log.error('The command ' + result.name + " doesn't exists");
         return;
     }
-    for (var i = 0, len = parts.length; i < len; i++) {
+    for (i = 0, len = parts.length; i < len; i++) {
         var part = parts[i];
         if (util.startsWith(part, '-')) {
             var opt = parseOption(part, result.command);
@@ -173,7 +173,7 @@ function parse(cmd) {
 
     return result;
 
-};
+}
 
 /* Change --t=none
  * into {name:'type', value:'none'}

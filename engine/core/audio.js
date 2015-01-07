@@ -21,7 +21,7 @@ audio.get = function (name) {
 
     return audio[name];
 
-}
+};
 
 // Sound class
 var Sound = kclass.create({
@@ -35,7 +35,7 @@ var Sound = kclass.create({
             audio.play();    
             self.loaded = true;
 
-        }
+        };
 
         this.audio = audio;
         this.loaded = false;
@@ -52,7 +52,7 @@ var Sound = kclass.create({
     // Pause
     pause: function () {
 
-        this.audio.pause;
+        this.audio.pause();
 
     },
     // Play

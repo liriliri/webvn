@@ -1,3 +1,8 @@
+var npmTasks = [
+	'grunt-contrib-connect',
+	'grunt-contrib-jshint'
+];
+
 module.exports = function (grunt) {
 
 grunt.initConfig({
@@ -9,9 +14,18 @@ grunt.initConfig({
                 port: 8002
             }
         }
+    },
+    jshint: {
+    	all: [
+    		'Gruntfile.js',
+    		'engine/core/**/*.js'
+    	]
     }
 });
 
-grunt.loadNpmTasks('grunt-contrib-connect');
+// Load npm tasks
+for (var i = 0, len = npmTasks.length; i < len; i++) {
+	grunt.loadNpmTasks(npmTasks[i]);
+}
 
 };
