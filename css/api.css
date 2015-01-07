@@ -1,0 +1,161 @@
+.api {
+    font-size: 16px;
+}
+
+.api a {
+    color: #09c;
+}
+
+.api a:hover {
+    text-decoration: underline;
+}
+
+.api blockquote {
+    padding: 8px 5px;
+    margin: 5px 0;
+    border-left: 2px solid #09c;
+    font-size: 15px;
+    background-color: #f9f9f9;
+}
+
+.api blockquote p {
+    margin: 0;
+}
+
+.api code {
+    display: block;
+    background-color: #202020;
+    padding: 8px;
+    color: #e2e2e5;
+    font-size: 16px;
+}
+
+.api code .com {
+    color: #7e8aa2;
+}
+
+.api code .str, .api code .atv{
+    color: #1abc9c;
+}
+
+.api h3 {
+    padding: 10px 0;
+    color: #09c;
+    font-size: 20px;
+    border-bottom: 1px solid #ccc;
+    font-weight: normal;
+    margin: 10px 0;
+}
+
+.api table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.api table td, .api table th{
+    border: 1px solid #bbb;
+    padding: 6px 10px;
+    vertical-align: middle;
+    text-align: left;
+}
+
+.api table th {
+    background-color: #09c;
+    border-color: #09c;
+    color: #fff;
+}
+
+.api ul {
+    padding-left: 0;
+    list-style: square inside;
+}
+
+.api ul li {
+    border-collapse: collapse;
+    border: 1px solid #f9f9f9;
+    padding: 5px 15px;
+}
+
+.api .function {
+    border: 1px solid #ccc;
+    margin: 10px 0;
+}
+
+.api .function h4 {
+    background: #6f82a4;
+    margin: 0;
+    padding: 6px 10px;
+    color: #fff;
+}
+
+.api .function .detail {
+    padding: 6px 10px;
+}
+
+.api .function .detail p {
+    margin: 5px 0;
+}
+
+.api .overlay {
+    cursor: pointer;
+}
+
+.api .title {
+    font-weight: normal;
+    font-size: 25px;
+    margin: 2px 0;
+    margin-bottom: 8px;
+    padding: 5px 0;
+    border-bottom: 1px solid #ccc;
+    color: #000;
+}
+
+.api .wrapper {
+    padding: 0 15px;
+}
+
+.api #overlay {
+    position: fixed;
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    display: none;
+    cursor: pointer;
+}
+
+.api #overlay .center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+}
+
+.api #overlay .container {
+    left: -400px;
+    top: -175px;
+    width: 770px;
+    height: 330px;
+    position: absolute;
+    background: #fff;
+    overflow-y: auto;
+    padding: 10px 15px;
+}
+
+.api #overlay .container p {
+    margin: 5px 0;
+}
+
+@media screen and (max-width: 800px) {
+    .api #overlay .container {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
+}

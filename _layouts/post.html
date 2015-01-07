@@ -1,0 +1,27 @@
+{% include header.html %}
+{% include nav.html %}
+
+<div id="page" data-feature="prettify"></div>
+
+<div id="post" class="container">
+    <div class="article">
+        <h2 class="title">{{ page.title }}</h2>
+        {{ content }}
+    </div>
+    <div id="post-disqus-container">
+        <div id="disqus_thread"></div>
+    </div>
+</div>
+
+{% include footer.html %}
+
+<script type="text/javascript">
+var disqus_shortname = 'kissylearning';
+var disqus_url = '{{ site.baseurl }}{{ page.url }}';
+(function() {
+var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<script src="{{ site.baseurl }}/js/prettify/prettify.js"></script>

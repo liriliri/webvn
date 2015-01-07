@@ -1,0 +1,93 @@
+---
+layout: default
+index: true
+---
+
+<div id="page" data-feature="homeIconInfo"></div>
+
+<div id="intro">
+    <div class="container">
+        <div class="img">
+            <img src="img/intro.png">
+            <a id="quick-start" href="{{ site.baseurl }}/basic-tutorial/2014/06/12/quick-start/">快速入门>></a>
+        </div>
+        <p>KISSY是一款跨终端、模块化、高性能、使用简单的 JavaScript 框架。除了完备的工具集合如DOM、Event、Ajax、Anim等，它还提供了经典的面向对象、动态加载、性能优化解决方案。作为一款全终端支持的JavaScript框架，KISSY为移动终端做了大量适配和优化，让你的程序在全终端均能流畅运行。</p>
+    </div>
+</div>
+
+<div id="sub-intro" class="container">
+    <div id="features">
+        <div class="feature first">
+            <img src="img/icon1.png">
+            <span>跨终端</span>
+            <p>作为生长于淘宝/天猫的前端 JavaScript 类库，在全网数以万计全终端的硬件设备中运行测试，KISSY 在我国互联网环境下各色终端、浏览器、移动设备中具备一流的健壮性和兼容性。</p>
+        </div>
+        <div class="feature">
+            <img src="img/icon2.png">
+            <span>模块化</span>
+            <p>KISSY 采用高度的模块化设计，通过加载器按需加载。模块高度解耦，并具有极强的扩展性。核心组件完整齐全，接口一致。适合多种应用场景，尤其适用团队协作的大型项目开发。</p>
+        </div>
+        <div class="feature">
+            <img src="img/icon3.png">
+            <span>高性能</span>
+            <p>库的实现的基本要求就是兼容性和性能，KISSY 在核心模块比如 Node、Event、Base 上做了极致的性能优化，特别是选择器性的读写效率，在各种终端里都达到很高的性能体验。KISSY 在面向对象的设计上秉承一贯的轻量级，保持轻巧高速的性能。</p>
+        </div>
+        <div class="feature last">
+            <img src="img/icon4.png">
+            <span>使用简单</span>
+            <p>KISSY 核心功能的设计遵循二八原则，保持最常用 API 的精简子集，自动探测终端主动适配，可以非常方便开始你的项目。清晰的面向对象功能以及轻松的架构性，更增强了 KISSY 的易用性。</p>
+        </div>
+        <div class="intro">
+            <div class="inner">
+                这里是说明文档。
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <h2 class="title">使用 KISSY</h2>
+        <div class="content article">
+            <table>
+                <tr>
+                    <td><span class="font-blue">下载：</span></td>
+                    <td><a href="https://github.com/kissyteam/kissy/archive/v1.4.3.zip">KISSY 1.4.3</a></td>
+                </tr>
+                <tr>
+                    <td><span class="font-blue">CDN：</span></td>
+                    <td>
+                        <code>http://g.tbcdn.cn/kissy/k/1.4.3/seed-min.js</code>
+                        <code>https://s.tbcdn.cn/g/kissy/k/1.4.3/seed-min.js</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="font-blue">NPM：</span></td>
+                    <td><code>npm install kissy</code></td>
+                </tr>
+                <tr>
+                    <td><span class="font-blue">BOWER：</span></td>
+                    <td><code>bower install kissy</code></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="section">
+        <h2 class="title">参与 KISSY</h2>
+        <div class="content article">
+            通过 <a href="https://waffle.io/kissyteam/kissy">任务面板</a> 了解 KISSY 将要做或正在做的事情<br>
+            通过 <a href="https://github.com/kissyteam/kissy/issues">issues</a> 来提供反馈<br>
+            通过 <a href="https://github.com/kissyteam/kissy/blob/master/CONTRIBUTING.md">github</a> 来给 KISSY 贡献代码<br>
+        </div>
+    </div>
+</div>
+
+<div id="index-disqus-container" class="container">
+    <div id="disqus_thread"></div>
+</div>
+<script type="text/javascript">
+var disqus_shortname = 'kissylearning';
+var disqus_url = '{{ site.baseurl }}/index.html';
+(function() {
+var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>

@@ -1,0 +1,11 @@
+{
+  "name": "KissyLearning",
+  "version": "0.1.0",
+  "descripttion": "A site that focuses on kissy learning material",
+  "devDependencies": {
+    "gulp": "~3.8.5",
+    "gulp-minify-css": "~0.3.4",
+    "gulp-uglify": "~0.3.0",
+    "gulp-htmlmin": "~0.1.2"
+  }
+}

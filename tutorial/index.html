@@ -1,0 +1,26 @@
+---
+layout: default
+---
+
+<div id="post-list" class="container">
+    <div class="section">
+        <h2 class="title">基础教程</h2>
+        <ul>
+            {% for post in site.posts %}
+                {% if post.category == 'basic-tutorial' %}
+                    <li><span>{{ post.date | date_to_string }}</span> - <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="section">
+        <h2 class="title">学习笔记</h2>
+        <ul>
+            {% for post in site.posts %}
+                {% if post.category == 'learning-notes' %}
+                    <li><span>{{ post.date | date_to_string }}</span> - <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
