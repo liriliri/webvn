@@ -2,35 +2,24 @@
 
 (function (s, loader) {
 
-// Load core
-loader.prefix('/engine/core/');
-loader.script([
-    'log',
-    'util',
-    'class',
-    'promise',
-    'ajax',
-    'storage',
-    'config',
-    'script',
-    'audio',
-    'event',
-    'anim',
-    'select',
-    'ui'
-]);
+var scripts = {
+    cmd: [
+        'console'
+    ],
+    core: [
+        'log', 'util', 'class',
+        'promise', 'ajax', 'storage',
+        'config', 'script', 'audio',
+        'event', 'anim', 'select',
+        'ui'
+    ],
+    ui: [
+        'background', 'rain'
+    ]
+};
 
-// Load Ui
-loader.prefix('/engine/ui/');
-loader.script([
-    'background',
-    'rain'
-]);
-
-// Load command
-loader.prefix('/engine/cmd/');
-loader.script([
-    'console'
-]);
+loader.prefix('/engine/core/').script(scripts.core);
+loader.prefix('/engine/ui/').script(scripts.ui);
+loader.prefix('/engine/cmd/').script(scripts.cmd);
 
 })(webvn, webvn.loader);

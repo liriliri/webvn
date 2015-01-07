@@ -1,0 +1,26 @@
+{
+  "name": "WebVN",
+  "version": "0.0.1",
+  "homepage": "https://github.com/surunzi/WebVN",
+  "authors": [
+    "'surunzi' <'670785827@qq.com'>"
+  ],
+  "description": "Html5 visual novel engine",
+  "main": "Gruntfile.js",
+  "keywords": [
+    "html5",
+    "galgame"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "qunit": "~1.16.0"
+  }
+}

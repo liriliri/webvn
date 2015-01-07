@@ -1,6 +1,8 @@
 /code_study/
 /doc/
 /node_modules/
+/bower_components/
 /avg_engine/
 /build/
 /asset/
+.bowerrc
