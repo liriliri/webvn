@@ -80,12 +80,14 @@ index: true
 <div id="index-disqus-container" class="container">
     <div id="disqus_thread"></div>
 </div>
+{% if site.baseurl != '' %}
 <script type="text/javascript">
-var disqus_shortname = 'kissylearning';
-var disqus_url = '{{ site.baseurl }}/index.html';
+var disqus_shortname = 'webvn';
+var disqus_url = '{{ site.disqusurl }}/index.html';
 (function() {
 var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
 (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
+{% endif %}
 </script>
