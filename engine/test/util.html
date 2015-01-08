@@ -4,17 +4,27 @@
 <meta charset="utf-8">
 <title>Util Test</title>
 <script src="../core/webvn.js"></script>
-<script src="../core/log.js"></script>
-<script src="../core/util.js"></script>
+<script src="../core/init.js"></script>
 </head>
 <body>
 <script>
-    var s = webvn;
-    s.log(s.util.keys({
-        a: 15,
-        b: 16
-    }));
-    s.log(s.util.createObj());
+webvn.loader.ready(function () {
+
+webvn.use(['util'], function (s, util) {
+
+s.log(s.util.keys({
+    a: 15,
+    b: 16
+}));
+
+s.log(util.clone({
+	a: 15,
+	b: 14
+}));
+
+});
+
+});
 </script>
 </body>
 </html>

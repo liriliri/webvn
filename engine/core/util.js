@@ -1,5 +1,6 @@
 /* Util Module
  * Used for placing some regular functions
+ * Most code is modified from kissy and underscore
  */
 
 webvn.add('util', function (s) {
@@ -7,44 +8,47 @@ webvn.add('util', function (s) {
 var util = {};
 
 // Quick references
-var ObjProto = Object.prototype;
-var toString = ObjProto.toString;
+var ObjProto = Object.prototype,
+    ArrProto = Array.prototype,
+    toString = ObjProto.toString;
 
-// Create a (shallow-cloned) duplicate of an object.
-util.clone = function (obj) {
+// Const
+var CLONE_MARKER = 'webvn_cloned',
+    EMPTY = '';
 
-    if (!util.isObj(obj)) {
-        return obj;
-    }
+// Create a duplicate of an object
+util.clone = function (o) {
 
-    return util.isArray(obj) ? obj.slice() : _.extend({}, obj);
+    var memory = {},
+        ret = cloneInternal(o, memory);
 
-};
+    util.each(memory, function (v) {
+        // Clear marker
+        v = v.input;
+        if (v[CLONE_MARKER]) {
+            try {
+                delete v[CLONE_MARKER];
+            } catch (e) {
+                v[CLONE_MARKER] = undefined;
+            }
+        }
+    });
 
-// Iterate an object or an array
-util.each = function(obj, iteratee) {
+    memory = null;
 
-    var len = obj.length, i;
-
-    /* Check if the object is an array or an obect
-     * And do different stuff according to the result
-     */
-    if (len === +len) {
-      for (i = 0; i < len; i++) {
-        iteratee(obj[i], i, obj);
-      }
-    } else {
-      var keys = util.keys(obj);
-      for (i = 0, len = keys.length; i < len; i++) {
-        iteratee(obj[keys[i]], keys[i], obj);
-      }
-    }
-
-    return obj;
+    return ret;
 
 };
 
-// Simple method of object merging, just like the one in backbone.
+// Check if a string startsWith a specific string
+util.endsWith = function (str, suffix) {
+
+    var ind = str.length - suffix.length;
+    return ind >= 0 && str.indexOf(suffix, ind) === ind;
+
+};
+
+// Simple method of object merging, just like the one in underscore.
 util.extend = function (obj) {
 
     // Not going to do anything if it is not an object
@@ -63,52 +67,49 @@ util.extend = function (obj) {
     return obj;
 };
 
-/* Copy properties of b into a
- * Notice that if they both have the same property,
- * the one inside a is going to be overwriten.
- */
-util.mix = function (a, b) {
+var guid = 0;
+// Generate global id
+util.guid = function (prefix) {
 
-    var keys = util.keys(b), p;
+    return (prefix || EMPTY) + guid++;
 
-    for (var i = 0, len = keys.length; i < len; i++) {
-        p = keys[i];
-        _mix(a, b, p);
+};
+
+// Where an element is in the specific array
+util.inArray = function (elem, arr) {
+
+    return util.indexOf(elem, arr) > -1;
+
+};
+
+util.indexOf = function (elem, arr) {
+
+    return ArrProto.indexOf.call(arr, elem);
+
+};
+
+util.isFunc = function (input) {
+
+    return typeof input === 'function' || false;
+
+};
+
+util.isObj = function (input) {
+
+    var type = typeof input;
+
+    return type === 'function' || type === 'object' && !!input;
+
+};
+
+util.isPlainObj = function (input) {
+
+    for (var key in input) {
     }
 
-    return a;
-};
-
-util.isArray = function (obj) {
-
-    return toString.call(obj) === '[object Array]';
+    return ((key === undefined) || hasOwnProperty(input, key));
 
 };
-
-util.isFunc = function (obj) {
-
-    return typeof obj == 'function' || false;
-
-};
-
-util.isObj = function (obj) {
-
-    var type = typeof obj;
-
-    return type === 'function' || type === 'object' && !!obj;
-
-};
-
-// isType methods
-util.each(['String', 'Number'], function(name) {
-
-    util['is' + name] = function(obj) {
-
-        return toString.call(obj) === '[object ' + name + ']';
-        
-    };
-
-});
 
 // Get keys of an object.
 util.keys = function (o) {
@@ -125,21 +126,125 @@ util.keys = function (o) {
 
 };
 
+/* Copy properties of b into a
+ * Notice that if they both have the same property,
+ * the one inside a is going to be overwriten.
+ */
+util.mix = function (a, b) {
+
+    var keys = util.keys(b), p;
+
+    for (var i = 0, len = keys.length; i < len; i++) {
+        p = keys[i];
+        mix(a, b, p);
+    }
+
+    return a;
+};
+
 // Check if a string startsWith a specific string
-util.startsWith = function (str, text) {
-    return str.indexOf(text) === 0;
+util.startsWith = function (str, prefix) {
+
+    return str.indexOf(prefix) === 0;
+    
 };
 
 // Trim strings
-util.trim = function(text) {
+util.trim = function(str) {
 
-    return text.replace(/^\s+|\s+$/g, '');
+    return str.replace(/^\s+|\s+$/g, '');
 
 };
 
+// Iterate an object or an array
+util.each = function(o, fn) {
+
+    var len = o.length, i;
+
+    /* Check if the object is an array or an obect
+     * And do different stuff according to the result
+     */
+    if (len === +len) {
+      for (i = 0; i < len; i++) {
+        fn(o[i], i, o);
+      }
+    } else {
+      var keys = util.keys(o);
+      for (i = 0, len = keys.length; i < len; i++) {
+        fn(o[keys[i]], keys[i], o);
+      }
+    }
+
+    return o;
+
+};
+
+// isType methods
+util.each(['Array', 'Number', 'String'], function(name) {
+
+    util['is' + name] = function(input) {
+
+        return toString.call(input) === '[object ' + name + ']';
+        
+    };
+
+});
+
 // Private function
 
-function _mix(a, b, p) {
+function cloneInternal(o, memory) {
+
+    var destination = o,
+        isArray = util.isArray(o),
+        isPlainObject = util.isPlainObj(o),
+        k,
+        stamp;
+
+    if (!o) {
+        return destination;
+    }
+
+    if (o[CLONE_MARKER]) {
+        return memory[input[CLONE_MARKER]].destination;
+    } else if (typeof input === 'object') {
+        var Constructor = o.constructor;
+        if (util.inArray(Constructor, [Boolean, String, Number, Date, RegExp])) {
+            destination = new Constructor(o.valueOf());
+        } else if (isArray) {
+            destination = o.concat();
+        } else if (isPlainObject) {
+            destination = {};
+        }
+        o[CLONE_MARKER] = (stamp = util.guid('c'));
+        memory[stamp] = {
+            destination: destination,
+            input: o
+        };
+    }
+
+    if (isArray) {
+        for (var i = 0, len = destination.length; i < len; i++) {
+            destination[i] = cloneInternal(destination[i], memory);
+        }
+    } else if (isPlainObject) {
+        for (k in o) {
+            if (k !== CLONE_MARKER) {
+                destination[k] = cloneInternal(o[k], memory);
+            }
+        }
+    }
+
+    return destination;
+
+}
+
+function hasOwnProperty(o, p) {
+
+    return ObjProto.hasOwnProperty.call(o, p);
+
+}
+
+function mix(a, b, p) {
     
     var target = a[p],
         src = b[p];
