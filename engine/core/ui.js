@@ -13,13 +13,13 @@ ui.create = function (name, type) {
 
 	switch (type) {
 		case 'canvas':
-			newUi = new CanvasUi();
+			newUi = new CanvasUi(name);
 			break;
 		case 'svg':
-			newUi = new SvgUi();
+			newUi = new SvgUi(name);
 			break;
 		default:
-			newUi = new DivUi();
+			newUi = new DivUi(name);
 			break;
 	}
 
@@ -38,31 +38,48 @@ ui.get = function (name) {
 
 // Base class for all ui class
 var BaseUi = kclass.create({
-    constructor: function BaseUI(name) {},
+    constructor: function BaseUI(name) {
+
+    	this.isAppendToContainer = false;
+
+    },
+    show: function () {
+
+    	if (this.isAppendToContainer === false) {
+    		
+    	}
+
+    },
     remove: function () {
 
-
+    	this.ele.remove();
 
     }
 });
 
 // Div element
 var DivUi = BaseUi.extend({
-    constructor: function DivUI() {
+    constructor: function DivUI(name) {
 
     	this.callSuper();
-    	this.ele = $('<div>');
+    	this.$ele = $('<div id="' + name + '">');
+
+    },
+    // Set content
+    setBody: function (html) {
+
+    	this.$ele.html(html);
 
     }
 });
 
 // Canvas element
 var CanvasUi = BaseUi.extend({
-	constructor: function CanvasUi() {
+	constructor: function CanvasUi(name) {
 
 		this.callSuper();
-		this.ele = $('<canvas>');
-		this.ctx = this.ele[0].getContext('2d');
+		this.$ele = $('<canvas id="' + name + '">');
+		this.ctx = this.$ele[0].getContext('2d');
 
 	},
 	// 获取2d绘图对象
@@ -76,10 +93,10 @@ var CanvasUi = BaseUi.extend({
 // Svg element
 var SvgUi = BaseUi.extend({
 
-	constructor: function SvgUi() {
+	constructor: function SvgUi(name) {
 
 		this.callSuper();
-		this.ele = $('<svg>');
+		this.$ele = $('<svg id="' + name + '">');
 
 	}
 
