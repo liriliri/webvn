@@ -3,23 +3,42 @@
 <head>
 <meta charset="utf-8">
 <title>Select</title>
-<script src="../core/webvn.js"></script>
-<script src="../core/loader.js"></script>
-<script src="../core/init.js"></script>
+<script src="/engine/core/webvn.js"></script>
+<script src="/engine/core/init.js"></script>
+<style>
+.a {
+	width: 5px;
+}
+</style>
 </head>
 <body>
-<div class="a">
-	<div class="b"></div>
+<div class="a ff">
+	<div class="b">fdsfsdf</div>
 </div>
 <div class="a"></div>
 <script>
 webvn.loader.ready(function () {
 
-webvn.use(['select'], function (s, select) {
+webvn.use(['select', 'log'], function (s, select, log) {
 
 var a = select('.a');
 
-a.find('.b').html('Come on again');
+a.html(function () {
+	return 'Hello World!';
+});
+
+console.log(a.hasClass("ff"));
+
+a.addClass('bb ff');
+
+a.text('Fuck this world');
+
+a.css({
+	'width': 100,
+	'height': 100,
+	'background': '#08c',
+	'color': '#fff'
+});
 
 });
 

@@ -2,6 +2,16 @@
 
 webvn.add('select', ['util'], function (s, util) {
 
+var cssNumber = {
+        'column-count': 1, 
+        'columns': 1, 
+        'font-weight': 1, 
+        'line-height': 1,
+        'opacity': 1, 
+        'z-index': 1, 
+        'zoom': 1 
+    };
+
 var select = function (selector, context) {
 
     return new select.fn.init(selector, context);
@@ -73,44 +83,6 @@ select.extend({
     }
 });
 
-// Multifunctional method to get and set values of a collection
-var access = select.access = function (elems, fn, key, value, chainable, emptyGet, raw) {
-
-    var len = elems.length,
-        // Whether key is null
-        bulk = key === null;
-
-    if (value !== undefined) {
-
-        chainable = true;
-
-        if (!util.isFunc(value)) {
-            raw = true;
-        }
-
-        if (bulk) {
-            if (raw) {
-                fn.call(elems, value);
-                fn = null;
-            }
-        }
-
-        if (fn) {
-            for (var i = 0; i < len; i++) {
-                fn(elems[i], key, value);
-            }
-        }
-
-    }
-
-    return chainable ?
-        elems :
-        bulk ? 
-            fn.call(elems) :
-            len ? fn (elems[0], key) : emptyGet;
-
-};
-
 // Judge the type of selector and do different initialization
 select.fn.init = function (selector, context) {
 
@@ -163,38 +135,250 @@ select.fn.find = function (selector, context) {
 // Initialize central reference
 rootSelect = select(document);
 
-// Below are functions like css, html, attr, etc
+/* Below are functions like css, html, attr, etc
+ * At first I'd like to copy some code from jQuery
+ * But it's really not that easy to understand every pieces of its code
+ * Now I copy code from zepto, which is much much easier to do
+ */
 select.fn.extend({
+    addClass: function (name) {
 
-    // Get or set html
-    html: function (value) {
+        if (!name) {
+            return this;
+        }
 
-        return access(this, function (value) {
+        return this.each(function (idx) {
 
-            var elem = this[0] || {},
-                len = this.length;
-
-            // Get value, only the first element
-            if (value === undefined && elem.nodeType === 1) {
-                return elem.innerHTML;
+            if (!('className' in this)) {
+                return;
             }
 
-            if (util.isString(value)) {
-                try {
-                    for (var i = 0; i < len; i++) {
-                        elem = this[i] || {};
-                        if (elem.nodeType === 1) {
-                            elem.innerHTML = value;
-                        }
+            var classList = [],
+                cls = this.className,
+                newName = funcArg(this, name, idx, cls);
+
+            newName.split(/\s+/g).forEach(function (kclass) {
+
+                if (!select(this).hasClass(kclass)) {
+                    classList.push(kclass);
+                }
+
+            }, this);
+
+            if (classList.length) {
+                this.className = cls + (cls ? ' ' : '') + classList.join('');
+            }
+
+        });
+
+    },
+    attr: function (name, value) {
+
+        var ret;
+
+        return (util.isString(name) && !(1 in arguments)) ?
+            // Get attributes
+            (!this.length || this[0].nodeType !== 1 ? undefined :
+                (!(ret = this[0].getAttribute(name)) && name in this[0]) ? this[0][name] : ret
+            ) :
+            // Set attributes
+            this.each(function (idx) {
+
+                if (this.nodeType !== 1) {
+                    return;
+                }
+
+                if (util.isObj(name)) {
+                    for (var key in name) {
+                        setAttribute(this, key, name[key]);
                     }
-                } catch (e) {}
+                } else {
+                    setAttribute(this, name, funcArg(this, value, idx, this.getAttribute(name)));
+                }
+
+            });
+
+    },
+    // Get or set css value
+    css: function (property, value) {
+
+        // Get style value
+        if (arguments.length < 2) {
+            var computedStyle, element = this[0];
+            if (!element) {
+                return;
+            }
+            computedStyle = getComputedStyle(element, '');
+            if (util.isString(property)) {
+                return element.style[camelize(property)] || computedStyle.getPropertyValue(property);
+            } else if (util.isArray(property)) {
+                var props = {};
+                util.each(property, function (prop) {
+
+                    props[prop] = (element.style[camelize(prop)] || computedStyle.getPropertyValue(prop));
+
+                });
+                return props;
+            }
+        }
+
+        // Set style value
+        var css = '';
+        if (util.isString(property)) {
+            if (!value && value !== 0) {
+                this.each(function () {
+
+                    this.style.removeProperty(dasherize(property));
+
+                });
+            } else {
+                css = dasherize(property) + ":" + maybeAddPx(property, value)
+            }
+        } else {
+            for (var key in property) {
+                if (!property[key] && property[key] !== 0) {
+                    this.each(function(){ 
+
+                        this.style.removeProperty(dasherize(key));
+
+                    });
+                } else {
+                    css += dasherize(key) + ':' + maybeAddPx(key, property[key]) + ';';
+                }
+            }
+        }
+
+        return this.each(function(){ this.style.cssText += ';' + css });
+        
+    },
+    // Iterate elements
+    each: function (fn) {
+
+        util.each(this, function (el, idx) {
+
+            return fn.call(el, idx, el) !== false;
+
+        });
+
+        return this;
+
+    },
+    // Set innerHtml to empty
+    empty: function () {
+
+        return this.each(function () {
+
+            this.innerHTML = '';
+
+        });
+
+    },
+    first: function () {
+
+        return select(this[0]);
+
+    },
+    hasClass: function (name) {
+
+        if (!name) {
+            return;
+        }
+
+        return [].some.call(this, function (el) {
+
+            return this.test(el.className);
+
+        }, new RegExp('(^|\\s)' + name + '(\\s|$)'));
+
+    },
+    // Get or set html
+    html: function (html) {
+
+        return 0 in arguments ?
+            // Set html
+            this.each(function (idx) {
+
+                var originHtml = this.innerHTML;
+                this.innerHTML = funcArg(this, html, idx, originHtml);
+
+            }) :
+            // Get html
+            (0 in this ? this[0].innerHTML : null);
+
+    },
+    last: function () {
+
+        return select(this[this.length - 1]);
+
+    },
+    // Remove all the dom nodes
+    remove: function () {
+
+        return this.each(function () {
+
+            if (this.parentNode != null) {
+                this.parentNode.removeChild(this);
             }
 
-        }, null, value);
+        });
+
+    },
+    text: function (text) {
+
+        return 0 in arguments ?
+            // Set text
+            this.each(function (idx) {
+
+                var newText = funcArg(this, text, idx, this.textContent);
+                this.textContent = newText == null ? '' : '' + newText;
+
+            }) :
+            // Get text
+            (0 in this ? this[0].textContent : null);
 
     }
-
 });
+
+// Private function
+
+function camelize (str) {
+
+    return str.replace(/-+(.)?/g, function(match, chr){
+
+        return chr ? chr.toUpperCase() : '' 
+
+    });
+
+}
+
+function dasherize(str) {
+
+    return str.replace(/::/g, '/')
+           .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
+           .replace(/([a-z\d])([A-Z])/g, '$1_$2')
+           .replace(/_/g, '-')
+           .toLowerCase();
+
+}
+
+// Handle function argument
+function funcArg(context, arg, idx, payload) {
+
+    return util.isFunc(arg) ? arg.call(context, idx, payload) : arg;
+
+}
+
+function maybeAddPx(name, value) {
+
+    return (typeof value == "number" && !cssNumber[dasherize(name)]) ? value + "px" : value;
+
+}
+
+function setAttribute(node, name, value) {
+
+    value == null ? node.removeAttribute(name) : node.setAttribute(name, value);
+
+}
 
 return select;
 
