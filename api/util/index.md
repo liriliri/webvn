@@ -301,7 +301,7 @@ return(Array)
 
 <div class="function" markdown="1">
 
-#### map(o, fn)：创建一个新数组, 数组结果是在对每个原数组或对象元素调用指定函数返回值
+#### map(o, fn)：创建一个新数组, 数组结果是在对每个原数组或对象元素调用指定函数的返回值
 
 <div class="detail" markdown="1">
 
