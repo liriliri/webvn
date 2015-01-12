@@ -301,6 +301,32 @@ return(Array)
 
 <div class="function" markdown="1">
 
+#### map(o, fn)：创建一个新数组, 数组结果是在对每个原数组或对象元素调用指定函数的返回值
+
+<div class="detail" markdown="1">
+
+o(Array\|Object)
+
+需要遍历的数组或对象
+
+------------------------------
+
+fn(Function)
+
+能够根据原数组当前元素返回新数组元素的函数
+
+------------------------------
+
+return(Array)
+
+返回符合根据指定函数调用得到的新数组
+
+</div>
+
+</div>
+
+<div class="function" markdown="1">
+
 #### startsWith(str, prefix)：判断str是否以prefix开头
 
 <div class="detail" markdown="1">
