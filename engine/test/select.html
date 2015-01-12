@@ -21,6 +21,8 @@ webvn.loader.ready(function () {
 
 webvn.use(['select', 'log'], function (s, select, log) {
 
+var b = select('<div>');
+
 var a = select('.a');
 
 a.html(function () {
@@ -39,6 +41,10 @@ a.css({
 	'background': '#08c',
 	'color': '#fff'
 });
+
+console.log(select.isSelect(a));
+
+a.append(document.createElement('div'));
 
 });
 

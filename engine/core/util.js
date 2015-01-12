@@ -190,6 +190,34 @@ util.each(['Array', 'Number', 'String'], function(name) {
 
 });
 
+util.map = function (o, fn) {
+
+    var len = o.length, i, value, values = [];
+
+    /* Check if the object is an array or an obect
+     * And do different stuff according to the result
+     */
+    if (len === +len) {
+        for (i = 0; i < len; i++) {
+            value = fn(o[i], i, o);
+            if (value !== null) {
+                values.push(value);
+            }
+        }
+    } else {
+        var keys = util.keys(o);
+        for (i = 0, len = keys.length; i < len; i++) {
+            value = fn(o[keys[i]], keys[i], o);
+            if (value != null) {
+                values.push(value);
+            }
+        }
+    }
+
+    return values;
+
+}
+
 // Private function
 
 function cloneInternal(o, memory) {

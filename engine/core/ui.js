@@ -40,19 +40,23 @@ ui.get = function (name) {
 var BaseUi = kclass.create({
     constructor: function BaseUI(name) {
 
-    	this.isAppendToContainer = false;
-
     },
-    show: function () {
+    init: function () {
 
-    	if (this.isAppendToContainer === false) {
-    		
-    	}
+    	this.$ele.hide();
+    	$container.append(this.$ele);
 
     },
     remove: function () {
 
     	this.ele.remove();
+
+    },
+    show: function () {
+
+    	this.$ele.show();
+
+    	return this;
 
     }
 });
@@ -63,12 +67,15 @@ var DivUi = BaseUi.extend({
 
     	this.callSuper();
     	this.$ele = $('<div id="' + name + '">');
+    	this.init();
 
     },
     // Set content
     setBody: function (html) {
 
     	this.$ele.html(html);
+
+    	return this;
 
     }
 });

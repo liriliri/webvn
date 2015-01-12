@@ -10,7 +10,11 @@ var cssNumber = {
         'opacity': 1, 
         'z-index': 1, 
         'zoom': 1 
-    };
+    },
+    adjacencyOperators = [ 'after', 'prepend', 'before', 'append' ],
+    elementDisplay = {};
+
+var slice = [].slice;
 
 var select = function (selector, context) {
 
@@ -50,6 +54,28 @@ select.fn.extend = function (obj) {
 
 // Static methods
 select.extend({
+    contains: document.documentElement.contains ?
+        function(parent, node) {
+
+            return parent !== node && parent.contains(node);
+
+        } :
+        function(parent, node) {
+
+            while (node && (node = node.parentNode)) {
+                if (node === parent) {
+                    return true;
+                }
+            }
+
+            return false;
+
+        },
+    isSelect: function (o) {
+
+        return o instanceof select;
+
+    },
     // Merge an array
     merge: function (first, second) {
 
@@ -278,6 +304,11 @@ select.fn.extend({
         return select(this[0]);
 
     },
+    get: function (idx) {
+
+        return idx === undefined ? slice.call(this) : this[idx];
+
+    },
     hasClass: function (name) {
 
         if (!name) {
@@ -289,6 +320,11 @@ select.fn.extend({
             return this.test(el.className);
 
         }, new RegExp('(^|\\s)' + name + '(\\s|$)'));
+
+    },
+    hide: function () {
+
+        this.css('display', 'none');
 
     },
     // Get or set html
@@ -323,6 +359,17 @@ select.fn.extend({
         });
 
     },
+    show: function () {
+
+        return this.each(function(){
+
+            if (getComputedStyle(this, '').getPropertyValue("display") == "none") {
+                this.style.display = defaultDisplay(this.nodeName);
+            }
+
+        });
+
+    },
     text: function (text) {
 
         return 0 in arguments ?
@@ -336,7 +383,101 @@ select.fn.extend({
             // Get text
             (0 in this ? this[0].textContent : null);
 
+    },
+    toArray: function () {
+
+        return this.get();
+
     }
+});
+
+/* Generate 'after', 'prepend', 'before', 'append'
+ * 'insertAfter', 'insertBefore', 'appendTo' and 'prependTo' methods
+ */
+adjacencyOperators.forEach(function (operator, idx) {
+
+    var inside = idx % 2; // prepend, append
+
+    select.fn[operator] = function () {
+
+        // Arguments can be nodes, arrays of nodes and Html strings
+        var nodeArray = util.map(arguments, function (arg) {
+
+            return util.isString(arg) ? select.parseHTML(arg) : arg; 
+
+        });
+
+        var nodes = [];
+        for (var i = 0, len = nodeArray.length; i < len; i++) {
+            if (util.isArray(nodeArray[i])) {
+                // Node array
+                nodes = nodes.concat(nodeArray[i]);
+            } else if (select.isSelect(nodeArray[i])) {
+                // Select
+                nodes = nodes.concat(nodeArray[i].toArray());
+            } else {
+                // Node
+                nodes.push(nodeArray[i]);
+            }
+        }
+
+        var parent, copyByClone = this.length > 1;
+
+        if (nodes.length < 1) {
+            return this;
+        }
+
+        return this.each(function (_, target) {
+
+            parent = inside ? target : target.parentNode;
+
+            switch (idx) {
+                case 0:
+                    target = target.nextSibling;
+                    break;
+                case 1:
+                    target = target.firstChild;
+                    break;
+                case 2:
+                    target = target;
+                    break;
+                default:
+                    target = null;
+                    break;
+            }
+
+            var parentInDocument = select.contains(document.documentElement, parent);
+
+            nodes.forEach(function(node){
+
+                if (copyByClone) {
+                    node = node.cloneNode(true);
+                } else if (!parent) {
+                    return select(node).remove();
+                }
+
+                parent.insertBefore(node, target);
+
+                if (parentInDocument) traverseNode(node, function(el){
+                    if (el.nodeName != null && el.nodeName.toUpperCase() === 'SCRIPT' &&
+                        (!el.type || el.type === 'text/javascript') && !el.src) {
+                        window['eval'].call(window, el.innerHTML);
+                    }
+                });
+
+            });
+
+        });
+
+    }
+
+    select.fn[inside ? operator + 'To' : 'insert' + (idx ? 'Before' : 'After')] = function (html) {
+
+        select(html)[operator](this);
+        return this;
+
+    }
+
 });
 
 // Private function
@@ -361,6 +502,24 @@ function dasherize(str) {
 
 }
 
+function defaultDisplay(nodeName) {
+
+    var element, display;
+
+    if (!elementDisplay[nodeName]) {
+        element = document.createElement(nodeName);
+        document.body.appendChild(element);
+        display = getComputedStyle(element, '').getPropertyValue("display");
+        element.parentNode.removeChild(element);
+        display == "none" && (display = "block");
+        elementDisplay[nodeName] = display;
+    }
+
+    return elementDisplay[nodeName];
+
+}
+
+
 // Handle function argument
 function funcArg(context, arg, idx, payload) {
 
@@ -377,6 +536,15 @@ function maybeAddPx(name, value) {
 function setAttribute(node, name, value) {
 
     value == null ? node.removeAttribute(name) : node.setAttribute(name, value);
+
+}
+
+function traverseNode(node, fn) {
+
+    fn(node);
+    for (var i = 0, len = node.childNodes.length; i < len; i++) {
+        traverseNode(node.childNodes[i], fn);
+    }
 
 }
 
