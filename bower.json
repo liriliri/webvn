@@ -22,5 +22,8 @@
   ],
   "devDependencies": {
     "qunit": "~1.16.0"
+  },
+  "dependencies": {
+    "gsap": "~1.15.0"
   }
 }

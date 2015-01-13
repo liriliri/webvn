@@ -13,12 +13,16 @@ var scripts = {
         'event', 'anim', 'select',
         'ui'
     ],
+    lib: [
+    	'TweenMax'
+    ],
     ui: [
         'background', 'rain'
     ]
 };
 
 loader.prefix('/engine/core/').script(scripts.core);
+loader.prefix('/engine/lib/').script(scripts.lib);
 loader.prefix('/engine/ui/').script(scripts.ui);
 loader.prefix('/engine/cmd/').script(scripts.cmd);
 
