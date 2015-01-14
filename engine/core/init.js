@@ -10,8 +10,7 @@ var scripts = {
         'log', 'util', 'class',
         'promise', 'ajax', 'storage',
         'config', 'script', 'audio',
-        'event', 'anim', 'select',
-        'ui'
+        'event', 'select', 'ui'
     ],
     lib: [
     	'TweenMax'
