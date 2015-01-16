@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Template</title>
+<title>Test</title>
 <script src="../core/webvn.js"></script>
 <script src="../core/init.js"></script>
 </head>
@@ -10,10 +10,9 @@
 <script>
 webvn.loader.ready(function () {
 
-webvn.use(['template'], function (s, template) {
+webvn.use(function (s) {
 
-var t = template('<div><%$out+=param;%></div>');
-console.log(t({param:'fdsf'}));
+// Write your testing here
 
 });
 
