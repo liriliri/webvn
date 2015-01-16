@@ -2,6 +2,12 @@
 
 (function (s, loader) {
 
+var css = {
+    ui: [
+        'background'
+    ]
+};
+
 var scripts = {
     cmd: [
         'console'
@@ -17,8 +23,13 @@ var scripts = {
     ],
     ui: [
         'background', 'rain'
+    ],
+    css: [
+        'background'
     ]
 };
+
+loader.prefix('/engine/ui/').css(css.ui);
 
 loader.prefix('/engine/core/').script(scripts.core);
 loader.prefix('/engine/lib/').script(scripts.lib);

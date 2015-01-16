@@ -48,6 +48,19 @@ loader.ready = function (cb) {
 
 };
 
+// Load css
+loader.css = function (css) {
+
+    if (!isArray(css)) {
+        css = [css];
+    }
+
+    for (var i = 0, len = css.length; i < len; i++) {
+        loadCss(prefix + css[i] + '.css');
+    }
+
+}
+
 /* Load scripts
  * Param script can be either a string or an array.
  */
@@ -76,6 +89,19 @@ loader.script = function (scripts) {
 function isArray(arr) {
 
     return Object.prototype.toString.call(arr) == '[object Array]';
+
+}
+
+// Load Css file
+function loadCss(href) {
+
+    var link = document.createElement('link');
+
+    link.setAttribute('rel', 'stylesheet');
+    link.setAttribute('type', 'text/css');
+    link.setAttribute('href', href);
+
+    head.appendChild(link);
 
 }
 
