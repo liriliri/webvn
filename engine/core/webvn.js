@@ -228,12 +228,13 @@ if (dataMain) {
         var config = window.config,
             loadFiles = config.loadFiles,
             css = loadFiles.css,
-            js = loadFiles.js;
-        loader.prefix('/engine/ui/').css(css.ui);
-        loader.prefix('/engine/core/').script(js.core);
-        loader.prefix('/engine/lib/').script(js.lib);
-        loader.prefix('/engine/ui/').script(js.ui);
-        loader.prefix('/engine/cmd/').script(js.cmd);
+            js = loadFiles.js,
+            prefix = loadFiles.prefix;
+        loader.prefix(prefix.css.ui).css(css.ui);
+        loader.prefix(prefix.js.core).script(js.core);
+        loader.prefix(prefix.js.lib).script(js.lib);
+        loader.prefix(prefix.js.ui).script(js.ui);
+        loader.prefix(prefix.js.cmd).script(js.cmd);
     });
 } else {
     console.error("Failed to load configuration");

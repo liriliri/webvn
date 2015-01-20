@@ -44,6 +44,17 @@ config.loadFiles = {
 		cmd: [
 	        'console'
 	    ]
+	},
+	prefix: {
+		css: {
+			ui: '/engine/ui/'
+		},
+		js: {
+			core: '/engine/core/',
+			lib: '/engine/lib/',
+			ui: '/engine/ui/',
+			cmd: '/engine/cmd/'
+		}
 	}
 };
 
