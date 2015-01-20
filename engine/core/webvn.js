@@ -204,3 +204,39 @@ function getModules(requires) {
 }
 
 })(webvn);
+
+// Look for config file and load some scripts
+(function (s) {
+
+var loader = s.loader,
+    script, dataMain,
+    scripts = document.getElementsByTagName('script');
+
+for (i = scripts.length - 1; i > -1; i--) {
+    if (scripts[i]) {
+        script = scripts[i];
+        dataMain = script.getAttribute('data-config');
+        if (dataMain) {
+            break;
+        }
+    }
+}
+
+if (dataMain) {
+    loader.script(dataMain);
+    loader.ready(function () {
+        var config = window.config,
+            loadFiles = config.loadFiles,
+            css = loadFiles.css,
+            js = loadFiles.js;
+        loader.prefix('/engine/ui/').css(css.ui);
+        loader.prefix('/engine/core/').script(js.core);
+        loader.prefix('/engine/lib/').script(js.lib);
+        loader.prefix('/engine/ui/').script(js.ui);
+        loader.prefix('/engine/cmd/').script(js.cmd);
+    });
+} else {
+    console.error("Failed to load configuration");
+}
+
+})(webvn)

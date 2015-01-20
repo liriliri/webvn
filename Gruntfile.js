@@ -3,6 +3,9 @@ var npmTasks = [
 	'grunt-contrib-jshint'
 ];
 
+// Load configuration file
+var config = require('./config');
+
 module.exports = function (grunt) {
 
 grunt.initConfig({
@@ -27,5 +30,7 @@ grunt.initConfig({
 for (var i = 0, len = npmTasks.length; i < len; i++) {
 	grunt.loadNpmTasks(npmTasks[i]);
 }
+
+grunt.registerTask('build', []);
 
 };
