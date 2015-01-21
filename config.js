@@ -58,6 +58,11 @@ config.loadFiles = {
 	}
 };
 
+// Ui module config
+config.ui = {
+	container: '#webvn'
+};
+
 // Exports config to be read by nodejs program
 if (typeof module === "object" && typeof module.exports === "object") {
 	module.exports = config;

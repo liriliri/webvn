@@ -4,7 +4,8 @@
 
 webvn.add('storage', ['class', 'util'], function (s, kclass, util) {
 
-var storage = {};
+var storage = {},
+    cache = {};
 
 // LocalStorage Session
 
@@ -17,7 +18,7 @@ if (window.localStorage) {
 }
 
 // LocalStore class
-storage.LocalStore = kclass.create({
+var LocalStore = kclass.create({
     /* name: the name of the store
      * when the instance is created, 
      * it's going to load content according to the name you sepecify.
@@ -41,6 +42,12 @@ storage.LocalStore = kclass.create({
         }
 
     },
+    // Return all the value
+    getAll: function () {
+
+        return this.value;
+
+    },
     // Save the value to localStore
     save: function () {
 
@@ -56,6 +63,23 @@ storage.LocalStore = kclass.create({
 
     }
 });
+
+// Create and add 
+storage.create = function (name, type) {
+
+    var newStore;
+
+    switch (type) {
+        case 'localStorage':
+            newStore = new LocalStore(name);
+            break;
+    }
+
+    cache[name] = newStore;
+
+    return newStore;
+
+};
 
 /* Wrapper of localStorage.setItem
  * And auto json stringify if it is a object

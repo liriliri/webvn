@@ -1,9 +1,19 @@
 // Manager of ui component
 
-webvn.add('ui', ['class', 'select'], function (s, kclass, $) {
+webvn.add('ui', ['class', 'select', 'config'], 
+	function (s, kclass, $, config) {
+
+// Default config
+var defaults = {
+	container: 'body'
+};
+
+var config = config.create('core-ui');
+config.init(defaults);
+console.log(config.get('container'));
 
 var ui = {},
-	uiContainer = {}, // Store all the ui components
+	cache = {}, // Store all the ui components
 	$container = $('body');
 
 // Create and add ui component
@@ -23,7 +33,7 @@ ui.create = function (name, type) {
 			break;
 	}
 
-	uiContainer[name] = newUi;
+	cache[name] = newUi;
 
 	return newUi;
 
@@ -32,7 +42,7 @@ ui.create = function (name, type) {
 // Get ui component for manipulation
 ui.get = function (name) {
 
-	return uiContainer[name];
+	return cache[name];
 
 };
 

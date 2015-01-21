@@ -3,8 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Util Test</title>
-<script src="../core/webvn.js"></script>
-<script src="../core/init.js"></script>
+<script src="/engine/core/webvn.js" data-config="/config"></script>
 </head>
 <body>
 <script>
@@ -20,6 +19,13 @@ s.log(s.util.keys({
 s.log(util.clone({
 	a: 15,
 	b: 14
+}));
+
+s.log(util.mix({
+	a: 'a',
+	b: 'b'
+}, {
+	c: 'c'
 }));
 
 });

@@ -28,7 +28,9 @@ var head = document.getElementsByTagName('head')[0],
 // Container of all scripts
     scriptList = [],
 // Function called when all scripts are loaded
-    onReady = null;
+    onReady = {},
+// Callback when all scripts loaded
+    allReady = null,
 // Whether is loading script
     isScriptLoading = false;
 
@@ -42,11 +44,20 @@ loader.prefix = function (pre) {
 };
 
 // Trigger when all scripts are loaded
-loader.ready = function (cb) {
+loader.ready = function (fn) {
 
-    onReady = cb;
+    allReady = fn;
 
 };
+
+loader.readyTrigger = function () {
+
+    if (allReady) {
+        allReady();
+        allReady = null;
+    }
+
+}
 
 // Load css
 loader.css = function (css) {
@@ -58,6 +69,8 @@ loader.css = function (css) {
     for (var i = 0, len = css.length; i < len; i++) {
         loadCss(prefix + css[i] + '.css');
     }
+
+    return loader;
 
 }
 
@@ -81,6 +94,15 @@ loader.script = function (scripts) {
     }
 
     return loader;
+
+};
+
+loader.wait = function (fn) {
+
+    var last = scriptList[scriptList.length - 1];
+    if (last) {
+        onReady[last] = fn;
+    }
 
 };
 
@@ -109,17 +131,15 @@ function loadCss(href) {
 function loadScript() {
 
     if (scriptList.length === 0) {
-        if (onReady) {
-            onReady();
-            onReady = null;
-        }
         return;
     }
 
     isScriptLoading = true;
 
-    var script = document.createElement('script');
-    script.src = scriptList.shift();
+    var script = document.createElement('script'),
+        scriptName;
+
+    script.src = scriptName = scriptList[0];
     script.onload = function () {
 
         isScriptLoading = false;
@@ -129,7 +149,15 @@ function loadScript() {
             script.readyState != "loaded") {
             return;
         }
+
+        scriptList.shift();
+
         loadScript();
+
+        if (onReady[scriptName]) {
+            onReady[scriptName]();
+            onReady[scriptName] = null;
+        }
 
     };
 
@@ -223,18 +251,21 @@ for (i = scripts.length - 1; i > -1; i--) {
 }
 
 if (dataMain) {
-    loader.script(dataMain);
-    loader.ready(function () {
+    loader.script(dataMain).
+        wait(function () {
         var config = window.config,
             loadFiles = config.loadFiles,
             css = loadFiles.css,
             js = loadFiles.js,
             prefix = loadFiles.prefix;
-        loader.prefix(prefix.css.ui).css(css.ui);
-        loader.prefix(prefix.js.core).script(js.core);
-        loader.prefix(prefix.js.lib).script(js.lib);
-        loader.prefix(prefix.js.ui).script(js.ui);
-        loader.prefix(prefix.js.cmd).script(js.cmd);
+        loader.prefix(prefix.css.ui).css(css.ui).
+            prefix(prefix.js.core).script(js.core).
+            prefix(prefix.js.lib).script(js.lib).
+            prefix(prefix.js.ui).script(js.ui).
+            prefix(prefix.js.cmd).script(js.cmd).wait(function () {
+                loader.readyTrigger();
+            });
+
     });
 } else {
     console.error("Failed to load configuration");

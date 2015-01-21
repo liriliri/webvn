@@ -13,7 +13,8 @@ var ObjProto = Object.prototype,
     toString = ObjProto.toString;
 
 // Const
-var CLONE_MARKER = 'webvn_cloned',
+var CLONE_MARKER = 'webvn_clone',
+    MIX_MARKER = 'webvn_mix'
     EMPTY = '';
 
 // Create a duplicate of an object
@@ -126,20 +127,66 @@ util.keys = function (o) {
 
 };
 
+// Transform a object into an array
+util.makeArray = function (o) {
+
+    if (o == null) {
+        return [];
+    }
+    if (util.isArray(o)) {
+        return o;
+    }
+    var lengthType = typeof o.length,
+        oType = typeof o;
+    if (lengthType !== 'number' ||
+        o.alert ||
+        oType === 'string' ||
+        (oType === 'function' && !( 'item' in o && lengthType === 'number'))) {
+        return [o];
+    }
+    var ret = [];
+    for (var i = 0, l = o.length; i < l; i++) {
+        ret[i] = o[i];
+    }
+
+    return ret;
+
+};
+
+/* Merge multiple object into a new object
+ * The latter one will overwrite the former if they have the same key
+ * Usually used to merge options
+ */
+util.merge = function () {
+
+    var varArgs = util.makeArray(arguments),
+        o = {};
+
+    for (var i = 0, len = varArgs.length; i < len; i++) {
+        util.mix(o, varArgs[i]);
+    }
+
+    return o;
+
+};
+
 /* Copy properties of b into a
  * Notice that if they both have the same property,
  * the one inside a is going to be overwriten.
  */
 util.mix = function (a, b) {
 
-    var keys = util.keys(b), p;
+    var cache = [],
+        c,
+        i = 0;
 
-    for (var i = 0, len = keys.length; i < len; i++) {
-        p = keys[i];
-        mix(a, b, p);
+    mixInternal(a, b, cache);
+    while ((c = cache[i++])) {
+        delete c[MIX_MARKER];
     }
 
     return a;
+
 };
 
 // Check if a string startsWith a specific string
@@ -272,23 +319,55 @@ function hasOwnProperty(o, p) {
 
 }
 
-function mix(a, b, p) {
+function mixInternal(a, b, cache) {
     
-    var target = a[p],
-        src = b[p];
+    if (!b || !a) {
+        return a;
+    }
+    var i, p, keys, len;
 
-    /* If it's an array or object,
-     * we have to call the function recursively.
-     */
-    if (util.isArray(src) || util.isObj(src)) {
-        var clone = target && (util.isArray(target) || util.isObj(target)) ?
-            target:(util.isArray(src) ? [] : {});
-        a[p] = clone;
-        util.mix(clone, src);
-    } else {
-        a[p] = src;
+    b[MIX_MARKER] = a;
+
+    cache.push(b);
+
+    // mix all properties
+    keys = util.keys(b);
+    len = keys.length;
+    for (i = 0; i < len; i++) {
+        p = keys[i];
+        if (p !== MIX_MARKER) {
+            _mix(p, a, b, cache);
+        }
     }
 
+    return r;
+
+}
+
+ function _mix(p, a, b, cache) {
+    var target = a[p],
+        src = b[p];
+    // prevent never-end loop
+    if (target === src) {
+        if (target === undefined) {
+            a[p] = target;
+        }
+        return;
+    }
+
+    if (src && (util.isArray(src) || util.isPlainObj(src))) {
+        if (src[MIX_MARKER]) {
+            a[p] = src[MIX_MARKER];
+        } else {
+            var clone = target && (util.isArray(target) || util.isPlainObject(target)) ?
+                target :
+                (util.isArray(src) ? [] : {});
+            a[p] = clone;
+            mixInternal(clone, src, cache);
+        }
+    } else if (src !== undefined && !(p in r)) {
+        a[p] = src;
+    }
 }
 
 return util;
