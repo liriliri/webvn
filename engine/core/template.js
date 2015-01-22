@@ -18,7 +18,7 @@ var replaces = ["$out='';", '$out+=', ';', '$out'],
 
 var template = function (source, options) {
 
-	options = util.extend({}, defaults, options);
+	options = util.merge(defaults, options);
 
 	var openTag = options.openTag,
 		closeTag = options.closeTag;

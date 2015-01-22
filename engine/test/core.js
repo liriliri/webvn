@@ -2,20 +2,30 @@
 
 webvn.loader.ready(function() {
 
-webvn.use(['util'], function(s, util) {
+webvn.use(['util', 'template'], function(s, util, template) {
+
+QUnit.test('Template Module', function (assert) {
+
+	var tpl1 = template('<div><%$out+=data;%></div>');
+	assert.equal(tpl1({data:'WebVN'}), '<div>WebVN</div>', 'basic');
+
+});
 
 QUnit.test('Util Module', function (assert) {
 
 	// endsWith
-	assert.equal(util.endsWith('WebVN', 'VN'), true, 'endsWith');
+	assert.ok(util.endsWith('WebVN', 'VN'), 'endsWith');
+
+	// inArray
+	assert.ok(util.inArray(5, [4, 5, 6]), 'inArray');
 
 	// isType
-	assert.equal(util.isArray([]), true, 'isArray');
-	assert.equal(util.isFunction(function(){}), true, 'isFunc');
-	assert.equal(util.isPlainObject({}), true, 'isPlainObj {} true');
-	assert.equal(util.isPlainObject(''), false, 'isPlainObj \'\' false');
-	assert.equal(util.isPlainObject(function(){}), false, 'isPlainObj function(){} false');
-	assert.equal(util.isString('str'), true, 'isString');
+	assert.ok(util.isArray([]), 'isArray');
+	assert.ok(util.isFunction(function(){}), 'isFunc');
+	assert.ok(util.isPlainObject({}), 'isPlainObj {} true');
+	assert.ok(!util.isPlainObject(''), 'isPlainObj \'\' false');
+	assert.ok(!util.isPlainObject(function(){}), 'isPlainObj function(){} false');
+	assert.ok(util.isString('str'), 'isString');
 
 	// keys
 	var keys = {
@@ -73,7 +83,10 @@ QUnit.test('Util Module', function (assert) {
 	assert.deepEqual(util.mix(mixA, mixB), mixResult, 'mix');
 
 	// startsWith
-	assert.equal(util.startsWith('WebVN', 'Web'), true, 'startsWith');
+	assert.ok(util.startsWith('WebVN', 'Web'), 'startsWith');
+
+	// trim
+	assert.equal(util.trim(' WebVN   '), 'WebVN', 'trim');
 
 });
 
