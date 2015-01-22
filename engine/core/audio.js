@@ -4,22 +4,21 @@
 
 webvn.add('audio', ['class'], function (s, kclass) {
 
-var audio = {},
-    audios = {}; // Audio container
+var cache = {}; // Audio container
 
 // Create audio element
 audio.create = function (name) {
 
-    audio[name] = new Sound();
+    cache[name] = new Sound();
 
-    return audio[name];
+    return cache[name];
 
 };
 
 // Get audio by name
 audio.get = function (name) {
 
-    return audio[name];
+    return cache[name];
 
 };
 
@@ -27,8 +26,8 @@ audio.get = function (name) {
 var Sound = kclass.create({
     constructor: function Sound(src) {
 
-        var self = this;
-        var audio = new Audio();
+        var self = this,
+            audio = new Audio();
 
         audio.onloadeddata = function () {
 
