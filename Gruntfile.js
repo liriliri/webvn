@@ -1,9 +1,13 @@
+var key;
+
+// Npm module list
 var npmTasks = [
 	'grunt-contrib-connect',
 	'grunt-contrib-jshint',
     'grunt-contrib-concat',
     'grunt-contrib-uglify',
-    'grunt-contrib-cssmin'
+    'grunt-contrib-cssmin',
+    'grunt-contrib-copy'
 ];
 
 // Load configuration file
@@ -26,6 +30,14 @@ var jsFile = {},
     });
 });
 
+var bowerFile = [];
+for (key in config.bower) {
+    bowerFile.push({
+        src: 'bower_components/' + config.bower[key],
+        dest: key
+    });
+}
+
 module.exports = function (grunt) {
 
 grunt.initConfig({
@@ -37,6 +49,11 @@ grunt.initConfig({
                 src: '**/*.css',
                 dest: 'build/engine'
             }]
+        }
+    },
+    copy: {
+        bower: {
+            files: bowerFile
         }
     },
     concat: {
@@ -86,6 +103,11 @@ for (var i = 0, len = npmTasks.length; i < len; i++) {
 	grunt.loadNpmTasks(npmTasks[i]);
 }
 
+// Start developing environment
+grunt.registerTask('dev', ['connect:server']);
+// Build the final product
 grunt.registerTask('build', ['concat:engine', 'uglify:engine', 'concat:engine', 'cssmin:engine']);
+// Copy 3rd lib from bower_components folder
+grunt.registerTask('bower', ['copy:bower']);
 
 };

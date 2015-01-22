@@ -2,6 +2,11 @@
 
 var config = {};
 
+// 3rd lib bower location
+config.bower = {
+	'engine/lib/TweenMax.js': 'gsap/src/uncompressed/TweenMax.js'
+};
+
 // Files that is loaded when initialize
 config.loadFiles = {
 	// Css files
