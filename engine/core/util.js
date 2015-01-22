@@ -49,25 +49,6 @@ util.endsWith = function (str, suffix) {
 
 };
 
-// Simple method of object merging, just like the one in underscore.
-util.extend = function (obj) {
-
-    // Not going to do anything if it is not an object
-    if (!util.isObj(obj)) {
-        return obj;
-    }
-
-    var source, prop;
-    for (var i = 1, len = arguments.length; i < len; i++) {
-        source = arguments[i];
-        for (prop in source) {
-            obj[prop] = source[prop];
-        }
-    }
-
-    return obj;
-};
-
 var guid = 0;
 // Generate global id
 util.guid = function (prefix) {
@@ -89,21 +70,11 @@ util.indexOf = function (elem, arr) {
 
 };
 
-util.isFunc = function (input) {
+util.isPlainObject = function (input) {
 
-    return typeof input === 'function' || false;
-
-};
-
-util.isObj = function (input) {
-
-    var type = typeof input;
-
-    return type === 'function' || type === 'object' && !!input;
-
-};
-
-util.isPlainObj = function (input) {
+    if (util.type(input) !== 'object') {
+        return false;
+    }
 
     for (var key in input) {
     }
@@ -226,16 +197,29 @@ util.each = function(o, fn) {
 
 };
 
+var class2type = {};
+
 // isType methods
-util.each(['Array', 'Number', 'String'], function(name) {
+util.each('Boolean Number String Function Date RegExp Object Array'.split(' '), function (name, lc) {
 
-    util['is' + name] = function(input) {
+    // populate the class2type map
+    class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
 
-        return toString.call(input) === '[object ' + name + ']';
-        
+    // add isBoolean/isNumber/...
+    util['is' + name] = function (o) {
+        return util.type(o) === lc;
     };
 
 });
+
+// Determine the internal JavaScript [[Class]] of an object.
+util.type = function (o) {
+
+    return o == null ?
+        String(o) :
+        class2type[toString.call(o)] || 'object';
+
+};
 
 util.map = function (o, fn) {
 
@@ -271,7 +255,7 @@ function cloneInternal(o, memory) {
 
     var destination = o,
         isArray = util.isArray(o),
-        isPlainObject = util.isPlainObj(o),
+        isPlainObject = util.isPlainObject(o),
         k,
         stamp;
 
@@ -340,7 +324,7 @@ function mixInternal(a, b, cache) {
         }
     }
 
-    return r;
+    return a;
 
 }
 
@@ -354,8 +338,7 @@ function mixInternal(a, b, cache) {
         }
         return;
     }
-
-    if (src && (util.isArray(src) || util.isPlainObj(src))) {
+    if (src && (util.isArray(src) || util.isPlainObject(src))) {
         if (src[MIX_MARKER]) {
             a[p] = src[MIX_MARKER];
         } else {
@@ -365,7 +348,7 @@ function mixInternal(a, b, cache) {
             a[p] = clone;
             mixInternal(clone, src, cache);
         }
-    } else if (src !== undefined && !(p in r)) {
+    } else if (src !== undefined) {
         a[p] = src;
     }
 }

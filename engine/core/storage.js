@@ -27,7 +27,7 @@ var LocalStore = kclass.create({
 
         this.key = name;
         this.value = getLocal(name);
-        if (!util.isObj(this.value)) {
+        if (!util.isObject(this.value)) {
             this.value = {};
         }
 
@@ -86,7 +86,7 @@ storage.create = function (name, type) {
  */
 function setLocal(key, value) {
 
-    if (util.isObj(value)) {
+    if (util.isObject(value)) {
         value = JSON.stringify(value);
     }
 

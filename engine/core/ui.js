@@ -5,16 +5,14 @@ webvn.add('ui', ['class', 'select', 'config'],
 
 // Default config
 var defaults = {
-	container: 'body'
+	container: '#webvn'
 };
 
 var config = config.create('core-ui');
-config.init(defaults);
-console.log(config.get('container'));
 
 var ui = {},
 	cache = {}, // Store all the ui components
-	$container = $('body');
+	$container = $('#webvn');
 
 // Create and add ui component
 ui.create = function (name, type) {

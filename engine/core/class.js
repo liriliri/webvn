@@ -56,7 +56,7 @@ function create(px, sx) {
     // Atach __name__ and __owner__ to each prototype method
     util.each(px, function (obj, key) {
 
-        if (util.isFunc(obj)) {
+        if (util.isFunction(obj)) {
             obj.__name__ = key;
             obj.__owner__ = _class;
         }
@@ -111,7 +111,7 @@ function extend(superClass, px, sx) {
     var _class = create(px, sx);
     newPx = createObj(superClass.prototype, _class);
 
-    util.extend(newPx, px);
+    util.mix(newPx, px);
 
     _class.prototype = newPx;
     _class.superclass = superClass.prototype;

@@ -44,7 +44,7 @@ var Promise = kclass.create({
 
 			return self.done(function (result) {
 
-				if (util.isFunc(onFulfilled)) {
+				if (util.isFunction(onFulfilled)) {
 					try {
 						return resolve(onFulfilled(result));
 					} catch (e) {
@@ -56,7 +56,7 @@ var Promise = kclass.create({
 
 			}, function (error) {
 
-				if (util.isFunc(onRejected)) {
+				if (util.isFunction(onRejected)) {
 					try {
 						return resolve(onRejected(error));
 					} catch (e) {
@@ -102,9 +102,9 @@ var Promise = kclass.create({
 	 */
 	_getThen: function (value) {
 
-		if (util.isObj(value)) {
+		if (util.isObject(value)) {
 			var then = value.then;
-			if (util.isFunc(then)) {
+			if (util.isFunction(then)) {
 				return then;
 			}
 		}
@@ -116,11 +116,11 @@ var Promise = kclass.create({
 			this.handlers.push(handler);
 		} else {
 			if (this.state === FULFILLED &&
-				util.isFunc(handler.onFulfilled)) {
+				util.isFunction(handler.onFulfilled)) {
 				handler.onFulfilled(this.value);
 			}
 			if (this.state === REJECTED &&
-				util.isFunc(handler.onRejected)) {
+				util.isFunction(handler.onRejected)) {
 				handler.onRejected(this.value);
 			}
 		}

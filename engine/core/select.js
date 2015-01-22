@@ -42,13 +42,13 @@ select.fn = select.prototype = {
 // Simple extend method
 select.extend = function (obj) {
 
-    util.extend(select, obj);
+    util.mix(select, obj);
 
 };
 
 select.fn.extend = function (obj) {
 
-    util.extend(select.fn, obj);
+    util.mix(select.fn, obj);
 
 };
 
@@ -214,7 +214,7 @@ select.fn.extend({
                     return;
                 }
 
-                if (util.isObj(name)) {
+                if (util.isObject(name)) {
                     for (var key in name) {
                         setAttribute(this, key, name[key]);
                     }
@@ -523,7 +523,7 @@ function defaultDisplay(nodeName) {
 // Handle function argument
 function funcArg(context, arg, idx, payload) {
 
-    return util.isFunc(arg) ? arg.call(context, idx, payload) : arg;
+    return util.isFunction(arg) ? arg.call(context, idx, payload) : arg;
 
 }
 
