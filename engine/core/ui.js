@@ -5,10 +5,11 @@ webvn.add('ui', ['class', 'select', 'config'],
 
 // Default config
 var defaults = {
-	container: '#webvn'
+	container: 'body'
 };
 
-var config = config.create('core-ui');
+var conf = config.create('core-ui');
+conf.init(defaults).set(config.global.ui);
 
 var ui = {},
 	cache = {}, // Store all the ui components

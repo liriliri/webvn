@@ -7,6 +7,7 @@ config.loadFiles = {
 	// Css files
 	css: {
 		ui: [
+			'basic',
 			'background'
 		]
 	},

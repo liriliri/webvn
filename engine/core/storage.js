@@ -5,6 +5,7 @@
 webvn.add('storage', ['class', 'util'], function (s, kclass, util) {
 
 var storage = {},
+    prefix = 'wv-',
     cache = {};
 
 // LocalStorage Session
@@ -25,13 +26,24 @@ var LocalStore = kclass.create({
      */
     constructor: function LocalStore(name) {
 
-        this.key = name;
+        this.key = prefix + name;
         this.value = getLocal(name);
         if (!util.isObject(this.value)) {
             this.value = {};
         }
 
 	},
+    clear: function () {
+
+        this.value = {};
+        this.save();
+
+    },
+    delete: function () {
+
+        removeLocal(this.key);
+
+    },
     // Get value
     get: function (key) {
 
@@ -57,7 +69,21 @@ var LocalStore = kclass.create({
     // Set value
     set: function (key, value) {
 
-        this.value[key] = value;
+        var attrs,
+            self = this;
+
+        if (util.isObject(key)) {
+            attrs = key;
+        } else {
+            (attrs = {})[key] = value;
+        }
+
+        util.each(attrs, function (value, key) {
+
+            self.value[key] = value;
+
+        });
+
         // Save automatically
         this.save();
 
@@ -106,6 +132,13 @@ function getLocal(key) {
     } catch (e) {}
 
     return value;
+
+}
+
+// Wrapper of localStorage.removeItem
+function removeLocal(key) {
+
+    localStore.removeItem(key);
 
 }
 
