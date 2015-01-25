@@ -47,17 +47,16 @@ var LocalStore = kclass.create({
     // Get value
     get: function (key) {
 
+        // If no key is given, return the whole value
+        if (key === undefined) {
+            return this.value;
+        }
+
         if (this.value[key]) {
             return this.value[key];
         } else {
             s.log.warn('Key ' + key + ' does not exist');
         }
-
-    },
-    // Return all the value
-    getAll: function () {
-
-        return this.value;
 
     },
     // Save the value to localStore
@@ -67,22 +66,23 @@ var LocalStore = kclass.create({
 
     },
     // Set value
-    set: function (key, value) {
+    set: function (key, value, overwrite) {
 
         var attrs,
             self = this;
 
         if (util.isObject(key)) {
             attrs = key;
+            overwrite = value;
         } else {
             (attrs = {})[key] = value;
         }
 
-        util.each(attrs, function (value, key) {
-
-            self.value[key] = value;
-
-        });
+        if (overwrite) {
+            this.value = util.merge(this.value, attrs);
+        } else {
+            this.value = util.merge(attrs, this.value);
+        }
 
         // Save automatically
         this.save();

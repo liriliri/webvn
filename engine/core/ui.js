@@ -9,7 +9,7 @@ var defaults = {
 };
 
 var conf = config.create('core-ui');
-conf.init(defaults).set(config.global.ui);
+conf.set(defaults, true).set(config.global.ui);
 
 var ui = {},
 	cache = {}, // Store all the ui components

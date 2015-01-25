@@ -23,7 +23,7 @@ var Config = kclass.create({
 	constructor: function Config(name) {
 
 		this.store = storage.create(name, 'localStorage');
-		this.value = this.store.getAll();
+		this.value = this.store.get();
 
 	},
 	delete: function () {
@@ -31,22 +31,16 @@ var Config = kclass.create({
 		this.store.delete();
 
 	},
-	// Set defaults
-	init: function (defaults) {
-
-		this.store.set(util.merge(defaults, this.value));
-
-		return this;
-
-	},
 	get: function (key) {
 
 		return this.store.get(key);
 
 	},
-	set: function (key, value) {
+	set: function (key, value, overwrite) {
 
-		this.store.set(key, value);
+		this.store.set(key, value, overwrite);
+
+		return this;
 
 	}
 });

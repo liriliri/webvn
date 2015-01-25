@@ -4,7 +4,8 @@
 
 webvn.add('audio', ['class'], function (s, kclass) {
 
-var cache = {}; // Audio container
+var audio = {},
+    cache = {}; // Audio container
 
 // Create audio element
 audio.create = function (name) {
