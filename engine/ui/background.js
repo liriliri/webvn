@@ -4,7 +4,7 @@ webvn.use(['ui'], function (s, ui) {
 
 var background = ui.create('background', 'div');
 
-var tpl = '<img src="http://pic2.zhimg.com/6198dbddf_m.jpg">' +
+var tpl = '<img src="/asset/test/bg1.png">' +
 	'<div class="a"></div>';
 
 background.setBody(tpl).show();

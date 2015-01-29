@@ -258,7 +258,12 @@ if (dataConfig) {
             css = loadFiles.css,
             js = loadFiles.js,
             prefix = loadFiles.prefix;
-        loader.prefix(prefix.css.ui).css(css.ui);
+        for (var key in css) {
+            if (prefix.css[key]) {
+                loader.prefix(prefix.css[key]);
+            }
+            loader.css(css[key]);
+        }
         for (var key in js) {
             if (prefix.js[key]) {
                 loader.prefix(prefix.js[key]);

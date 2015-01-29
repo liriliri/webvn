@@ -1,1 +1,1 @@
-log -t=error 'Something is wrong'
+log -t=error 'This is the first script file'

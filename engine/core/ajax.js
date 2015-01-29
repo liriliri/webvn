@@ -138,19 +138,28 @@ return ajax;
 // Extend loader module
 webvn.use(['loader', 'ajax'], function (s, loader, ajax, config) {
 
+/* Load scene
+ * Scenes should be array
+ */
+loader.scenario = function (scenes, cb) {
 
-
-// Load scene
-loader.scenario = function (scenes) {
-
-    if (!util.isArray(scenes)) {
-        scenes = [scenes];
-    }
-
-    var i = 0, len = scenes.length;
-
-    ajax.get(scenes, );
+    loadScenario(scenes, 0, cb);
 
 };
+
+// Private function
+
+function loadScenario (scenes, i, cb) {
+
+    ajax.get(scenes[i]).then(function (value) {
+
+        cb(value);
+        if (i < scenes.length - 1) {
+            loadScenario(scenes, i + 1, cb);
+        }
+
+    });
+
+}
 
 });

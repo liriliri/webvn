@@ -2,14 +2,16 @@
  * All command is loaded and controled here
  */
 
-webvn.add('script', ['class', 'util', 'config'], function (s, kclass, util, config) {
+webvn.add('script', ['class', 'util', 'config', 'loader'], 
+    function (s, kclass, util, config, loader) {
 
 var defaults = {};
 
 var conf = config.create('core-ui');
 conf.set(defaults, true).set(config.global.script);
 
-var script = {};
+var script = {},
+    scenarios = ''; // Original scenarios
 
 // Container of commands
 var commands = {};
@@ -79,6 +81,34 @@ script.execute = function (cmd) {
     command.execute(cmd.option, cmd.value);
 
 };
+
+// Load scenarios
+script.load = function (scenario) {
+
+    var prefix = conf.get('prefix'),
+        fileType = conf.get('fileType');
+
+    if (!util.isArray(scenario)) {
+        scenario = [scenario];
+    }
+
+    scenario = scenario.map(function (val) {
+
+        return prefix + val + '.' + fileType;
+
+    });
+
+    loader.scenario(scenario, function (data) {
+
+        scenarios += data + '\n';
+        console.log(scenarios);
+
+    });
+
+};
+
+// Load default scenarios
+script.load(conf.get('scenario'));
 
 // Private function
 

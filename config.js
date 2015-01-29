@@ -14,6 +14,9 @@ config.loadFiles = {
         ui: [
             'basic',
             'background'
+        ],
+        custom: [
+            'style'
         ]
     },
     // Js files
@@ -56,12 +59,10 @@ config.loadFiles = {
             'init'
         ]
     },
-		scenario: [
-				
-		],
     prefix: {
         css: {
-            ui: '/engine/ui/'
+            ui: '/engine/ui/',
+            custom: '/custom/'
         },
         js: {
             core: '/engine/core/',
@@ -69,13 +70,19 @@ config.loadFiles = {
             ui: '/engine/ui/',
             cmd: '/engine/cmd/',
             init: '/engine/'
-        },
-        scenario: '/scenario/'
+        }
     }
 };
 
 // Script module config
-config.script = {};
+config.script = {
+    scenario: [
+        'first',
+        'second'
+    ],
+    prefix: '/scenario/',
+    fileType: 'wvn'
+};
 
 // Ui module config
 config.ui = {
