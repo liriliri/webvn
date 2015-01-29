@@ -3,16 +3,16 @@
 webvn.add('config', ['storage', 'class', 'util'], function (s, storage, kclass, util) {
 
 var config = {},
-	cache = {};
+    cache = {};
 
 // Create config
 config.create = function (name) {
 
-	var newConfig = new Config(name);
+    var newConfig = new Config(name);
 
-	cache[name] = newConfig;
+    cache[name] = newConfig;
 
-	return newConfig;
+    return newConfig;
 
 };
 
@@ -20,35 +20,35 @@ config.global = window.config;
 
 // Config class
 var Config = kclass.create({
-	constructor: function Config(name) {
+    constructor: function Config(name) {
 
-		this.store = storage.create(name, 'localStorage');
-		this.value = this.store.getAll();
+        this.store = storage.create(name, 'localStorage');
+        this.value = this.store.getAll();
 
-	},
-	delete: function () {
+    },
+    delete: function () {
 
-		this.store.delete();
+        this.store.delete();
 
-	},
-	// Set defaults
-	init: function (defaults) {
+    },
+    // Set defaults
+    init: function (defaults) {
 
-		this.store.set(util.merge(defaults, this.value));
+        this.store.set(util.merge(defaults, this.value));
 
-		return this;
+        return this;
 
-	},
-	get: function (key) {
+    },
+    get: function (key) {
 
-		return this.store.get(key);
+        return this.store.get(key);
 
-	},
-	set: function (key, value) {
+    },
+    set: function (key, value) {
 
-		this.store.set(key, value);
+        this.store.set(key, value);
 
-	}
+    }
 });
 
 return config;

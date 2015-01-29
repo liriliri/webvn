@@ -15,13 +15,13 @@ if (window.localStorage) {
     localStore = localStorage;
     s.log.info('LocalStorage is supported');
 } else {
-	s.log.warn('LocalStorage is not supported');
+    s.log.warn('LocalStorage is not supported');
 }
 
 // LocalStore class
 var LocalStore = kclass.create({
     /* name: the name of the store
-     * when the instance is created, 
+     * when the instance is created,
      * it's going to load content according to the name you sepecify.
      */
     constructor: function LocalStore(name) {
@@ -32,7 +32,7 @@ var LocalStore = kclass.create({
             this.value = {};
         }
 
-	},
+    },
     clear: function () {
 
         this.value = {};
@@ -90,7 +90,7 @@ var LocalStore = kclass.create({
     }
 });
 
-// Create and add 
+// Create and add
 storage.create = function (name, type) {
 
     var newStore;

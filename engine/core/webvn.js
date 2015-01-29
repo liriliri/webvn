@@ -242,28 +242,32 @@ var loader = s.loader,
 for (i = scripts.length - 1; i > -1; i--) {
     if (scripts[i]) {
         script = scripts[i];
-        dataMain = script.getAttribute('data-config');
-        if (dataMain) {
+        dataConfig = script.getAttribute('data-config');
+        if (dataConfig) {
             break;
         }
     }
 }
 
-if (dataMain) {
-    loader.script(dataMain).
+if (dataConfig) {
+    loader.script(dataConfig).
         wait(function () {
+
         var config = window.config,
             loadFiles = config.loadFiles,
             css = loadFiles.css,
             js = loadFiles.js,
             prefix = loadFiles.prefix;
-        loader.prefix(prefix.css.ui).css(css.ui).
-            prefix(prefix.js.core).script(js.core).
-            prefix(prefix.js.lib).script(js.lib).
-            prefix(prefix.js.ui).script(js.ui).
-            prefix(prefix.js.cmd).script(js.cmd).wait(function () {
-                loader.readyTrigger();
-            });
+        loader.prefix(prefix.css.ui).css(css.ui);
+        for (var key in js) {
+            if (prefix.js[key]) {
+                loader.prefix(prefix.js[key]);
+            }
+            loader.script(js[key]);
+        }
+        loader.wait(function () {
+            loader.readyTrigger();
+        });
 
     });
 } else {

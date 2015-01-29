@@ -2,7 +2,12 @@
  * All command is loaded and controled here
  */
 
-webvn.add('script', ['class', 'util'], function (s, kclass, util) {
+webvn.add('script', ['class', 'util', 'config'], function (s, kclass, util, config) {
+
+var defaults = {};
+
+var conf = config.create('core-ui');
+conf.init(defaults).set(config.global.script);
 
 var script = {};
 
