@@ -57,7 +57,7 @@ grunt.initConfig({
         }
     },
     concat: {
-        engine: {
+        engineJs: {
             files: {
                 'build/engine/core.js': jsFile.core,
                 'build/engine/lib.js': jsFile.lib,
@@ -65,7 +65,7 @@ grunt.initConfig({
                 'build/engine/cmd.js': jsFile.cmd
             }
         },
-        engine: {
+        engineCss: {
             files: {
                 'build/engine/ui.css': cssFile.ui
             }
@@ -106,7 +106,7 @@ for (var i = 0, len = npmTasks.length; i < len; i++) {
 // Start developing environment
 grunt.registerTask('dev', ['connect:server']);
 // Build the final product
-grunt.registerTask('build', ['concat:engine', 'uglify:engine', 'concat:engine', 'cssmin:engine']);
+grunt.registerTask('build', ['concat:engineJs', 'uglify:engine', 'concat:engineCss', 'cssmin:engine']);
 // Copy 3rd lib from bower_components folder
 grunt.registerTask('bower', ['copy:bower']);
 
