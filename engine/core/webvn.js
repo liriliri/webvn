@@ -14,7 +14,7 @@ return s;
 })();
 
 /* Simple loader
- * Also defines a simple function to add modules 
+ * Also defines a simple function to add modules
  */
 
 (function (s) {
@@ -143,7 +143,7 @@ function loadScript() {
 
         isScriptLoading = false;
 
-        if (script.readyState && 
+        if (script.readyState &&
             script.readyState != "complete" &&
             script.readyState != "loaded") {
             return;

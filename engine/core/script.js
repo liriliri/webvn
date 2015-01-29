@@ -7,7 +7,7 @@ webvn.add('script', ['class', 'util', 'config'], function (s, kclass, util, conf
 var defaults = {};
 
 var conf = config.create('core-ui');
-conf.init(defaults).set(config.global.script);
+conf.set(defaults, true).set(config.global.script);
 
 var script = {};
 
@@ -112,7 +112,7 @@ function parse(cmd) {
             parts.push(word);
         }
         switch (c) {
-            case ' ': 
+            case ' ':
                 if (lastC !== ' ') {
                     if (insideDq || insideSq) {
                         word += c;

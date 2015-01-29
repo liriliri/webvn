@@ -29,16 +29,9 @@ var ajaxSettings = {
 
 var ajax = function (options) {
 
-    var settings = util.extend({}, options || {});
-
-    for (var key in ajaxSettings) {
-        if (settings[key] === undefined) {
-            settings[key] = ajaxSettings[key];
-        }
-    }
+    var settings = util.merge(ajaxSettings, options);
 
     var dataType = settings.dataType,
-        mime = settings.accepts[dataType],
         context = settings.context,
         protocol = /^([\w-]+:)\/\//.test(settings.url) ? RegExp.$1 : window.location.protocol,
         xhr = settings.xhr();
@@ -52,7 +45,7 @@ var ajax = function (options) {
             var status = xhr.status,
                 result = xhr.responseText;
 
-            if ((status >= 200 && status < 300) || 
+            if ((status >= 200 && status < 300) ||
                 status == 304 || (status == 0 && protocol === 'file:')) {
                 try {
                     switch (dataType) {
@@ -143,12 +136,20 @@ return ajax;
 });
 
 // Extend loader module
-webvn.use(['loader', 'ajax'], function (s, loader, ajax) {
+webvn.use(['loader', 'ajax'], function (s, loader, ajax, config) {
+
+
 
 // Load scene
-loader.scenario = function () {
+loader.scenario = function (scenes) {
 
+    if (!util.isArray(scenes)) {
+        scenes = [scenes];
+    }
 
+    var i = 0, len = scenes.length;
+
+    ajax.get(scenes, );
 
 };
 

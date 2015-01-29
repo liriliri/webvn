@@ -3,9 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Ajax</title>
-<script src="../core/webvn.js"></script>
-<script src="../core/loader.js"></script>
-<script src="../core/init.js"></script>
+<script src="/engine/core/webvn.js" data-config="/config"></script>
 </head>
 <body>
 <script>
@@ -14,7 +12,7 @@ webvn.loader.ready(function () {
 webvn.use(['ajax'], function (s, ajax) {
 
 ajax.get('ajax_plain.txt').then(function (value) {
-	
+
 	console.log(value);
 
 });

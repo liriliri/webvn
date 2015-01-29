@@ -56,6 +56,9 @@ config.loadFiles = {
             'init'
         ]
     },
+		scenario: [
+				
+		],
     prefix: {
         css: {
             ui: '/engine/ui/'
@@ -66,17 +69,13 @@ config.loadFiles = {
             ui: '/engine/ui/',
             cmd: '/engine/cmd/',
             init: '/engine/'
-        }
+        },
+        scenario: '/scenario/'
     }
 };
 
 // Script module config
-config.script = {
-    scripts: [
-        'first'
-    ],
-    cwd: '/script/'
-};
+config.script = {};
 
 // Ui module config
 config.ui = {
