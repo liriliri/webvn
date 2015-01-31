@@ -16,7 +16,7 @@ config.loadFiles = {
             'background'
         ],
         custom: [
-            'style'
+            'base'
         ]
     },
     // Js files
@@ -25,16 +25,16 @@ config.loadFiles = {
         core: [
             'log',
             'util',
-            'system',
+            'select',
             'class',
-            'promise',
-            'ajax',
             'storage',
             'config',
+            'system',
+            'promise',
+            'ajax',
             'script',
             'audio',
             'event',
-            'select',
             'template',
             'ui'
         ],
@@ -82,6 +82,13 @@ config.script = {
     ],
     prefix: '/scenario/',
     fileType: 'wvn'
+};
+
+// System module config
+config.system = {
+    width: 960,
+    height: 480,
+    title: 'WebVN'
 };
 
 // Ui module config

@@ -7,8 +7,8 @@ webvn.add('script', ['class', 'util', 'config', 'loader'],
 
 var defaults = {};
 
-var conf = config.create('core-ui');
-conf.set(defaults, true).set(config.global.script);
+var conf = config.create('core-script');
+conf.set(defaults).set(config.global.script, true);
 
 var script = {},
     scenarios = ''; // Original scenarios
@@ -101,7 +101,6 @@ script.load = function (scenario) {
     loader.scenario(scenario, function (data) {
 
         scenarios += data + '\n';
-        console.log(scenarios);
 
     });
 
