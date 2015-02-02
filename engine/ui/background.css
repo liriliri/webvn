@@ -1,16 +1,4 @@
 #background {
-	background: orange;
-	width: 500px;
-	height: 500px;
-}
-
-#background .a {
-	background: #08c;
-	width:20px;
-	height:20px;
-}
-
-#background img {
-	margin: 0 auto;
-	display: block;
+	position: absolute;
+	z-index: 500;
 }

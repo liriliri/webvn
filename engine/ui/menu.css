@@ -1,0 +1,8 @@
+#menu {
+	position: absolute;
+	z-index: 1000;
+}
+
+#menu ul li {
+	cursor: pointer;
+}

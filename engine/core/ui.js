@@ -15,6 +15,12 @@ var ui = {},
     cache = {}, // Store all the ui components
     $container = $('#webvn');
 
+// Init container width and height
+$container.css({
+    width: conf.get('width'),
+    height: conf.get('height')
+});
+
 // Create and add ui component
 ui.create = function (name, type) {
 

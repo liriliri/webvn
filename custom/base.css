@@ -12,10 +12,8 @@ body {
 
 #webvn {
 	position: absolute;
-	width: 960px;
-	height: 540px;
-	left: -480px;
-	top: -270px;
+	left: -640px;
+	top: -480px;
 	border: 5px outset #fff;
 	overflow: hidden;
 	background: #fff;

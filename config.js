@@ -12,11 +12,13 @@ config.loadFiles = {
     // Css files
     css: {
         ui: [
-            'basic',
+            'base',
+            'menu',
             'background'
         ],
         custom: [
-            'base'
+            'base',
+            'ui'
         ]
     },
     // Js files
@@ -32,6 +34,7 @@ config.loadFiles = {
             'system',
             'promise',
             'ajax',
+            'parser',
             'script',
             'audio',
             'event',
@@ -47,6 +50,7 @@ config.loadFiles = {
         ],
         // Ui components
         ui: [
+            'menu',
             'background',
             'rain'
         ],
@@ -86,14 +90,14 @@ config.script = {
 
 // System module config
 config.system = {
-    width: 960,
-    height: 480,
     title: 'WebVN'
 };
 
 // Ui module config
 config.ui = {
-    container: '#webvn'
+    container: '#webvn',
+    width: 1280,
+    height: 960
 };
 
 // Exports config to be read by nodejs program
