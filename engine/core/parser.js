@@ -8,100 +8,38 @@ webvn.add('parser', ['util'], function (s, util) {
 var parser = {};
 
 /* Parse a command into a well-formed one
- * video -d=2000 opening.avi
- * will become
- * {name:'video', command: {}, option:{'duration':2000}, value:'opening.avi'}
+ * There are several types of commands, listed as below:
+ * 1. Command
+ * {
+ *      type: 'command',
+ *      name: 'video',
+ *      options: {
+ *          '--duration': 2000,
+ *          '--src': 'opening.avi'
+ *      },
+ *      value: ['value1', 'value2']
+ * }
+ * 2. Code
+ * {
+ *      type: 'code',
+ *      code: 'var x = 5;'      
+ * } 
+ * Notice the return is an array since one command
+ * is possible to expand into several commands
  */
-parser.parseCmd = function (cmd) {
+parser.parse = function (text) {
 
-    cmd = util.trim(cmd);
+    var ret = [];
 
-    var result = {};
-
-    /* Break the command into different parts by space
-     * The space inside quotes is ignored.
-     */
-    var parts = [],
-        sq = "'",
-        dq = '"',
-        insideSq = false,
-        insideDq = false,
-        word = '';
-        lastC = '';
-    for (var i = 0, len = cmd.length; i < len; i++, lastC = c) {
-        var c = cmd[i];
-        if (i === len - 1) {
-            if (c !== sq && c !== dq) {
-                word += c;
-            }
-            parts.push(word);
-        }
-        switch (c) {
-            case ' ':
-                if (lastC !== ' ') {
-                    if (insideDq || insideSq) {
-                        word += c;
-                        continue;
-                    } else {
-                        parts.push(word);
-                        word = '';
-                    }
-                }
-                continue;
-            case sq:
-                if (insideSq) {
-                    insideSq = false;
-                } else {
-                    if (!insideDq) {
-                        insideSq = true;
-                    } else {
-                        word += c;
-                    }
-                }
-                continue;
-            case dq:
-                if (insideDq) {
-                    insideDq = false;
-                } else {
-                    if (!insideSq) {
-                        insideDq = true;
-                    } else {
-                        word += c;
-                    }
-                }
-                continue;
-        }
-        word += c;
+    // Handle code
+    if (util.startsWith(text, 'code')) {
+        ret.push(parseCode(text));
+        return ret;
     }
 
-    /* Parse different types of the seperated command
-     * -: option name in short
-     * --: option name in long
-     * first: command name
-     * rest: value
-     */
-    var option = {},
-        value = [];
-    result.name = parts.shift();
-    if (cache[result.name]) {
-        result.command = cache[result.name];
-    } else {
-        s.log.error('The command ' + result.name + " doesn't exists");
-        return;
-    }
-    for (i = 0, len = parts.length; i < len; i++) {
-        var part = parts[i];
-        if (util.startsWith(part, '-')) {
-            var opt = parseOption(part, result.command);
-            option[opt.name] = opt.value;
-            continue;
-        }
-        value.push(part);
-    }
-    result.option = option;
-    result.value = value.join(' ');
-
-    return result;
+    // Handle command
+    ret.push(parseCommand(text));
+    return ret;
 
 };
 
@@ -198,30 +136,115 @@ parser.split = function (text) {
 
 };
 
-// Private function
+function parseCode(text) {
+
+    return {
+        type: 'code',
+        code: text.substr(5, text.length - 5)
+    };
+
+}
+
+function parseCommand(text) {
+
+    /* Break the command into different parts by space
+     * The space inside quotes is ignored.
+     */
+    var parts = [],
+        sq = "'",
+        dq = '"',
+        insideSq = false,
+        insideDq = false,
+        word = '';
+        lastC = '';
+    for (var i = 0, len = text.length; i < len; i++, lastC = c) {
+        var c = text[i];
+        if (i === len - 1) {
+            if (c !== sq && c !== dq) {
+                word += c;
+            }
+            parts.push(word);
+        }
+        switch (c) {
+            case ' ':
+                if (lastC !== ' ') {
+                    if (insideDq || insideSq) {
+                        word += c;
+                        continue;
+                    } else {
+                        parts.push(word);
+                        word = '';
+                    }
+                }
+                continue;
+            case sq:
+                if (insideSq) {
+                    insideSq = false;
+                } else {
+                    if (!insideDq) {
+                        insideSq = true;
+                    } else {
+                        word += c;
+                    }
+                }
+                continue;
+            case dq:
+                if (insideDq) {
+                    insideDq = false;
+                } else {
+                    if (!insideSq) {
+                        insideDq = true;
+                    } else {
+                        word += c;
+                    }
+                }
+                continue;
+        }
+        word += c;
+    }
+
+    var options = {},
+        ret = {
+            type: 'command'
+        },
+        value = [];
+    ret.name = parts.shift();
+    for (i = 0, len = parts.length; i < len; i++) {
+        var part = parts[i];
+        if (util.startsWith(part, '-')) {
+            var opt = parseOption(part);
+            options[opt.name] = opt.value;
+            continue;
+        }
+        value.push(part);
+    }
+    ret.options = options;
+    ret.value = value;
+
+    return ret;
+
+}
 
 /* Change --t=none
- * into {name:'type', value:'none'}
+ * into {name:'--t', value:'none'}
  */
-function parseOption(option, command) {
+function parseOption(text) {
 
-    var result = {},
-        matches = option.match(/-*([^=]*)(=(.*))?/);
+    var ret = {},
+        equalPos = text.indexOf('=');
 
     /* If the option has value, set it to the value
      * Otherwise, just set it to true
      */
-    result.name = matches[1];
-    if (!util.startsWith(option, '--')) {
-        result.name = command.getOptionFullname(result.name);
-    }
-    if (matches[3]) {
-        result.value = matches[3];
+    if (equalPos > -1) {
+        ret.name = text.substr(0, equalPos);
+        ret.value = text.substr(equalPos + 1, text.length - equalPos - 1);
     } else {
-        result.value = true;
+        ret.name = text;
+        ret.value = true;
     }
 
-    return result;
+    return ret;
 
 }
 

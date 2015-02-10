@@ -131,6 +131,9 @@ function getLabel(data) {
                 lineNum: startNum + i,
                 displayName: arr[1]
             };
+            // Delete the line since it's not useful anymore
+            data.splice(i, 1);
+            len -= 1;
         }
     }
 
