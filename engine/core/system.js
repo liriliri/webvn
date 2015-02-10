@@ -31,8 +31,6 @@ system.setTitle = function (text) {
 // Set default title
 system.setTitle(conf.get('title'));
 
-system
-
 return system;
 
 });

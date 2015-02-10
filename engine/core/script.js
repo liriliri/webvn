@@ -2,8 +2,8 @@
  * All command is loaded and controled here
  */
 
-webvn.add('script', ['class', 'util', 'config', 'loader', 'parser'], 
-    function (s, kclass, util, config, loader, parser) {
+webvn.add('script', ['class', 'util', 'config', 'loader', 'parser', 'log'], 
+    function (s, kclass, util, config, loader, parser, log) {
 
 var defaults = {};
 
@@ -11,7 +11,8 @@ var conf = config.create('core-script');
 conf.set(defaults).set(config.global.script, true);
 
 var script = {},
-    scenarios = ''; // Original scenarios
+    label = {},
+    splitScript = [];
 
 // Container of commands
 var cache = {};
@@ -21,7 +22,7 @@ var cache = {};
  */
 script.addCommand = function (name, options, processor) {
 
-    s.log.info('Add command: ' + name);
+    log.info('Add command: ' + name);
 
     cache[name] = new script.Command(name, options, processor);
 
@@ -100,7 +101,11 @@ script.load = function (scenario) {
 
     loader.scenario(scenario, function (data) {
 
-        scenarios += data + '\n';
+        var splitData = parser.split(data);
+
+        getLabel(splitData);
+
+        splitScript = splitScript.concat(splitData);
 
     });
 
@@ -108,6 +113,28 @@ script.load = function (scenario) {
 
 // Load default scenarios
 script.load(conf.get('scenario'));
+
+/* Extract label and store it into label variable
+ * Basically, it turns '* chapter1 | save name' into:
+ * 'chapter1': {lineNum: 5, displayName: 'save name';
+ */  
+function getLabel(data) {
+
+    var startNum = splitScript.length;
+
+    for (var i = 0, len = data.length; i < len; i++) {
+        var line = data[i];
+        if (util.startsWith(line, '*')) {
+            line = line.substr(1, line.length - 1);
+            var arr = line.split('|');
+            label[util.trim(arr[0])] = {
+                lineNum: startNum + i,
+                displayName: arr[1]
+            };
+        }
+    }
+
+}
 
 return script;
 

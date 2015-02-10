@@ -12,7 +12,7 @@ var parser = {};
  * will become
  * {name:'video', command: {}, option:{'duration':2000}, value:'opening.avi'}
  */
-parser.parse = function (cmd) {
+parser.parseCmd = function (cmd) {
 
     cmd = util.trim(cmd);
 
@@ -102,6 +102,99 @@ parser.parse = function (cmd) {
     result.value = value.join(' ');
 
     return result;
+
+};
+
+/* Split a bock of text into small and executable units
+ * It simply does the following things:
+ * 1. Delete comments
+ * 2. Line concatenation when one line is ended with +
+ * 3. Handle code block which is quoted with "<% %>"
+ * 4. Return an array containing units
+ */
+parser.split = function (text) {
+
+    var ret = [];
+
+    var insideBlockComment = false,
+        insideLineComment = false,
+        insideCode = false;
+
+    for (var i = 0, len = text.length, line = '';
+        i < len; i++) {
+
+        line += text[i];
+
+        if (line[0] === ' ') {
+            line = util.trim(line);
+        }
+
+        if (insideCode) {
+            if (util.endsWith(line, '%>')) {
+                insideCode = false;
+                line = 'code ' + line.substr(2, line.length - 4);
+                ret.push(line);
+                line = '';
+                continue;
+            }
+        }
+
+        if (insideBlockComment) {
+            if (util.endsWith(line, '*/')) {
+                insideBlockComment = false;
+                line = '';
+            }
+            continue;
+        }
+
+        if (insideLineComment) {
+            if (util.endsWith(line, '\n')) {
+                insideLineComment = false;
+                line = '';
+            }
+            continue;
+        }
+
+        if (util.startsWith(line, '<%')) {
+            insideCode = true;
+            continue;
+        }
+
+        if (util.startsWith(line, '/*')) {
+            insideBlockComment = true;
+            continue;
+        }
+
+        if (util.startsWith(line, '//')) {
+            insideLineComment = true;
+            continue;
+        }
+
+        if (util.endsWith(line, '\n')) {
+            line = line.substr(0, line.length - 1);
+            line = util.trim(line);
+            // If the line ends with '+', concatenate the next line
+            if (util.endsWith(line, '+')) {
+                line = line.substr(0, line.length - 1);
+                continue;
+            }
+            if (line !== '') {
+                ret.push(line);
+                line = '';
+                continue;
+            }
+        }
+
+        // End of all text
+        if (i === len - 1) {
+            line = util.trim(line);
+            if (line !== '') {
+                ret.push(line);
+            }
+        }
+    }
+
+    return ret;
 
 };
 

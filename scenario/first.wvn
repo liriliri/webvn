@@ -1,1 +1,14 @@
-log -t=error 'This is the first script file'
+/* Description
+ * Not going to be execute
+ */
+* start | 主程序入口
+bg --src=bg1.jpg --trans=fadeIn
+// One line comment
+<%
+var x = 5;
+alert('cool');
+%>
+* chapter1 | 第一章 仇恨之源
+dialog --name=redhood --content="This is the content of +
+the dialog" --show
+bgm --src=bgm1.ogg
