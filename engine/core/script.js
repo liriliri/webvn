@@ -12,10 +12,17 @@ conf.set(defaults).set(config.global.script, true);
 
 var script = {},
     label = {},
-    splitScript = [];
+    splitScript = [],
+    // The script num currently executing 
+    curNum = 0,
+    isPause = true,
+    /* Script that is actually executing, and is not just plain string
+     * If empty, get new ones from splitScript
+     */
+    execScript = [];
 
 // Container of commands
-var cache = {};
+var commands = {};
 
 /* Add command
  * Just a simple wrapper of 'new Command'
@@ -24,7 +31,9 @@ script.addCommand = function (name, options, processor) {
 
     log.info('Add command: ' + name);
 
-    cache[name] = new script.Command(name, options, processor);
+    commands[name] = new script.Command(name, options, processor);
+
+    return commands[name];
 
 };
 
@@ -42,7 +51,17 @@ script.Command = kclass.create({
         this.name = name;
         this.options = options;
         this.processor = processor;
-        this.vlaue = '';
+
+        // Init shortHands
+        var shortHands = {};
+        util.each(this.options, function (value, key) {
+
+            if (value.shortHand) {
+                shortHands[value.shortHand] = key;
+            }
+
+        });
+        this.shortHands = shortHands;
 
     },
     // Get the command name
@@ -51,22 +70,53 @@ script.Command = kclass.create({
         return this.name;
 
     },
-    // Get option full name
-    getOptionFullname: function (short) {
-
-        return this.options[short];
-
-    },
-    // Set value of the command
-    setValue: function (value) {
-
-        this.value = value;
-
-    },
     // Execute command
-    execute: function (options, value) {
+    exec: function (options, value) {
+
+        options = this.parseOptions(options);
 
         this.processor(options, value);
+
+    },
+    parseOptions: function (options) {
+
+        var ret = {},
+            self = this,
+            shortHands = this.shortHands;
+
+        util.each(options, function (value, key) {
+
+            var keys = [];
+
+            if (util.startsWith(key, '--')) {
+                key = key.substr(2, key.length - 2);
+                ret[key] = value;
+                keys.push(key);
+            } else {
+                key = key.substr(1, key.length - 1);
+                for (var i = 0, len = key.length; i < len; i++) {
+                    var k = shortHands[key[i]];
+                    if (k) {
+                        ret[k] = value;
+                    }
+                    keys.push(k);
+                }
+            }
+
+            // Get rid of illegal options and parse is values
+            for (i = 0, len = keys.length; i < len; i++) {
+                var key = keys[i],
+                    opt = self.options[key];
+                if (opt) {
+                    ret[key] = opt.type(ret[key]);
+                } else {
+                    delete ret[key];
+                }
+            }
+
+        });
+
+        return ret;
 
     },
     // A new command should overwrite this function
@@ -74,17 +124,27 @@ script.Command = kclass.create({
 });
 
 // Execute command
-script.execute = function (cmd) {
+script.exec = function (unit) {
 
-    cmd = parser.parse(cmd);
-    command = cmd.command;
-
-    command.execute(cmd.option, cmd.value);
+    switch (unit.type) {
+        case 'command': {
+            execCommand(unit);
+            break;
+        }
+        case 'code': {
+            execCode(unit);
+            break;
+        }
+        default:
+            break;
+    }
 
 };
 
 // Load scenarios
 script.load = function (scenario) {
+
+    scenario = scenario || conf.get('scenario');
 
     var prefix = conf.get('prefix'),
         fileType = conf.get('fileType');
@@ -99,7 +159,7 @@ script.load = function (scenario) {
 
     });
 
-    loader.scenario(scenario, function (data) {
+    loader.scenario(scenario, function (data, isLast) {
 
         var splitData = parser.split(data);
 
@@ -107,12 +167,59 @@ script.load = function (scenario) {
 
         splitScript = splitScript.concat(splitData);
 
+        // If this is the last scenario, then begin executing
+        if (isLast) {
+            script.start();
+        }
+
     });
 
 };
 
-// Load default scenarios
-script.load(conf.get('scenario'));
+script.resume = function () {
+
+    if (execScript.length === 0) {
+        var line = splitScript[curNum];
+        curNum++;
+        execScript = execScript.concat(parser.parse(line));
+    }
+
+    script.exec(execScript.shift());
+
+}
+
+// Start executing scripts
+script.start = function () {
+
+    curNum = 0;
+    script.resume();
+
+};
+
+function execCode(unit) {
+
+
+
+}
+
+function execCommand(unit) {
+
+    var name = unit.name,
+        options = unit.options,
+        value = unit.value;
+
+    log.info("Running command: " + name);
+
+    var cmd = commands[name];
+
+    if (cmd === undefined) {
+        log.error('Command not found!');
+        return;
+    }
+
+    cmd.exec(options, value);
+
+};
 
 /* Extract label and store it into label variable
  * Basically, it turns '* chapter1 | save name' into:

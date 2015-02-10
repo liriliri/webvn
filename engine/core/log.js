@@ -18,7 +18,7 @@ var colors = {
 };
 
 // Wrapper of console.error
-log.err = function (str) {
+log.error = function (str) {
 
     console.error('%c' + str, 'color: ' + colors.err);
 

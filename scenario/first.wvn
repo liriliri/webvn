@@ -2,7 +2,8 @@
  * Not going to be execute
  */
 * start | 主程序入口
-bg --src=bg1.jpg --trans=fadeIn
+log -t=info --msg='This is the info message'
+bg --src=bg1.jpg --trans=fadeIn -d --delay=2000
 // One line comment
 <%
 var x = 5;

@@ -58,7 +58,7 @@ var template = function (source, options) {
 
         };
     } catch (e) {
-        s.log.err('Template error: ' + e.message);
+        s.log.error('Template error: ' + e.message);
     }
 
 };

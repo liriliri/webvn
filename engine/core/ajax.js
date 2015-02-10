@@ -153,7 +153,7 @@ function loadScenario (scenes, i, cb) {
 
     ajax.get(scenes[i]).then(function (value) {
 
-        cb(value);
+        cb(value, i === scenes.length - 1);
         if (i < scenes.length - 1) {
             loadScenario(scenes, i + 1, cb);
         }
