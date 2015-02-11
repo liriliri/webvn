@@ -57,7 +57,8 @@ config.loadFiles = {
         // Command
         cmd: [
             'log',
-            'background'
+            'bg',
+            'bgm'
         ],
         // Scripts after all module is loading
         init: [

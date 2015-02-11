@@ -94,12 +94,16 @@ script.Command = kclass.create({
                 keys.push(key);
             } else {
                 key = key.substr(1, key.length - 1);
-                for (var i = 0, len = key.length; i < len; i++) {
-                    var k = shortHands[key[i]];
-                    if (k) {
-                        ret[k] = value;
+                if (shortHands[key]) {
+                    ret[shortHands[key]] = value;
+                } else {
+                    for (var i = 0, len = key.length; i < len; i++) {
+                        var k = shortHands[key[i]];
+                        if (k) {
+                            ret[k] = value;
+                        }
+                        keys.push(k);
                     }
-                    keys.push(k);
                 }
             }
 
@@ -127,14 +131,12 @@ script.Command = kclass.create({
 script.exec = function (unit) {
 
     switch (unit.type) {
-        case 'command': {
+        case 'command': 
             execCommand(unit);
             break;
-        }
-        case 'code': {
+        case 'code': 
             execCode(unit);
             break;
-        }
         default:
             break;
     }
