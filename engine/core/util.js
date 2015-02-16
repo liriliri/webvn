@@ -41,6 +41,20 @@ util.clone = function (o) {
 
 };
 
+// Check if the value is present in the list
+util.contains = function (o, target) {
+
+    if (o == null) {
+        return false;
+    }
+    if (o.length !== +o.length) {
+        obj = util.values(obj);
+    }
+
+    return util.indexOf(target, o) >= 0;
+
+};
+
 // Check if a string startsWith a specific string
 util.endsWith = function (str, suffix) {
 
@@ -247,7 +261,22 @@ util.map = function (o, fn) {
 
     return values;
 
-}
+};
+
+// Retrieve the values of an object's properties
+util.values = function (o) {
+
+    var keys = util.keys(o),
+        len = keys.length;
+    var values = Array(len);
+
+    for (var i = 0; i < len; i++) {
+        values[i] = obj[keys[i]];
+    }
+
+    return values;
+
+};
 
 // Private function
 

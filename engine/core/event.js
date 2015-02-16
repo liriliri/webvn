@@ -1,190 +1,176 @@
 /* Event module
- * Inspired by zepto.js
+ * Note: jQuery's implementation is too complex for this one
+ * Zepto's implementation is way too simple and has some kind of problem
+ * Now I have to implement my own version :(
  */
 
-webvn.add('event', ['util', 'select'], function (s, util, select) {
+webvn.add('event', ['util', 'select', 'class'], function (s, util, select, kclass) {
 
-var eventModule = {};
+var event = {};
 
-var hover = {
-        mouseenter: 'mouseover',
-        mouseleave: 'mouseout'
-    },
-    focusinSupported = 'onfocusin' in window,
-    focus = {
-        focus: 'focusin',
-        blur: 'focusout'
-    },
-    eventMethods = {
-        preventDefault: 'isDefaultPrevented',
-        stopImmediatePropagation: 'isImmediatePropagationStopped',
-        stopPropagation: 'isPropagationStopped'
-    };
+/* Add event
+ * All events are attached to the elem's events, it looks as below:
+ * ele.events = {
+ *      'click': [],
+ *      'mouseenter': []   
+ * }
+ */
+event.add = function (ele, type, fn, selector) {
 
-var _uid = 1,
-    handlers = {};
+    var handleObj = {
+            selector: selector,
+            handler: fn
+        }, handlers;
 
-// Add event
-eventModule.add = function (element, events, fn, data, selector, delegator, capture) {
+    if (!ele.events) {
+        ele.events = {};
+    }
+    if (!(handlers = ele.events[type])) {
+        handlers = ele.events[type] = [];
+        handlers.delegateCount = 0;
+        ele.addEventListener(type, function (e) {
 
-    var id = uid(element), set = (handlers[id] || (handlers[id] = []));
+            trigger.apply(ele, arguments);
 
-    events.split(/\s/).forEach(function (event) {
+        }, false);
+    }
 
-        var handler = parse(event);
-        handler.fn = fn;
-        handler.sel = selector;
-
-        if (handler.e in hover) {
-            var related = e.relatedTarget;
-            if (!related || (related !== this) && !select.contains(this, related));
-        }
-
-        handler.del = delegator;
-        var callback = delegator || fn;
-        handler.proxy = function (e) {
-
-            e = compatible(e);
-            if (e.isImmediatePropagationStopped()) {
-                return;
-            }
-            e.data = data;
-            var result = callback.apply(element, e._args == undefined ? [e] : [e].concat(e._args));
-            if (result === false) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-            return result;
-        }
-        handler.i = set.length;
-        set.push(handler);
-        if ('addEventListener' in element) {
-            element.addEventListener(realEvent(handler.e), handler.proxy, eventCapture(handler, capture));
-        }
-
-    });
+    if (selector) {
+        handlers.splice(handlers.delegateCount++, 0, handleObj);
+    } else {
+        handlers.push(handleObj);
+    }
 
 };
 
-function compatible(event, source) {
+event.Event = kclass.create({
+    constructor: function Event(e) {
 
-    if (source || !event.isDefaultPrevented) {
-        source || (source = event);
-        util.each(eventMethods, function (predicate, name) {
+        this.originalEvent = e;
 
-            var sourceMethod = source[name];
-            event[name] = function () {
-                this[predicate] = returnTrue;
-                return sourceMethod && sourceMethod.apply(source, arguments);
-            };
-            event[predicate] = returnFalse;
+    },
+    isDefaultPrevented: returnFalse,
+    isPropagationStopped: returnFalse,
+    isImmediatePropagationStopped: returnFalse,
+    preventDefault: function() {
 
-        });
-
-        if (source.isDefaultPrevented !== undefined ? source.defaultPrevented :
-            'returnValue' in source ? source.returnValue === false :
-            source.getPreventDefault && source.getPreventDefault()) {
-            event.isDefaultPrevented = returnTrue;
+        var e = this.originalEvent;
+        this.isDefaultPrevented = returnTrue;
+        if ( e && e.preventDefault ) {
+            e.preventDefault();
         }
+
+    },
+    stopPropagation: function() {
+
+        var e = this.originalEvent;
+        this.isPropagationStopped = returnTrue;
+        if ( e && e.stopPropagation ) {
+            e.stopPropagation();
+        }
+
+    },
+    stopImmediatePropagation: function() {
+
+        var e = this.originalEvent;
+        this.isImmediatePropagationStopped = returnTrue;
+        if ( e && e.stopImmediatePropagation ) {
+            e.stopImmediatePropagation();
+        }
+        this.stopPropagation();
     }
-
-    return event;
-
-}
-
-function eventCapture(handler, captureSetting) {
-
-    return handler.del &&
-        (!focusinSupported && (handler.e in focus)) ||
-        !!captureSetting;
-
-}
-
-function parse(event) {
-
-    var parts = ('' + event).split('.');
-
-    return {
-        e: parts[0],
-        ns: parts.slice(1).sort().join('')
-    };
-
-}
-
-function realEvent(type) {
-
-    return hover[type] || (focusinSupported && focus[type]) || type;
-
-}
+});
 
 function returnFalse() {
 
     return false;
 
-}
+};
 
 function returnTrue() {
 
     return true;
 
-}
+};
 
-function uid(element) {
+function trigger(e) {
 
-    return element.uid || (element.uid = _uid++);
+    var handlers = this.events[e.type],
+        handlerObj,
+        handlerQueue = formatHandlers.call(this, e, handlers);
 
-}
+    e = new event.Event(e);
 
-// Extend select module
-select.fn.on = function (event, selector, data, callback, one) {
+    var i, j, matched, ret;
 
-    var autoRemove, delegator, $this = this;
-    if (event && !util.isString(event)) {
-        util.each(event, function (fn, type) {
-            $this.on(type, selector, data, fn, one);
-        });
-        return $this;
-    }
-
-    if (!util.isString(selector) && !util.isFunction(callback) && callback !== false) {
-        callback = data, data = selector, selector = undefined;
-    }
-
-    if (callback === undefined || data === false) {
-        callback = data, data = undefined;
-    }
-
-    if (callback === false) {
-        callback = returnFalse;
-    }
-
-    return $this.each(function (_, element) {
-
-        if (one) {
-            autoRemove = function (e) {
-
-                remove(element, e.type, callback);
-                return callback.apply(this, arguments);
-
-            };
-        } 
-
-        if (selector) {
-            delegator = function (e) {
-                var evt,
-                    match = select(e.target).closest(selector, element).get(0);
-                if (match && match !== element) {
-                    evt = select.extend(createProxy(e), {currentTarget: match, liveFired: element})
-                    return (autoRemove || callback).apply(match, [evt].concat(slice.call(arguments, 1)))
-                }
-            };
+    i = 0;
+    while ((matched = handlerQueue[i++]) && !e.isPropagationStopped()) {
+        e.currentTarget = matched.elem;
+        j = 0;
+        while ((handleObj = matched.handlers[j++]) &&
+            !e.isImmediatePropagationStopped() ) {
+            ret = handleObj.handler.apply(matched.elem, [e]);
+            if (ret === false) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
         }
+    }
 
-        eventModule.add(element, event, callback, data, selector, delegator || autoRemove);
+}
+
+function formatHandlers(e, handlers) {
+
+    var cur = e.target,
+        matches,
+        handlerQueue = [],
+        delegateCount = handlers.delegateCount;
+
+    if (cur.nodeType) {
+        for ( ; cur !== this; cur = cur.parentNode || this ) {
+            matches = [];
+            for (var i = 0; i < delegateCount; i++) {
+                handleObj = handlers[i];
+                sel = handleObj.selector + ' ';
+                if (matches[sel] === undefined) {
+                    matches[sel] = util.contains(this.querySelectorAll(sel), cur);
+                }
+                if (matches[sel]) {
+                    matches.push(handleObj);
+                }
+            }
+            if (matches.length) {
+                handlerQueue.push({elem: cur, handlers: matches});
+            }
+        }
+    }
+    if (delegateCount < handlers.length) {
+        handlerQueue.push({
+            elem: this, 
+            handlers: handlers.slice(delegateCount)
+        });
+    }
+
+    return handlerQueue;
+
+}
+
+// Extend select method
+select.fn.on = function (type, selector, fn) {
+
+    if (fn === undefined) {
+        fn = selector;
+        selector = undefined;
+    }
+
+    return this.each(function (_, ele) {
+
+        event.add(ele, type, fn, selector);
+
     });
 
 };
 
-return eventModule;
+return event;
 
 });

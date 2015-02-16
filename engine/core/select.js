@@ -14,7 +14,8 @@ var cssNumber = {
     adjacencyOperators = [ 'after', 'prepend', 'before', 'append' ],
     elementDisplay = {};
 
-var slice = [].slice;
+var emptyArray = [],
+    slice = emptyArray.slice;
 
 var select = function (selector, context) {
 
@@ -27,6 +28,8 @@ select.fn = select.prototype = {
     constructor: select,
 
     selector: '',
+
+    indexOf: emptyArray.indexOf,
 
     length: 0,
 

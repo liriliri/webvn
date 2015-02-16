@@ -1,7 +1,7 @@
 // Manager of ui component
 
-webvn.add('ui', ['class', 'select', 'config'], 
-    function (s, kclass, $, config) {
+webvn.add('ui', ['class', 'select', 'config', 'util'], 
+    function (s, kclass, $, config, util) {
 
 // Default config
 var defaults = {
@@ -86,9 +86,32 @@ var DivUi = BaseUi.extend({
 
     },
     // Set content
-    setBody: function (html) {
+    body: function (html) {
 
         this.$ele.html(html);
+
+        return this;
+
+    },
+    // Bind events
+    event: function (type, fn) {
+
+        var self = this,
+            events = {};
+
+        if (util.isObject(type)) {
+            events = type;
+        } else {
+            events[type] = fn;
+        }
+
+        /*util.each(events, function (fn, type) {
+
+            var parts = type.split(' ');
+
+            self.$ele.on(parts[0], parts[1], fn);
+
+        });*/
 
         return this;
 

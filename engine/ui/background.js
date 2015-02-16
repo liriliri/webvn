@@ -8,6 +8,6 @@ $ele.addClass('fill');
 
 var tpl = '<img src="/asset/test/bg1.png">';
 
-background.setBody(tpl).show();
+background.body(tpl).show();
 
 });

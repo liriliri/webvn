@@ -5,10 +5,17 @@
 <title>Event</title>
 <script src="/engine/core/webvn.js" data-config="/config"></script>
 </head>
+<style type="text/css">
+    #test {
+        background: #fff;
+    }
+</style>
 <body>
 <div id="test">
 	Click me
+    <span id="delegate-wrapper">
 	<span id="delegate">Delegate!</span>
+    </span>
 </div>
 <script>
 webvn.loader.ready(function () {
@@ -19,6 +26,15 @@ var $test = select('#test');
 
 $test.on('click', function () {
     console.log('yep');
+});
+
+$test.on('click', '#delegate', function (e) {
+    console.log('delegate');
+});
+
+$test.on('click', '#delegate-wrapper', function (e) {
+    e.stopPropagation();
+    console.log('delegate-wrapper');
 });
 
 });
