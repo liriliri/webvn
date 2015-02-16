@@ -78,6 +78,7 @@ event.Event = kclass.create({
             e.stopImmediatePropagation();
         }
         this.stopPropagation();
+        
     }
 });
 

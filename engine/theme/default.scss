@@ -1,0 +1,33 @@
+// Default theme style
+$primary-color: #357cc7;
+$secondary-color: #e56437;
+
+* {
+    font-family: '微软雅黑';
+}
+
+// Menu style
+#menu {
+    ul {
+        position: absolute;
+        height: 50%;
+        width: 50%;
+        top: 50%;
+        right: 0;
+        li {
+            font-size: 35px;
+            padding: 15px;
+            text-align: center;
+            color: $primary-color;
+            margin: 0px auto;
+            margin-bottom: 10px;
+            transition: color .3s, background .3s;
+            width: 200px;
+            border-radius: 50%;
+            &:hover {
+                color: #fff;
+                background: $secondary-color;
+            }
+        }
+    }
+}

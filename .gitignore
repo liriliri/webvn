@@ -4,6 +4,8 @@
 /bower_components/
 /avg_engine/
 /engine/lib/
+/engine/theme/**/*.css
+/.sass-cache/
 /build/
 /asset/
 /custom/

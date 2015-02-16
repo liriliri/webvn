@@ -16,6 +16,9 @@ config.loadFiles = {
             'menu',
             'background'
         ],
+        theme: [
+            'default'
+        ],
         custom: [
             'base',
             'ui'
@@ -68,6 +71,7 @@ config.loadFiles = {
     prefix: {
         css: {
             ui: '/engine/ui/',
+            theme: '/engine/theme/',
             custom: '/custom/'
         },
         js: {

@@ -7,6 +7,7 @@ var npmTasks = [
     'grunt-contrib-concat',
     'grunt-contrib-uglify',
     'grunt-contrib-cssmin',
+    'grunt-contrib-sass',
     'grunt-contrib-copy'
 ];
 
@@ -85,6 +86,20 @@ grunt.initConfig({
     		'Gruntfile.js',
     		'engine/core/**/*.js'
     	]
+    },
+    sass: {
+        options: {
+            sourcemap: 'none'
+        },
+        theme: {
+            files: [{
+                expand: true,
+                cwd: 'engine/theme',
+                src: '**/*.scss',
+                dest: 'engine/theme',
+                ext: '.css'
+            }]
+        }
     },
     uglify: {
         engine: {

@@ -105,13 +105,13 @@ var DivUi = BaseUi.extend({
             events[type] = fn;
         }
 
-        /*util.each(events, function (fn, type) {
+        util.each(events, function (fn, type) {
 
-            var parts = type.split(' ');
+            var parts = type.split(/\s/);
 
-            self.$ele.on(parts[0], parts[1], fn);
+            self.$ele.on(parts[0], parts[parts.length - 1], fn);
 
-        });*/
+        });
 
         return this;
 
