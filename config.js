@@ -61,7 +61,8 @@ config.loadFiles = {
         cmd: [
             'log',
             'bg',
-            'bgm'
+            'bgm',
+            'menu'
         ],
         // Scripts after all module is loading
         init: [
@@ -87,6 +88,7 @@ config.loadFiles = {
 // Script module config
 config.script = {
     scenario: [
+        'init',
         'first',
         'second'
     ],

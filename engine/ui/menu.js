@@ -38,6 +38,4 @@ menu.body(tpl).event({
     }
 });
 
-menu.show();
-
 });

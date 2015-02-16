@@ -6,8 +6,8 @@ var background = ui.create('background', 'div'),
 	$ele = background.$ele;
 $ele.addClass('fill');
 
-var tpl = '<img src="/asset/test/bg1.png">';
+var tpl = '<img src="">';
 
-background.body(tpl).show();
+background.body(tpl);
 
 });
