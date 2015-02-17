@@ -43,6 +43,7 @@ config.loadFiles = {
             'event',
             'anim',
             'template',
+            'video',
             'ui'
         ],
         // Engine extension
@@ -56,6 +57,7 @@ config.loadFiles = {
         ui: [
             'menu',
             'background',
+            'video',
             'rain'
         ],
         // Command
@@ -63,7 +65,8 @@ config.loadFiles = {
             'log',
             'bg',
             'bgm',
-            'menu'
+            'menu',
+            'video'
         ],
         // Scripts after all module is loading
         init: [

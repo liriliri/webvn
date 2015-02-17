@@ -3,6 +3,7 @@
  */
 * start | 主程序入口
 // bgm -s='/asset/test/bgm1.ogg' -l
+video -d -pl
 log -t=info --msg='This is the info message'
 bg --src=bg1.jpg --trans=fadeIn -d --delay=2000
 // One line comment
