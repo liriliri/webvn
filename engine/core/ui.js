@@ -1,7 +1,7 @@
 // Manager of ui component
 
-webvn.add('ui', ['class', 'select', 'config', 'util'], 
-    function (s, kclass, $, config, util) {
+webvn.add('ui', ['class', 'select', 'config', 'util', 'script'], 
+    function (s, kclass, $, config, util, script) {
 
 // Default config
 var defaults = {
@@ -14,6 +14,13 @@ conf.set(defaults).set(config.global.ui, true);
 var ui = {},
     cache = {}, // Store all the ui components
     $container = $('#webvn');
+
+// When the ui is clicked, execute the script
+$container.on('click', function () {
+
+    script.play();
+
+});
 
 // Init container width and height
 $container.css({

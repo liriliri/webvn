@@ -1,12 +1,18 @@
 // Menu ui component
 
-webvn.use(['ui'], function (s, ui) {
+webvn.use(['ui', 'script'], function (s, ui, script) {
 
 var menu = ui.create('menu', 'div'),
 	$ele = menu.$ele;
 
 $ele.addClass('fill');
 
+menu.show = function () {
+
+    script.pause();
+    $ele.fadeIn();
+
+};
 
 var tpl = '<ul>' +
 		'<li class="start-game">开始游戏</li>' +
@@ -18,7 +24,11 @@ var tpl = '<ul>' +
 menu.body(tpl).event({
     'click .start-game': function () {
 
-        console.log('Start game!');
+        $ele.fadeOut('fast', function () {
+
+            script.resume();
+
+        });
 
     },
     'click .load-game': function () {

@@ -65,8 +65,10 @@ var anim = function (properties, duration, ease, callback, delay) {
         endEvent = fx.transitionEnd;
 
     if (duration === undefined) {
-        duration = conf.get('speeds')._default;
+        duration = fx.speeds._default;
     }
+    duration = (typeof duration == 'number' ? duration :
+        (fx.speeds[duration] || fx.speeds._default)) / 1000;
     if (delay === undefined) {
         delay = 0;
     }
@@ -144,6 +146,9 @@ function normalizeEvent(name) {
 }
 
 // Extend select module
+var origShow = select.fn.show,
+    origHide = select.fn.hide;
+
 select.fn.animate = function (properties, duration, ease, callback, delay) {
 
     if (util.isFunction(duration)) {
@@ -161,10 +166,6 @@ select.fn.animate = function (properties, duration, ease, callback, delay) {
         delay = duration.delay;
         duration = duration.duration;
     }
-    if (duration) {
-        duration = (typeof duration == 'number' ? duration :
-            (fx.speeds[duration] || fx.speeds._default)) / 1000;
-    }
     if (delay) {
         delay = parseFloat(delay) / 1000;
     }
@@ -174,6 +175,59 @@ select.fn.animate = function (properties, duration, ease, callback, delay) {
 };
 
 select.fn.anim = anim;
+
+select.fn.fadeIn = function (speed, callback) {
+
+    var target = this.css('opacity');
+    if (target > 0) {
+        this.css('opacity', 0);
+    } else {
+        target = 1;
+    }
+
+    return origShow.call(this).fadeTo(speed, target, callback);
+
+};
+
+select.fn.fadeOut = function (speed, callback) {
+
+    return hide(this, speed, null, callback);
+
+};
+
+select.fn.fadeTo = function (speed, opacity, callback) {
+
+    return animProxy(this, speed, opacity, null, callback);
+
+};
+
+function hide(el, speed, scale, callback) {
+
+    return animProxy(el, speed, 0, scale, function () {
+
+        origHide.call(el);
+        callback && callback.call(el);
+
+    });
+
+}
+
+function animProxy(el, speed, opacity, scale, callback) {
+
+    if (typeof speed == 'function' && !callback) {
+        callback = speed, speed = undefined
+    }
+    var props = { 
+        opacity: opacity
+    };
+    if (scale) {
+        props.scale = scale;
+        el.css(fx.cssPrefix + 'transform-origin', '0 0');
+    }
+
+    return el.animate(props, speed, null, callback);
+
+}
 
 return anim;
 

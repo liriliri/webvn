@@ -15,7 +15,7 @@ var script = {},
     splitScript = [],
     // The script num currently executing 
     curNum = 0,
-    isPause = true,
+    isPaused = false,
     /* Script that is actually executing, and is not just plain string
      * If empty, get new ones from splitScript
      */
@@ -178,7 +178,31 @@ script.load = function (scenario) {
 
 };
 
+script.pause = function (duration) {
+
+    isPaused = true;
+    if (duration) {
+        setTimeout(function () {
+
+            isPaused = false;
+
+        }, duration);
+    }
+
+};
+
 script.resume = function () {
+
+    isPaused = false;
+    script.play();
+
+};
+
+script.play = function () {
+
+    if (isPaused) {
+        return;
+    }
 
     if (execScript.length === 0) {
         var line = splitScript[curNum];
@@ -188,13 +212,14 @@ script.resume = function () {
 
     script.exec(execScript.shift());
 
-}
+};
 
 // Start executing scripts
 script.start = function () {
 
     curNum = 0;
-    script.resume();
+    execScript = [];
+    script.play();
 
 };
 
