@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Anim</title>
+<script src="/engine/core/webvn.js" data-config="/config"></script>
+<style>
+#test {
+	width: 50px;
+    height: 50px;
+    background: #08c;
+}
+</style>
+</head>
+<body>
+<div id="test">
+</div>
+<script>
+webvn.loader.ready(function () {
+
+webvn.use(['select'], function (s, select) {
+
+var test = select('#test');
+
+test.animate({
+    width: '100px',
+    height: '100px'
+}, 500);
+
+});
+
+});
+</script>
+</body>
+</html>

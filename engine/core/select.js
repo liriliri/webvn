@@ -373,6 +373,11 @@ select.fn.extend({
         });
 
     },
+    size: function () {
+
+        return this.length;
+
+    },
     text: function (text) {
 
         return 0 in arguments ?

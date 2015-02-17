@@ -41,6 +41,7 @@ config.loadFiles = {
             'script',
             'audio',
             'event',
+            'anim',
             'template',
             'ui'
         ],
