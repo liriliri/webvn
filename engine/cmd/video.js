@@ -9,6 +9,10 @@ script.addCommand('video', {
         type: Boolean,
         shortHand: 'd'
     },
+    click: {
+        type: String,
+        shortHand: 'c'
+    },
     play: {
         type: Boolean,
         shortHand: 'pl'
@@ -26,6 +30,11 @@ script.addCommand('video', {
     } else if (options.play === false) {
         video.stop();
     }
+
+    if (!options.click) {
+        options.click = 'stop';
+    }
+    video.clickAction(options.click);
 
 });
 

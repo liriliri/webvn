@@ -235,48 +235,40 @@ function getModules(requires) {
 // Look for config file and load some scripts
 (function (s) {
 
-var loader = s.loader,
-    script, dataMain,
-    scripts = document.getElementsByTagName('script');
+// Load webvn.json
+var xhr = new window.XMLHttpRequest();
+xhr.onload = function () {
 
-for (i = scripts.length - 1; i > -1; i--) {
-    if (scripts[i]) {
-        script = scripts[i];
-        dataConfig = script.getAttribute('data-config');
-        if (dataConfig) {
-            break;
-        }
+    var data = JSON.parse(xhr.responseText);
+    loadFiles(data);
+
+};
+xhr.open('get', 'webvn.json');
+xhr.send();
+
+function loadFiles(fileList) {
+
+    var loader = s.loader,
+        css = fileList.css,
+        js = fileList.js,
+        key, item;
+
+    for (key in css) {
+        item = css[key];
+        loader.prefix(item.path);
+        loader.css(item.files);
     }
-}
 
-if (dataConfig) {
-    loader.script(dataConfig).
-        wait(function () {
+    for (key in js) {
+        item = js[key];
+        loader.prefix(item.path);
+        loader.script(item.files);
+    }
 
-        var config = window.config,
-            loadFiles = config.loadFiles,
-            css = loadFiles.css,
-            js = loadFiles.js,
-            prefix = loadFiles.prefix;
-        for (var key in css) {
-            if (prefix.css[key]) {
-                loader.prefix(prefix.css[key]);
-            }
-            loader.css(css[key]);
-        }
-        for (var key in js) {
-            if (prefix.js[key]) {
-                loader.prefix(prefix.js[key]);
-            }
-            loader.script(js[key]);
-        }
-        loader.wait(function () {
-            loader.readyTrigger();
-        });
-
+    loader.wait(function () {
+        loader.readyTrigger();
     });
-} else {
-    console.error("Failed to load configuration");
+
 }
 
 })(webvn)

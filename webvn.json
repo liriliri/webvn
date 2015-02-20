@@ -1,0 +1,91 @@
+{
+    "css": {
+        "ui": {
+            "path": "/engine/ui/",
+            "files": [
+                "base",
+                "menu",
+                "background"
+            ]
+        },
+        "theme": {
+            "path": "/engine/theme/",
+            "files": [
+                "default"
+            ]
+        },
+        "custom": {
+            "path": "/custom/",
+            "files": [
+                "base",
+                "ui"
+            ]
+        }
+    },
+    "js": {
+        "config": {
+            "path": "/config/",
+            "files": [
+                "config"
+            ]
+        },
+        "core": {
+            "path": "/engine/core/",
+            "files": [
+                "log",
+                "util",
+                "select",
+                "class",
+                "storage",
+                "config",
+                "system",
+                "promise",
+                "ajax",
+                "parser",
+                "script",
+                "audio",
+                "event",
+                "anim",
+                "template",
+                "video",
+                "ui"
+            ]
+        },
+        "lib": {
+            "path": "/engine/lib/",
+            "files": [
+                "TweenMax"
+            ]
+        },
+        "ext": {
+            "path": "/engine/ext/",
+            "files": [
+            ]
+        },
+        "ui": {
+            "path": "/engine/ui/",
+            "files": [
+                "menu",
+                "background",
+                "video",
+                "rain"
+            ]
+        },
+        "cmd": {
+            "path": "/engine/cmd/",
+            "files": [
+                "log",
+                "bg",
+                "bgm",
+                "menu",
+                "video"
+            ]
+        },
+        "init": {
+            "path": "/engine/",
+            "files": [
+                "init"
+            ]
+        }
+    }
+}
