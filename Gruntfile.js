@@ -6,6 +6,7 @@ var npmTasks = [
 	'grunt-contrib-jshint',
     'grunt-contrib-concat',
     'grunt-contrib-uglify',
+    'grunt-contrib-watch',
     'grunt-contrib-cssmin',
     'grunt-contrib-sass',
     'grunt-contrib-copy'
@@ -97,6 +98,15 @@ grunt.initConfig({
                 dest: 'engine/theme',
                 ext: '.css'
             }]
+        },
+        ui: {
+            files: [{
+                expand: true,
+                cwd: 'engine/ui',
+                src: '**/*.scss',
+                dest: 'engine/ui',
+                ext: '.css'
+            }]
         }
     },
     uglify: {
@@ -108,6 +118,18 @@ grunt.initConfig({
                 dest: 'build/engine'
             }]
         }
+    },
+    watch: {
+        sass: {
+            options: {
+                spawn: false,
+            },
+            files: [
+                'engine/theme/**/*.scss',
+                'engine/ui/**/*.scss'
+            ],
+            tasks: ['sass:theme', 'sass:ui']
+        }
     }
 });
 
@@ -117,7 +139,8 @@ for (var i = 0, len = npmTasks.length; i < len; i++) {
 }
 
 // Start developing environment
-grunt.registerTask('dev', ['connect:server']);
+grunt.registerTask('server', ['connect:server']);
+grunt.registerTask('dev', ['watch']);
 // Build the final product
 grunt.registerTask('build', ['concat:engineJs', 'uglify:engine', 'concat:engineCss', 'cssmin:engine']);
 // Copy 3rd lib from bower_components folder

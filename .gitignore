@@ -6,6 +6,7 @@
 /avg_engine/
 /engine/lib/
 /engine/theme/**/*.css
+/engine/ui/**/*.css
 /.sass-cache/
 /build/
 /asset/

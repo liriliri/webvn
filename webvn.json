@@ -4,8 +4,7 @@
             "path": "/engine/ui/",
             "files": [
                 "base",
-                "menu",
-                "background"
+                "ui"
             ]
         },
         "theme": {
