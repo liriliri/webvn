@@ -42,7 +42,7 @@ var Sound = kclass.create({
 
     },
     // Load 
-    load: function (src, cb) {
+    load: function (src) {
 
         s.log.info('Loading audio: ' + src);
 

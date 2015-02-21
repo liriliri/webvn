@@ -13,7 +13,17 @@ video.create = function (v) {
 var Video = kclass.create({
     constructor: function Video(v) {
 
+        var self = this;
+
+        v.onloadeddata = function () {
+
+            v.play();    
+            self.loaded = true;
+
+        };
+
         this.video = v;
+        this.loaded = false;
 
     },
     event: function (events) {
@@ -29,6 +39,14 @@ var Video = kclass.create({
     isPlaying: function () {
 
         return !this.video.paused;
+
+    },
+    // Load 
+    load: function (src) {
+
+        s.log.info('Loading video: ' + src);
+
+        this.video.src = src;
 
     },
     // Pause

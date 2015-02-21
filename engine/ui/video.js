@@ -6,7 +6,7 @@ var vid = ui.create('video', 'div'),
     clickAction = 'stop',
     $ele = vid.$ele;
 
-var tpl = '<video class="video fill" src="/asset/test/video.mp4"></video>';
+var tpl = '<video class="video fill"></video>';
 
 vid.body(tpl);
 
@@ -33,6 +33,12 @@ vid.show = function () {
 
     $ele.show();
     script.pause();
+
+};
+
+vid.src = function (src) {
+
+    video.load(src);
 
 };
 

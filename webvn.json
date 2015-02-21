@@ -23,6 +23,12 @@
         }
     },
     "js": {
+        "basic": {
+            "path": "/engine/core/",
+            "files": [
+                "util"
+            ]
+        },
         "config": {
             "path": "/config/",
             "files": [
@@ -33,7 +39,6 @@
             "path": "/engine/core/",
             "files": [
                 "log",
-                "util",
                 "select",
                 "class",
                 "storage",

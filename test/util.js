@@ -4,13 +4,6 @@ webvn.loader.ready(function() {
 
 webvn.use(['util', 'template'], function(s, util, template) {
 
-QUnit.test('Template Module', function (assert) {
-
-    var tpl1 = template('<div><%$out+=data;%></div>');
-    assert.equal(tpl1({data:'WebVN'}), '<div>WebVN</div>', 'basic');
-
-});
-
 QUnit.test('Util Module', function (assert) {
 
     // endsWith

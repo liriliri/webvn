@@ -1,11 +1,15 @@
 /* Wrapper of console
  * Used to display logs
+ * Notice that only under debug mode, the info is displayed
  */
 
-webvn.add('log', function (s) {
+webvn.add('log', ['conf'], function (s, conf) {
 
 var log = function (str) {
 
+    if (!conf.debug) {
+        return;
+    }
     console.log(str);
 
 };
@@ -20,6 +24,9 @@ var colors = {
 // Wrapper of console.error
 log.error = function (str) {
 
+    if (!conf.debug) {
+        return;
+    }
     console.error('%c' + str, 'color: ' + colors.err);
 
 };
@@ -27,6 +34,9 @@ log.error = function (str) {
 // Wrapper of console.info
 log.info = function (str) {
 
+    if (!conf.debug) {
+        return;
+    }
     console.info('%c' + str, 'color: ' + colors.info);
 
 };
@@ -34,6 +44,9 @@ log.info = function (str) {
 // Wrapper of console.warn
 log.warn = function (str) {
 
+    if (!conf.debug) {
+        return;
+    }
     console.warn('%c' + str, 'color: ' + colors.warning);
 
 };

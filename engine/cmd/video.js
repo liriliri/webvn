@@ -16,6 +16,10 @@ script.addCommand('video', {
     play: {
         type: Boolean,
         shortHand: 'pl'
+    },
+    src: {
+        type: String,
+        shortHand: 's'
     }
 }, function (options, value) {
 
@@ -23,6 +27,10 @@ script.addCommand('video', {
         video.show();
     } else if (options.display === false) {
         video.hide();
+    }
+
+    if (options.src) {
+        video.src(options.src);
     }
 
     if (options.play === true) {

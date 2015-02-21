@@ -163,18 +163,24 @@ script.load = function (scenario) {
 
     loader.scenario(scenario, function (data, isLast) {
 
-        var splitData = parser.split(data);
-
-        getLabel(splitData);
-
-        splitScript = splitScript.concat(splitData);
-
-        // If this is the last scenario, then begin executing
-        if (isLast) {
-            script.start();
-        }
+        script.loadText(data, isLast);
 
     });
+
+};
+
+// Load a bunch of commands
+script.loadText = function (str, startGame) {
+
+    var splitData = parser.split(str);
+
+    getLabel(splitData);
+
+    splitScript = splitScript.concat(splitData);
+
+    if (startGame) {
+        script.start();
+    }
 
 };
 

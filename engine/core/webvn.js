@@ -192,6 +192,10 @@ s.add = function (name, requires, module) {
     requires.unshift(s);
     s[name] = module.apply(null, requires);
 
+    if (!s.conf || !s.conf.debug) {
+        return;
+    }
+
     if (s[name]) {
         console.info('Module ' + name + ' loaded');
     } else {
@@ -243,7 +247,7 @@ xhr.onload = function () {
     loadFiles(data);
 
 };
-xhr.open('get', 'webvn.json');
+xhr.open('get', '/webvn.json');
 xhr.send();
 
 function loadFiles(fileList) {

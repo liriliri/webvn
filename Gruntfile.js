@@ -12,14 +12,12 @@ var npmTasks = [
 ];
 
 // Load configuration file
-var config = require('./config'),
-    loadFiles = config.loadFiles,
-    filePrefix = loadFiles.prefix;
+var webvn = require('./webvn.json');
 
 var jsFile = {},
     cssFile = {};
 
-['core', 'lib', 'ui', 'cmd'].forEach(function (key) {
+/*['core', 'lib', 'ui', 'cmd'].forEach(function (key) {
     jsFile[key] = loadFiles.js[key].map(function (item) {
         return filePrefix.js[key].substr(1) + item + '.js';
     });
@@ -29,15 +27,15 @@ var jsFile = {},
     cssFile[key] = loadFiles.css[key].map(function (item) {
         return filePrefix.css[key].substr(1) + item + '.css';
     });
-});
+});*/
 
 var bowerFile = [];
-for (key in config.bower) {
+/*for (key in config.bower) {
     bowerFile.push({
         src: 'bower_components/' + config.bower[key],
         dest: key
     });
-}
+}*/
 
 module.exports = function (grunt) {
 

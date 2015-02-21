@@ -2,6 +2,7 @@
 /doc/
 /node_modules/
 /bower_components/
+/webvn_components/
 /avg_engine/
 /engine/lib/
 /engine/theme/**/*.css
