@@ -2,8 +2,8 @@ var key;
 
 // Npm module list
 var npmTasks = [
-	'grunt-contrib-connect',
-	'grunt-contrib-jshint',
+    'grunt-contrib-connect',
+    'grunt-contrib-jshint',
     'grunt-contrib-concat',
     'grunt-contrib-uglify',
     'grunt-contrib-watch',

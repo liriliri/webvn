@@ -51,6 +51,7 @@
                 "event",
                 "anim",
                 "template",
+                "canvas",
                 "video",
                 "ui"
             ]

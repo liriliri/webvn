@@ -18,7 +18,11 @@ var log = function (str) {
 var colors = {
     info: '#357ae8',
     err: '#d84030',
-    warning: '#f9c621'
+    warning: '#f9c621',
+    sys: {
+        back: '#357ae8',
+        font: '#fff'
+    }
 };
 
 // Wrapper of console.error
@@ -41,6 +45,20 @@ log.info = function (str) {
 
 };
 
+// System info
+log.sys = function (str) {
+
+    if (!conf.debug) {
+        return;
+    }
+    console.log('%c' + str, 
+        'background: ' + colors.sys.back +
+        ';color: ' + colors.sys.font + ' !important' +
+        ';padding: 0 5px;' +
+        ';font-size: 20px;');
+
+};
+
 // Wrapper of console.warn
 log.warn = function (str) {
 
@@ -50,6 +68,9 @@ log.warn = function (str) {
     console.warn('%c' + str, 'color: ' + colors.warning);
 
 };
+
+// Log out version info
+log.sys('WebVN v' + s.VERSION + ' | https://github.com/surunzi/WebVN');
 
 return log;
 

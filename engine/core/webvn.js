@@ -196,10 +196,10 @@ s.add = function (name, requires, module) {
         return;
     }
 
-    if (s[name]) {
-        console.info('Module ' + name + ' loaded');
+    if (s[name] && s.log) {
+        s.log.info('Module ' + name + ' loaded');
     } else {
-        console.error('Failed to create module ' + name);
+        s.log && s.log.error('Failed to create module ' + name);
     }
 
 };
@@ -275,4 +275,4 @@ function loadFiles(fileList) {
 
 }
 
-})(webvn)
+})(webvn);
