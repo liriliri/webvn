@@ -9,6 +9,113 @@ var canvas = {};
 var BaseTextureCache = {},
     TextureCache = {};
 
+canvas.Event = kclass.create({
+    constructor: function (target, name, data) {
+
+        this.__isEventObject = true;
+        this.stopped = false;
+        this.stoppedImmediate = false;
+        this.target = target;
+        this.type = name;
+        this.data = data;
+        this.timeStamp = Date.now();
+        
+    }
+});
+
+canvas.EventTarget = {
+    mixin: function mixin(obj) {
+
+        obj.emit = obj.dispatchEvent = function emit(eventName, data) {
+
+            this._listeners = this._listeners || {};
+
+            if(typeof eventName === 'object') {
+                data = eventName;
+                eventName = eventName.type;
+            }
+
+            if(!data || data.__isEventObject !== true) {
+                data = new canvas.Event(this, eventName, data);
+            }
+
+            if(this._listeners && this._listeners[eventName]) {
+                var listeners = this._listeners[eventName],
+                    length = listeners.length,
+                    fn = listeners[0],
+                    i;
+
+                for(i = 0; i < length; fn = listeners[++i]) {
+                    fn.call(this, data);
+
+                    if(data.stoppedImmediate) {
+                        return this;
+                    }
+                }
+
+                if(data.stopped) {
+                    return this;
+                }
+            }
+
+            if(this.parent && this.parent.emit) {
+                this.parent.emit.call(this.parent, eventName, data);
+            }
+
+            return this;
+
+        };
+
+        obj.on = obj.addEventListener = function on(eventName, fn) {
+
+            this._listeners = this._listeners || {};
+
+            (this._listeners[eventName] = this._listeners[eventName] || []).push(fn);
+
+            return this;
+
+        };
+
+        obj.off = obj.removeEventListener = function off(eventName, fn) {
+
+            this._listeners = this._listeners || {};
+
+            if(!this._listeners[eventName]) {
+                return this;
+            }
+
+            var list = this._listeners[eventName],
+                i = fn ? list.length : 0;
+
+            while(i-- > 0) {
+                if(list[i] === fn || list[i]._originalHandler === fn) {
+                    list.splice(i, 1);
+                }
+            }
+
+            if(list.length === 0) {
+                delete this._listeners[eventName];
+            }
+
+            return this;
+
+        };
+
+    }
+};
+
+// The Rectangle object is an area defined by its position, as indicated by its top-left corner point (x, y) and by its width and its height
+canvas.Rectangle = kclass.create({
+    constructor: function Rectangle(x, y, width, height) {
+
+        this.x = x || 0;
+        this.y = y || 0;
+        this.width = width || 0;
+        this.height = height || 0;
+
+    }
+});
+
 // A texture stores the information that represents an image
 canvas.BaseTexture = kclass.create({
     constructor: function BaseTexture(source) {
@@ -34,6 +141,8 @@ canvas.BaseTexture = kclass.create({
                 self.width = self.source.width;
                 self.height = self.source.height;
 
+                self.dispatchEvent({type: 'loaded', content: self});
+
             };
         }
 
@@ -55,6 +164,8 @@ canvas.BaseTexture = kclass.create({
 
     }
 });
+
+canvas.EventTarget.mixin(canvas.BaseTexture.prototype);
 
 // The base class for all objects that are rendered on the screen
 canvas.DisplayObject = kclass.create({
@@ -87,6 +198,14 @@ canvas.DisplayObjectContainer = canvas.DisplayObject.extend({
             return child;
         }
 
+    },
+    _renderCanvas: function (renderSession) {
+
+        for (var i = 0, len = this.children.length; i < len; i++) {
+            var child = this.children[i];
+            child._renderCanvas(renderSession);
+        }
+
     }
 });
 
@@ -95,6 +214,22 @@ canvas.Renderer = kclass.create({
     constructor: function Renderer(v) {
 
         this.view = v;
+        this.context = this.view.getContext('2d');
+
+        this.renderSession = {
+            context: this.context
+        };
+
+    },
+    render: function (scene) {
+
+        this.renderDisplayObject(scene);
+
+    },
+    renderDisplayObject: function (displayObject) {
+
+        this.renderSession.context = this.context;
+        displayObject._renderCanvas(this.renderSession);
 
     }
 });
@@ -110,28 +245,99 @@ canvas.Scene = canvas.DisplayObjectContainer.extend({
 
 // The Sprite object is the base for all textured objects that are rendered to the screen
 canvas.Sprite = canvas.DisplayObjectContainer.extend({
-    constructor: function Sprite() {
+    constructor: function Sprite(texture) {
 
         this.callSuper();
 
+        this.texture = texture;
+
+        this.renderable = true;
+
     },
-    _renderCanvas: function () {
+    _renderCanvas: function (renderSession) {
 
-
+        renderSession.context.drawImage(
+            this.texture.baseTexture.source,
+            this.texture.crop.x,
+            this.texture.crop.y,
+            this.texture.crop.width,
+            this.texture.crop.height);
 
     }
 });
 
 // A texture stores the information that represents an image or part of an image
 canvas.Texture = kclass.create({
-    constructor: function Texture() {
+    constructor: function Texture(baseTexture, frame, crop, trim) {
 
+        this.noFrame = false;
 
+        if (!frame) {
+            this.noFrame = true;
+            frame = new canvas.Rectangle(0, 0, 1, 1);
+        }
+
+        this.baseTexture = baseTexture;
+        this.valid = false;
+        this.width = 0;
+        this.height = 0;
+
+        this.crop = crop || new canvas.Rectangle(0, 0, 1, 1);
+
+        if (baseTexture.hasLoaded) {
+            if (this.noFrame) {
+                frame = new canvas.Rectangle(0, 0, baseTexture.width, baseTexture.height);
+            }
+            this.setFrame(frame);
+        } else {
+            baseTexture.addEventListener('loaded', this.onBaseTextureLoaded.bind(this));
+        }
+
+    },
+    onBaseTextureLoaded: function () {
+
+        var baseTexture = this.baseTexture;
+        baseTexture.removeEventListener('loaded', this.onLoaded);
+
+        if (this.noFrame) {
+            this.frame = new canvas.Rectangle(0, 0, baseTexture.width, baseTexture.height);
+        }
+
+        this.setFrame(this.frame);
+
+    },
+    setFrame: function (frame) {
+
+        this.noFrame = false;
+        this.frame = frame;
+        this.width = frame.width;
+        this.height = frame.height;
+
+        this.crop.x = frame.x;
+        this.crop.y = frame.y;
+        this.crop.width = frame.width;
+        this.crop.height = frame.height;
+
+        this.valid = frame && frame.width && frame.height &&
+            this.baseTexture.source && this.baseTexture.hasLoaded;
+
+    }
+}, {
+    fromImage: function (imageUrl) {
+
+        var texture = TextureCache[imageUrl];
+
+        if (!texture) {
+            texture = new canvas.Texture(canvas.BaseTexture.fromImage(imageUrl));
+            TextureCache[imageUrl] = texture;
+        }
+
+        return texture;
 
     }
 });
 
-
+canvas.EventTarget.mixin(canvas.Texture.prototype);
 
 return canvas;
 
