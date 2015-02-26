@@ -53,7 +53,7 @@ video.event({
         // When the video is ended, execute the next command
         $ele.fadeOut(function () {
 
-            script.play();
+            script.resume();
 
         });
     }
@@ -67,7 +67,7 @@ vid.event({
                 $ele.fadeOut(function () {
 
                     video.stop();
-                    script.play();
+                    script.resume();
 
                 });
                 break;

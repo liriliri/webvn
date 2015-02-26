@@ -223,6 +223,7 @@ script.play = function () {
 // Start executing scripts
 script.start = function () {
 
+    isPaused = false;
     curNum = 0;
     execScript = [];
     script.play();

@@ -1,13 +1,14 @@
 // Background ui component
 
-webvn.use(['ui'], function (s, ui) {
+webvn.use(['ui', 'canvas'], function (s, ui, canvas) {
 
-var background = ui.create('background', 'div'),
+var background = ui.create('background', 'canvas'),
 	$ele = background.$ele;
 $ele.addClass('fill');
 
-var tpl = '<img src="">';
-
-background.body(tpl);
+var image = new canvas.ImageEntity('/asset/test/bg1.png'),
+    scene = new canvas.Scene(background.getCanvas());
+scene.add(image);
+canvas.renderer.add(scene).start();
 
 });

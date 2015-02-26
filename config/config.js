@@ -3,7 +3,7 @@
 webvn.add('conf', ['util'], function (s, util) {
 
 var config = {
-    debug: false
+    debug: true
 };
 
 // Config can be overitten by global config

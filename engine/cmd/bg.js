@@ -17,7 +17,9 @@ script.addCommand('bg', {
     }
 }, function (options, value) {
 
-
+    if (options.display) {
+        background.show();
+    }
 
 });
 

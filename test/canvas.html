@@ -23,21 +23,11 @@
 
 			webvn.use(['canvas'], function (s, canvas) {
 
-				var scene = new canvas.Scene();
-				var renderer = new canvas.Renderer(document.getElementById('test'));
-				var texture = canvas.Texture.fromImage('/asset/test/bg1.png');
-				var bg = new canvas.Sprite(texture);
-				scene.addChild(bg);
-    			requestAnimationFrame(animate);
-
-				function animate() {
-			        try {
-			    		renderer.render(scene);
-			        	requestAnimationFrame(animate);
-			        } catch (e) {
-			        	console.log(e);
-			        }
-			    }
+				var scene = new canvas.Scene(document.getElementById('test'));
+				var img = new canvas.ImageEntity('/asset/test/bg1.png');
+				scene.add(img);
+				canvas.renderer.add(scene);
+				canvas.renderer.start();
 
 			});
 

@@ -136,7 +136,26 @@ return ajax;
 });
 
 // Extend loader module
-webvn.use(['loader', 'ajax'], function (s, loader, ajax, config) {
+webvn.use(['loader', 'ajax', 'promise'], function (s, loader, ajax, promise) {
+
+// Load image
+loader.image = function (source) {
+
+    return new Promise(function (resolve, reject) {
+
+        var image = new Image;
+
+        image.onload = function () {
+
+            resolve(image);
+
+        };
+
+        image.src = source;
+
+    });
+
+};
 
 /* Load scene
  * Scenes should be array

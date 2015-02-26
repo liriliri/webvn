@@ -3,9 +3,9 @@
  */
 * start | 主程序入口
 // bgm -s='/asset/test/bgm1.ogg' -l
-video -d -pl -c=pause -s=/asset/test/video.mp4
-log -t=info --msg='This is the info message'
+video -d -pl -c=stop -s=/asset/test/video.mp4
 bg --src=bg1.jpg --trans=fadeIn -d --delay=2000
+log -t=info --msg='This is the info message'
 // One line comment
 <%
 var x = 5;

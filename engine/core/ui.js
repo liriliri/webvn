@@ -130,14 +130,20 @@ var CanvasUi = BaseUi.extend({
     constructor: function CanvasUi(name) {
 
         this.callSuper();
+
         this.$ele = $('<canvas id="' + name + '">');
-        this.ctx = this.$ele[0].getContext('2d');
+
+        this.canvas = this.$ele.get(0);
+
+        this.canvas.width = conf.get('width');
+        this.canvas.height = conf.get('height');
+
+        this.init();
 
     },
-    // 获取2d绘图对象
-    getContext2d: function () {
+    getCanvas: function () {
 
-        return this.ctx;
+        return this.canvas;
 
     }
 });
