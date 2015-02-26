@@ -80,6 +80,13 @@ var BaseUi = kclass.create({
 
         return this;
 
+    },
+    hide: function () {
+
+        this.$ele.hide();
+
+        return this;
+
     }
 });
 

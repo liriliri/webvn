@@ -6,7 +6,7 @@ var menu = ui.get('menu');
 
 script.addCommand('menu', {
     'display': {
-        type: Boolean,
+        type: 'Boolean',
         shortHand: 'd'
     }
 }, function (options, value) {

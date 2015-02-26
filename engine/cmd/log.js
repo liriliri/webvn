@@ -6,11 +6,11 @@ webvn.use(['script', 'log'], function (s, script, log) {
 
 script.addCommand('log', {
     type: {
-        type: String,
+        type: 'String',
         shortHand: 't'
     },
     msg: {
-        type: String,
+        type: 'String',
         shortHand: 'm'
     }
 }, function (options, value) {

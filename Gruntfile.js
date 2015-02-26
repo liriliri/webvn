@@ -88,7 +88,7 @@ grunt.initConfig({
     },
     sass: {
         options: {
-            sourcemap: 'none'
+            // sourcemap: 'none'
         },
         theme: {
             files: [{
@@ -103,7 +103,7 @@ grunt.initConfig({
             files: [{
                 expand: true,
                 cwd: 'engine/ui',
-                src: '**/*.scss',
+                src: 'ui.scss',
                 dest: 'engine/ui',
                 ext: '.css'
             }]

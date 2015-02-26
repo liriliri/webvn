@@ -3,7 +3,6 @@
         "ui": {
             "path": "/engine/ui/",
             "files": [
-                "base",
                 "ui"
             ]
         },
@@ -45,6 +44,7 @@
                 "system",
                 "promise",
                 "ajax",
+                "loader",
                 "parser",
                 "script",
                 "audio",
@@ -72,6 +72,7 @@
             "files": [
                 "menu",
                 "background",
+                "dialog",
                 "video",
                 "rain"
             ]
@@ -81,6 +82,7 @@
             "files": [
                 "log",
                 "bg",
+                "dialog",
                 "bgm",
                 "menu",
                 "video"

@@ -6,19 +6,19 @@ var video = ui.get('video');
 
 script.addCommand('video', {
     display: {
-        type: Boolean,
+        type: 'Boolean',
         shortHand: 'd'
     },
     click: {
-        type: String,
+        type: 'String',
         shortHand: 'c'
     },
     play: {
-        type: Boolean,
+        type: 'Boolean',
         shortHand: 'pl'
     },
     src: {
-        type: String,
+        type: 'String',
         shortHand: 's'
     }
 }, function (options, value) {

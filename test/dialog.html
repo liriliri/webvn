@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Test - Dialog</title>
+		<script>
+		var config = {
+			debug: true,
+			test: true
+		};
+		</script>
+		<script src="/engine/core/webvn.js"></script>
+		<link type="stylesheet" href="/test/test.css">
+	</head>
+	<body>
+		<div class="center">
+			<div id="webvn"></div>
+		</div>
+		<div id="scenario" class="hidden">
+		dialog -d --name=RedHoodSu -t="Hello world!"
+		dialog -t="Hello world again!"
+		dialog -n=Surunzi -t="Hello world plus!!!"
+		dialog -d=false
+		</div>
+		<script>
+		webvn.loader.ready(function () {
+
+			webvn.use(['script', 'select', 'util'], function (s, script, $, util) {
+
+				var scenario = util.trim($('#scenario').text());
+				script.loadText(scenario, true);
+
+			});
+
+		});
+		</script>
+	</body>
+</html>

@@ -6,19 +6,25 @@ var background = ui.get('background');
 
 script.addCommand('bg', {
     display: {
-        type: Boolean,
+        type: 'Boolean',
         shortHand: 'd',
         desc: 'Whether the background is displayed'
     },
     src: {
-        type: String,
+        type: 'String',
         shortHand: 's',
         desc: 'Source of the current background image'
     }
 }, function (options, value) {
 
-    if (options.display) {
+    if (options.display === true) {
         background.show();
+    } else if (options.display === false) {
+        background.hide();
+    }
+
+    if (options.src) {
+        background.src(options.src);
     }
 
 });

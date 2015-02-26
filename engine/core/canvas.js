@@ -1,6 +1,6 @@
 // Module canvas
 
-webvn.add('canvas', ['class', 'loader'], function (s, kclass, loader) {
+webvn.add('canvas', ['class', 'loader', 'log'], function (s, kclass, loader, log) {
 
 var canvas = {};
 
@@ -32,6 +32,7 @@ canvas.ImageEntity = canvas.Entity.extend({
         self.isLoaded = false;
         self.width = 0;
         self.height = 0;
+        self.update = null;
         loader.image(source).then(function (image) {
 
             self.onLoad(image);
@@ -40,6 +41,8 @@ canvas.ImageEntity = canvas.Entity.extend({
 
     },
     load: function (source) {
+
+        var self = this;
 
         loader.image(source).then(function (image) {
 
@@ -61,10 +64,18 @@ canvas.ImageEntity = canvas.Entity.extend({
     render: function () {
 
         var self = this;
+        if (self.update) {
+            self.update();
+        }
         if (self.isLoaded && self.parent) {
             var context = self.parent.context;
             context.drawImage(self.image, 0, 0, self.width, self.height);
         }
+
+    },
+    update: function (fn) {
+
+        this.update = fn;
 
     }
 });

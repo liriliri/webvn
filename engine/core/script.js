@@ -96,6 +96,7 @@ script.Command = kclass.create({
                 key = key.substr(1, key.length - 1);
                 if (shortHands[key]) {
                     ret[shortHands[key]] = value;
+                    keys.push(shortHands[key]);
                 } else {
                     for (var i = 0, len = key.length; i < len; i++) {
                         var k = shortHands[key[i]];
@@ -107,12 +108,12 @@ script.Command = kclass.create({
                 }
             }
 
-            // Get rid of illegal options and parse is values
+            // Get rid of illegal options and parse values
             for (i = 0, len = keys.length; i < len; i++) {
                 var key = keys[i],
                     opt = self.options[key];
                 if (opt) {
-                    ret[key] = opt.type(ret[key]);
+                    ret[key] = parseValue(opt.type, ret[key]);
                 } else {
                     delete ret[key];
                 }
@@ -211,6 +212,10 @@ script.play = function () {
     }
 
     if (execScript.length === 0) {
+        if (curNum >= splitScript.length) {
+            log.warn('End of scripts');
+            return;
+        }
         var line = splitScript[curNum];
         curNum++;
         execScript = execScript.concat(parser.parse(line));
@@ -276,6 +281,26 @@ function getLabel(data) {
             data.splice(i, 1);
             len -= 1;
         }
+    }
+
+}
+
+// Parse option value into specific type
+function parseValue(type, value) {
+
+    switch (type) {
+        case 'String':
+            return String(value);
+        case 'Boolean':
+            if (value === 'false' || value === '0') {
+                return false;
+            } else {
+                return true;
+            }
+        case 'Number':
+            return Number(value);
+        default:
+            return value;
     }
 
 }

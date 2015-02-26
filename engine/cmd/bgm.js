@@ -6,11 +6,11 @@ var bgm = audio.create('bgm');
 
 script.addCommand('bgm', {
     loop: {
-        type: Boolean,
+        type: 'Boolean',
         shortHand: 'l'
     },
     src: {
-        type: String,
+        type: 'String',
         shortHand: 's'
     }
 }, function (options, value) {
