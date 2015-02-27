@@ -1,6 +1,10 @@
 // Module canvas
 
-webvn.add('canvas', ['class', 'loader', 'log'], function (s, kclass, loader, log) {
+webvn.add('canvas', ['class', 'loader', 'log', 'config'], 
+    function (s, kclass, loader, log, config) {
+
+var conf = config.create('core-canvas');
+conf.set(config.global.canvas, false);
 
 var canvas = {};
 
@@ -137,6 +141,7 @@ var requestAnim = window.requestAnimationFrame;
 
 canvas.renderer = {
     isPaused: true,
+    interval: 20,
     scenes: [],
     add: function (scene) {
 
@@ -164,15 +169,27 @@ canvas.renderer = {
         requestAnim(this.render.bind(this));
 
     },
+    fps: function (fps) {
+
+        this.interval = Math.floor(1000 / fps);
+
+        return this;
+
+    },
     start: function () {
 
-        console.log('start');
+        var self = this;
 
         if (!this.isPaused) {
             return;
         }
         this.isPaused = false;
-        requestAnim(this.render.bind(this));
+
+        setTimeout(function () {
+
+            requestAnim(self.render.bind(self));
+
+        }, this.interval);
 
     },
     stop: function () {
@@ -182,7 +199,8 @@ canvas.renderer = {
     }
 };
 
-canvas.renderer.start();
+canvas.renderer.fps(conf.get('fps')).
+    start();
 
 return canvas;
 

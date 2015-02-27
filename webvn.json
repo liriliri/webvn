@@ -30,7 +30,8 @@
         "config": {
             "path": "/config/",
             "files": [
-                "config"
+                "config",
+                "core"
             ]
         },
         "core": {

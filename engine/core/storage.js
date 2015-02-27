@@ -78,6 +78,11 @@ var LocalStore = kclass.create({
             (attrs = {})[key] = value;
         }
 
+        // Overwrite the value by default
+        if (overwrite === undefined) {
+            overwrite = true;
+        }
+
         if (overwrite) {
             this.value = util.merge(this.value, attrs);
         } else {

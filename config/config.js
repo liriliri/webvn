@@ -16,29 +16,6 @@ config.bower = {
     'engine/lib/TweenMax.js': 'gsap/src/uncompressed/TweenMax.js'
 };
 
-// Script module config
-config.script = {
-    scenario: [
-        'init',
-        'first',
-        'second'
-    ],
-    prefix: '/scenario/',
-    fileType: 'wvn'
-};
-
-// System module config
-config.system = {
-    title: 'WebVN'
-};
-
-// Ui module config
-config.ui = {
-    container: '#webvn',
-    width: 1280,
-    height: 960
-};
-
 return config;
 
 });
