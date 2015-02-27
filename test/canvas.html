@@ -24,10 +24,14 @@
 			webvn.use(['canvas'], function (s, canvas) {
 
 				var scene = new canvas.Scene(document.getElementById('test'));
-				var img = new canvas.ImageEntity('/asset/test/bg1.png');
+				var img = new canvas.ImageEntity();
+				img.load('/asset/test/bg1.png');
 				scene.add(img);
 				canvas.renderer.add(scene);
-				canvas.renderer.start();
+				img.animate({
+					x: 200,
+					y: 200
+				}, 2000, 'easeInOutBounce');
 
 			});
 

@@ -1,7 +1,7 @@
 // Module canvas
 
-webvn.add('canvas', ['class', 'loader', 'log', 'config'], 
-    function (s, kclass, loader, log, config) {
+webvn.add('canvas', ['class', 'loader', 'log', 'config', 'util', 'anim'], 
+    function (s, kclass, loader, log, config, util, anim) {
 
 var conf = config.create('core-canvas');
 conf.set(config.global.canvas, false);
@@ -13,6 +13,67 @@ canvas.Entity = kclass.create({
 
         this.parent = null;
         this.order = null;
+
+        this.x = 0;
+        this.y = 0;
+        this.opacity = 1;
+        this.visible = true;
+
+    },
+    animate: function (properties, duration, ease) {
+
+        var interval,
+            self = this,
+            start = +new Date,
+            origin = {},
+            diff = {},
+            finish = start + duration,
+            ease = ease || 'linear';
+
+        ease = anim.ease[ease];
+
+        util.each(properties, function (value, key) {
+
+            origin[key] = self[key];
+            diff[key] = value - origin[key];
+
+        });
+
+        interval = setInterval(function () {
+
+            var time = +new Date;
+
+            util.each(properties, function (value, key) {
+
+                if (time > finish) {
+                    clearInterval(interval);
+                    return;
+                }
+
+                self[key] = ease(0, time - start, origin[key], diff[key], duration);
+
+            });
+
+        }, 1000 / conf.get('fps'));
+
+    },
+    set: function (key, value) {
+
+        var self = this;
+
+        if (util.isObject(key)) {
+            attrs = key;
+        } else {
+            (attrs = {})[key] = value;
+        }
+
+        util.each(attrs, function (value, key) {
+
+            if (self[key]) {
+                self[key] = value;
+            }
+
+        });
 
     },
     destroy: function () {
@@ -27,21 +88,16 @@ canvas.Entity = kclass.create({
 });
 
 canvas.ImageEntity = canvas.Entity.extend({
-    constructor: function ImageEntity(source) {
+    constructor: function ImageEntity() {
 
         this.callSuper();
 
         var self = this;
+
         self.image = null;
         self.isLoaded = false;
         self.width = 0;
         self.height = 0;
-        self.update = null;
-        loader.image(source).then(function (image) {
-
-            self.onLoad(image);
-
-        });
 
     },
     load: function (source) {
@@ -68,18 +124,15 @@ canvas.ImageEntity = canvas.Entity.extend({
     render: function () {
 
         var self = this;
-        if (self.update) {
-            self.update();
+
+        if (!self.visible) {
+            return;
         }
+
         if (self.isLoaded && self.parent) {
             var context = self.parent.context;
-            context.drawImage(self.image, 0, 0, self.width, self.height);
+            context.drawImage(self.image, self.x, self.y, self.width, self.height);
         }
-
-    },
-    update: function (fn) {
-
-        this.update = fn;
 
     }
 });

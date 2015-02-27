@@ -57,7 +57,7 @@ script.addCommand('se', {
 // Voice
 var voice = audio.create('voice');
 
-script.addCommand('voice', {
+script.addCommand('vo', {
     loop: {
         type: 'Boolean',
         shortHand: 'l'
