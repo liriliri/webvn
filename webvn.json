@@ -87,7 +87,7 @@
                 "bg",
                 "fg",
                 "dialog",
-                "bgm",
+                "audio",
                 "menu",
                 "video"
             ]

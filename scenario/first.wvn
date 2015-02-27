@@ -10,6 +10,8 @@ fg -d
 fg -s=/asset/test/fg2.png
 log -t=info --msg='This is the info message'
 bgm -s=/asset/test/bgm1.ogg
+voice -s=/asset/test/vo1.ogg
+voice -s=/asset/test/vo2.ogg
 // One line comment
 <%
 var x = 5;
