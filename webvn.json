@@ -53,7 +53,8 @@
                 "template",
                 "canvas",
                 "video",
-                "ui"
+                "ui",
+                "test"
             ]
         },
         "lib": {
