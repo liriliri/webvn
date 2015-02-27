@@ -99,6 +99,11 @@ canvas.Scene = kclass.create({
         this.children.push(entity);
 
     },
+    clear: function () {
+
+        this.context.clearRect(0, 0, this.width, this.height);
+
+    },
     getImageData: function () {
 
         return this.context.getImageData(0, 0, this.width, this.height);
@@ -115,6 +120,9 @@ canvas.Scene = kclass.create({
 
     },
     render: function () {
+
+        // Remove every thing first
+        this.clear();
 
         var children = this.children;
         for (var i = 0, len = children.length; i < len; i++) {
@@ -158,6 +166,8 @@ canvas.renderer = {
     },
     start: function () {
 
+        console.log('start');
+
         if (!this.isPaused) {
             return;
         }
@@ -171,6 +181,8 @@ canvas.renderer = {
 
     }
 };
+
+canvas.renderer.start();
 
 return canvas;
 

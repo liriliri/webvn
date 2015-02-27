@@ -3,9 +3,9 @@
 webvn.use(['ui'], function (s, ui) {
 
 var dialog = ui.create('dialog', 'div'),
-    $ele = dialog.$ele;
+    $el = dialog.$el;
 
-$ele.addClass('fill');
+$el.addClass('fill');
 
 var tpl = '<div class="name"></div>' +
     '<div class="content">' +
@@ -15,8 +15,8 @@ var tpl = '<div class="name"></div>' +
 
 dialog.body(tpl);
 
-var $content = $ele.find('.content'),
-    $name = $ele.find('.name'),
+var $content = $el.find('.content'),
+    $name = $el.find('.name'),
     $face = $content.find('.face'),
     $text = $content.find('.text');
 

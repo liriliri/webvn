@@ -6,7 +6,8 @@
 // video -d -pl -c=stop -s=/asset/test/video.mp4
 bg --src=/asset/test/bg1.png -d
 bg --src=/asset/test/bg2.png
-dialog -d -name=RedHoodSu
+dialog -d -name=RedHoodSu -t="Hello world!"
+fg -d
 log -t=info --msg='This is the info message'
 // One line comment
 <%

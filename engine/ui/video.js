@@ -4,13 +4,13 @@ webvn.use(['ui', 'video', 'script'], function (s, ui, video, script) {
 
 var vid = ui.create('video', 'div'),
     clickAction = 'stop',
-    $ele = vid.$ele;
+    $el = vid.$el;
 
 var tpl = '<video class="video fill"></video>';
 
 vid.body(tpl);
 
-var video = video.create($ele.find('.video').get(0));
+var video = video.create($el.find('.video').get(0));
 
 /* Set action when video is clicked
  * Type listed as below:
@@ -31,7 +31,7 @@ vid.play = function () {
 
 vid.show = function () {
 
-    $ele.show();
+    $el.show();
     script.pause();
 
 };
@@ -51,7 +51,7 @@ vid.stop = function () {
 video.event({
     'ended': function () {
         // When the video is ended, execute the next command
-        $ele.fadeOut(function () {
+        $el.fadeOut(function () {
 
             script.resume();
 
@@ -64,7 +64,7 @@ vid.event({
 
         switch (clickAction) {
             case 'stop': {
-                $ele.fadeOut(function () {
+                $el.fadeOut(function () {
 
                     video.stop();
                     script.resume();

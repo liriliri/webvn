@@ -3,14 +3,14 @@
 webvn.use(['ui', 'script'], function (s, ui, script) {
 
 var menu = ui.create('menu', 'div'),
-	$ele = menu.$ele;
+	$el = menu.$el;
 
-$ele.addClass('fill');
+$el.addClass('fill');
 
 menu.show = function () {
 
     script.pause();
-    $ele.fadeIn();
+    $el.fadeIn();
 
 };
 
@@ -24,7 +24,7 @@ var tpl = '<ul>' +
 menu.body(tpl).event({
     'click .start-game': function () {
 
-        $ele.fadeOut('fast', function () {
+        $el.fadeOut('fast', function () {
 
             script.resume();
 

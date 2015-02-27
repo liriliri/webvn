@@ -65,25 +65,25 @@ var BaseUi = kclass.create({
     },
     init: function () {
 
-        this.$ele.hide();
-        $container.append(this.$ele);
+        this.$el.hide();
+        $container.append(this.$el);
 
     },
     remove: function () {
 
-        this.ele.remove();
+        this.$el.remove();
 
     },
     show: function () {
 
-        this.$ele.show();
+        this.$el.show();
 
         return this;
 
     },
     hide: function () {
 
-        this.$ele.hide();
+        this.$el.hide();
 
         return this;
 
@@ -95,14 +95,14 @@ var DivUi = BaseUi.extend({
     constructor: function DivUI(name) {
 
         this.callSuper();
-        this.$ele = $('<div id="' + name + '">');
+        this.$el = $('<div id="' + name + '">');
         this.init();
 
     },
     // Set content
     body: function (html) {
 
-        this.$ele.html(html);
+        this.$el.html(html);
 
         return this;
 
@@ -123,7 +123,7 @@ var DivUi = BaseUi.extend({
 
             var parts = type.split(/\s/);
 
-            self.$ele.on(parts[0], parts[parts.length - 1], fn);
+            self.$el.on(parts[0], parts[parts.length - 1], fn);
 
         });
 
@@ -138,9 +138,9 @@ var CanvasUi = BaseUi.extend({
 
         this.callSuper();
 
-        this.$ele = $('<canvas id="' + name + '">');
+        this.$el = $('<canvas id="' + name + '">');
 
-        this.canvas = this.$ele.get(0);
+        this.canvas = this.$el.get(0);
 
         this.canvas.width = conf.get('width');
         this.canvas.height = conf.get('height');
@@ -161,7 +161,7 @@ var SvgUi = BaseUi.extend({
     constructor: function SvgUi(name) {
 
         this.callSuper();
-        this.$ele = $('<svg id="' + name + '">');
+        this.$el = $('<svg id="' + name + '">');
 
     }
 

@@ -74,6 +74,7 @@
                 "menu",
                 "background",
                 "dialog",
+                "figure",
                 "video",
                 "rain"
             ]
@@ -83,6 +84,7 @@
             "files": [
                 "log",
                 "bg",
+                "fg",
                 "dialog",
                 "bgm",
                 "menu",
