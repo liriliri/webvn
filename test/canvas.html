@@ -1,41 +1,49 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Test</title>
-		<script>
-		var config = {
-			debug: true,
-			test: true
-		};
-		</script>
-		<script src="/engine/core/webvn.js"></script>
-		<link type="stylesheet" href="/test/test.css">
-	</head>
-	<body>
-		<div class="center">
-			<div id="webvn">
-				<canvas id="test" class="fill" width="1280" height="960"></canvas>
-			</div>
-		</div>
-	<script>
-		webvn.loader.ready(function () {
+    <head>
+        <meta charset="utf-8">
+        <title>Test</title>
+        <script>
+        var config = {
+            debug: true,
+            test: true
+        };
+        </script>
+        <script src="/engine/core/webvn.js"></script>
+        <link type="stylesheet" href="/test/test.css">
+    </head>
+    <body>
+        <div class="center">
+            <div id="webvn">
+                <canvas id="test" class="fill" width="1280" height="960"></canvas>
+            </div>
+        </div>
+    <script>
+        webvn.loader.ready(function () {
 
-			webvn.use(['canvas'], function (s, canvas) {
+            webvn.use(['canvas'], function (s, canvas) {
 
-				var scene = new canvas.Scene(document.getElementById('test'));
-				var img = new canvas.ImageEntity();
-				img.load('/asset/test/bg1.png');
-				scene.add(img);
-				canvas.renderer.add(scene);
-				img.animate({
-					x: 200,
-					y: 200
-				}, 2000, 'easeInOutBounce');
+                var scene = new canvas.Scene(document.getElementById('test'));
+                var img = new canvas.ImageEntity();
+                img.load('/asset/test/bg1.png');
+                scene.add(img);
+                canvas.renderer.add(scene);
+                scene.filter('grayscale');
+                setTimeout(function () {
 
-			});
 
-		});
-		</script>
-	</body>
+                img.animate({
+                    x: 200,
+                    y: 200
+                }, 8000, 'easeInOutBounce', function () {
+                    img.fadeOut(2000);
+                });
+
+                }, 2000);
+
+            });
+
+        });
+        </script>
+    </body>
 </html>

@@ -52,6 +52,7 @@
                 "event",
                 "anim",
                 "template",
+                "webgl",
                 "canvas",
                 "video",
                 "ui",

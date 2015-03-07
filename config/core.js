@@ -3,7 +3,8 @@
 webvn.use(['conf'], function (s, config) {
 
 config.canvas = {
-    fps: 60
+    fps: 30,
+    duration: 200
 };
 
 config.script = {

@@ -1,7 +1,7 @@
 // Module canvas
 
-webvn.add('canvas', ['class', 'loader', 'log', 'config', 'util', 'anim'], 
-    function (s, kclass, loader, log, config, util, anim) {
+webvn.add('canvas', ['class', 'loader', 'log', 'config', 'util', 'anim', 'webgl'], 
+    function (s, kclass, loader, log, config, util, anim, webgl) {
 
 var conf = config.create('core-canvas');
 conf.set(config.global.canvas, false);
@@ -20,7 +20,14 @@ canvas.Entity = kclass.create({
         this.visible = true;
 
     },
-    animate: function (properties, duration, ease) {
+    animate: function (properties, duration, ease, cb) {
+
+        duration = duration || conf.get('duration');
+
+        if (util.isFunction(ease)) {
+            cb = ease;
+            ease = undefined;
+        }
 
         var interval,
             self = this,
@@ -47,6 +54,9 @@ canvas.Entity = kclass.create({
 
                 if (time > finish) {
                     clearInterval(interval);
+                    if (cb) {
+                        cb.call(self);
+                    }
                     return;
                 }
 
@@ -55,6 +65,32 @@ canvas.Entity = kclass.create({
             });
 
         }, 1000 / conf.get('fps'));
+
+    },
+    fadeIn: function (duration, cb) {
+
+        if (!this.visible) {
+            this.visible = true;
+        }
+
+        this.animate({
+            opacity: 1
+        }, duration, cb);
+
+    },
+    fadeOut: function (duration, cb) {
+
+        this.animate({
+            opacity: 0
+        }, duration, function () {
+
+            this.visible = false;
+
+            if (cb) {  
+                cb.call(this);
+            }
+
+        });
 
     },
     set: function (key, value) {
@@ -83,6 +119,24 @@ canvas.Entity = kclass.create({
             this.parent = null;
             this.order = null;
         }
+
+    },
+    renderWrapper: function (caller) {
+
+        var self = this,
+            context = caller.context;
+
+        if (!self.visible) {
+            return;
+        }
+
+        /*context.save();
+
+        context.globalAlpha = self.opacity;*/
+
+        self.render(context);
+
+        // context.restore();
 
     }
 });
@@ -121,18 +175,13 @@ canvas.ImageEntity = canvas.Entity.extend({
         self.height = self.image.height;
 
     },
-    render: function () {
+    render: function (context) {
 
         var self = this;
 
-        if (!self.visible) {
-            return;
-        }
-
-        if (self.isLoaded && self.parent) {
-            var context = self.parent.context;
+        /*if (self.isLoaded && self.parent) {
             context.drawImage(self.image, self.x, self.y, self.width, self.height);
-        }
+        }*/
 
     }
 });
@@ -143,7 +192,12 @@ canvas.Scene = kclass.create({
 
         this.view = v;
         this.order = null;
-        this.context = this.view.getContext('2d');
+        this.filterData = {
+            name: false,
+            param: null
+        };
+        // this.context = this.view.getContext('2d');
+        this.gl = webgl.create(this.view, '2d');
         this.width = this.view.width;
         this.height = this.view.height;
         this.children = [];
@@ -158,22 +212,22 @@ canvas.Scene = kclass.create({
     },
     clear: function () {
 
-        this.context.clearRect(0, 0, this.width, this.height);
-
-    },
-    getImageData: function () {
-
-        return this.context.getImageData(0, 0, this.width, this.height);
-
-    },
-    putImageData: function (imageData) {
-
-        this.context.putImageData(imageData);
+        this.gl.clear();
 
     },
     remove: function (order) {
 
         this.children.splice(order, 1);
+
+    },
+    filter: function (name, param) {
+
+        this.filterData.name = name;
+        if (param) {
+            this.filterData.param = param;
+        } else {
+            this.filterData.param = null;
+        }
 
     },
     render: function () {
@@ -184,7 +238,25 @@ canvas.Scene = kclass.create({
         var children = this.children;
         for (var i = 0, len = children.length; i < len; i++) {
             var child = this.children[i];
-            child.render(this);
+            child.renderWrapper(this);
+        }
+
+    },
+    renderFilter: function () {
+
+        var name = this.filterData.name,
+            param = this.filterData.param;
+
+        if (!name) {
+            return;
+        }
+
+        switch (name) {
+            case 'grayscale':
+                this.grayscale();
+                break;
+            default:
+                break;
         }
 
     }
