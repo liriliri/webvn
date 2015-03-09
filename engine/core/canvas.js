@@ -124,19 +124,13 @@ canvas.Entity = kclass.create({
     renderWrapper: function (caller) {
 
         var self = this,
-            context = caller.context;
+            gl = caller.gl;
 
         if (!self.visible) {
             return;
         }
 
-        /*context.save();
-
-        context.globalAlpha = self.opacity;*/
-
-        self.render(context);
-
-        // context.restore();
+        self.render(gl);
 
     }
 });
@@ -175,13 +169,13 @@ canvas.ImageEntity = canvas.Entity.extend({
         self.height = self.image.height;
 
     },
-    render: function (context) {
+    render: function (gl) {
 
         var self = this;
 
-        /*if (self.isLoaded && self.parent) {
-            context.drawImage(self.image, self.x, self.y, self.width, self.height);
-        }*/
+        if (self.isLoaded && self.parent) {
+            gl.drawImage(self.image, self.x, self.y);
+        }
 
     }
 });
