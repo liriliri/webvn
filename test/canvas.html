@@ -26,16 +26,21 @@
                 var scene = new canvas.Scene(document.getElementById('test'));
                 var img = new canvas.ImageEntity();
                 img.load('/asset/test/bg1.png');
+                var img2 = new canvas.ImageEntity();
+                img2.load('/asset/test/fg1.png');
                 scene.add(img);
+                scene.add(img2);
                 canvas.renderer.add(scene);
-                scene.filter('grayscale');
                 setTimeout(function () {
 
                 img.animate({
                     x: 200,
                     y: 200
                 }, 2000, 'easeInOutBounce', function () {
-                    img.fadeOut(2000);
+                    img.animate({
+                        x: 0,
+                        y: 0
+                    }, 2000, 'easeInOutBounce');
                 });
 
                 }, 2000);

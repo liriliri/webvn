@@ -190,7 +190,7 @@ canvas.Scene = kclass.create({
             name: false,
             param: null
         };
-        // this.context = this.view.getContext('2d');
+        this.filter = new webgl.Filter(this.view);
         this.gl = webgl.create(this.view, '2d');
         this.width = this.view.width;
         this.height = this.view.height;
@@ -229,11 +229,15 @@ canvas.Scene = kclass.create({
         // Remove every thing first
         this.clear();
 
+        this.filter.start();
+
         var children = this.children;
         for (var i = 0, len = children.length; i < len; i++) {
             var child = this.children[i];
             child.renderWrapper(this);
         }
+
+        this.filter.end();
 
     },
     renderFilter: function () {

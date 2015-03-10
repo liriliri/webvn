@@ -3,13 +3,13 @@
  */
 * start | 主程序入口
 // video -d -pl -c=stop -s=/asset/test/video.mp4
+// bgm -s=/asset/test/bgm1.ogg
 bg --src=/asset/test/bg1.png -d
 bg --src=/asset/test/bg2.png
 dialog -d -name=RedHoodSu -t="Hello world!"
 fg -d -s=/asset/test/fg1.png
 fg -s=/asset/test/fg2.png
 log -t=info --msg='This is the info message'
-// bgm -s=/asset/test/bgm1.ogg
 vo -s=/asset/test/vo1.ogg
 vo -s=/asset/test/vo2.ogg
 // One line comment
