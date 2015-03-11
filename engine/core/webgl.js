@@ -255,7 +255,7 @@ var Filter = webgl.Filter = kclass.create({
 
         gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
-        this.sepia();
+        this.emboss(1);
 
         var shaderProgram = this.shaderProgram;
 
@@ -343,6 +343,10 @@ var Filter = webgl.Filter = kclass.create({
         switch (type) {
             case 'colorMatrix':
                 shaderProgram.m = gl.getUniformLocation(shaderProgram, 'm');
+                break;
+            case 'convolution':
+                shaderProgram.m = gl.getUniformLocation(shaderProgram, 'm');
+                shaderProgram.px = gl.getUniformLocation(shaderProgram, 'px');
                 break;
             default:
                 break;
@@ -536,6 +540,48 @@ var Filter = webgl.Filter = kclass.create({
             0,0,0,1,0
         ]);
 
+    },
+    // Convolution filters
+    convolution: function (matrix) {
+
+        var gl = this.gl,
+            m = new Float32Array(matrix),
+            pixelSizeX = 1 / this.width,
+            pixelSizeY = 1 / this.height;
+
+        var shaderProgram = this.initShader('convolution');
+        gl.uniform1fv(shaderProgram.m, m);
+        gl.uniform2f(shaderProgram.px, pixelSizeX, pixelSizeY);
+
+    },
+    detectEdges: function() {
+
+        this.convolution([
+            0, 1, 0,
+            1 -4, 1,
+            0, 1, 0
+        ]);
+
+    },
+    sharpen: function(amount) {
+
+        var a = amount || 1;
+        this.convolution([
+            0, -1*a, 0,
+            -1*a, 1 + 4*a, -1*a,
+            0, -1*a, 0
+        ]);
+
+    },
+    emboss: function(size) {
+
+        var s = size || 1;
+        this.convolution([
+            -2*s, -1*s, 0,
+            -1*s, 1, 1*s,
+            0, 1*s, 2*s
+        ]);
+
     }
 }, {
     fragmentShader: {
@@ -551,6 +597,29 @@ var Filter = webgl.Filter = kclass.create({
                 'gl_FragColor.b = m[10] * c.r + m[11] * c.g + m[12] * c.b + m[13] * c.a + m[14];',
                 'gl_FragColor.a = m[15] * c.r + m[16] * c.g + m[17] * c.b + m[18] * c.a + m[19];',
             '}'
+        ].join('\n'),
+        convolution: [
+            'precision highp float;',
+            'varying vec2 vUv;',
+            'uniform sampler2D texture;',
+            'uniform vec2 px;',
+            'uniform float m[9];',
+            'void main(void) {',
+                'vec4 c11 = texture2D(texture, vUv - px);',
+                'vec4 c12 = texture2D(texture, vec2(vUv.x, vUv.y - px.y));',
+                'vec4 c13 = texture2D(texture, vec2(vUv.x + px.x, vUv.y - px.y));',
+                'vec4 c21 = texture2D(texture, vec2(vUv.x - px.x, vUv.y) );',
+                'vec4 c22 = texture2D(texture, vUv);',
+                'vec4 c23 = texture2D(texture, vec2(vUv.x + px.x, vUv.y) );',
+                'vec4 c31 = texture2D(texture, vec2(vUv.x - px.x, vUv.y + px.y) );',
+                'vec4 c32 = texture2D(texture, vec2(vUv.x, vUv.y + px.y) );',
+                'vec4 c33 = texture2D(texture, vUv + px );',
+                'gl_FragColor = ',
+                    'c11 * m[0] + c12 * m[1] + c22 * m[2] +',
+                    'c21 * m[3] + c22 * m[4] + c23 * m[5] +',
+                    'c31 * m[6] + c32 * m[7] + c33 * m[8];',
+                'gl_FragColor.a = c22.a;',
+            '}',
         ].join('\n')
     }
 });
