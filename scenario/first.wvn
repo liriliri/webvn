@@ -6,6 +6,8 @@
 // bgm -s=/asset/test/bgm1.ogg
 bg --src=/asset/test/bg1.png -d
 bg --src=/asset/test/bg2.png
+dialog --name=redhood --content="gdsfsdfsdf +
+the dialog" --show
 dialog -d -name=RedHoodSu -t="Hello world!"
 fg -d -s=/asset/test/fg1.png
 fg -s=/asset/test/fg2.png
@@ -18,6 +20,4 @@ var x = 5;
 alert('cool');
 %>
 * chapter1 | 第一章 仇恨之源
-dialog --name=redhood --content="This is the content of +
-the dialog" --show
 bgm --src=bgm1.ogg

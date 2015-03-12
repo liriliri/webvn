@@ -11,11 +11,17 @@
         </script>
         <script src="/engine/core/webvn.js"></script>
         <link type="stylesheet" href="/test/test.css">
+        <style>
+        #testParticle, #test {
+            position: absolute;
+        }
+        </style>
     </head>
     <body>
         <div class="center">
             <div id="webvn">
                 <canvas id="test" class="fill" width="1280" height="960"></canvas>
+                <canvas id="testParticle" class="fill" width="1280" height="960"></canvas>
             </div>
         </div>
     <script>
@@ -33,17 +39,21 @@
                 canvas.renderer.add(scene);
                 setTimeout(function () {
 
-                img.animate({
-                    x: 200,
-                    y: 200
-                }, 2000, 'easeInOutBounce', function () {
                     img.animate({
-                        x: 0,
-                        y: 0
-                    }, 2000, 'easeInOutBounce');
-                });
+                        x: 200,
+                        y: 200
+                    }, 2000, 'easeInOutBounce', function () {
+                        img.animate({
+                            x: 0,
+                            y: 0
+                        }, 2000, 'easeInOutBounce');
+                    });
 
                 }, 2000);
+
+                // Particle
+                var particle = new canvas.Emitter(document.getElementById('testParticle'));
+                canvas.renderer.add(particle);
 
             });
 
