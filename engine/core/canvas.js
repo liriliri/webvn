@@ -322,6 +322,12 @@ canvas.Emitter = kclass.create({
             };
         }
 
+        if (ret.textureEnabled) {
+            var src = ret.texture;
+            ret.texture = new Image();
+            ret.texture.src = src;
+        }
+
         return ret;
 
     },
@@ -390,7 +396,7 @@ canvas.Emitter = kclass.create({
     reConfigure: function (config) {
 
         if (!config) {
-            config = this.getPredefined('snow');
+            config = this.getPredefined('rain');
         }
 
         this.totalParticles = 0;
@@ -417,8 +423,7 @@ canvas.Emitter = kclass.create({
         this.radius = 0;
         this.radiusVar = 0;
 
-        this.texture = new Image();
-        this.texture.src = '/engine/img/particle.png';
+        this.texture = null;
         this.textureEnabled = false;
         this.textureAdditive = false;
 
@@ -676,35 +681,168 @@ canvas.Emitter = kclass.create({
         }
     }),
     predefined: {
-        'meteor': {
-            totalParticles: 150,
-            emissionRate: 150 / 2,
+        'glaxy': {
+            totalParticles: 200,
+            emissionRate: 50,
             pos: 'center',
-            gravity: {
-                x: - 200,
-                y: - 200
-            },
             angle: 90,
             angleVar: 360,
-            speed: 15,
-            speedVar: 5,
-            life: 2,
+            speed: 60,
+            speedVar: 10,
+            life: 4,
             lifeVar: 1,
+            radialAccel: - 80,
+            radialAccelVar: 0,
+            tangentialAccel: 80,
+            tangentialAccelVar: 0,
+            texture: '/engine/img/particle.png',
+            textureEnabled: true,
+            textureAdditive: true,
+            radius: 10,
+            radiusVar: 2,
+            startScale: 1,
+            endScale: 1,
+            startColor: [30.6, 63.75, 193.8, 1],
+            endColor: [0, 0, 0, 0],
+            active: true,
+            duration: Infinity
+        },
+        'vapour': {
+            totalParticles: 50,
+            emissionRate: 100,
+            pos: 'centerOffBottom',
+            posVar: {
+                x: 640,
+                y: 200
+            },
+            angle: 90,
+            angleVar: 60,
+            speed: 60,
+            speedVar: 10,
+            life: 5,
+            lifeVar: 2,
             radialAccel: 0,
             radialAccelVar: 0,
             tangentialAccel: 0,
             tangentialAccelVar: 0,
+            texture: '/engine/img/smoke.png',
             textureEnabled: true,
-            textureAdditive: true,
-            radius: 12,
+            textureAdditive: false,
+            radius: 5,
             radiusVar: 2,
             startScale: 1,
             endScale: 1,
-            startColor: [51, 102, 178.5, 1],
-            startColorVar: [0, 0, 51, 0.1],
-            endColor: [0, 0, 0, 1],
+            gravity: {
+                x: 0,
+                y: -50
+            },
+            startColor: [255, 255, 255, 1],
+            endColor: [255, 255, 255, 0.4],
             active: true,
             duration: Infinity
+        },
+        'bubble': {
+            totalParticles: 200,
+            emissionRate: 8,
+            active: true,
+            duration: Infinity,
+            pos: 'centerOffBottom',
+            posVar: {
+                x: 640,
+                y: 0
+            },
+            angle: 90,
+            angleVar: 20,
+            life: 12,
+            lifeVar: 1,
+            radius: 20,
+            radiusVar: 8,
+            textureEnabled: false,
+            textureAdditive: false,
+            startScale: 1,
+            startScaleVar: 0,
+            endScale: 1,
+            endScaleVar: 0,
+            startColor: [255, 255, 255, 1],
+            endColor: [25.5, 25.5, 25.5, 0],
+            gravity: {
+                x: 0,
+                y: -30
+            },
+            radialAccel: 0,
+            radialAccelVar: 0,
+            tangentialAccel: 0,
+            tangentialAccelVar: 0,
+            speed: 2,
+            speedVar: 0
+        },
+        'fire': {
+            totalParticles: 250,
+            emissionRate: 30,
+            pos: 'centerOffBottom',
+            posVar: {
+                x: 40,
+                y: 20
+            },
+            angle: 90,
+            angleVar: 10,
+            speed: 60,
+            speedVar: 20,
+            life: 8,
+            lifeVar: 4,
+            radialAccel: 0,
+            radialAccelVar: 0,
+            tangentialAccel: 0,
+            tangentialAccelVar: 0,
+            texture: '/engine/img/particle.png',
+            textureEnabled: true,
+            textureAdditive: true,
+            radius: 10,
+            radiusVar: 1,
+            startScale: 1,
+            endScale: 1,
+            startColor: [193.8, 63.75, 30.6, 1],
+            endColor: [0, 0, 0, 0],
+            active: true,
+            duration: Infinity
+        },
+        'rain': {
+            totalParticles: 500,
+            emissionRate: 100,
+            active: true,
+            duration: Infinity,
+            pos: 'centerAboveTop',
+            posVar: {
+                x: 800,
+                y: 0
+            },
+            angle: 260,
+            angleVar: 0,
+            life: 3,
+            lifeVar: 1,
+            radius: 2,
+            radiusVar: 1,
+            texture: '/engine/img/rain.png',
+            textureEnabled: true,
+            textureAdditive: true,
+            startScale: 1,
+            startScaleVar: 0,
+            endScale: 1,
+            endScaleVar: 0,
+            startColor: [255, 255, 255, 0.9],
+            startColorVar: [0, 0, 0, 0.1],
+            endColor: [255, 255, 255, 0.4],
+            endColorVar: [0, 0, 0, 0.2],
+            gravity: {
+                x: -5,
+                y: 80
+            },
+            radialAccel: 0,
+            radialAccelVar: 0,
+            tangentialAccel: 0,
+            tangentialAccelVar: 0,
+            speed: 350,
+            speedVar: 50
         },
         'snow': {
             totalParticles: 700,
