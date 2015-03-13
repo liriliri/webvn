@@ -395,8 +395,12 @@ canvas.Emitter = kclass.create({
     // 重置数据
     reConfigure: function (config) {
 
+        if (util.isString(config)) {
+            config = this.getPredefined(config);
+        }
+
         if (!config) {
-            config = this.getPredefined('rain');
+            config = this.getPredefined('glaxy');
         }
 
         this.totalParticles = 0;
@@ -707,7 +711,7 @@ canvas.Emitter = kclass.create({
             active: true,
             duration: Infinity
         },
-        'vapour': {
+        'smoke': {
             totalParticles: 50,
             emissionRate: 100,
             pos: 'centerOffBottom',
@@ -845,8 +849,8 @@ canvas.Emitter = kclass.create({
             speedVar: 50
         },
         'snow': {
-            totalParticles: 700,
-            emissionRate: 10,
+            totalParticles: 300,
+            emissionRate: 8,
             pos: 'centerAboveTop',
             posVar: {
                 x: 640,
@@ -868,11 +872,12 @@ canvas.Emitter = kclass.create({
             tangentialAccelVar: 0,
             textureEnabled: false,
             textureAdditive: false,
-            radius: 3,
+            radius: 5,
             radiusVar: 2,
             startScale: 1,
             endScale: 0.3,
-            startColor: [255, 255, 255, 1],
+            startColor: [255, 255, 255, 0.8],
+            startColorVar: [0, 0, 0, 0.2],
             endColor: [255, 255, 255, 0],
             active: true,
             duration: Infinity
@@ -896,9 +901,9 @@ canvas.renderer = {
         return this;
 
     },
-    remove: function (order) {
+    remove: function (scene) {
 
-        this.scenes.splice(order, 1);
+        this.scenes.splice(scene.order, 1);
 
     },
     render: function (timestamp) {

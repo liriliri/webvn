@@ -88,7 +88,7 @@ grunt.initConfig({
     },
     sass: {
         options: {
-            // sourcemap: 'none'
+            sourcemap: 'none'
         },
         theme: {
             files: [{
