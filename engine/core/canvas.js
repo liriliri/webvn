@@ -16,8 +16,8 @@ canvas.Entity = kclass.create({
 
         this.x = 0;
         this.y = 0;
-        this.opacity = 1;
-        this.visible = true;
+        this.alpha = 1;
+        this.visible = false;
 
     },
     animate: function (properties, duration, ease, cb) {
@@ -50,15 +50,20 @@ canvas.Entity = kclass.create({
 
             var time = +new Date;
 
-            util.each(properties, function (value, key) {
+            if (time > finish) {
+                clearInterval(interval);
+                util.each(properties, function (value, key) {
 
-                if (time > finish) {
-                    clearInterval(interval);
-                    if (cb) {
-                        cb.call(self);
-                    }
-                    return;
+                    self[key] = value;
+
+                });
+                if (cb) {
+                    cb.call(self);
                 }
+                return;
+            }
+
+            util.each(properties, function (value, key) {
 
                 self[key] = ease(0, time - start, origin[key], diff[key], duration);
 
@@ -74,14 +79,14 @@ canvas.Entity = kclass.create({
         }
 
         this.animate({
-            opacity: 1
+            alpha: 1
         }, duration, cb);
 
     },
     fadeOut: function (duration, cb) {
 
         this.animate({
-            opacity: 0
+            alpha: 0
         }, duration, function () {
 
             this.visible = false;
@@ -124,13 +129,14 @@ canvas.Entity = kclass.create({
     renderWrapper: function (caller) {
 
         var self = this,
-            gl = caller.gl;
+            gl = caller.gl,
+            view = caller.view
 
         if (!self.visible) {
             return;
         }
 
-        self.render(gl);
+        self.render(gl, view);
 
     }
 });
@@ -146,6 +152,31 @@ canvas.ImageEntity = canvas.Entity.extend({
         self.isLoaded = false;
         self.width = 0;
         self.height = 0;
+        // If process is not 1, it means transition executed
+        self.progress = 1;
+
+    },
+    transTo: function (source, duration) {
+
+        var self = this;
+
+        loader.image(source).then(function (image) {
+
+            if (!self.image) {
+                self.onLoad(image);
+            }
+
+            self.image2 = image;
+            self.progress = 0;
+            self.animate({
+                progress: 1
+            }, duration, function () {
+
+                self.image = self.image2;
+
+            });
+
+        });
 
     },
     load: function (source) {
@@ -168,14 +199,40 @@ canvas.ImageEntity = canvas.Entity.extend({
         self.width = self.image.width;
         self.height = self.image.height;
 
+        self.visible = true;
+        self.alpha = 0;
+        self.fadeIn();
+
+    },
+    isTransition: function () {
+
+        return this.progress !== 1;
+
     },
     render: function (gl) {
 
         var self = this;
 
+        gl.save();
+        gl.alpha = this.alpha;
+
         if (self.isLoaded && self.parent) {
+            // Buffer image1
+            if (self.isTransition()) {
+                gl.startBuffer(0);
+            }
             gl.drawImage(self.image, self.x, self.y);
+            // Buffer image2
+            if (self.isTransition()) {
+                gl.endBuffer(0);
+                gl.startBuffer(1);
+                gl.drawImage(self.image2, self.x, self.y);
+                gl.endBuffer(1);
+                gl.drawTransition(gl.getBuffer(0), gl.getBuffer(1), 'AdvancedMosaic', self.progress);
+            }
         }
+
+        gl.restore();
 
     }
 });
@@ -195,6 +252,7 @@ canvas.Scene = kclass.create({
         this.width = this.view.width;
         this.height = this.view.height;
         this.children = [];
+        this.filterEnabled = false;
 
     },
     add: function (entity) {
@@ -229,7 +287,9 @@ canvas.Scene = kclass.create({
         // Remove every thing first
         this.clear();
 
-        this.filter.start();
+        if (this.filterEnabled) {
+            this.filter.start();
+        }
 
         var children = this.children;
         for (var i = 0, len = children.length; i < len; i++) {
@@ -237,7 +297,9 @@ canvas.Scene = kclass.create({
             child.renderWrapper(this);
         }
 
-        this.filter.end();
+        if (this.filterEnabled) {
+            this.filter.end();
+        }
 
     }
 });

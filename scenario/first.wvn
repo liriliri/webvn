@@ -5,12 +5,10 @@
 // video -d -pl -c=stop -s=/asset/test/video.mp4
 // bgm -s=/asset/test/bgm1.ogg
 particle -d -t=snow
-bg --src=/asset/test/bg1.png -d
-bg --src=/asset/test/bg2.png
+bg --src=/asset/test/bg1.bmp -d
+bg --src=/asset/test/bg2.bmp
 particle -d=false
-dialog --name=redhood --content="gdsfsdfsdf +
-the dialog" --show
-dialog -d -name=RedHoodSu -t="Hello world!"
+dialog --name=尤希尔·弗洛·让梅尔 --text="这里是对话的内容" --display
 fg -d -s=/asset/test/fg1.png
 fg -s=/asset/test/fg2.png
 log -t=info --msg='This is the info message'

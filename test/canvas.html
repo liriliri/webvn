@@ -20,8 +20,8 @@
     <body>
         <div class="center">
             <div id="webvn">
-                <canvas id="test" class="fill" width="1280" height="960"></canvas>
-                <canvas id="testParticle" class="fill" width="1280" height="960"></canvas>
+                <canvas id="test" class="fill" width="1280" height="720"></canvas>
+                <canvas id="testParticle" class="fill" width="1280" height="720"></canvas>
             </div>
         </div>
     <script>
@@ -31,15 +31,15 @@
 
                 var scene = new canvas.Scene(document.getElementById('test'));
                 var img = new canvas.ImageEntity();
-                img.load('/asset/test/bg1.png');
                 var img2 = new canvas.ImageEntity();
                 img2.load('/asset/test/fg1.png');
                 scene.add(img);
                 scene.add(img2);
                 canvas.renderer.add(scene);
+                img.transTo('/asset/test/bg2.bmp', 2000);
                 setTimeout(function () {
 
-                    img.animate({
+                    /*img.animate({
                         x: 200,
                         y: 200
                     }, 2000, 'easeInOutBounce', function () {
@@ -47,13 +47,9 @@
                             x: 0,
                             y: 0
                         }, 2000, 'easeInOutBounce');
-                    });
+                    });*/
 
                 }, 2000);
-
-                // Particle
-                var particle = new canvas.Emitter(document.getElementById('testParticle'), 'smoke');
-                canvas.renderer.add(particle);
 
             });
 

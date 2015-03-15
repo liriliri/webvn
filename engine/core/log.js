@@ -54,8 +54,7 @@ log.sys = function (str) {
     console.log('%c' + str, 
         'background: ' + colors.sys.back +
         ';color: ' + colors.sys.font + ' !important' +
-        ';padding: 0 5px;' +
-        ';font-size: 20px;');
+        ';padding: 0 5px;');
 
 };
 

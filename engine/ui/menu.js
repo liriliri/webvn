@@ -17,8 +17,7 @@ menu.show = function () {
 var tpl = '<ul>' +
 		'<li class="start-game">开始游戏</li>' +
 		'<li class="load-game">读取存档</li>' +
-		'<li class="setting">环境设定</li>' +
-		'<li class="exit">游戏结束</li>' +
+		'<li class="setting">环境设定</li>'
 	'</ul>';
 
 menu.body(tpl).event({
@@ -39,11 +38,6 @@ menu.body(tpl).event({
     'click .setting': function () {
 
         console.log('setting');
-
-    },
-    'click .exit': function () {
-
-        console.log('exit');
 
     }
 });

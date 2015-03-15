@@ -46,6 +46,11 @@ table {
 	border-spacing: 0;
 }
 
+/* Game reset */
+* {
+	-webkit-user-select: none;
+}
+
 /* Useful common classes */
 .fill {
 	width: 100%;

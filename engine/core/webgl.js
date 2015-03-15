@@ -222,7 +222,7 @@ var Filter = webgl.Filter = kclass.create({
         this.gl = v.getContext('webgl');
         this.width = v.width;
         this.height = v.height;
-        this.shaderPool = [];
+        this.shaderPool = {};
         this.vertices = new Float32Array([
             -1, -1, 0, 1, 
             1, -1, 1, 1, 
@@ -624,6 +624,235 @@ var Filter = webgl.Filter = kclass.create({
     }
 });
 
+var Framebuffer = webgl.Framebuffer = kclass.create({
+    constructor: function (v) {
+
+        this.view = v;
+        this.gl = v.getContext('webgl');
+        this.width = v.width;
+        this.height = v.height;
+        this.init();
+
+    }, 
+    init: function () {
+
+        var gl = this.gl;
+
+        // Init Texture
+        texture = this.texture = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, this.width, this.height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+
+        // Init FrameBuffer
+        framebuffer = this.framebuffer = gl.createFramebuffer();
+        gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
+        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+
+    },
+    getTexture: function () {
+
+        return this.texture;
+
+    },
+    end: function () {
+
+        var gl = this.gl;
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+
+    },
+    start: function () {
+
+        var gl = this.gl;
+
+        gl.bindFramebuffer(gl.FRAMEBUFFER, this.framebuffer);
+        gl.clearColor(0.0, 0.0, 0.0, 0.0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+
+    }
+});
+
+// Transition effects
+var Transition = webgl.Transition = kclass.create({
+    constructor: function Transition(v) {
+
+        this.view = v;
+        this.gl = v.getContext('webgl');
+        this.shaderPool = {};
+        var w, h;
+        w = this.width = v.width;
+        h = this.height = v.height;
+        this.vertices = new Float32Array([
+            0, 0,
+            w, 0,
+            0, h,
+            0, h,
+            w, 0,
+            w, h
+        ]);
+
+    },
+    getFragmentShaderSource: function (type) {
+
+        type = type || 'default';
+        return Transition.fragmentShader[type];
+
+    },
+    compileShader: function (source, type) {
+
+        var gl = this.gl,
+            shader = gl.createShader(type);
+
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+
+        return shader;
+
+    },
+    getVertexShaderSource: function () {
+
+        return [
+            'attribute vec2 pos;',
+            'void main() {', 
+                'gl_Position = vec4(2.0 * pos - 1.0, 0.0, 1.0);',
+            '}'
+        ].join('\n');
+
+    },
+    initShader: function (type) {
+
+        var gl = this.gl,
+            storedShader = this.shaderPool[type];
+
+        if (storedShader) { 
+            gl.useProgram(storedShader);
+            this.shaderProgram = storedShader;
+            return storedShader;
+        }
+
+        var fs = this.compileShader(this.getFragmentShaderSource(type), gl.FRAGMENT_SHADER),
+            vs = this.compileShader(this.getVertexShaderSource(), gl.VERTEX_SHADER);
+
+        var shaderProgram = this.shaderProgram = gl.createProgram();
+        gl.attachShader(shaderProgram, fs);
+        gl.attachShader(shaderProgram, vs);
+        gl.linkProgram(shaderProgram);
+        gl.useProgram(shaderProgram);
+
+        this.shaderPool[type] = shaderProgram;
+        this.shaderProgram = shaderProgram;
+
+        shaderProgram.pos = gl.getAttribLocation(shaderProgram, 'pos');
+        this.vertexBuffer = gl.createBuffer();
+
+        shaderProgram.resolution = gl.getUniformLocation(shaderProgram, 'resolution');
+        shaderProgram.progress = gl.getUniformLocation(shaderProgram, 'progress');
+        shaderProgram.from = gl.getUniformLocation(shaderProgram, 'from');
+        shaderProgram.to = gl.getUniformLocation(shaderProgram, 'to');
+
+        return shaderProgram;
+
+    },
+    draw: function (texture1, texture2, type, progress) {
+
+        var gl = this.gl,
+            sp = this.initShader(type);
+
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+
+        var floatSize = Float32Array.BYTES_PER_ELEMENT,
+            vertSize = 2 * floatSize;
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
+        gl.enableVertexAttribArray(sp.pos);
+        gl.vertexAttribPointer(sp.pos, 2, gl.FLOAT, false, vertSize , 0);
+        gl.bufferData(gl.ARRAY_BUFFER, this.vertices, gl.STATIC_DRAW);
+        gl.uniform2f(sp.resolution, this.width, this.height);
+        gl.uniform1f(sp.progress, progress);
+        gl.activeTexture(gl.TEXTURE0 + 0);
+        gl.bindTexture(gl.TEXTURE_2D, texture1);
+        gl.uniform1i(sp.from, 0);
+        gl.activeTexture(gl.TEXTURE0 + 1);
+        gl.bindTexture(gl.TEXTURE_2D, texture2);
+        gl.uniform1i(sp.to, 1);
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+    }
+}, {
+    fragmentShader: {
+        'default': [
+            '#ifdef GL_ES',
+            'precision highp float;',
+            '#endif',
+            'uniform sampler2D from, to;',
+            'uniform float progress;',
+            'uniform vec2 resolution;',
+            'void main() {',
+                'vec2 p = gl_FragCoord.xy / resolution.xy;',
+                'gl_FragColor = mix(texture2D(from, p), texture2D(to, p), progress);',
+            '}'
+        ].join('\n'),
+        crosshatch: [
+            '#ifdef GL_ES',
+            'precision highp float;',
+            '#endif',
+            'uniform sampler2D from;',
+            'uniform sampler2D to;',
+            'uniform float progress;',
+            'uniform vec2 resolution;',
+            'const vec2 center = vec2(0.5, 0.5);',
+            'float quadraticInOut(float t) {',
+                'float p = 2.0 * t * t;',
+                'return t < 0.5 ? p : -p + (4.0 * t) - 1.0;',
+            '}',
+            'float rand(vec2 co) {',
+                'return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);',
+            '}',
+            'void main() {',
+                'vec2 p = gl_FragCoord.xy / resolution.xy;',
+                'if (progress == 0.0) {',
+                    'gl_FragColor = texture2D(from, p);',
+                '} else if (progress == 1.0) {',
+                    'gl_FragColor = texture2D(to, p);',
+                '} else {',
+                    'float x = progress;',
+                    'float dist = distance(center, p);',
+                    'float r = x - min(rand(vec2(p.y, 0.0)), rand(vec2(0.0, p.x)));',
+                    'float m = dist <= r ? 1.0 : 0.0;',
+                    'gl_FragColor = mix(texture2D(from, p), texture2D(to, p), m);',
+                '}',
+            '}'
+        ].join('\n'),
+        AdvancedMosaic: [
+            '#ifdef GL_ES',
+            'precision highp float;',
+            '#endif',
+            'uniform sampler2D from, to;',
+            'uniform float progress;',
+            'uniform vec2 resolution;',
+            'void main(void)',
+            '{',
+                'vec2 p = gl_FragCoord.xy / resolution.xy;',
+                'float T = progress;',
+                'float S0 = 1.0;',
+                'float S1 = 50.0;',
+                'float S2 = 1.0;',
+                'float Half = 0.5;',
+                'float PixelSize = ( T < Half ) ? mix( S0, S1, T / Half ) : mix( S1, S2, (T-Half) / Half );',
+                'vec2 D = PixelSize / resolution.xy;',
+                'vec2 UV = ( p + vec2( -0.5 ) ) / D;',
+                'vec2 Coord = clamp( D * ( ceil( UV + vec2( -0.5 ) ) ) + vec2( 0.5 ), vec2( 0.0 ), vec2( 1.0 ) );',
+                'vec4 C0 = texture2D( from, Coord );',
+                'vec4 C1 = texture2D( to, Coord );',
+                'gl_FragColor = mix( C0, C1, T );',
+            '}'
+        ].join('\n')
+    }
+});
+
 /* 2d webgl functions
  * Inspired by webgl-2d
  */
@@ -639,8 +868,52 @@ var WebGL2D = webgl.WebGL2D = kclass.create({
         this.transform = new Transform();
         this.maxTextureSize = undefined;
         this.shaderPool = [];
+        this.buffers = [
+            new Framebuffer(v),
+            new Framebuffer(v)
+        ];
+        this.transition = new Transition(v);
+
+        this.drawState = {};
+
+        this.alpha = 1;
 
         this.init();
+
+    },
+    drawTransition: function (texture1, texture2, type, progress) {
+
+        this.transition.draw(texture1, texture2, type, progress);
+
+    },
+    startBuffer: function (num) {
+
+        num = num || 0;
+        this.buffers[num].start();
+
+    },
+    endBuffer: function (num) {
+
+        num = num || 0;
+        this.buffers[num].end();
+
+    },
+    getBuffer: function (num) {
+
+        num = num || 0;
+        return this.buffers[num].getTexture();
+
+    },
+    save: function () {
+
+        var drawState = this.drawState;
+        drawState['alpha'] = this.alpha;
+
+    },
+    restore: function () {
+
+        var drawState = this.drawState;
+        this.alpha = drawState['alpha'];
 
     },
     clear: function () {
@@ -664,7 +937,7 @@ var WebGL2D = webgl.WebGL2D = kclass.create({
         return program;
 
     },
-    drawImage: function (image, x, y) {
+    drawImage: function (image, a, b, c, d, e, f, g, h) {
 
         var gl = this.gl;
 
@@ -674,8 +947,18 @@ var WebGL2D = webgl.WebGL2D = kclass.create({
 
         transform.pushMatrix();
 
-        transform.translate(x, y);
-        transform.scale(image.width, image.height);
+        if (arguments.length === 3) {
+            transform.translate(a, b);
+            transform.scale(image.width, image.height);
+        } else if (arguments.length === 5) {
+            transform.translate(a, b);
+            transform.scale(c, d);
+        } else if (arguments.length === 9) {
+            transform.translate(e, f);
+            transform.scale(g, h);
+            sMask = sMask | shaderMask.crop;
+            doCrop = true;
+        }
 
         var sp = this.initShaders(transform.c_stack, sMask);
 
@@ -687,11 +970,16 @@ var WebGL2D = webgl.WebGL2D = kclass.create({
             texture = new WebGL2D.Texture(gl, image);
         }
 
+        if (doCrop) {
+            gl.uniform4f(shaderProgram.uCropSource, a/image.width, b/image.height, c/image.width, d/image.height);
+        }
+
         gl.bindBuffer(gl.ARRAY_BUFFER, this.rectVertexPositionBuffer);
+        gl.uniform1f(sp.uAlpha, parseFloat(this.alpha));
         gl.vertexAttribPointer(sp.vertexPositionAttribute, 4, gl.FLOAT, false, 0, 0);
 
-        gl.bindTexture(gl.TEXTURE_2D, texture.obj);
         gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, texture.obj);
 
         gl.uniform1i(sp.uSampler, 0);
 
@@ -709,6 +997,7 @@ var WebGL2D = webgl.WebGL2D = kclass.create({
             '#endif',
             '#define hasTexture ' + ((sMask & WebGL2D.shaderMask.texture) ? '1' : '0'),
             '#define hasCrop ' + ((sMask & WebGL2D.shaderMask.crop) ? '1' : '0'),
+            'uniform float uAlpha;',
             'varying vec4 vColor;',
             '#if hasTexture',
                 'varying vec2 vTextureCoord;',
@@ -718,12 +1007,14 @@ var WebGL2D = webgl.WebGL2D = kclass.create({
                 '#endif',
             '#endif',
             'void main() {',
+                'vec4 textureColor;',
                 '#if hasTexture',
                     '#if hasCrop',
-                        'gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.x * uCropSource.z, vTextureCoord.y * uCropSource.w) + uCropSource.xy);',
+                        'textureColor = texture2D(uSampler, vec2(vTextureCoord.x * uCropSource.z, vTextureCoord.y * uCropSource.w) + uCropSource.xy);',
                     '#else',
-                        'gl_FragColor = texture2D(uSampler, vTextureCoord);',
+                        'textureColor = texture2D(uSampler, vTextureCoord);',
                     '#endif',
+                    'gl_FragColor = vec4(textureColor.rgb, textureColor.a * uAlpha);',
                 '#else',
                     'gl_FragColor = vColor;',
                 '#endif',
@@ -836,7 +1127,8 @@ var WebGL2D = webgl.WebGL2D = kclass.create({
             shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
             gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
 
-            shaderProgram.uColor   = gl.getUniformLocation(shaderProgram, 'uColor');
+            shaderProgram.uColor = gl.getUniformLocation(shaderProgram, 'uColor');
+            shaderProgram.uAlpha = gl.getUniformLocation(shaderProgram, 'uAlpha');
             shaderProgram.uSampler = gl.getUniformLocation(shaderProgram, 'uSampler');
             shaderProgram.uCropSource = gl.getUniformLocation(shaderProgram, 'uCropSource');
 
