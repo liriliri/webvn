@@ -33,11 +33,13 @@
                 var img = new canvas.ImageEntity();
                 var img2 = new canvas.ImageEntity();
                 img2.load('/asset/test/fg1.png');
+                img.load('/asset/test/bg1.bmp');
+                img2.x = 400;
                 scene.add(img);
                 scene.add(img2);
                 canvas.renderer.add(scene);
-                img.transTo('/asset/test/bg2.bmp', 2000);
                 setTimeout(function () {
+                    img.load('/asset/test/bg2.bmp', 2000);
 
                     /*img.animate({
                         x: 200,
@@ -50,6 +52,11 @@
                     });*/
 
                 }, 2000);
+                setTimeout(function() {
+
+                    img2.load('/asset/test/fg2.png', 2000);
+
+                }, 4000);
 
             });
 

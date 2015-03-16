@@ -156,7 +156,7 @@ canvas.ImageEntity = canvas.Entity.extend({
         self.progress = 1;
 
     },
-    transTo: function (source, duration) {
+    load: function (source, duration) {
 
         var self = this;
 
@@ -175,17 +175,6 @@ canvas.ImageEntity = canvas.Entity.extend({
                 self.image = self.image2;
 
             });
-
-        });
-
-    },
-    load: function (source) {
-
-        var self = this;
-
-        loader.image(source).then(function (image) {
-
-            self.onLoad(image);
 
         });
 
@@ -228,7 +217,7 @@ canvas.ImageEntity = canvas.Entity.extend({
                 gl.startBuffer(1);
                 gl.drawImage(self.image2, self.x, self.y);
                 gl.endBuffer(1);
-                gl.drawTransition(gl.getBuffer(0), gl.getBuffer(1), 'AdvancedMosaic', self.progress);
+                gl.drawTransition(gl.getBuffer(0), gl.getBuffer(1), 'circleOpen', self.progress);
             }
         }
 

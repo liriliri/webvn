@@ -1,6 +1,6 @@
 // Module webgl
 
-webvn.add('webgl', ['class'], function (s, kclass) {
+webvn.add('webgl', ['class', 'util'], function (s, kclass, util) {
 
 var webgl = {};
 
@@ -762,8 +762,6 @@ var Transition = webgl.Transition = kclass.create({
         var gl = this.gl,
             sp = this.initShader(type);
 
-        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
-
         var floatSize = Float32Array.BYTES_PER_ELEMENT,
             vertSize = 2 * floatSize;
         gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
@@ -782,6 +780,15 @@ var Transition = webgl.Transition = kclass.create({
 
     }
 }, {
+    addTransition: function (o) {
+
+        util.each(o, function (value, key) {
+            
+            Transition.fragmentShader[key] = value;
+            
+        });
+
+    },
     fragmentShader: {
         'default': [
             '#ifdef GL_ES',
@@ -794,62 +801,7 @@ var Transition = webgl.Transition = kclass.create({
                 'vec2 p = gl_FragCoord.xy / resolution.xy;',
                 'gl_FragColor = mix(texture2D(from, p), texture2D(to, p), progress);',
             '}'
-        ].join('\n'),
-        crosshatch: [
-            '#ifdef GL_ES',
-            'precision highp float;',
-            '#endif',
-            'uniform sampler2D from;',
-            'uniform sampler2D to;',
-            'uniform float progress;',
-            'uniform vec2 resolution;',
-            'const vec2 center = vec2(0.5, 0.5);',
-            'float quadraticInOut(float t) {',
-                'float p = 2.0 * t * t;',
-                'return t < 0.5 ? p : -p + (4.0 * t) - 1.0;',
-            '}',
-            'float rand(vec2 co) {',
-                'return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);',
-            '}',
-            'void main() {',
-                'vec2 p = gl_FragCoord.xy / resolution.xy;',
-                'if (progress == 0.0) {',
-                    'gl_FragColor = texture2D(from, p);',
-                '} else if (progress == 1.0) {',
-                    'gl_FragColor = texture2D(to, p);',
-                '} else {',
-                    'float x = progress;',
-                    'float dist = distance(center, p);',
-                    'float r = x - min(rand(vec2(p.y, 0.0)), rand(vec2(0.0, p.x)));',
-                    'float m = dist <= r ? 1.0 : 0.0;',
-                    'gl_FragColor = mix(texture2D(from, p), texture2D(to, p), m);',
-                '}',
-            '}'
-        ].join('\n'),
-        AdvancedMosaic: [
-            '#ifdef GL_ES',
-            'precision highp float;',
-            '#endif',
-            'uniform sampler2D from, to;',
-            'uniform float progress;',
-            'uniform vec2 resolution;',
-            'void main(void)',
-            '{',
-                'vec2 p = gl_FragCoord.xy / resolution.xy;',
-                'float T = progress;',
-                'float S0 = 1.0;',
-                'float S1 = 50.0;',
-                'float S2 = 1.0;',
-                'float Half = 0.5;',
-                'float PixelSize = ( T < Half ) ? mix( S0, S1, T / Half ) : mix( S1, S2, (T-Half) / Half );',
-                'vec2 D = PixelSize / resolution.xy;',
-                'vec2 UV = ( p + vec2( -0.5 ) ) / D;',
-                'vec2 Coord = clamp( D * ( ceil( UV + vec2( -0.5 ) ) ) + vec2( 0.5 ), vec2( 0.0 ), vec2( 1.0 ) );',
-                'vec4 C0 = texture2D( from, Coord );',
-                'vec4 C1 = texture2D( to, Coord );',
-                'gl_FragColor = mix( C0, C1, T );',
-            '}'
-        ].join('\n')
+        ].join('\n')        
     }
 });
 

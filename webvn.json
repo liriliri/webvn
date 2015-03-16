@@ -53,6 +53,7 @@
                 "anim",
                 "template",
                 "webgl",
+                "transition",
                 "canvas",
                 "video",
                 "ui",

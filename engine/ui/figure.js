@@ -22,7 +22,7 @@ canvas.renderer.add(scene);
 
 figure.src = function (src) {
 
-    fg.transTo(src);
+    fg.load(src);
 
 };
 
