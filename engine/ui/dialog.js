@@ -29,12 +29,8 @@ dialog.clear = function () {
 
 // Set or get name
 dialog.name = function (str) {
-
-    if (str) {
-        $name.html(str);
-    } else {
-        return $name.html();
-    }
+        
+    $name.html('【' + str + '】');
 
 };
 

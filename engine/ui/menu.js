@@ -1,9 +1,10 @@
 // Menu ui component
 
-webvn.use(['ui', 'script'], function (s, ui, script) {
+webvn.use(['ui', 'script', 'audio'], function (s, ui, script, audio) {
 
 var menu = ui.create('menu', 'div'),
-	$el = menu.$el;
+	$el = menu.$el,
+    bgm = audio.create('bgm');
 
 $el.addClass('fill');
 
@@ -25,6 +26,7 @@ menu.body(tpl).event({
 
         $el.fadeOut('fast', function () {
 
+            bgm.stop();
             script.resume();
 
         });

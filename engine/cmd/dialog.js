@@ -1,8 +1,9 @@
 // Command dialog
 
-webvn.use(['script', 'ui'], function (s, script, ui) {
+webvn.use(['script', 'ui', 'audio'], function (s, script, ui, audio) {
 
-var dialog = ui.get('dialog');
+var dialog = ui.get('dialog'),
+    voice = audio.create('voice');
 
 script.addCommand('dialog', {
     display: {
@@ -16,6 +17,10 @@ script.addCommand('dialog', {
     text: {
         type: 'String',
         shortHand: 't'
+    },
+    voice: {
+        type: 'String',
+        shortHand: 'v'
     }
 }, function (options, value) {
 
@@ -31,6 +36,10 @@ script.addCommand('dialog', {
 
     if (options.text) {
         dialog.text(options.text);
+    }
+
+    if (options.voice) {
+        voice.load(options.voice);
     }
 
 });

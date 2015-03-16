@@ -24,6 +24,8 @@ var Video = kclass.create({
 
         this.video = v;
         this.loaded = false;
+        // Default loop is disabled
+        v.loop = false;
 
     },
     event: function (events) {

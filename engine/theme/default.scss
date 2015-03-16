@@ -4,6 +4,7 @@ $secondary-color: #ff8e01;
 
 * {
     font-family: 'Microsoft YaHei';
+    box-sizing: border-box;
 }
 
 // Menu style
@@ -42,32 +43,36 @@ $secondary-color: #ff8e01;
     height: 300px;
     bottom: 0;
     .name {
+        font-family: STSong;
+        color: #fff;
+        text-shadow: 0px 0px 3px $secondary-color;
         position: absolute;
         padding: 2px 25px;
         left: 50px;
         height: 40px;
         font-size: 25px;
         line-height: 40px;
-        background-color: rgba(255, 255, 255, 0.8);
+        background-color: rgba(0, 0, 0, 0.4);
         border-radius: 5px 5px 0 0;
-        color: $secondary-color;
     }
     .content {
         position: absolute;
         padding: 25px;
         left: 50px;
         top: 47px;
-        width: 1150px;
-        height: 180px;
-        font-size: 20px;
-        background-color: rgba(255, 255, 255, 0.8);
+        width: 1180px;
+        height: 230px;
+        background-color: rgba(0, 0, 0, 0.4);
         border-radius: 0 5px 5px 5px;
         overflow: hidden;
         .face {
             
         }
         .text {
-
+            font-family: STSong;
+            text-shadow: 0px 0px 3px $primary-color;
+            color: #fff;
+            font-size: 30px;
         }
     }
 }

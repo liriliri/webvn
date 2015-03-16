@@ -21,9 +21,9 @@ script.addCommand('bgm', {
     }
 
     if (options.loop === true) {
-        bgm.setLoop(true);
+        bgm.loop(true);
     } else if (options.loop === false) {
-        bgm.setLoop(false);
+        bgm.loop(false);
     }
 
 });
@@ -47,9 +47,9 @@ script.addCommand('se', {
     }
 
     if (options.loop === true) {
-        se.setLoop(true);
+        se.setloop(true);
     } else if (options.loop === false) {
-        se.setLoop(false);
+        se.setloop(false);
     }
 
 });
@@ -73,9 +73,9 @@ script.addCommand('vo', {
     }
 
     if (options.loop === true) {
-        voice.setLoop(true);
+        voice.loop(true);
     } else if (options.loop === false) {
-        voice.setLoop(false);
+        voice.loop(false);
     }
 
 });

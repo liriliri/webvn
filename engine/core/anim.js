@@ -106,6 +106,7 @@ var anim = function (properties, duration, ease, callback, delay) {
     }
 
     if (duration > 0) {
+
         setTimeout(function(){
 
             callback && callback.call(self);
@@ -386,11 +387,22 @@ select.fn.fadeIn = function (speed, callback) {
 
 select.fn.fadeOut = function (speed, callback) {
 
+    if (util.isFunction(speed) && !callback) {
+        callback = speed,
+        speed = undefined;
+    }
+
     return hide(this, speed, null, callback);
 
 };
 
 select.fn.fadeTo = function (speed, opacity, callback) {
+
+    if (util.isFunction(speed) && !callback) {
+        opacity = speed,
+        callback = opacity,
+        speed = undefined;
+    }
 
     return animProxy(this, speed, opacity, null, callback);
 
@@ -409,8 +421,8 @@ function hide(el, speed, scale, callback) {
 
 function animProxy(el, speed, opacity, scale, callback) {
 
-    if (typeof speed == 'function' && !callback) {
-        callback = speed, speed = undefined
+    if (util.isFunction(speed) && !callback) {
+        callback = speed, speed = undefined;
     }
     var props = { 
         opacity: opacity

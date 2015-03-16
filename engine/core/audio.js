@@ -10,6 +10,10 @@ var audio = {},
 // Create audio element
 audio.create = function (name) {
 
+    if (cache[name]) {
+        return cache[name];
+    }
+
     cache[name] = new Sound();
 
     return cache[name];
@@ -70,7 +74,7 @@ var Sound = kclass.create({
 
     },
     // Set loop
-    setLoop: function (flag) {
+    loop: function (flag) {
 
         this.audio.loop = flag;
 
@@ -89,6 +93,11 @@ var Sound = kclass.create({
 
     }
 });
+
+var bgm = audio.create('bgm');
+bgm.loop(true);
+audio.create('se');
+audio.create('voice');
 
 return audio;
 

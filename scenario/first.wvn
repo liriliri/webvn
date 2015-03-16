@@ -3,21 +3,15 @@
  */
 * start | 主程序入口
 video -d -pl -c=stop -s=/asset/test/video.mp4
-// bgm -s=/asset/test/bgm1.ogg
+bgm -s=/asset/test/bgm2.ogg
+bg --src=/asset/test/bg2.bmp -d
 particle -d -t=snow
-bg --src=/asset/test/bg1.bmp -d
-bg --src=/asset/test/bg2.bmp
-particle -d=false
-dialog --name=尤希尔·弗洛·让梅尔 --text="这里是对话的内容" --display
 fg -d -s=/asset/test/fg1.png
-fg -s=/asset/test/fg2.png
-log -t=info --msg='This is the info message'
-vo -s=/asset/test/vo1.ogg
-vo -s=/asset/test/vo2.ogg
+dialog --display --name=ユルシュール --text="モトカレ、何をしていますの！？　冗談では済まされませんわよ！" -v=/asset/test/vo1.ogg
+particle -d -t=smoke
+dialog -t="大丈夫ですの？　私のペットが迷惑を掛けてしまって、申し訳ありませんわ" -v=/asset/test/vo2.ogg
 // One line comment
 <%
 var x = 5;
 alert('cool');
 %>
-* chapter1 | 第一章 仇恨之源
-bgm --src=bgm1.ogg
