@@ -52,11 +52,11 @@ parser.parse = function (text) {
  */
 parser.split = function (text) {
 
+    text = removeComment(text);
+
     var ret = [];
 
-    var insideBlockComment = false,
-        insideLineComment = false,
-        insideCode = false;
+    var insideCode = false;
 
     for (var i = 0, len = text.length, line = '';
         i < len; i++) {
@@ -77,34 +77,8 @@ parser.split = function (text) {
             }
         }
 
-        if (insideBlockComment) {
-            if (util.endsWith(line, '*/')) {
-                insideBlockComment = false;
-                line = '';
-            }
-            continue;
-        }
-
-        if (insideLineComment) {
-            if (util.endsWith(line, '\n')) {
-                insideLineComment = false;
-                line = '';
-            }
-            continue;
-        }
-
         if (util.startsWith(line, '<%')) {
             insideCode = true;
-            continue;
-        }
-
-        if (util.startsWith(line, '/*')) {
-            insideBlockComment = true;
-            continue;
-        }
-
-        if (util.startsWith(line, '//')) {
-            insideLineComment = true;
             continue;
         }
 
@@ -242,6 +216,46 @@ function parseOption(text) {
     } else {
         ret.name = text;
         ret.value = true;
+    }
+
+    return ret;
+
+}
+
+// Remove block comment and one line comment
+function removeComment (text) {
+
+    var insideBlockComment = false,
+        insideLineComment = false,
+        mark,
+        ret = '';
+
+    for (var i = 0, len = text.length; i < len; i++) {
+        mark = text[i] + text[i+1];
+        if (insideBlockComment) {
+            if (mark === '*/') {
+                insideBlockComment = false;
+                i++;
+            }
+            continue;
+        }
+        if (insideLineComment) {
+            if (text[i] === '\n') {
+                insideLineComment = false;
+            } else {
+                continue;
+            }
+        }
+        if (mark === '/*') {
+            insideBlockComment = true;
+            ret = ret.substr(0, ret.length - 1);
+            continue;
+        }
+        if (mark === '//') {
+            insideLineComment = true;
+            continue;
+        }
+        ret += text[i];
     }
 
     return ret;

@@ -2,8 +2,7 @@
 
 webvn.use(['script', 'ui', 'media'], function (s, script, ui, media) {
 
-var menu = ui.get('menu'),
-    bgm = media.createAudio('bgm');
+var menu = ui.get('menu');
 
 script.addCommand('menu', {
     'display': {
@@ -12,11 +11,19 @@ script.addCommand('menu', {
     },
     'bgm': {
         type: 'String',
-        shortHand: 'b'
+        shortHand: 'bgm'
     },
     'btnHoverSound': {
         type: 'String',
         shortHand: 'bhs'
+    },
+    'btnClickSound': {
+        type: 'String',
+        shortHand: 'bcs'
+    },
+    'btn': {
+        type: 'Json',
+        shortHand: 'btn'
     }
 }, function (options, value) {
 
@@ -27,11 +34,19 @@ script.addCommand('menu', {
     }
 
     if (options.bgm) {
-        bgm.load(options.bgm);
+        menu.bgm(options.bgm);
     }
 
     if (options.btnHoverSound) {
-        menu.btnHoverSound(options.btnHoverSound);
+        menu.btnSound(options.btnHoverSound, 'hover');
+    }
+
+    if (options.btnClickSound) {
+        menu.btnSound(options.btnClickSound, 'click');
+    }
+
+    if (options.btn) {
+        menu.btn(options.btn);
     }
 
 });

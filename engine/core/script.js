@@ -299,6 +299,8 @@ function parseValue(type, value) {
             }
         case 'Number':
             return Number(value);
+        case 'Json':
+            return JSON.parse(value);
         default:
             return value;
     }

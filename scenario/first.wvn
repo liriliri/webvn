@@ -1,16 +1,29 @@
 /* Description
  * Not going to be execute
  */
+
 * start | 主程序入口
-video -d -pl -c=stop -s=/asset/test/video.mp4
+
+video -d -pl -c=stop+
+    -s=/asset/test/video.mp4
+
 bgm -s=/asset/test/bgm2.ogg
+
 bg --src=/asset/test/bg2.bmp -d
+
 particle -d -t=snow
+
 fg -d -s=/asset/test/fg1.png
-dialog --display --name=ユルシュール --text="モトカレ、何をしていますの！？　冗談では済まされませんわよ！" -v=/asset/test/vo1.ogg
+
+dialog --display+
+    --name=ユルシュール --text="モトカレ、何をしていますの！？　冗談では済まされませんわよ！"+
+    -v=/asset/test/vo1.ogg
+
 particle -d -t=smoke
-dialog -t="大丈夫ですの？　私のペットが迷惑を掛けてしまって、申し訳ありませんわ" -v=/asset/test/vo2.ogg
-// One line comment
+
+dialog -t="大丈夫ですの？　私のペットが迷惑を掛けてしまって、申し訳ありませんわ"+
+    -v=/asset/test/vo2.ogg
+
 <%
 var x = 5;
 alert('cool');

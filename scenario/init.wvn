@@ -1,3 +1,7 @@
 // Initialization script
 
-menu -d -b=/asset/test/bgm1.ogg -bhs=/asset/test/onmouse.wav
+// Menu
+menu -d -bgm=/asset/test/bgm1.ogg+
+    -bhs=/asset/test/onmouse.wav+
+    -bcs=/asset/test/onclick.wav+
+    -btn='{"load-game":false,"setting":false,"cg":false,"music":false}'
