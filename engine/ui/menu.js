@@ -1,12 +1,15 @@
 // Menu ui component
 
-webvn.use(['ui', 'script', 'audio'], function (s, ui, script, audio) {
+webvn.use(['ui', 'script', 'media'], function (s, ui, script, media) {
 
 var menu = ui.create('menu', 'div'),
 	$el = menu.$el,
-    bgm = audio.create('bgm');
+    bgm = media.createAudio('bgm');
 
 $el.addClass('fill');
+
+var btnHoverSound = media.createAudio('btn'),
+    btnSound = false;
 
 menu.show = function () {
 
@@ -41,7 +44,22 @@ menu.body(tpl).event({
 
         console.log('setting');
 
+    },
+    'mouseover li': function () {
+
+        if (btnSound) {
+            btnHoverSound.stop();
+            btnHoverSound.play();
+        }
+
     }
 });
+
+menu.btnHoverSound = function (src) {
+
+    btnSound = true;
+    btnHoverSound.load(src, false);
+
+};
 
 });

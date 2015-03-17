@@ -1,6 +1,6 @@
 // Video ui component
 
-webvn.use(['ui', 'video', 'script'], function (s, ui, video, script) {
+webvn.use(['ui', 'media', 'script'], function (s, ui, media, script) {
 
 var vid = ui.create('video', 'div'),
     clickAction = 'stop',
@@ -10,7 +10,7 @@ var tpl = '<video class="video fill"></video>';
 
 vid.body(tpl);
 
-var video = video.create($el.find('.video').get(0));
+var video = media.createVideo($el.find('.video').get(0));
 
 /* Set action when video is clicked
  * Type listed as below:

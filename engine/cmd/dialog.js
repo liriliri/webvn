@@ -1,9 +1,10 @@
 // Command dialog
 
-webvn.use(['script', 'ui', 'audio'], function (s, script, ui, audio) {
+webvn.use(['script', 'ui', 'media'], 
+    function (s, script, ui, media) {
 
 var dialog = ui.get('dialog'),
-    voice = audio.create('voice');
+    voice = media.createAudio('voice');
 
 script.addCommand('dialog', {
     display: {

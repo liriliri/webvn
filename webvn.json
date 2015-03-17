@@ -48,14 +48,13 @@
                 "loader",
                 "parser",
                 "script",
-                "audio",
                 "event",
                 "anim",
                 "template",
                 "webgl",
                 "transition",
                 "canvas",
-                "video",
+                "media",
                 "ui",
                 "test"
             ]

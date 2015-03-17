@@ -1,9 +1,9 @@
 // Command bgm
 
-webvn.use(['script', 'audio'], function (s, script, audio) {
+webvn.use(['script', 'media'], function (s, script, media) {
 
 // Background music
-var bgm = audio.create('bgm');
+var bgm = media.createAudio('bgm');
 
 script.addCommand('bgm', {
     loop: {
@@ -29,7 +29,7 @@ script.addCommand('bgm', {
 });
 
 // Sound Effect
-var se = audio.create('se');
+var se = media.createAudio('se');
 
 script.addCommand('se', {
     loop: {
@@ -55,7 +55,7 @@ script.addCommand('se', {
 });
 
 // Voice
-var voice = audio.create('voice');
+var voice = media.createAudio('voice');
 
 script.addCommand('vo', {
     loop: {
