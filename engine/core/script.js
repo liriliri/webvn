@@ -5,10 +5,8 @@
 webvn.add('script', ['class', 'util', 'config', 'loader', 'parser', 'log'], 
     function (s, kclass, util, config, loader, parser, log) {
 
-var defaults = {};
-
 var conf = config.create('core-script');
-conf.set(defaults).set(config.global.script, true);
+conf.set(config.global.script, false);
 
 var script = {},
     label = {},
@@ -27,9 +25,9 @@ var commands = {};
 /* Add command
  * Just a simple wrapper of 'new Command'
  */
-script.addCommand = function (name, options, processor) {
+script.createCommand = function (name, options, processor) {
 
-    log.info('Add command: ' + name);
+    log.info('Create command: ' + name);
 
     commands[name] = new script.Command(name, options, processor);
 

@@ -4,7 +4,7 @@ webvn.use(['script', 'ui', 'media'], function (s, script, ui, media) {
 
 var menu = ui.get('menu');
 
-script.addCommand('menu', {
+script.createCommand('menu', {
     'display': {
         type: 'Boolean',
         shortHand: 'd'

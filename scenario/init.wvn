@@ -1,6 +1,7 @@
 // Initialization script
 
 // Menu
+* menu | 标题页面
 menu -d -bgm=/asset/test/bgm1.ogg+
     -bhs=/asset/test/onmouse.wav+
     -bcs=/asset/test/onclick.wav+

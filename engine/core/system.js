@@ -2,7 +2,7 @@
  * Provide some common system info and function, such as the screen width and height
  */
 
-webvn.add('system', ['select', 'config'], 
+ebvn.add('system', ['select', 'config'],
 	function (s, select, config) {
 
 var defaults = {

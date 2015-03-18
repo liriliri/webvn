@@ -5,7 +5,7 @@ webvn.use(['script', 'media'], function (s, script, media) {
 // Background music
 var bgm = media.createAudio('bgm');
 
-script.addCommand('bgm', {
+script.createCommand('bgm', {
     loop: {
         type: 'Boolean',
         shortHand: 'l'

@@ -4,7 +4,7 @@ webvn.use(['script', 'ui'], function (s, script, ui) {
 
 var particle = ui.get('particle');
 
-script.addCommand('particle', {
+script.createCommand('particle', {
     display: {
         type: 'Boolean',
         shortHand: 'd'

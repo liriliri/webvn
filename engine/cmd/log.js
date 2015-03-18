@@ -4,7 +4,7 @@
 
 webvn.use(['script', 'log'], function (s, script, log) {
 
-script.addCommand('log', {
+script.createCommand('log', {
     type: {
         type: 'String',
         shortHand: 't'

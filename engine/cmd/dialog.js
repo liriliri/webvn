@@ -6,7 +6,7 @@ webvn.use(['script', 'ui', 'media'],
 var dialog = ui.get('dialog'),
     voice = media.createAudio('voice');
 
-script.addCommand('dialog', {
+script.createCommand('dialog', {
     display: {
         type: 'Boolean',
         shortHand: 'd'

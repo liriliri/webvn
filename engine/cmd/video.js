@@ -4,7 +4,7 @@ webvn.use(['script', 'ui'], function (s, script, ui) {
 
 var video = ui.get('video');
 
-script.addCommand('video', {
+script.createCommand('video', {
     display: {
         type: 'Boolean',
         shortHand: 'd'

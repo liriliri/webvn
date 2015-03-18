@@ -50,6 +50,7 @@
                 "script",
                 "event",
                 "anim",
+                "tween",
                 "template",
                 "webgl",
                 "transition",

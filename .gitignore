@@ -1,4 +1,3 @@
-/code_study/
 /doc/
 /node_modules/
 /bower_components/
@@ -13,4 +12,4 @@
 /build/
 /asset/
 /custom/
-.bowerrc
+/.idea/

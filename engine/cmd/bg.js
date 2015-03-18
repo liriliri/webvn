@@ -4,7 +4,7 @@ webvn.use(['script', 'ui'], function (s, script, ui) {
 
 var background = ui.get('background');
 
-script.addCommand('bg', {
+script.createCommand('bg', {
     display: {
         type: 'Boolean',
         shortHand: 'd',

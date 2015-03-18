@@ -1,4 +1,4 @@
-// UI component menu ui
+// UI component menu
 
 webvn.use(['ui', 'script', 'media', 'util'], 
     function (s, ui, script, media, util) {
