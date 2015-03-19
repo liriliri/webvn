@@ -3,13 +3,8 @@
 webvn.add('ui', ['class', 'select', 'config', 'util', 'script'], 
     function (s, kclass, $, config, util, script) {
 
-// Default config
-var defaults = {
-    container: 'body'
-};
-
 var conf = config.create('core-ui');
-conf.set(defaults).set(config.global.ui, true);
+conf.set(config.global.ui, false);
 
 var ui = {},
     cache = {}, // Store all the ui components

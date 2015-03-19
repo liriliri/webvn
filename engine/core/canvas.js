@@ -1,7 +1,7 @@
 // Module canvas
 
-webvn.add('canvas', ['class', 'loader', 'log', 'config', 'util', 'anim', 'webgl'], 
-    function (s, kclass, loader, log, config, util, anim, webgl) {
+webvn.add('canvas', ['class', 'loader', 'log', 'config', 'util', 'webgl', 'tween'],
+    function (s, kclass, loader, log, config, util, webgl, tween) {
 
 var conf = config.create('core-canvas');
 conf.set(config.global.canvas, false);
@@ -20,80 +20,24 @@ canvas.Entity = kclass.create({
         this.visible = false;
 
     },
-    animate: function (properties, duration, ease, cb) {
-
-        duration = duration || conf.get('duration');
-
-        if (util.isFunction(ease)) {
-            cb = ease;
-            ease = undefined;
-        }
-
-        var interval,
-            self = this,
-            start = +new Date,
-            origin = {},
-            diff = {},
-            finish = start + duration,
-            ease = ease || 'linear';
-
-        ease = anim.ease[ease];
-
-        util.each(properties, function (value, key) {
-
-            origin[key] = self[key];
-            diff[key] = value - origin[key];
-
-        });
-
-        interval = setInterval(function () {
-
-            var time = +new Date;
-
-            if (time > finish) {
-                clearInterval(interval);
-                util.each(properties, function (value, key) {
-
-                    self[key] = value;
-
-                });
-                if (cb) {
-                    cb.call(self);
-                }
-                return;
-            }
-
-            util.each(properties, function (value, key) {
-
-                self[key] = ease(0, time - start, origin[key], diff[key], duration);
-
-            });
-
-        }, 1000 / conf.get('fps'));
-
-    },
-    fadeIn: function (duration, cb) {
+    fadeIn: function (duration) {
 
         if (!this.visible) {
             this.visible = true;
         }
 
-        this.animate({
+        tween.create(this).to({
             alpha: 1
-        }, duration, cb);
+        }, duration);
 
     },
-    fadeOut: function (duration, cb) {
+    fadeOut: function (duration) {
 
-        this.animate({
+        tween.create(this).to({
             alpha: 0
-        }, duration, function () {
+        }, duration).call(function () {
 
             this.visible = false;
-
-            if (cb) {  
-                cb.call(this);
-            }
 
         });
 
@@ -168,9 +112,9 @@ canvas.ImageEntity = canvas.Entity.extend({
 
             self.image2 = image;
             self.progress = 0;
-            self.animate({
+            tween.create(this).to({
                 progress: 1
-            }, duration, function () {
+            }, duration).call(function () {
 
                 self.image = self.image2;
 

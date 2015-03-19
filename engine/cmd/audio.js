@@ -31,7 +31,7 @@ script.createCommand('bgm', {
 // Sound Effect
 var se = media.createAudio('se');
 
-script.addCommand('se', {
+script.createCommand('se', {
     loop: {
         type: 'Boolean',
         shortHand: 'l'
@@ -57,7 +57,7 @@ script.addCommand('se', {
 // Voice
 var voice = media.createAudio('voice');
 
-script.addCommand('vo', {
+script.createCommand('vo', {
     loop: {
         type: 'Boolean',
         shortHand: 'l'

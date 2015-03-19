@@ -1,4 +1,4 @@
-// Module svg
+// Svg
 
 webvn.add('svg', function (s) {
 

@@ -27,7 +27,7 @@
     <script>
         webvn.loader.ready(function () {
 
-            webvn.use(['canvas'], function (s, canvas) {
+            webvn.use(['canvas', 'tween'], function (s, canvas, tween) {
 
                 var scene = new canvas.Scene(document.getElementById('test'));
                 var img = new canvas.ImageEntity();
@@ -40,6 +40,9 @@
                 canvas.renderer.add(scene);
                 setTimeout(function () {
                     img.load('/asset/test/bg2.bmp', 2000);
+                    tween.create(img).to({
+                        x: 200
+                    }, 2000);
 
                     /*img.animate({
                         x: 200,
