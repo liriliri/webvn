@@ -3,6 +3,7 @@
 // Menu
 * menu | 标题页面
 menu -d -bgm=/asset/test/bgm1.ogg+
+    -fi=false -fo=false+
     -bhs=/asset/test/onmouse.wav+
     -bcs=/asset/test/onclick.wav+
-    -btn='{"load-game":false,"setting":false,"cg":false,"music":false}'
+    -btn='{"load":false,"setting":false,"cg":false,"music":false}'

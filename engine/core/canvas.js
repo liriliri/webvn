@@ -26,12 +26,16 @@ canvas.Entity = kclass.create({
             this.visible = true;
         }
 
+        duration = duration || 2000;
+
         tween.create(this).to({
             alpha: 1
         }, duration);
 
     },
     fadeOut: function (duration) {
+
+        duration = duration || 2000;
 
         tween.create(this).to({
             alpha: 0

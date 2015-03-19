@@ -1,54 +1,83 @@
 // Command menu
 
-webvn.use(['script', 'ui', 'media'], function (s, script, ui, media) {
+webvn.use(['script', 'ui', 'media'],
+    function (s, script, ui, media) {
 
-var menu = ui.get('menu');
+        var menu = ui.get('menu');
 
-script.createCommand('menu', {
-    'display': {
-        type: 'Boolean',
-        shortHand: 'd'
-    },
-    'bgm': {
-        type: 'String',
-        shortHand: 'bgm'
-    },
-    'btnHoverSound': {
-        type: 'String',
-        shortHand: 'bhs'
-    },
-    'btnClickSound': {
-        type: 'String',
-        shortHand: 'bcs'
-    },
-    'btn': {
-        type: 'Json',
-        shortHand: 'btn'
-    }
-}, function (options, value) {
+        script.createCommand('menu', {
+            'bgm': {
+                type: 'String',
+                shortHand: 'bgm'
+            },
+            'btn': {
+                type: 'Json',
+                shortHand: 'btn'
+            },
+            'btnHoverSound': {
+                type: 'String',
+                shortHand: 'bhs'
+            },
+            'btnClickSound': {
+                type: 'String',
+                shortHand: 'bcs'
+            },
+            'display': {
+                type: 'Boolean',
+                shortHand: 'd'
+            },
+            'duration': {
+                type: 'Number',
+                shortHand: 'du'
+            },
+            'fadeIn': {
+                type: 'Boolean',
+                shortHand: 'fi'
+            },
+            'fadeOut': {
+                type: 'Boolean',
+                shortHand: 'fo'
+            }
+        }, function (options, value) {
 
-    if (options.display === true) {
-        menu.show();
-    } else if (options.display === false) {
-        menu.hide();
-    }
+            if (options.bgm) {
+                menu.bgm = options.bgm;
+            }
 
-    if (options.bgm) {
-        menu.bgm(options.bgm);
-    }
+            if (options.btn) {
+                menu.btn(options.btn);
+            }
 
-    if (options.btnHoverSound) {
-        menu.btnSound(options.btnHoverSound, 'hover');
-    }
+            if (options.btnClickSound) {
+                menu.btnClickSound = options.btnClickSound;
+            }
 
-    if (options.btnClickSound) {
-        menu.btnSound(options.btnClickSound, 'click');
-    }
+            if (options.btnHoverSound) {
+                menu.btnHoverSound = options.btnHoverSound;
+            }
 
-    if (options.btn) {
-        menu.btn(options.btn);
-    }
+            if (options.duration) {
+                menu.duration = options.duration;
+            }
 
-});
+            if (options.fadeIn === true) {
+                menu.fadeIn = true;
+            } else if (options.fadeIn === false) {
+                menu.fadeIn = false;
+            }
 
-});
+            if (options.fadeOut === true) {
+                menu.fadeOut = true;
+            } else if (options.fadeOut === false) {
+                menu.fadeOut = false;
+            }
+
+            if (options.display === true) {
+                menu.show();
+            } else if (options.display === false) {
+                menu.hide();
+            }
+
+        });
+
+    });
