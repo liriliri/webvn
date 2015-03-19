@@ -2,174 +2,271 @@
  * Audio and video utility
  */
 
-webvn.add('media', ['class', 'log', 'util'], 
-    function (s, kclass, log, util) {
+webvn.add('media', ['class', 'log', 'util', 'tween'],
+    function (s, kclass, log, util, tween) {
 
-var exports = {};
+        var exports = {};
 
-// Const variables
-var STATE = {
-        NOTLOADED: 0,
-        PAUSE: 1,
-        PLAY: 2
-    };
-
-// Class Base
-var Base = exports.Base = kclass.create({
-    constructor: function Base() {
-
-        this.state = STATE.NOTLOADED;
-        this.el = null;
-
-    },
-    load: function (src, autoplay) {
-
-        if (autoplay === undefined) {
-            autoplay = true;
-        }
-
-        var self = this;
-
-        // Stop playing music
-        if (this.state === STATE.PLAY) {
-            this.stop();
-        }
-        this.state === STATE.NOTLOADED;
-
-        // Autoplay init
-        if (autoplay) {
-            this.el.onloadeddata = function () {
-
-                self.el.play();
-                self.state = STATE.PLAY;
-
+        // Const variables
+        var STATE = {
+                NOT_LOADED: 0,
+                PAUSE: 1,
+                PLAY: 2,
+                FADE_OUT: 3
             };
-        } else {
-            this.el.onloadeddata = function () {
 
-                self.state = STATE.PAUSE;
+        // Class Base
+        var Base = exports.Base = kclass.create({
+            constructor: function Base() {
+
+                this.state = STATE.NOT_LOADED;
+                this.el = null;
+
+            },
+            load: function (src, autoplay) {
+
+                if (autoplay === undefined) {
+                    autoplay = true;
+                }
+
+                var self = this;
+
+                // Stop playing music
+                this.stop();
+                this.state = STATE.NOT_LOADED;
+
+                // Autoplay init
+                if (autoplay) {
+                    this.el.onloadeddata = function () {
+
+                        self.state = STATE.PAUSE;
+                        self.play();
+
+                    };
+                } else {
+                    this.el.onloadeddata = function () {
+
+                        self.state = STATE.PAUSE;
+
+                    }
+                }
+
+                log.info('Loading media: ' + src);
+
+                // Start loading
+                this.el.src = src;
+
+            },
+            pause: function () {
+
+                if (this.state === STATE.PLAY) {
+                    this.el.pause();
+                    this.state = STATE.PAUSE;
+                }
+
+            },
+            play: function () {
+
+                if (this.state === STATE.PAUSE) {
+                    this.el.play();
+                    this.state = STATE.PLAY;
+                }
+
+            },
+            stop: function () {
+
+                if (this.state !== STATE.NOT_LOADED) {
+                    this.currentTime(0);
+                    this.pause();
+                    this.state = STATE.PAUSE;
+                }
+
+            },
+            currentTime: function (time) {
+
+                if (this.state !== STATE.NOT_LOADED) {
+                    this.el.currentTime = time;
+                }
+
+            },
+            volume: function (volume) {
+
+                if (volume !== undefined) {
+                    this.el.volume = volume;
+                } else {
+                    return this.el.volume;
+                }
+
+            },
+            loop: function (flag) {
+
+                this.el.loop = flag;
+
+            },
+            event: function (events) {
+
+                var self = this;
+
+                util.each(events, function (fn, type) {
+
+                    self.el['on' + type] = fn;
+
+                });
 
             }
-        }
-
-        log.info('Loading media: ' + src);
-
-        // Start loading
-        this.el.src = src;
-
-    },
-    pause: function () {
-
-        if (this.state === STATE.PLAY) {
-            this.el.pause();
-            this.state = STATE.PAUSE;
-        }
-
-    },
-    play: function () {
-
-        if (this.state === STATE.PAUSE) {
-            this.el.play();
-            this.state = STATE.PLAY;
-        }
-
-    },
-    stop: function () {
-
-        if (this.state !== STATE.NOTLOADED) {
-            this.currentTime(0);
-            this.pause();
-            this.state = STATE.PAUSE;
-        }
-
-    },
-    currentTime: function (time) {
-
-        if (this.state !== STATE.NOTLOADED) {
-            this.el.currentTime = time;
-        }
-
-    },
-    volumn: function (volumn) {
-
-        this.el.volumn = volumn;
-
-    },
-    loop: function (flag) {
-
-        this.el.loop = flag;
-
-    },
-    event: function (events) {
-
-        var self = this;
-
-        util.each(events, function (fn, type) {
-
-            self.el['on' + type] = fn;
-
         });
 
-    }
-});
+        /* Class Audio
+         * Applend class in order not to confict with primitive Audio class
+         */
+        var AudioClass = exports.AudioClass = Base.extend({
+            constructor: function AudioClass() {
 
-/* Class Audio
- * Applend class in order not to confict with primitive Audio class
- */
-var AudioClass = exports.AudioClass = Base.extend({
-    constructor: function AudioClass() {
+                this.callSuper();
 
-        this.callSuper();
+                this.el = new Audio;
+                this.duration = 0;
+                this.fadeIn = false;
+                this.fadeOut = false;
 
-        this.el = new Audio;
+            },
+            load: function (src, autoplay) {
 
-    }
-});
+                if (autoplay === undefined) {
+                    autoplay = true;
+                }
 
-/* Class Video
- * Unlike audio, video object is passed by user
- */
-var Video = exports.Video = Base.extend({
-    constructor: function Video(video) {
+                var self = this;
 
-        this.callSuper();
+                // Stop playing music
+                this.stop();
+                this.state = STATE.NOT_LOADED;
 
-        this.el = video;
+                // Autoplay init
+                if (autoplay) {
+                    this.el.onloadeddata = function () {
 
-    }
-});
+                        self.state = STATE.PAUSE;
+                        self.play();
 
-var audioCache = {};
+                    };
+                } else {
+                    this.el.onloadeddata = function () {
 
-var createAudio = exports.createAudio = function (name) {
+                        self.state = STATE.PAUSE;
 
-    if (audioCache[name]) {
-        return audioCache[name];
-    }
+                    }
+                }
 
-    audioCache[name] = new AudioClass();
+                log.info('Loading media: ' + src);
 
-    return audioCache[name];
+                // Start loading
+                this.el.src = src;
 
-};
+            },
+            play: function () {
 
-var createVideo = exports.createVideo = function (video) {
+                this.callSuper();
 
-    return new Video(video);
+                if (this.fadeIn) {
+                    this._stopTween();
+                    var self = this;
+                    this._volume = this.volume();
+                    this.volume(0);
+                    this._tween = tween.create(this.el).to({
+                        volume: this._volume
+                    }, this.duration).call(function () {
 
-};
+                        self._tween = null;
 
-// Init audios
-// Background music
-var bgm = createAudio('bgm');
-bgm.loop(true);
-// Sound effect
-createAudio('se');
-// Voice
-createAudio('vo');
-// System sound, for example: button hover effect
-createAudio('sys');
+                    });
+                }
 
-return exports;
+            },
+            pause: function () {
 
-});
+                var self = this;
+
+                if (this.state !== STATE.PLAY) {
+                    return;
+                }
+
+                if (this.fadeOut) {
+                    this._stopTween();
+                    var self = this;
+                    this.state = STATE.FADE_OUT;
+                    this._volume = this.volume();
+                    this._tween = tween.create(this.el).to({
+                        volume: 0
+                    }, this.duration).call(function () {
+
+                        this._tween = null;
+                        self.volume(self._volume);
+                        self.el.pause();
+                        this.state = STATE.PAUSE;
+
+                    });
+                } else {
+                    this.el.pause();
+                    this.state = STATE.PAUSE;
+                }
+
+            },
+            _stopTween: function () {
+
+                if (this._tween) {
+                    this._tween.stop();
+                    this.volume(this._volume);
+                }
+
+            }
+        });
+
+        /* Class Video
+         * Unlike audio, video object is passed by user
+         */
+        var Video = exports.Video = Base.extend({
+            constructor: function Video(video) {
+
+                this.callSuper();
+
+                this.el = video;
+
+            }
+        });
+
+        var audioCache = {};
+
+        var createAudio = exports.createAudio = function (name) {
+
+            if (audioCache[name]) {
+                return audioCache[name];
+            }
+
+            audioCache[name] = new AudioClass();
+
+            return audioCache[name];
+
+        };
+
+        var createVideo = exports.createVideo = function (video) {
+
+            return new Video(video);
+
+        };
+
+        // Init audios
+        // Background music
+        var bgm = createAudio('bgm');
+        bgm.loop(true);
+        bgm.duration = 2000;
+        // Sound effect
+        createAudio('se');
+        // Voice
+        createAudio('vo');
+        // System sound, for example: button hover effect
+        createAudio('sys');
+
+        return exports;
+
+    });
