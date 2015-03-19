@@ -112,7 +112,7 @@ canvas.ImageEntity = canvas.Entity.extend({
 
             self.image2 = image;
             self.progress = 0;
-            tween.create(this).to({
+            tween.create(self).to({
                 progress: 1
             }, duration).call(function () {
 

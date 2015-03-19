@@ -41,32 +41,36 @@ webvn.add('tween', ['util', 'class', 'anim'],
                 ease = anim.ease[ease];
 
                 this._steps.push({
-                    type: 'tween',
+                    type: 'to',
                     props: props,
                     duration: duration,
                     ease: ease
                 });
 
-                if (this.state === STATE.PAUSE) {
-                    this.play();
-                }
+                this.play();
 
                 return this;
 
             },
             pause: function () {
 
+                if (this.state === STATE.PAUSE) {
+                    return;
+                }
 
+                this.state = STATE.PAUSE;
+                clearInterval(this._intervalId);
 
             },
             stop: function () {
 
-
+                this._curStep = 0;
+                this.pause();
 
             },
             play: function () {
 
-                if (this._steps.length === 0) {
+                if (this._steps.length === 0 || this.state === STATE.PLAY) {
                     return;
                 }
 
@@ -83,7 +87,7 @@ webvn.add('tween', ['util', 'class', 'anim'],
                 var step = this._steps[this._curStep];
                 this._curStep++;
 
-                if (step.type === 'tween'){
+                if (step.type === 'to'){
                     var self = this,
                         start = +new Date,
                         finish = start + step.duration,
@@ -97,18 +101,19 @@ webvn.add('tween', ['util', 'class', 'anim'],
 
                     });
 
-                    var intervalId = setInterval(function () {
+                    this._intervalId = setInterval(function () {
 
                         var time = +new Date;
 
                         // One step of tween is finish
                         if (time > finish) {
-                            clearInterval(intervalId);
+                            clearInterval(self._intervalId);
                             util.each(step.props, function (value, key) {
 
                                 self.target[key] = value;
 
                             });
+                            self.state = STATE.PAUSE;
                             // Play the next step
                             self.play();
                             return;
@@ -123,20 +128,46 @@ webvn.add('tween', ['util', 'class', 'anim'],
 
                     }, 20);
 
-                    this.state = STATE.PLAY;
+                } else if (step.type === 'call') {
+                    step.fn();
+                    this.state = STATE.PAUSE;
+                    this.play();
+                } else if (step.type === 'wait') {
+                    var self = this;
+
+                    setTimeout(function () {
+
+                       self.state = STATE.PAUSE;
+                       self.play();
+
+                    }, step.duration);
                 }
+
+                this.state = STATE.PLAY;
 
                 return this;
 
             },
             wait: function (duration) {
 
+                this._steps.push({
+                    type: 'wait',
+                    duration: duration
+                });
+                this.play();
 
+                return this;
 
             },
             call: function (fn) {
 
+                this._steps.push({
+                    type: 'call',
+                    fn: fn
+                });
+                this.play();
 
+                return this;
 
             }
         });

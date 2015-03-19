@@ -40,9 +40,27 @@
                 canvas.renderer.add(scene);
                 setTimeout(function () {
                     img.load('/asset/test/bg2.bmp', 2000);
-                    tween.create(img).to({
+                    var myTween = tween.create(img);
+                    myTween.loop = true;
+                    myTween.to({
                         x: 200
-                    }, 2000);
+                    }, 1000).call(function () {
+                        console.log('finish');
+                    }).to({
+                        x: 0,
+                        y: 200
+                    }, 1000).wait(1000).to({
+                        y: 0
+                    }, 1000);
+
+                    setTimeout(function () {
+
+                        myTween.pause();
+                        setTimeout(function () {
+                            myTween.play();
+                        }, 2000);
+
+                    }, 4000);
 
                     /*img.animate({
                         x: 200,
