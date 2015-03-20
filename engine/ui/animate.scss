@@ -1,0 +1,453 @@
+@mixin vendor-prefix($name, $argument) {
+    -webkit-#{$name}: #{$argument};
+    #{$name}: #{$argument};
+}
+
+@mixin keyframes($name) {
+    @-webkit-keyframes #{$name} { @content; }
+    @keyframes #{$name} { @content; }
+}
+
+@each $name in bounceIn, bounceInDown, bounceInLeft, bounceInRight, bounceInUp {
+    .#{$name} {
+        @include vendor-prefix(animation-name, #{$name});
+        @include vendor-prefix(transform-origin, center bottom);
+    }
+}
+
+@each $name in fadeIn, fadeInDown, fadeInLeft, fadeInRight, fadeInUp,
+    rotateIn, rotateInDownLeft, rotateInDownRight, rotateInUpLeft, rotateInUpRight,
+    slideInUp, slideInDown, slideInLeft, slideInRight,
+    zoomIn, zoomInDown, zoomInUp, zoomInLeft, zoomInRight,
+    rollIn {
+    .#{$name} {
+        @include vendor-prefix(animation-name, #{$name})
+    }
+}
+
+@each $name in flipInX, flipInY {
+    .#{$name} {
+        @include vendor-prefix(backface-visibility, visible !important);
+        @include vendor-prefix(animation-name, #{$name});
+    }
+}
+
+@each $name in lightSpeedIn {
+    .#{$name} {
+        @include vendor-prefix(animation-name, #{$name});
+        @include vendor-prefix(animation-timing-function, ease-out);
+    }
+}
+
+@include keyframes(bounceIn) {
+    0%, 20%, 40%, 60%, 80%, 100% {
+        @include vendor-prefix(transition-timing-function, cubic-bezier(0.215, 0.610, 0.355, 1.000))
+    }
+    0% {
+        opacity: 0;
+        @include vendor-prefix(transform, scale3d(.3, .3, .3))
+    }
+    20% {
+        @include vendor-prefix(transform, scale3d(1.1, 1.1, 1.1))
+    }
+    40% {
+        @include vendor-prefix(transform, scale3d(.9, .9, .9))
+    }
+    60% {
+        opacity: 1;
+        @include vendor-prefix(transform, scale3d(1.03, 1.03, 1.03))
+    }
+    80% {
+        @include vendor-prefix(transform, scale3d(.97, .97, .97))
+    }
+    100% {
+        opacity: 1;
+        @include vendor-prefix(transform, scale3d(1, 1, 1))
+    }
+}
+
+@include keyframes(bounceInDown) {
+    0%, 60%, 75%, 90%, 100% {
+        @include vendor-prefix(transition-timing-function, cubic-bezier(0.215, 0.610, 0.355, 1.000))
+    }
+    0% {
+        opacity: 0;
+        @include vendor-prefix(transform, translate3d(0, -3000px, 0))
+    }
+    60% {
+        opacity: 1;
+        @include vendor-prefix(transform, translate3d(0, 25px, 0))
+    }
+    75% {
+        @include vendor-prefix(transform, translate3d(0, -10px, 0))
+    }
+    90% {
+        @include vendor-prefix(transform, translate3d(0, 5px, 0))
+    }
+    100% {
+        @include vendor-prefix(transform, none)
+    }
+}
+
+@include keyframes(bounceInLeft) {
+    0%, 60%, 75%, 90%, 100% {
+        @include vendor-prefix(transition-timing-function, cubic-bezier(0.215, 0.610, 0.355, 1.000))
+    }
+    0% {
+        opacity: 0;
+        @include vendor-prefix(transform, translate3d(-3000px, 0, 0))
+    }
+    60% {
+        opacity: 1;
+        @include vendor-prefix(transform, translate3d(25px, 0, 0))
+    }
+    75% {
+        @include vendor-prefix(transform, translate3d(-10px, 0, 0))
+    }
+    90% {
+        @include vendor-prefix(transform, translate3d(5px, 0, 0))
+    }
+    100% {
+        @include vendor-prefix(transform, none)
+    }
+}
+
+@include keyframes(bounceInRight) {
+    0%, 60%, 75%, 90%, 100% {
+        @include vendor-prefix(transition-timing-function, cubic-bezier(0.215, 0.610, 0.355, 1.000))
+    }
+    0% {
+        opacity: 0;
+        @include vendor-prefix(transform, translate3d(3000px, 0, 0))
+    }
+    60% {
+        opacity: 1;
+        @include vendor-prefix(transform, translate3d(-25px, 0, 0))
+    }
+    75% {
+        @include vendor-prefix(transform, translate3d(10px, 0, 0))
+    }
+    90% {
+        @include vendor-prefix(transform, translate3d(-5px, 0, 0))
+    }
+    100% {
+        @include vendor-prefix(transform, none)
+    }
+}
+
+@include keyframes(bounceInUp) {
+    0%, 60%, 75%, 90%, 100% {
+        @include vendor-prefix(transition-timing-function, cubic-bezier(0.215, 0.610, 0.355, 1.000))
+    }
+    0% {
+        opacity: 0;
+        @include vendor-prefix(transform, translate3d(0, 3000px, 0))
+    }
+    60% {
+        opacity: 1;
+        @include vendor-prefix(transform, translate3d(0, -20px, 0))
+    }
+    75% {
+        @include vendor-prefix(transform, translate3d(0, 10px, 0))
+    }
+    90% {
+        @include vendor-prefix(transform, translate3d(0, -5px, 0))
+    }
+    100% {
+        @include vendor-prefix(transform, translate3d(0, 0, 0))
+    }
+}
+
+@include keyframes(fadeIn) {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@include keyframes(fadeInDown) {
+    0% {
+        opacity: 0;
+        @include vendor-prefix(transform, translate3d(0, -100%, 0))
+    }
+    100% {
+        opacity: 1;
+        @include vendor-prefix(transform, none)
+    }
+}
+
+@include keyframes(fadeInUp) {
+    0% {
+        opacity: 0;
+        @include vendor-prefix(transform, translate3d(0, 100%, 0))
+    }
+    100% {
+        opacity: 1;
+        @include vendor-prefix(transform, none)
+    }
+}
+
+@include keyframes(fadeInLeft) {
+    0% {
+        opacity: 0;
+        @include vendor-prefix(transform, translate3d(-100%, 0, 0))
+    }
+    100% {
+        opacity: 1;
+        @include vendor-prefix(transform, none)
+    }
+}
+
+@include keyframes(fadeInRight) {
+    0% {
+        opacity: 0;
+        @include vendor-prefix(transform, translate3d(100%, 0, 0))
+    }
+    100% {
+        opacity: 1;
+        @include vendor-prefix(transform, none)
+    }
+}
+
+@include keyframes(flipInX) {
+    0% {
+        @include vendor-prefix(transform, perspective(400px) rotate3d(1, 0, 0, 90deg));
+        @include vendor-prefix(transition-timing-function, ease-in);
+        opacity: 0;
+    }
+    40% {
+        @include vendor-prefix(transform, perspective(400px) rotate3d(1, 0, 0, -20deg));
+        @include vendor-prefix(transition-timing-function, ease-in);
+    }
+    60% {
+        @include vendor-prefix(transform, perspective(400px) rotate3d(1, 0, 0, 10deg));
+        opacity: 1;
+    }
+    80% {
+        @include vendor-prefix(transform, perspective(400px) rotate3d(1, 0, 0, -5deg))
+    }
+    100% {
+        @include vendor-prefix(transform, perspective(400px))
+    }
+}
+
+@include keyframes(flipInY) {
+    0% {
+        @include vendor-prefix(transform, perspective(400px) rotate3d(0, 1, 0, 90deg));
+        @include vendor-prefix(transition-timing-function, ease-in);
+        opacity: 0;
+    }
+    40% {
+        @include vendor-prefix(transform, perspective(400px) rotate3d(0, 1, 0, -20deg));
+        @include vendor-prefix(transition-timing-function, ease-in);
+    }
+    60% {
+        @include vendor-prefix(transform, perspective(400px) rotate3d(0, 1, 0, 10deg));
+        opacity: 1;
+    }
+    80% {
+        @include vendor-prefix(transform, perspective(400px) rotate3d(0, 1, 0, -5deg))
+    }
+    100% {
+        @include vendor-prefix(transform, perspective(400px))
+    }
+}
+
+@include keyframes(lightSpeedIn) {
+    0% {
+        @include vendor-prefix(transform, translate3d(100%, 0, 0) skewX(-30deg));
+        opacity: 0;
+    }
+    60% {
+        @include vendor-prefix(transform, skewX(20deg));
+        opacity: 1;
+    }
+    80% {
+        @include vendor-prefix(transform, skewX(-5deg));
+        opacity: 1;
+    }
+    100% {
+        @include vendor-prefix(transform, none);
+        opacity: 1;
+    }
+}
+
+@include keyframes(rotateIn) {
+    0% {
+        @include vendor-prefix(transform-origin, center);
+        @include vendor-prefix(transform, rotate3d(0, 0, 1, -200deg));
+        opacity: 0;
+    }
+    100% {
+        @include vendor-prefix(transform-origin, center);
+        @include vendor-prefix(transform, none);
+        opacity: 1;
+    }
+}
+
+@include keyframes(rotateInDownLeft) {
+    0% {
+        @include vendor-prefix(transform-origin, left bottom);
+        @include vendor-prefix(transform, rotate3d(0, 0, 1, -45deg));
+        opacity: 0;
+    }
+    100% {
+        @include vendor-prefix(transform-origin, left bottom);
+        @include vendor-prefix(transform, none);
+        opacity: 1;
+    }
+}
+
+@include keyframes(rotateInDownRight) {
+    0% {
+        @include vendor-prefix(transform-origin, right bottom);
+        @include vendor-prefix(transform, rotate3d(0, 0, 1, 45deg));
+        opacity: 0;
+    }
+    100% {
+        @include vendor-prefix(transform-origin, right bottom);
+        @include vendor-prefix(transform, none);
+        opacity: 1;
+    }
+}
+
+@include keyframes(rotateInUpLeft) {
+    0% {
+        @include vendor-prefix(transform-origin, left bottom);
+        @include vendor-prefix(transform, rotate3d(0, 0, 1, 45deg));
+        opacity: 0;
+    }
+    100% {
+        @include vendor-prefix(transform-origin, left bottom);
+        @include vendor-prefix(transform, none);
+        opacity: 1;
+    }
+}
+
+@include keyframes(rotateInUpRight) {
+    0% {
+        @include vendor-prefix(transform-origin, right bottom);
+        @include vendor-prefix(transform, rotate3d(0, 0, 1, -90deg));
+        opacity: 0;
+    }
+    100% {
+        @include vendor-prefix(transform-origin, right bottom);
+        @include vendor-prefix(transform, none);
+        opacity: 1;
+    }
+}
+
+@include keyframes(slideInUp) {
+    0% {
+        @include vendor-prefix(transform, translateY(100%));
+        visibility: visible;
+    }
+    100% {
+        @include vendor-prefix(transform, translateY(0))
+    }
+}
+
+@include keyframes(slideInDown) {
+    0% {
+        @include vendor-prefix(transform, translateY(-100%));
+        visibility: visible;
+    }
+    100% {
+        @include vendor-prefix(transform, translateY(0))
+    }
+}
+
+@include keyframes(slideInLeft) {
+    0% {
+        @include vendor-prefix(transform, translateX(-100%));
+        visibility: visible;
+    }
+    100% {
+        @include vendor-prefix(transform, translateX(0))
+    }
+}
+
+@include keyframes(slideInRight) {
+    0% {
+        @include vendor-prefix(transform, translateX(100%));
+        visibility: visible;
+    }
+    100% {
+        @include vendor-prefix(transform, translateX(0))
+    }
+}
+
+@include keyframes(zoomIn) {
+    0% {
+        opacity: 0;
+        @include vendor-prefix(transform, scale3d(.3, .3, .3))
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@include keyframes(zoomInUp) {
+    0% {
+        opacity: 0;
+        @include vendor-prefix(transform, scale3d(.1, .1, .1) translate3d(0, 1000px, 0));
+        @include vendor-prefix(animation-timing-function, cubic-bezier(0.550, 0.055, 0.675, 0.190));
+    }
+    60% {
+        opacity: 1;
+        @include vendor-prefix(transform, scale3d(.475, .475, .475) translate3d(0, -60px, 0));
+        @include vendor-prefix(animation-timing-function, cubic-bezier(0.175, 0.885, 0.320, 1));
+    }
+}
+
+@include keyframes(zoomInDown) {
+    0% {
+        opacity: 0;
+        @include vendor-prefix(transform, scale3d(.1, .1, .1) translate3d(0, -1000px, 0));
+        @include vendor-prefix(animation-timing-function, cubic-bezier(0.550, 0.055, 0.675, 0.190));
+    }
+    60% {
+        opacity: 1;
+        @include vendor-prefix(transform, scale3d(.475, .475, .475) translate3d(0, 60px, 0));
+        @include vendor-prefix(animation-timing-function, cubic-bezier(0.175, 0.885, 0.320, 1));
+    }
+}
+
+@include keyframes(zoomInLeft) {
+    0% {
+        opacity: 0;
+        @include vendor-prefix(transform, scale3d(.1, .1, .1) translate3d(-1000px, 0, 0));
+        @include vendor-prefix(animation-timing-function, cubic-bezier(0.550, 0.055, 0.675, 0.190));
+    }
+    60% {
+        opacity: 1;
+        @include vendor-prefix(transform, scale3d(.475, .475, .475) translate3d(10px, 0, 0));
+        @include vendor-prefix(animation-timing-function, cubic-bezier(0.175, 0.885, 0.320, 1));
+    }
+}
+
+@include keyframes(zoomInRight) {
+    0% {
+        opacity: 0;
+        @include vendor-prefix(transform, scale3d(.1, .1, .1) translate3d(1000px, 0, 0));
+        @include vendor-prefix(animation-timing-function, cubic-bezier(0.550, 0.055, 0.675, 0.190));
+    }
+    60% {
+        opacity: 1;
+        @include vendor-prefix(transform, scale3d(.475, .475, .475) translate3d(-10px, 0, 0));
+        @include vendor-prefix(animation-timing-function, cubic-bezier(0.175, 0.885, 0.320, 1));
+    }
+}
+
+@include keyframes(rollIn) {
+    0% {
+        opacity: 0;
+        @include vendor-prefix(transform, translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg));
+    }
+    100% {
+        opacity: 1;
+        @include vendor-prefix(transform, none);
+    }
+}

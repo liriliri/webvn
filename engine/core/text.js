@@ -36,7 +36,7 @@ webvn.add('text', ['util', 'class', 'select'],
             },
             show: function () {
 
-                this.$el.html(splitText(this.data));
+                this.$el.html(this.splitText(this.data));
                 this.$el.find('span').hide();
                 var self = this;
                 for (var i = 0; i < this.length; i++) {
@@ -54,26 +54,32 @@ webvn.add('text', ['util', 'class', 'select'],
                 var self = this;
                 setTimeout(function () {
 
-                    self.$el.find('.char' + i).show();
+                    self.$el.find('.char' + i).show().css({
+                        '-webkit-animation-duration': '.5s',
+                        'display': 'inline-block'
+                    }).addClass('fadeIn');
 
                 }, delay);
 
+            },
+            // Split text into different span
+            // TODO use template to replace it when template module is completed
+            splitText: function (data) {
+
+                var ret = '';
+
+                for (var i = 0, len = data.length; i < len; i++) {
+                    var char = data[i];
+                    if (char === ' ') {
+                        char = '&nbsp;';
+                    }
+                    ret += '<span class="char' + i + '">' + char + '</span>';
+                }
+
+                return ret;
+
             }
         });
-
-        // Split text into different span
-        // TODO use template to replace it when template module is completed
-        function splitText(data) {
-
-            var ret = '';
-
-            for (var i = 0, len = data.length; i < len; i++) {
-                ret += '<span class="char' + i + '">' + data[i] + '</span>';
-            }
-
-            return ret;
-
-        }
 
         exports.createAnim = function (el) {
 

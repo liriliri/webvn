@@ -122,7 +122,7 @@ grunt.initConfig({
     watch: {
         sass: {
             options: {
-                spawn: false,
+                spawn: false
             },
             files: [
                 'engine/theme/**/*.scss',

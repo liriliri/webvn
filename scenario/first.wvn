@@ -32,6 +32,11 @@ particle -d -t=smoke
 dialog -t="大丈夫ですの？　私のペットが迷惑を掛けてしまって、申し訳ありませんわ"+
     -v=/asset/test/vo2.ogg
 
+particle -t=snow
+
+dialog -t="大丈夫ですの？　私のペットが迷惑を掛けてしまって、申し訳ありませんわ"+
+    -v=/asset/test/vo2.ogg
+
 <%
 var x = 5;
 alert('cool');

@@ -14,7 +14,7 @@ canvas.renderer.add(scene);
 
 background.src = function (src) {
 
-    image.load(src, 2000);
+    image.load(src, 500);
 
 };
 
