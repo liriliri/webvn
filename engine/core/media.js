@@ -12,7 +12,6 @@ webvn.add('media', ['class', 'log', 'util', 'tween'],
                 NOT_LOADED: 0,
                 PAUSE: 1,
                 PLAY: 2,
-                FADE_OUT: 3
             };
 
         // Class Base

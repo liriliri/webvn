@@ -3,6 +3,7 @@
  * I think it is better to separate it from script module
  */
 
+// TODO alias, macro support
 webvn.add('parser', ['util'], function (s, util) {
 
 var parser = {};

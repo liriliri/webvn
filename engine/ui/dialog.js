@@ -1,49 +1,43 @@
 // Dialog ui component
 
-webvn.use(['ui'], function (s, ui) {
+webvn.use(['ui', 'text'],
+    function (s, ui, text) {
 
-var dialog = ui.create('dialog', 'div'),
-    $el = dialog.$el;
+        var exports = ui.create('dialog', 'div');
 
-$el.addClass('fill');
+        var $el = exports.$el;
+        $el.addClass('fill');
 
-var tpl = '<div class="name"></div>' +
-    '<div class="content">' +
-        '<img class="face" src=""/>' +
-        '<span class="text"></span>' +
-    '</div>';
+        var tpl = [
+                '<div class="name"></div>',
+                '<div class="content">',
+                    '<img class="face" src=""/>',
+                    '<span class="text"></span>',
+                '</div>'
+            ].join('');
+        exports.body(tpl);
 
-dialog.body(tpl);
+        var $content = $el.find('.content'),
+            $name = $el.find('.name'),
+            $text = $content.find('.text');
 
-var $content = $el.find('.content'),
-    $name = $el.find('.name'),
-    $face = $content.find('.face'),
-    $text = $content.find('.text');
+        exports.clear = function () {
 
-// Clear text
-dialog.clear = function () {
+            $text.html('');
 
-    $text.html('');
+        };
 
-};
+        exports.name = function (str) {
 
-// Set or get name
-dialog.name = function (str) {
-        
-    $name.html('【' + str + '】');
+            $name.html('【' + str + '】');
 
-};
+        };
 
-// Set or get text
-dialog.text = function (str) {
+        var textAnim = text.createAnim($text);
+        exports.text = function (str) {
 
-    if (str) {
-        $text.html(str);
-    } else {
-        return $text.html();
-    }
+                textAnim.load(str);
 
-};
+        };
 
-
-});
+    });

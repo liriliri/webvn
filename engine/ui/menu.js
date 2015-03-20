@@ -5,11 +5,19 @@ webvn.use(['ui', 'script', 'media', 'util'],
 
         var exports = ui.create('menu', 'div');
 
-        var $el = exports.$el;
-        $el.addClass('fill');
+        // Properties
+        exports.bgm = null;
+        exports.btnClickSound = null;
+        exports.btnHoverSound = null;
+        exports.duration = 1000;
+        exports.fadeIn = true;
+        exports.fadeOut = true;
 
         var bgm = media.createAudio('bgm'),
             sysAudio = media.createAudio('sys');
+
+        var $el = exports.$el;
+        $el.addClass('fill');
 
         var tpl = [
                 '<ul>',
@@ -19,15 +27,8 @@ webvn.use(['ui', 'script', 'media', 'util'],
                     '<li class="music">音乐鉴赏</li>',
                     '<li class="setting">环境设定</li>',
                 '</ul>'
-            ].join('\n');
+            ].join('');
         exports.body(tpl);
-
-        exports.bgm = null;
-        exports.btnClickSound = null;
-        exports.btnHoverSound = null;
-        exports.duration = 1000;
-        exports.fadeIn = true;
-        exports.fadeOut = true;
 
         exports.event({
             'click .start': function () {
@@ -97,10 +98,12 @@ webvn.use(['ui', 'script', 'media', 'util'],
 
                 var $e = $el.find('ul li.' + key);
 
-                if (value) {
+                if (value === true) {
                     $e.css('display', 'block');
-                } else {
+                } else if (value === false) {
                     $e.css('display', 'none');
+                } else if (util.isString(value)) {
+                    $e.text(value);
                 }
 
             });

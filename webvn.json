@@ -56,6 +56,7 @@
                 "transition",
                 "canvas",
                 "media",
+                "text",
                 "ui",
                 "test"
             ]
@@ -63,7 +64,6 @@
         "lib": {
             "path": "/engine/lib/",
             "files": [
-                "TweenMax"
             ]
         },
         "ext": {

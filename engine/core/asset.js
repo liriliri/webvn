@@ -1,9 +1,11 @@
 // Module asset
 
-webvn.add('asset', ['util'], function (s, util) {
+// TODO module asset
+webvn.add('asset', ['util'],
+    function (s, util) {
 
-var asset = {};
+        var exports = {};
 
-return asset;
+        return exports;
 
-});
+    });
