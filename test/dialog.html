@@ -17,9 +17,10 @@
 		</div>
 		<div id="scenario" class="hidden">
 		dialog -d --name=RedHoodSu -t="Hello world!"
-		dialog -t="Hello world again!"
-		dialog -n=Surunzi -t="Hello world plus!!!"
+		dialog -t="Hello world again!" -tt=bounceIn
+		dialog -n=Surunzi -t="Hello world plus!!!" -td=1000
 		dialog -d=false
+		dialog -d
 		</div>
 		<script>
 		webvn.loader.ready(function () {

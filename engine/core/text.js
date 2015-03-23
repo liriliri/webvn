@@ -7,7 +7,6 @@ webvn.add('text', ['util', 'class', 'select'],
         
         var exports = {};
 
-        // TODO text animation effect
         var TextAnim = exports.TextAnim = kclass.create({
             constructor: function TextAnim(el) {
 
@@ -18,7 +17,10 @@ webvn.add('text', ['util', 'class', 'select'],
 
                 this.$el = el;
                 this.data = '';
+                this.length = 0;
+                this.type = 'fadeIn';
                 this.duration = 50;
+                this.timers = [];
 
             },
             load: function (data, autoshow) {
@@ -26,6 +28,8 @@ webvn.add('text', ['util', 'class', 'select'],
                 if (autoshow === undefined) {
                     autoshow = true;
                 }
+
+                this.stopTimer();
 
                 this.data = data;
                 this.length = data.length;
@@ -38,28 +42,26 @@ webvn.add('text', ['util', 'class', 'select'],
 
                 this.$el.html(this.splitText(this.data));
                 this.$el.find('span').hide();
-                var self = this;
                 for (var i = 0; i < this.length; i++) {
-                    this.doSetTimeout(i, i * this.duration);
+                    this.showChar(i);
                 }
 
             },
-            hide: function () {
+            showChar: function (i) {
 
+                var self = this,
+                    animDuration = this.duration / 100 + 's';
 
-
-            },
-            doSetTimeout: function (i, delay) {
-
-                var self = this;
-                setTimeout(function () {
+                this.timers[i] = setTimeout(function () {
 
                     self.$el.find('.char' + i).show().css({
-                        '-webkit-animation-duration': '.5s',
+                        '-webkit-animation-duration': animDuration,
                         'display': 'inline-block'
-                    }).addClass('fadeIn');
+                    }).addClass(self.type);
 
-                }, delay);
+                    self.timers[i] = null;
+
+                }, i * this.duration);
 
             },
             // Split text into different span
@@ -77,6 +79,16 @@ webvn.add('text', ['util', 'class', 'select'],
                 }
 
                 return ret;
+
+            },
+            stopTimer: function () {
+
+                for (var i = 0; i < this.length; i++) {
+                    if (this.timers[i]) {
+                        clearTimeout(this.timers[i]);
+                        this.timers[i] = null;
+                    }
+                }
 
             }
         });

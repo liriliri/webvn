@@ -1,9 +1,15 @@
-// Dialog ui component
+// UI component dialog
 
-webvn.use(['ui', 'text'],
-    function (s, ui, text) {
+webvn.use(['ui', 'text', 'media'],
+    function (s, ui, text, media) {
 
         var exports = ui.create('dialog', 'div');
+
+        exports.textType = 'fadeIn';
+        exports.textDuration = 50;
+        exports.duration = 200;
+        exports.fadeIn = true;
+        exports.fadeOut = true;
 
         var $el = exports.$el;
         $el.addClass('fill');
@@ -21,22 +27,45 @@ webvn.use(['ui', 'text'],
             $name = $el.find('.name'),
             $text = $content.find('.text');
 
-        exports.clear = function () {
+        exports.show = function () {
 
-            $text.html('');
+            if (exports.fadeIn) {
+                $el.fadeIn(exports.duration);
+            } else {
+                $el.show();
+            }
 
         };
 
-        exports.name = function (str) {
+        exports.hide = function () {
 
-            $name.html('【' + str + '】');
+            if (exports.fadeOut) {
+                $el.fadeOut(exports.duration);
+            } else {
+                $el.hide();
+            }
+
+        };
+
+        exports.name = function (name) {
+
+            $name.html('【' + name + '】');
 
         };
 
         var textAnim = text.createAnim($text);
-        exports.text = function (str) {
+        exports.text = function (text) {
 
-                textAnim.load(str);
+            textAnim.type = exports.textType;
+            textAnim.duration = exports.textDuration;
+            textAnim.load(text);
+
+        };
+
+        var voice = media.createAudio('voice');
+        exports.voice = function (voiceSouce) {
+
+            voice.load(voiceSouce);
 
         };
 
