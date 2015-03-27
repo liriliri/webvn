@@ -1,52 +1,120 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>WebVN</title>
-<script src="/bower_components/jquery/dist/jquery.js"></script>
-<script>
-	var tests = {
-		'core': [
-			'util',
-			'canvas'
-		],
-		'component': [
-			'video',
-			'dialog'
-		]
-	}
-</script>
+    <meta charset="utf-8">
+    <title>WebVN</title>
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+	<style>
+        * {
+            font-family: '微软雅黑';
+        }
+        body {
+            margin: 0;
+            font-size: 18px;
+            text-align: center;
+            background: #eb6864;
+        }
+        ul {
+            text-align: left;
+            display: inline;
+            margin: 0;
+            padding: 15px 4px 17px 0;
+            list-style: none;
+        }
+        ul li {
+            display: inline-block;
+            margin-right: -5px;
+            position: relative;
+            padding: 15px 20px;
+            background: #07a;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #fff;
+        }
+        ul li:hover {
+            background: #78e0ff;
+        }
+        ul li ul {
+            padding: 0;
+            position: absolute;
+            top: 54px;
+            left: 0;
+            display: none;
+        }
+        ul li ul li {
+            background: #07a;
+            display: block;
+            padding: 0;
+            color: #fff;
+        }
+        ul li ul li:hover {
+            background: #78e0ff;
+        }
+        ul li:hover ul {
+            display: block;
+        }
+        ul li ul li a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            padding: 15px 20px;
+            white-space: nowrap;
+        }
+        .first {
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+        .last {
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+        #menu {
+            padding-top: 200px;
+        }
+	</style>
+    <script>
+        var tests = [
+            'util',
+            'canvas',
+            'video',
+            'dialog'
+        ];
+    </script>
 </head>
 <body>
-<div>
-	<h2>Dev</h2>
-	<ul>
-		<li><a href="/webvn.html">WebVN</a></li>
-	</ul>
-</div>
-<div>
-	<h2>Test</h2>
-	<div id="test-list">
-	</div>
+<div id="menu">
+    <ul>
+        <li class="first">
+            Dev
+            <ul>
+                <li>
+                    <a href="/webvn.html">WebVN</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            Test
+            <ul id="test">
+            </ul>
+        </li>
+        <li class="last">
+            Extra
+            <ul>
+                <li><a href="http://webvn.surunzi.com/">WebVN-site</a></li>
+                <li><a href="http://webvn-site/">WebVN-site-dev</a></li>
+                <li><a href="http://webvn-api/">WebVN-api</a></li>
+            </ul>
+        </li>
+    </ul>
 </div>
 <script>
 var i, len;
-
-var $testList = $('#test-list');
-
-$.each(tests, function (key, val) {
-
-	var header = '<h3>' + key + '</h3><ul>',
-		footer = '</ul>',
-		body = '';
-
-	for (i = 0, len = val.length; i < len; i++) {
-		body += '<li><a href="/test/' + val[i] + '.html">' + val[i] + '</a></li>'
-	}
-
-	$testList.append(header + body + footer);
-
-});
+var $test = $('#test'),
+    body = '';
+for (i = 0, len = tests.length; i < len; i++) {
+	body += '<li><a href="/test/' + tests[i] + '.html">' + tests[i] + '</a></li>'
+}
+$test.html(body);
 </script>
 </body>
 </html>
