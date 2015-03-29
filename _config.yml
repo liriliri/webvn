@@ -1,10 +1,11 @@
 # Site settings
 title: WebVN
+port: 4000
 email: your-email@domain.com
 description: "Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description."
 baseurl: "http://surunzi.github.io/WebVN"
 disqusurl: "http://surunzi.github.io/WebVN"
-exclude: ["node_modules", "package.json"]
+exclude: ["node_modules", "package.json", "Gruntfile.js", "README.md", "css/*.scss"]
 
 # Build settings
 markdown: kramdown

@@ -2,5 +2,4 @@
 /_site/
 /bower_components/
 .bowerrc
-run.bat
-build.bat
+/.sass-cache/
