@@ -1,5 +1,6 @@
 /node_modules/
 /_site/
+/img/
 /bower_components/
 .bowerrc
 /.sass-cache/

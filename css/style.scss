@@ -1,5 +1,6 @@
 $primary-color: #eb6864;
 $secondary-color: #07a;
+$image-url: 'http://webvn-image.stor.sinaapp.com/api/';
 
 ::selection {
 	background: #ffea73;
@@ -16,7 +17,6 @@ a {
 body {
     margin: 0;
     padding: 0;
-    background: #fff;
 }
 
 html {
@@ -328,8 +328,21 @@ ul {
     color: #fff;
 }
 
+#index-girl {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    lef: 0;
+    z-index: 1000;
+    background: url($image-url+'index-girl.png') no-repeat fixed top right;
+}
+
 #index-disqus-container {
     margin: 15px auto;
+    position: relative;
+    z-index: 1200;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 #intro {
@@ -360,11 +373,11 @@ ul {
 #nav {
     width: 100%;
     height: 80px;
-    background-color: #fff;
-    z-index: 10;
     position: relative;
+    z-index: 1200;
     border-bottom: 1px solid $primary-color;
     border-top: 8px solid $primary-color;
+    background-color: rgba(255, 255, 255, 0.5);
     ul {
         margin: 0 auto;
         padding: 0;
@@ -451,6 +464,9 @@ ul {
 
 #sub-intro {
     padding: 15px 0;
+    position: relative;
+    z-index: 1200;
+    background: rgba(255, 255, 255, 0.5);
 }
 
 #sub-intro .section {

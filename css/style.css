@@ -10,8 +10,7 @@ a {
 
 body {
   margin: 0;
-  padding: 0;
-  background: #fff; }
+  padding: 0; }
 
 html {
   margin: 0;
@@ -262,8 +261,20 @@ ul {
   line-height: 50px;
   color: #fff; }
 
+#index-girl {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  lef: 0;
+  z-index: 1000;
+  background: url("http://webvn-image.stor.sinaapp.com/api/index-girl.png") no-repeat fixed top right; }
+
 #index-disqus-container {
-  margin: 15px auto; }
+  margin: 15px auto;
+  position: relative;
+  z-index: 1200;
+  background-color: rgba(255, 255, 255, 0.5); }
 
 #intro {
   padding-top: 30px;
@@ -288,11 +299,11 @@ ul {
 #nav {
   width: 100%;
   height: 80px;
-  background-color: #fff;
-  z-index: 10;
   position: relative;
+  z-index: 1200;
   border-bottom: 1px solid #eb6864;
-  border-top: 8px solid #eb6864; }
+  border-top: 8px solid #eb6864;
+  background-color: rgba(255, 255, 255, 0.5); }
   #nav ul {
     margin: 0 auto;
     padding: 0;
@@ -355,7 +366,10 @@ ul {
   width: 140px; }
 
 #sub-intro {
-  padding: 15px 0; }
+  padding: 15px 0;
+  position: relative;
+  z-index: 1200;
+  background: rgba(255, 255, 255, 0.5); }
 
 #sub-intro .section {
   margin: 25px 0; }
