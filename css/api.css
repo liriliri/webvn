@@ -91,9 +91,6 @@
   border-bottom: 1px solid #ccc;
   color: #000; }
 
-.api .wrapper {
-  padding: 0 15px; }
-
 .api #overlay {
   position: fixed;
   z-index: 10000;

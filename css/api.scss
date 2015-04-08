@@ -1,5 +1,6 @@
 $primary-color: #eb6864;
 $secondary-color: #07a;
+$common-padding: 20px;
 
 .api {
     font-size: 16px;
@@ -112,10 +113,6 @@ $secondary-color: #07a;
     padding: 5px 0;
     border-bottom: 1px solid #ccc;
     color: #000;
-}
-
-.api .wrapper {
-    padding: 0 15px;
 }
 
 .api #overlay {

@@ -1,13 +1,10 @@
 $primary-color: #eb6864;
 $secondary-color: #07a;
+$common-padding: 20px;
 $image-url: 'http://webvn-image.stor.sinaapp.com/api/';
 
 ::selection {
 	background: #ffea73;
-}
-
-* {
-    font-family: 微软雅黑;
 }
 
 a {
@@ -15,6 +12,8 @@ a {
 }
 
 body {
+    font-family: 微软雅黑;
+    background-image: url($image-url+'main-bg.png');
     margin: 0;
     padding: 0;
 }
@@ -178,6 +177,13 @@ ul {
     margin: 0 auto;
 }
 
+.container.white {
+    padding: $common-padding;
+    margin-top: 15px;
+    box-shadow: 0 0 5px #666;
+    background: #fff;
+}
+
 .font-blue {
     color: $secondary-color;
 }
@@ -187,7 +193,6 @@ ul {
 }
 
 #api {
-    padding: 15px 0;
     ul {
         padding: 0;
         display: table;
@@ -202,6 +207,8 @@ ul {
         background-color: $primary-color;
     }
     ul li:hover {
+        box-shadow: 0 0 5px #666;
+        transform: scale(1.02);
         background-color: $secondary-color;
     }
     ul li a {
@@ -312,6 +319,7 @@ ul {
 #footer {
     height: 50px;
     background-color: $secondary-color;
+    padding: 0 $common-padding;
     margin-top: 20px;
     border-bottom: 5px solid $primary-color;
 }
@@ -341,6 +349,8 @@ ul {
 #index-disqus-container {
     margin: 15px auto;
     position: relative;
+    padding: $common-padding;
+    box-shadow: 0 0 5px #666;
     z-index: 1200;
     background-color: rgba(255, 255, 255, 0.5);
 }
@@ -364,8 +374,12 @@ ul {
     #quick-start:hover {
         background-color: rgba(255, 255, 255, 0.2);
     }
+    h2 {
+        font-size: 40px;
+        color: #fff;
+    }
     p {
-        font-size: 50px;
+        font-size: 25px;
         color: #fff;
     }
 }
@@ -377,7 +391,8 @@ ul {
     z-index: 1200;
     border-bottom: 1px solid $primary-color;
     border-top: 8px solid $primary-color;
-    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 5px #666;
+    background-color: rgba(255, 255, 255, 0.8);
     ul {
         margin: 0 auto;
         padding: 0;
@@ -463,9 +478,11 @@ ul {
 }
 
 #sub-intro {
-    padding: 15px 0;
     position: relative;
     z-index: 1200;
+    padding: $common-padding;
+    margin-top: 15px;
+    box-shadow: 0 0 5px #666;
     background: rgba(255, 255, 255, 0.5);
 }
 
