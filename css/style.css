@@ -318,7 +318,7 @@ ul {
   background-color: rgba(255, 255, 255, 0.8); }
   #nav ul {
     margin: 0 auto;
-    padding: 0;
+    padding: 0 20px;
     height: 100%; }
   #nav ul li {
     float: left;
@@ -330,7 +330,7 @@ ul {
     padding: 0 15px;
     color: #000;
     display: block;
-    font-size: 15px;
+    font-size: 18px;
     text-align: left; }
   #nav ul li a:hover {
     color: #07a;
