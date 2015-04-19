@@ -16,49 +16,63 @@
         }
         ul {
             text-align: left;
-            display: inline;
-            margin: 0;
+            display: block;
             padding: 15px 4px 17px 0;
-            list-style: none;
+            position: relative;
+            float: left;
+            left: 50%;
         }
         ul li {
-            display: inline-block;
-            margin-right: -5px;
             position: relative;
             padding: 15px 20px;
-            background: #07a;
+            background: #f0f2f1;
             cursor: pointer;
+            text-align: center;
             transition: all 0.2s;
-            color: #fff;
+            float: left;
+            display: block;
+            right: 50%;
+            color: #525252;
         }
         ul li:hover {
-            background: #78e0ff;
+            background: #07a;
+            color: #fff;
         }
         ul li ul {
             padding: 0;
             position: absolute;
             top: 54px;
             left: 0;
+            float: none;
             display: none;
+            box-shadow: 0 0 5px #666;
         }
         ul li ul li {
-            background: #07a;
+            background: #f0f2f1;
             display: block;
             padding: 0;
-            color: #fff;
+            text-align: left;
+            width: auto;
+            color: #525252;
+            right: 0;
+            float: none;
         }
         ul li ul li:hover {
-            background: #78e0ff;
+            background: #07a;
         }
         ul li:hover ul {
             display: block;
         }
         ul li ul li a {
-            color: #fff;
+            color: #525252;
             text-decoration: none;
             display: block;
             padding: 15px 20px;
+            width: 160px;
             white-space: nowrap;
+        }
+        ul li ul li a:hover {
+            color: #fff;
         }
         .first {
             border-top-left-radius: 3px;
@@ -69,15 +83,24 @@
             border-bottom-right-radius: 3px;
         }
         #menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             padding-top: 200px;
+            overflow: hidden;
         }
 	</style>
     <script>
-        var tests = [
+        var testCore = [
             'util',
             'canvas',
-            'video',
-            'dialog'
+            'script'
+        ];
+        var testUi = [
+            'dialog',
+            'video'
         ];
     </script>
 </head>
@@ -93,8 +116,13 @@
             </ul>
         </li>
         <li>
-            Test
-            <ul id="test">
+            Test-core
+            <ul id="test-core">
+            </ul>
+        </li>
+        <li>
+            Test-ui
+            <ul id="test-ui">
             </ul>
         </li>
         <li class="last">
@@ -109,12 +137,18 @@
 </div>
 <script>
 var i, len;
-var $test = $('#test'),
+var $testUi = $('#test-ui'),
+    $testCore = $('#test-core'),
     body = '';
-for (i = 0, len = tests.length; i < len; i++) {
-	body += '<li><a href="/test/' + tests[i] + '.html">' + tests[i] + '</a></li>'
+for (i = 0, len = testCore.length; i < len; i++) {
+	body += '<li><a href="/test/' + testCore[i] + '.html">' + testCore[i] + '</a></li>'
 }
-$test.html(body);
+$testCore.html(body);
+body = '';
+for (i = 0, len = testUi.length; i < len; i++) {
+    body += '<li><a href="/test/' + testUi[i] + '.html">' + testUi[i] + '</a></li>'
+}
+$testUi.html(body);
 </script>
 </body>
 </html>

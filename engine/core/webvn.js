@@ -185,7 +185,7 @@ s.add = function (name, requires, module) {
     try {
         requires = getModules(requires);
     } catch (e) {
-        console.error(e);
+        console.error(e.message);
     }
 
     // The first param that parsed is the webvn global namespace
@@ -210,7 +210,7 @@ s.use = function (requires, module) {
     try {
         requires = getModules(requires);
     } catch (e) {
-        console.error(e);
+        console.error(e.message);
     }
 
     requires.unshift(s);

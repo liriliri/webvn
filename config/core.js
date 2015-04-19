@@ -8,10 +8,9 @@ config.canvas = {
 };
 
 config.script = {
-    scenario: [
+    scenarios: [
         'init',
-        'first',
-        'second'
+        'first'
     ],
     prefix: '/scenario/',
     fileType: 'wvn'

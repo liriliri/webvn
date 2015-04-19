@@ -2,7 +2,7 @@
  * Not going to be execute
  */
 
-* start | 主程序入口
+/* start | 主程序入口
 
 video -d -pl -c=stop+
     -s=/asset/test/video.mp4
@@ -40,4 +40,4 @@ dialog -t="大丈夫ですの？　私のペットが迷惑を掛けてしまっ
 <%
 var x = 5;
 alert('cool');
-%>
+%>*/

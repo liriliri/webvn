@@ -1,83 +1,94 @@
 // Command menu
 
-webvn.use(['script', 'ui', 'media'],
-    function (s, script, ui, media) {
+webvn.use(['script', 'ui'],
+    function (s, script, ui) {
 
         var menu = ui.get('menu');
 
-        script.createCommand('menu', {
-            'bgm': {
-                type: 'String',
-                shortHand: 'bgm'
+        var MenuCommand = script.Command.extend({
+            constructor: function () {
+
+                var options = {
+                    'bgm': {
+                        type: 'String',
+                        shortHand: 'bgm'
+                    },
+                    'btn': {
+                        type: 'Json',
+                        shortHand: 'btn'
+                    },
+                    'btnHoverSound': {
+                        type: 'String',
+                        shortHand: 'bhs'
+                    },
+                    'btnClickSound': {
+                        type: 'String',
+                        shortHand: 'bcs'
+                    },
+                    'display': {
+                        type: 'Boolean',
+                        shortHand: 'd'
+                    },
+                    'duration': {
+                        type: 'Number',
+                        shortHand: 'du'
+                    },
+                    'fadeIn': {
+                        type: 'Boolean',
+                        shortHand: 'fi'
+                    },
+                    'fadeOut': {
+                        type: 'Boolean',
+                        shortHand: 'fo'
+                    }
+                };
+
+                this.callSuper('menu', options);
+
             },
-            'btn': {
-                type: 'Json',
-                shortHand: 'btn'
-            },
-            'btnHoverSound': {
-                type: 'String',
-                shortHand: 'bhs'
-            },
-            'btnClickSound': {
-                type: 'String',
-                shortHand: 'bcs'
-            },
-            'display': {
-                type: 'Boolean',
-                shortHand: 'd'
-            },
-            'duration': {
-                type: 'Number',
-                shortHand: 'du'
-            },
-            'fadeIn': {
-                type: 'Boolean',
-                shortHand: 'fi'
-            },
-            'fadeOut': {
-                type: 'Boolean',
-                shortHand: 'fo'
-            }
-        }, function (options, value) {
+            execution: function (values) {
 
-            if (options.bgm) {
-                menu.bgm = options.bgm;
-            }
+                if (values.bgm) {
+                    menu.bgm = values.bgm;
+                }
 
-            if (options.btn) {
-                menu.btn(options.btn);
-            }
+                if (values.btn) {
+                    menu.btn(values.btn);
+                }
 
-            if (options.btnClickSound) {
-                menu.btnClickSound = options.btnClickSound;
-            }
+                if (values.btnClickSound) {
+                    menu.btnClickSound = values.btnClickSound;
+                }
 
-            if (options.btnHoverSound) {
-                menu.btnHoverSound = options.btnHoverSound;
-            }
+                if (values.btnHoverSound) {
+                    menu.btnHoverSound = values.btnHoverSound;
+                }
 
-            if (options.duration) {
-                menu.duration = options.duration;
-            }
+                if (values.duration) {
+                    menu.duration = values.duration;
+                }
 
-            if (options.fadeIn === true) {
-                menu.fadeIn = true;
-            } else if (options.fadeIn === false) {
-                menu.fadeIn = false;
-            }
+                if (values.fadeIn === true) {
+                    menu.fadeIn = true;
+                } else if (values.fadeIn === false) {
+                    menu.fadeIn = false;
+                }
 
-            if (options.fadeOut === true) {
-                menu.fadeOut = true;
-            } else if (options.fadeOut === false) {
-                menu.fadeOut = false;
-            }
+                if (values.fadeOut === true) {
+                    menu.fadeOut = true;
+                } else if (values.fadeOut === false) {
+                    menu.fadeOut = false;
+                }
 
-            if (options.display === true) {
-                menu.show();
-            } else if (options.display === false) {
-                menu.hide();
-            }
+                if (values.display === true) {
+                    menu.show();
+                } else if (values.display === false) {
+                    menu.hide();
+                }
 
+            }
         });
+
+        new MenuCommand();
 
     });

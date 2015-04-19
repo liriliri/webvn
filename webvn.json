@@ -46,6 +46,7 @@
                 "promise",
                 "ajax",
                 "loader",
+                "parserNode",
                 "parser",
                 "script",
                 "event",
@@ -85,14 +86,7 @@
         "cmd": {
             "path": "/engine/cmd/",
             "files": [
-                "log",
-                "bg",
-                "fg",
-                "dialog",
-                "audio",
-                "menu",
-                "video",
-                "particle"
+                "menu"
             ]
         },
         "init": {
