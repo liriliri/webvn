@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Wvn</title>
+        <script>
+        var config = {
+            debug: true,
+            test: true
+        };
+        </script>
+        <script src="/engine/core/webvn.js"></script>
+        <link type="stylesheet" href="/test/test.css">
+    </head>
+    <body>
+    <div id="scenario">
+        //[];(
+        ]
+        /* fdsfdsfsdf */
+        if (!x == 5 && (y == 6 || c == 6)) {
+            `jfkldsfja;    sfk
+            // fdlsfjsdk   lfjal
+        } else if (!x == 6) {
+            `fdsfsdfsdf
+        } else {
+
+        }
+        ```
+        fdsfsdf ()[]
+        fdsfsdf
+        ```
+        `fjdslfjdsf;sdfla
+        bg -d --src=test.jpg
+        function alias(param, paramTwo) {
+
+            if (x == param) {
+                dialog -d -text='This is the {{param}} context'
+            }
+            dialog -d -text={{paramTwo}}
+
+        }
+    </div>
+    <script>
+        webvn.loader.ready(function () {
+
+            webvn.use(['wvn', 'select'], function (s, wvn, select) {
+
+                var scenario = select('#scenario');
+
+                // console.log(wvn.lexer(scenario.text()));
+                /*wvn.eval(scenario.text());
+
+                wvn.jsEval('for (var i = 1; i <= 10; i++) {'+
+                    'console.time(i);'+
+                    'for (var j = 0; j <256*256*256; j++) { };'+
+                    'console.timeEnd(i);'+
+                '}');
+
+                wvn.jsEval('console.dir(sources);');
+
+                console.log(wvn.jsEvalVal('util.isNumber("webvn")'));*/
+
+            });
+
+        });
+        </script>
+    </body>
+</html>
