@@ -1,30 +1,42 @@
 // Command particle
 
-webvn.use(['script', 'ui'], function (s, script, ui) {
+webvn.use(['script', 'ui'],
+    function (s, script, ui) {
 
-var particle = ui.get('particle');
+        var particle = ui.get('particle');
 
-script.createCommand('particle', {
-    display: {
-        type: 'Boolean',
-        shortHand: 'd'
-    },
-    type: {
-        type: 'String',
-        shortHand: 't'
-    }
-}, function (options, value) {
+        var Command = script.Command.extend({
+            constructor: function () {
 
-    if (options.display === true) {
-        particle.show();
-    } else if (options.display === false) {
-        particle.hide();
-    }
+                var options = {
+                    display: {
+                        type: 'Boolean',
+                        shortHand: 'd'
+                    },
+                    type: {
+                        type: 'String',
+                        shortHand: 't'
+                    }
+                };
 
-    if (options.type) {
-        particle.type(options.type);
-    }
+                this.callSuper('particle', options);
 
-});
+            },
+            execution: function (values) {
 
-});
+                if (values.display === true) {
+                    particle.show();
+                } else if (values.display === false) {
+                    particle.hide();
+                }
+
+                if (values.type) {
+                    particle.type(values.type);
+                }
+
+            }
+        });
+
+        new Command;
+
+    });

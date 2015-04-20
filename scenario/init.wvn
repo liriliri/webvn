@@ -1,11 +1,9 @@
 // Initialization script
 
-// Menu
-/* menu | 标题页面
-menu -d -bgm=/asset/test/bgm1.ogg+
-    -fi=false -fo=false+
-    -bhs=/asset/test/onmouse.wav+
-    -bcs=/asset/test/onclick.wav+
-    -btn='{"start":"开始旅程","load":false,"setting":false,"cg":false,"music":false}'*/
+menu -d -bgm=/asset/test/bgm1.ogg +
+    -fi=false -fo=false           +
+    -bhs=/asset/test/onmouse.wav  +
+    -bcs=/asset/test/onclick.wav  +
+    -btn='{"start":"开始旅程","load":false,"setting":false,"cg":false,"music":false}'
 
-menu -d -bgm=/asset/test/bgm1.ogg -fi=false -fo=false -bhs=/asset/test/onmouse.wav -bcs=/asset/test/onclick.wav
+

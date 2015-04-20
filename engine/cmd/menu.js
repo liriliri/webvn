@@ -5,7 +5,7 @@ webvn.use(['script', 'ui'],
 
         var menu = ui.get('menu');
 
-        var MenuCommand = script.Command.extend({
+        var Command = script.Command.extend({
             constructor: function () {
 
                 var options = {
@@ -89,6 +89,6 @@ webvn.use(['script', 'ui'],
             }
         });
 
-        new MenuCommand();
+        new Command;
 
     });

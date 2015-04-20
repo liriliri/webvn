@@ -1,49 +1,61 @@
 // Command video
 
-webvn.use(['script', 'ui'], function (s, script, ui) {
+webvn.use(['script', 'ui'],
+    function (s, script, ui) {
 
-var video = ui.get('video');
+        var video = ui.get('video');
 
-script.createCommand('video', {
-    display: {
-        type: 'Boolean',
-        shortHand: 'd'
-    },
-    click: {
-        type: 'String',
-        shortHand: 'c'
-    },
-    play: {
-        type: 'Boolean',
-        shortHand: 'pl'
-    },
-    src: {
-        type: 'String',
-        shortHand: 's'
-    }
-}, function (options, value) {
+        var Command = script.Command.extend({
+            constructor: function () {
 
-    if (options.display === true) {
-        video.show();
-    } else if (options.display === false) {
-        video.hide();
-    }
+                var options = {
+                    display: {
+                        type: 'Boolean',
+                        shortHand: 'd'
+                    },
+                    click: {
+                        type: 'String',
+                        shortHand: 'c'
+                    },
+                    play: {
+                        type: 'Boolean',
+                        shortHand: 'pl'
+                    },
+                    src: {
+                        type: 'String',
+                        shortHand: 's'
+                    }
+                };
 
-    if (options.src) {
-        video.src(options.src);
-    }
+                this.callSuper('video', options);
 
-    if (options.play === true) {
-        video.play();
-    } else if (options.play === false) {
-        video.stop();
-    }
+            },
+            execution: function (values) {
 
-    if (!options.click) {
-        options.click = 'stop';
-    }
-    video.clickAction(options.click);
+                if (values.display === true) {
+                    video.show();
+                } else if (values.display === false) {
+                    video.hide();
+                }
 
-});
+                if (values.src) {
+                    video.src(values.src);
+                }
 
-});
+                if (values.play === true) {
+                    video.play();
+                } else if (values.play === false) {
+                    video.stop();
+                }
+
+                if (!values.click) {
+                    values.click = 'stop';
+                }
+                video.clickAction(values.click);
+
+            }
+        });
+
+        new Command;
+
+    });

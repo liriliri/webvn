@@ -1,133 +1,165 @@
 // Command bgm
 
-webvn.use(['script', 'media'], function (s, script, media) {
+webvn.use(['script', 'media'],
+    function (s, script, media) {
 
-// Background music
-var bgm = media.createAudio('bgm');
+        // Background music
+        var bgm = media.getAudio('bgm');
 
-script.createCommand('bgm', {
-    duration: {
-        type: 'Number',
-        shortHand: 'du'
-    },
-    fadeIn: {
-        type: 'Boolean',
-        shortHand: 'fi'
-    },
-    fadeOut: {
-        type: 'Boolean',
-        shortHand: 'fo'
-    },
-    loop: {
-        type: 'Boolean',
-        shortHand: 'l'
-    },
-    play: {
-        type: 'Boolean',
-        shortHand: 'p'
-    },
-    src: {
-        type: 'String',
-        shortHand: 's'
-    },
-    stop: {
-        type: 'Boolean',
-        shortHand: 'st'
-    },
-    volume: {
-        type: 'Number',
-        shortHand: 'v'
-    }
-}, function (options, value) {
+        var BgmCommand = script.Command.extend({
+            constructor: function () {
 
-    if (options.fadeIn === true) {
-        bgm.fadeIn = true;
-    } else if (options.fadeIn === false) {
-        bgm.fadeIn = false;
-    }
+                var options = {
+                    duration: {
+                        type: 'Number',
+                        shortHand: 'du'
+                    },
+                    fadeIn: {
+                        type: 'Boolean',
+                        shortHand: 'fi'
+                    },
+                    fadeOut: {
+                        type: 'Boolean',
+                        shortHand: 'fo'
+                    },
+                    loop: {
+                        type: 'Boolean',
+                        shortHand: 'l'
+                    },
+                    play: {
+                        type: 'Boolean',
+                        shortHand: 'p'
+                    },
+                    src: {
+                        type: 'String',
+                        shortHand: 's'
+                    },
+                    stop: {
+                        type: 'Boolean',
+                        shortHand: 'st'
+                    },
+                    volume: {
+                        type: 'Number',
+                        shortHand: 'v'
+                    }
+                };
 
-    if (options.fadeOut === true) {
-        bgm.fadeOut = true;
-    } else if (options.fadeOut === false) {
-        bgm.fadeOut = false;
-    }
+                this.callSuper('bgm', options);
 
-    if (options.duration) {
-        bgm.duration = options.duration;
-    }
+            },
+            execution: function (values) {
 
-    if (options.play === true) {
-        bgm.play();
-    } else if (options.play === false) {
-        bgm.pause();
-    }
+                if (values.fadeIn === true) {
+                    bgm.fadeIn = true;
+                } else if (values.fadeIn === false) {
+                    bgm.fadeIn = false;
+                }
 
-    if (options.loop === true) {
-        bgm.loop(true);
-    } else if (options.loop === false) {
-        bgm.loop(false);
-    }
+                if (values.fadeOut === true) {
+                    bgm.fadeOut = true;
+                } else if (values.fadeOut === false) {
+                    bgm.fadeOut = false;
+                }
 
-    if (options.stop === true) {
-        bgm.stop();
-    }
+                if (values.duration) {
+                    bgm.duration = values.duration;
+                }
 
-    if (options.src) {
-        bgm.load(options.src);
-    }
+                if (values.play === true) {
+                    bgm.play();
+                } else if (values.play === false) {
+                    bgm.pause();
+                }
 
-});
+                if (values.loop === true) {
+                    bgm.loop(true);
+                } else if (values.loop === false) {
+                    bgm.loop(false);
+                }
 
-// Sound Effect
-var se = media.createAudio('se');
+                if (values.stop === true) {
+                    bgm.stop();
+                }
 
-script.createCommand('se', {
-    loop: {
-        type: 'Boolean',
-        shortHand: 'l'
-    },
-    src: {
-        type: 'String',
-        shortHand: 's'
-    }
-}, function (options, value) {
+                if (values.src) {
+                    bgm.load(values.src);
+                }
 
-    if (options.src) {
-        se.load(options.src);
-    }
+            }
+        });
 
-    if (options.loop === true) {
-        se.setloop(true);
-    } else if (options.loop === false) {
-        se.setloop(false);
-    }
+        new BgmCommand;
 
-});
+        // Sound Effect
+        var se = media.getAudio('se');
 
-// Voice
-var voice = media.createAudio('voice');
+        var SeCommand = script.Command.extend({
+            constructor: function () {
 
-script.createCommand('vo', {
-    loop: {
-        type: 'Boolean',
-        shortHand: 'l'
-    },
-    src: {
-        type: 'String',
-        shortHand: 's'
-    }
-}, function (options, value) {
+                var options = {
+                    loop: {
+                        type: 'Boolean',
+                        shortHand: 'l'
+                    },
+                    src: {
+                        type: 'String',
+                        shortHand: 's'
+                    }
+                };
 
-    if (options.src) {
-        voice.load(options.src);
-    }
+                this.callSuper('se', options);
 
-    if (options.loop === true) {
-        voice.loop(true);
-    } else if (options.loop === false) {
-        voice.loop(false);
-    }
+            },
+            execution: function (values) {
 
-});
+                if (values.src) {
+                    se.load(values.src);
+                }
 
-});
+                if (values.loop === true) {
+                    se.setloop(true);
+                } else if (values.loop === false) {
+                    se.setloop(false);
+                }
+
+            }
+        });
+
+        new SeCommand;
+
+        // Voice
+        var voice = media.getAudio('voice');
+
+        var VoiceCommand = script.Command.extend({
+            constructor: function () {
+
+                var options = {
+                    loop: {
+                        type: 'Boolean',
+                        shortHand: 'l'
+                    },
+                    src: {
+                        type: 'String',
+                        shortHand: 's'
+                    }
+                };
+
+                this.callSuper('voice', options);
+
+            },
+            execution: function (values) {
+
+                if (values.src) {
+                    voice.load(values.src);
+                }
+
+                if (values.loop === true) {
+                    voice.loop(true);
+                } else if (values.loop === false) {
+                    voice.loop(false);
+                }
+
+            }
+        });
+
+    });

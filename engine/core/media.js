@@ -248,6 +248,12 @@ webvn.add('media', ['class', 'log', 'util', 'tween'],
 
         };
 
+        exports.getAudio = function (name) {
+
+            return audioCache[name];
+
+        };
+
         var createVideo = exports.createVideo = function (video) {
 
             return new Video(video);

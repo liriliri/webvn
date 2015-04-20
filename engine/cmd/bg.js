@@ -1,32 +1,44 @@
 // Command bg
 
-webvn.use(['script', 'ui'], function (s, script, ui) {
+webvn.use(['script', 'ui'],
+    function (s, script, ui) {
 
-var background = ui.get('background');
+        var background = ui.get('background');
 
-script.createCommand('bg', {
-    display: {
-        type: 'Boolean',
-        shortHand: 'd',
-        desc: 'Whether the background is displayed'
-    },
-    src: {
-        type: 'String',
-        shortHand: 's',
-        desc: 'Source of the current background image'
-    }
-}, function (options, value) {
+        var Command = script.Command.extend({
+            constructor: function () {
 
-    if (options.display === true) {
-        background.show();
-    } else if (options.display === false) {
-        background.hide();
-    }
+                var options = {
+                    display: {
+                        type: 'Boolean',
+                        shortHand: 'd',
+                        desc: 'Whether the background is displayed'
+                    },
+                    src: {
+                        type: 'String',
+                        shortHand: 's',
+                        desc: 'Source of the current background image'
+                    }
+                };
 
-    if (options.src) {
-        background.src(options.src);
-    }
+                this.callSuper('bg', options);
 
-});
+            },
+            execution: function (values) {
 
-});
+                if (values.display === true) {
+                    background.show();
+                } else if (values.display === false) {
+                    background.hide();
+                }
+
+                if (values.src) {
+                    background.src(values.src);
+                }
+
+            }
+        });
+
+        new Command;
+
+    });

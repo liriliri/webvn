@@ -86,7 +86,13 @@
         "cmd": {
             "path": "/engine/cmd/",
             "files": [
-                "menu"
+                "menu",
+                "video",
+                "audio",
+                "bg",
+                "particle",
+                "fg",
+                "dialog"
             ]
         },
         "init": {

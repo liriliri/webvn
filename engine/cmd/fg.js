@@ -1,62 +1,74 @@
 // Command fg
 
-webvn.use(['script', 'ui'], function (s, script, ui) {
+webvn.use(['script', 'ui'],
+    function (s, script, ui) {
 
-var figure = ui.get('figure');
+        var figure = ui.get('figure');
 
-script.createCommand('fg', {
-    display: {
-        type: 'Boolean',
-        shortHand: 'd'
-    },
-    select: {
-        type: 'Number',
-        shortHand: 'sel'
-    },
-    src: {
-        type: 'String',
-        shortHand: 's'
-    },
-    x: {
-        type: 'Number',
-        shortHand: 'x'
-    },
-    y: {
-        type: 'Number',
-        shortHand: 'y'
-    },
-    position: {
-        type: 'String',
-        shortHand: 'pos'
-    }
-}, function (options, value) {
+        var Command = script.Command.extend({
+            constructor: function () {
 
-    if (options.select) {
-        figure.select(options.select);
-    }
+                var options = {
+                    display: {
+                        type: 'Boolean',
+                        shortHand: 'd'
+                    },
+                    select: {
+                        type: 'Number',
+                        shortHand: 'sel'
+                    },
+                    src: {
+                        type: 'String',
+                        shortHand: 's'
+                    },
+                    x: {
+                        type: 'Number',
+                        shortHand: 'x'
+                    },
+                    y: {
+                        type: 'Number',
+                        shortHand: 'y'
+                    },
+                    position: {
+                        type: 'String',
+                        shortHand: 'pos'
+                    }
+                };
 
-    if (options.display === true) {
-        figure.show();
-    } else if (options.display === false) {
-        figure.hide();
-    }
+                this.callSuper('fg', options);
 
-    if (options.src) {
-        figure.src(options.src);
-    }
+            },
+            execution: function (values) {
 
-    if (options.x) {
-        figure.pos(options.x);
-    }
+                if (values.select) {
+                    figure.select(values.select);
+                }
 
-    if (options.y) {
-        figure.pos(null, options.y);
-    }
+                if (values.display === true) {
+                    figure.show();
+                } else if (values.display === false) {
+                    figure.hide();
+                }
 
-    if (options.position) {
-        figure.pos(options.position);
-    }
+                if (values.src) {
+                    figure.src(values.src);
+                }
 
-});
+                if (values.x) {
+                    figure.pos(values.x);
+                }
 
-});
+                if (values.y) {
+                    figure.pos(null, values.y);
+                }
+
+                if (values.position) {
+                    figure.pos(values.position);
+                }
+
+            }
+        });
+
+        new Command;
+
+    });

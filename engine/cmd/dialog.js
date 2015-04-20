@@ -3,89 +3,100 @@
 webvn.use(['script', 'ui', 'media'], 
     function (s, script, ui, media) {
 
-var dialog = ui.get('dialog');
+        var dialog = ui.get('dialog');
 
-script.createCommand('dialog', {
-    display: {
-        type: 'Boolean',
-        shortHand: 'd'
-    },
-    duration: {
-        type: 'Number',
-        shortHand: 'du'
-    },
-    fadeIn: {
-        type: 'Boolean',
-        shortHand: 'fi'
-    },
-    fadeOut: {
-        type: 'Boolean',
-        shortHand: 'fo'
-    },
-    name: {
-        type: 'String',
-        shortHand: 'n'
-    },
-    text: {
-        type: 'String',
-        shortHand: 't'
-    },
-    textDuration: {
-        type: 'Number',
-        shortHand: 'td'
-    },
-    textType: {
-        type: 'String',
-        shortHand: 'tt'
-    },
-    voice: {
-        type: 'String',
-        shortHand: 'v'
-    }
-}, function (options, value) {
+        var Command = script.Command.extend({
+            constructor: function () {
 
-    if (options.fadeIn === true) {
-        dialog.fadeIn = true;
-    } else if (options.fadeIn === false) {
-        dialog.fadeIn = false;
-    }
+                var options = {
+                    display: {
+                        type: 'Boolean',
+                        shortHand: 'd'
+                    },
+                    duration: {
+                        type: 'Number',
+                        shortHand: 'du'
+                    },
+                    fadeIn: {
+                        type: 'Boolean',
+                        shortHand: 'fi'
+                    },
+                    fadeOut: {
+                        type: 'Boolean',
+                        shortHand: 'fo'
+                    },
+                    name: {
+                        type: 'String',
+                        shortHand: 'n'
+                    },
+                    text: {
+                        type: 'String',
+                        shortHand: 't'
+                    },
+                    textDuration: {
+                        type: 'Number',
+                        shortHand: 'td'
+                    },
+                    textType: {
+                        type: 'String',
+                        shortHand: 'tt'
+                    },
+                    voice: {
+                        type: 'String',
+                        shortHand: 'v'
+                    }
+                };
 
-    if (options.fadeOut === true) {
-        dialog.fadeOut = true;
-    } else if (options.fadeOut === false) {
-        dialog.fadeOut = false;
-    }
+                this.callSuper('dialog', options);
 
-    if (options.duration) {
-        dialog.duration = options.duration;
-    }
+            },
+            execution: function (values) {
 
-    if (options.textType) {
-        dialog.textType = options.textType;
-    }
+                if (values.fadeIn === true) {
+                    dialog.fadeIn = true;
+                } else if (values.fadeIn === false) {
+                    dialog.fadeIn = false;
+                }
 
-    if (options.textDuration) {
-        dialog.textDuration = options.textDuration;
-    }
+                if (values.fadeOut === true) {
+                    dialog.fadeOut = true;
+                } else if (values.fadeOut === false) {
+                    dialog.fadeOut = false;
+                }
 
-    if (options.display === true) {
-        dialog.show();
-    } else if (options.display === false) {
-        dialog.hide();
-    }
+                if (values.duration) {
+                    dialog.duration = values.duration;
+                }
 
-    if (options.name) {
-        dialog.name(options.name);
-    }
+                if (values.textType) {
+                    dialog.textType = values.textType;
+                }
 
-    if (options.text) {
-        dialog.text(options.text);
-    }
+                if (values.textDuration) {
+                    dialog.textDuration = values.textDuration;
+                }
 
-    if (options.voice) {
-        dialog.voice(options.voice);
-    }
+                if (values.display === true) {
+                    dialog.show();
+                } else if (values.display === false) {
+                    dialog.hide();
+                }
 
-});
+                if (values.name) {
+                    dialog.name(values.name);
+                }
 
-});
+                if (values.text) {
+                    dialog.text(values.text);
+                }
+
+                if (values.voice) {
+                    dialog.voice(values.voice);
+                }
+
+            }
+        });
+
+        new Command;
+
+    });

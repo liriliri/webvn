@@ -2,13 +2,18 @@
  * Not going to be execute
  */
 
-/* start | 主程序入口
+// start | 主程序入口
 
-video -d -pl -c=stop+
-    -s=/asset/test/video.mp4
+`console.log('code trigger!')
 
-bgm -s=/asset/test/bgm2.ogg+
-    -fi=true -du=2000
+```
+var x = 5;
+console.log(x+5);
+```
+
+video -d -pl -c=stop -s=/asset/test/video.mp4
+
+bgm -s=/asset/test/bgm2.ogg -fi=true -du=2000
 
 bg --src=/asset/test/bg2.bmp -d
 
@@ -23,7 +28,7 @@ fg -sel=1 -s=/asset/test/fg4.png -pos=center
 fg -sel=2 -s=/asset/test/fg3.png -pos=right
 fg -sel=0 -s=/asset/test/fg2.png
 
-dialog --display+
+dialog -d+
     --name=ユルシュール --text="モトカレ、何をしていますの！？　冗談では済まされませんわよ！"+
     -v=/asset/test/vo1.ogg
 
@@ -36,8 +41,3 @@ particle -t=snow
 
 dialog -t="大丈夫ですの？　私のペットが迷惑を掛けてしまって、申し訳ありませんわ"+
     -v=/asset/test/vo2.ogg
-
-<%
-var x = 5;
-alert('cool');
-%>*/
