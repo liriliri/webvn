@@ -416,15 +416,19 @@ webvn.add('script', ['parserNew', 'parserNode', 'class', 'util', 'log', 'config'
 
                 var lastC = '';
 
-                // If there is a '+' before line break, then it is not the end of command.
-                while (!(this.c === '\n' && lastC !== '+')) {
-                    if (this.c === '\n' && lastC === '+') {
+                // If there is a '\' before line break, then it is not the end of command.
+                while (!(this.c === '\n' && lastC !== '\\')) {
+                    if (this.c === '\n' && lastC === '\\') {
                         value = value.substr(0, value.length - 1) + this.c;
                     } else {
                         value += this.c;
                     }
                     lastC = this.c;
-                    this.advance();
+                    if (lastC === '\\') {
+                        this.consume();
+                    } else {
+                        this.advance();
+                    }
                     if (this.c === EOF) {
                         break;
                     }

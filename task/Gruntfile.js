@@ -13,7 +13,7 @@ var npmTasks = [
 ];
 
 // Load configuration file
-var webvn = require('./webvn.json');
+var webvn = require('./../webvn.json');
 
 var jsFile = {},
     cssFile = {};
