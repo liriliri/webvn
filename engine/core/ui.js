@@ -1,5 +1,7 @@
-// Manager of ui component
-
+/**
+ * Manager of ui component
+ * @namespace webvn.ui
+ */
 webvn.add('ui', ['class', 'select', 'config', 'util', 'script'], 
     function (s, kclass, $, config, util, script) {
 

@@ -1,0 +1,16 @@
+{
+    "fileBase": "../",
+    "npmTasks": [
+        "grunt-contrib-connect",
+        "grunt-contrib-jshint",
+        "grunt-contrib-concat",
+        "grunt-contrib-uglify",
+        "grunt-contrib-watch",
+        "grunt-contrib-cssmin",
+        "grunt-contrib-sass",
+        "grunt-contrib-copy",
+        "grunt-exec",
+        "grunt-jsdoc"
+    ],
+    "serverPort": 8002
+}

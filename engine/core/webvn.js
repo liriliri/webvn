@@ -1,16 +1,16 @@
-/* The namespace of the game engine: webvn.
+/**
+ * Namespace of the game engine <br>
  * All different parts of the engine should be defined within it.
+ * @namespace
  */
-
-var webvn = (function (undefined) {
-
-var s = {};
-
-// version number
-s.VERSION = '0.0.1';
-
-return s;
-
+var webvn = (function(){
+    "use strict";
+    var exports = {};
+    /**
+     * @name webvn.version
+     */
+    exports.version = '0.0.1';
+    return exports;
 })();
 
 /* Simple loader
