@@ -10,13 +10,13 @@ A game engine designed specifically for making visual novels.
 * Multiple Themes
 * Custom UI with CSS
 * Component Manager
-* Bulit-in Wheather Effects
+* Built-in Weather Effects
 * Free to Use (MIT License)
 * User-friendly Script Style
 
 ## Related Projects
 
 * [WebVN-doc](http://surunzi.github.io/WebVN): documentation of WebVN, Chinese only.
-* [WebVN-site](https://webvn.surunzi.com): Official site, prividing free recources to create your own games.
+* [WebVN-site](https://webvn.surunzi.com): Official site, providing free resources to create your own games.
 * [WebVN-st](https://github.com/surunzi/WebVN-st): Sublime Text plugin for WebVN.
 * [WebVN-cli](https://github.com/surunzi/WebVN-cli): Cli tool, mainly used for WebVN component management.
