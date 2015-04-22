@@ -4,6 +4,7 @@
  */
 webvn.add('media', ['class', 'log', 'util', 'tween'],
     function (s, kclass, log, util, tween) {
+
         var exports = {};
 
         // Const variables
@@ -24,8 +25,8 @@ webvn.add('media', ['class', 'log', 'util', 'tween'],
             /**
              * Load media and play(optional)
              * @method webvn.media.Base#load
-             * @param {String} src source of media
-             * @param {Boolean} autoPlay play media after loading
+             * @param {string} src source of media
+             * @param {boolean=} [autoPlay=true] play media after loading
              */
             load: function (src, autoPlay) {
                 if (autoPlay === undefined) {
@@ -84,12 +85,12 @@ webvn.add('media', ['class', 'log', 'util', 'tween'],
             /**
              * Set the currentTime of media
              * @method webvn.media.Base#currentTime
-             * @param {Number} time seconds
+             * @param {number} time seconds
              */
             /**
              * Get the currentTime of media
              * @method webvn.media.Base#currentTime
-             * @returns {Number}
+             * @returns {number}
              */
             currentTime: function (time) {
                 if (this.state !== STATE.NOT_LOADED) {
@@ -103,7 +104,7 @@ webvn.add('media', ['class', 'log', 'util', 'tween'],
             /**
              * Set the volume of media
              * @method webvn.media.Base#volume
-             * @param {Number} time float number between 0 and 1
+             * @param {number} time float number between 0 and 1
              */
             /**
              * Get the volume of media
@@ -120,7 +121,7 @@ webvn.add('media', ['class', 'log', 'util', 'tween'],
             /**
              * Loop media or not
              * @method webvn.media.Base#loop
-             * @param {Boolean} flag
+             * @param {boolean} flag loop or not
              */
             loop: function (flag) {
                 this.el.loop = flag;
@@ -128,7 +129,7 @@ webvn.add('media', ['class', 'log', 'util', 'tween'],
             /**
              * Set events of media
              * @method webvn.media.Base#event
-             * @param {Object} events
+             * @param {object} events events such as onload, onended
              */
             event: function (events) {
                 var self = this;
@@ -195,16 +196,15 @@ webvn.add('media', ['class', 'log', 'util', 'tween'],
                 }
                 if (this.fadeOut) {
                     this._stopTween();
-                    var self = this;
                     this.state = STATE.FADE_OUT;
                     this._volume = this.volume();
                     this._tween = tween.create(this.el).to({
                         volume: 0
                     }, this.duration).call(function () {
-                        this._tween = null;
+                        self._tween = null;
                         self.volume(self._volume);
                         self.el.pause();
-                        this.state = STATE.PAUSE;
+                        self.state = STATE.PAUSE;
                     });
                 } else {
                     this.el.pause();
@@ -223,7 +223,7 @@ webvn.add('media', ['class', 'log', 'util', 'tween'],
          * Unlike audio, video object is passed by user.
          * @class webvn.media.Video
          * @extends webvn.media.Base
-         * @param {Object} video video element
+         * @param {object} video video element
          */
         var Video = exports.Video = Base.extend({
             constructor: function Video(video) {
@@ -237,7 +237,7 @@ webvn.add('media', ['class', 'log', 'util', 'tween'],
         /**
          * Create an AudioClass instance
          * @function webvn.media.createAudio
-         * @param {String} name name of audio
+         * @param {string} name name of audio
          * @returns {AudioClass}
          */
         var createAudio = exports.createAudio = function (name) {
@@ -251,7 +251,7 @@ webvn.add('media', ['class', 'log', 'util', 'tween'],
         /**
          * Get audio instance if exists
          * @function webvn.media.getAudio
-         * @param {String} name name of audio
+         * @param {string} name name of audio
          * @returns {AudioClass|undefined}
          */
         exports.getAudio = function (name) {
@@ -261,7 +261,7 @@ webvn.add('media', ['class', 'log', 'util', 'tween'],
         /**
          * Create a Video instance
          * @function webvn.media.createVideo
-         * @param {Object} video video element
+         * @param {object} video video element
          * @returns {Video}
          */
         exports.createVideo = function (video) {

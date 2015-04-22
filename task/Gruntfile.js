@@ -33,12 +33,14 @@ gruntConfig.jsdoc = {
     dist: {
         options: {
             destination: 'doc/jsdoc',
-            template : "../WebVN-jsdoc3"
+            template: "../WebVN-jsdoc3",
+            configure: "task/jsdoc.json"
         },
         src: [
             'engine/core/*.js',
             'engine/ui/*.js',
-            'engine/cmd/*.js'
+            'engine/cmd/*.js',
+            'README.md'
         ]
     }
 };
