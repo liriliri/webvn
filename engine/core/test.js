@@ -3,7 +3,7 @@
  * Should be removed when the game is realeased
  */
 
-webvn.add('test', ['class', 'select', 'script', 'util'], 
+webvn.module('test', ['class', 'select', 'script', 'util'],
     function (s, kclass, select, script, util) {
 
 var test = {};

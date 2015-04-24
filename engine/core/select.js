@@ -1,6 +1,6 @@
 // A jQuery like selector module
 
-webvn.add('select', ['util'], function (s, util) {
+webvn.module('select', ['util'], function (s, util) {
 
 var cssNumber = {
         'column-count': 1, 

@@ -1,278 +1,217 @@
 /**
  * Namespace of the game engine <br>
  * All different parts of the engine should be defined within it.
- * @namespace
+ * @namespace webvn
  */
-var webvn = (function(){
+window.webvn = (function(){
     "use strict";
     var exports = {};
     /**
+     * Version of WebVN
      * @name webvn.version
      */
     exports.version = '0.0.1';
     return exports;
 })();
 
-/* Simple loader
- * Also defines a simple function to add modules
+/**
+ * Simple Loader <br>
+ * Also defines a simple function to add modules.
+ * @namespace webvn.loader
  */
+(function(s){
+    "use strict";
+    var exports = {};
 
-(function (s) {
+    var head = document.getElementsByTagName('head')[0];
 
-var loader = {};
-
-// Used to append script tag
-var head = document.getElementsByTagName('head')[0],
-// Prefix of all url
-    prefix = '',
-// Container of all scripts
-    scriptList = [],
-// Function called when all scripts are loaded
-    onReady = {},
-// Callback when all scripts loaded
-    allReady = null,
-// Whether is loading script
-    isScriptLoading = false;
-
-// Set prefix of the url
-loader.prefix = function (pre) {
-
-    prefix = pre;
-
-    return loader;
-
-};
-
-// Trigger when all scripts are loaded
-loader.ready = function (fn) {
-
-    allReady = fn;
-
-};
-
-loader.readyTrigger = function () {
-
-    if (allReady) {
-        allReady();
-        allReady = null;
+    /**
+     * Path of Css Files
+     * @name webvn.loader.cssPath
+     * @type {string}
+     */
+    exports.cssPath = '';
+    /**
+     * Load CSS <br>
+     * Css files are designed to load as fast as possible.
+     * @function webvn.loader.css
+     * @param {string|Array} css css files to be loaded
+     * @returns {object}
+     */
+    exports.css = function (css) {
+        if (!isArray(css)) {
+            css = [css];
+        }
+        // Add css path and file extension
+        css = css.map(function (css) {
+            return exports.cssPath + css + '.css';
+        });
+        loadCss(css);
+    };
+    function loadCss(hrefs) {
+        var link;
+        hrefs.forEach(function (href) {
+            link = document.createElement('link');
+            link.setAttribute('rel', 'stylesheet');
+            link.setAttribute('href', href);
+            head.appendChild(link);
+        });
     }
 
-}
-
-// Load css
-loader.css = function (css) {
-
-    if (!isArray(css)) {
-        css = [css];
-    }
-
-    for (var i = 0, len = css.length; i < len; i++) {
-        loadCss(prefix + css[i] + '.css');
-    }
-
-    return loader;
-
-}
-
-/* Load scripts
- * Param script can be either a string or an array.
- */
-loader.script = function (scripts) {
-
-    // Turn scripts into an array if it is not.
-    if (!isArray(scripts)) {
-        scripts = [scripts];
-    }
-
-    // Push scripts into container and excute them
-    for (var i = 0, len = scripts.length; i < len; i++) {
-        scriptList.push(prefix + scripts[i] + '.js');
-    }
-
-    if (isScriptLoading === false) {
-        loadScript();
-    }
-
-    return loader;
-
-};
-
-loader.wait = function (fn) {
-
-    var last = scriptList[scriptList.length - 1];
-    if (last) {
-        onReady[last] = fn;
-    }
-
-};
-
-// Private methods
-
-function isArray(arr) {
-
-    return Object.prototype.toString.call(arr) == '[object Array]';
-
-}
-
-// Load Css file
-function loadCss(href) {
-
-    var link = document.createElement('link');
-
-    link.setAttribute('rel', 'stylesheet');
-    link.setAttribute('href', href);
-
-    head.appendChild(link);
-
-}
-
-// Load scripts one by one until there is nothing left.
-function loadScript() {
-
-    if (scriptList.length === 0) {
-        return;
-    }
-
-    isScriptLoading = true;
-
-    var script = document.createElement('script'),
-        scriptName;
-
-    script.src = scriptName = scriptList[0];
-    script.onload = function () {
-
-        isScriptLoading = false;
-
-        if (script.readyState &&
-            script.readyState != "complete" &&
-            script.readyState != "loaded") {
+    // Js file list, also contains some functions
+    var jsList = [];
+    var isJsLoading = false;
+    /**
+     * Path of Js Files
+     * @name webvn.loader.jsPath
+     * @type {string}
+     */
+    exports.jsPath = '';
+    /**
+     * Load Js
+     * @function webvn.loader.js
+     * @param {string|Array} js js files to be loaded
+     */
+    exports.js = function (js) {
+        if (!isArray(js)) {
+            js = [js];
+        }
+        js = js.map(function (js) {
+            return exports.jsPath + js + '.js';
+        });
+        jsList = jsList.concat(js);
+        loadJs();
+    };
+    function loadJs() {
+        // If jsList is not empty, then the script is still loading.
+        if (isJsLoading) {
             return;
         }
-
-        scriptList.shift();
-
-        loadScript();
-
-        if (onReady[scriptName]) {
-            onReady[scriptName]();
-            onReady[scriptName] = null;
+        var js = jsList.shift();
+        // Js may not be string but function
+        while (isFunction(js)) {
+            js(s);
+            js = jsList.shift();
         }
+        // JsList is empty
+        if (js === undefined) {
+            isJsLoading = false;
+            return;
+        }
+        _loadJs(js);
+    }
+    function _loadJs(js) {
+        isJsLoading = true;
+        var script = document.createElement('script');
+        script.onload = function () {
+            isJsLoading = false;
+            if (script.readyState &&
+                script.readyState != "complete" &&
+                script.readyState != "loaded") {
+                isJsLoading = false;
+                return;
+            }
+            // Load next js file
+            loadJs();
+        };
+        script.src = js;
+        head.appendChild(script);
+    }
 
+    /**
+     * Add function in jsList
+     * @function webvn.loader.call
+     * @param {function} fn function to call
+     */
+    exports.call = function (fn) {
+        jsList.push(fn);
     };
 
-    head.appendChild(script);
+    s.loader = exports;
 
-}
-
-s.loader = loader;
-
-/* name: the name of the module
- * requires: other module reference
- * module: function that acturally creates the module
- */
-s.add = function (name, requires, module) {
-
-    if (s[name]) {
-        console.error('The module already exists');
-        return;
-    }
-
-    if (typeof requires === 'function') {
-        module = requires;
-        requires = [];
-    }
-
-    try {
+    /**
+     * Add WebVN Module
+     * @function webvn.module
+     * @param {string} name name of the module
+     * @param {Array=} requires
+     * @param {function} module module, should have return value
+     */
+    s.module = function (name, requires, module) {
+        if (isFunction(requires)) {
+            module = requires;
+            requires = [];
+        }
         requires = getModules(requires);
-    } catch (e) {
-        console.error(e.message);
-    }
+        requires.unshift(s);
+        s[name] = module.apply(null, requires);
+    };
 
-    // The first param that parsed is the webvn global namespace
-    requires.unshift(s);
-    s[name] = module.apply(null, requires);
-
-    if (!s.conf || !s.conf.debug) {
-        return;
-    }
-
-    if (s[name] && s.log) {
-        s.log.info('Module ' + name + ' loaded');
-    } else {
-        s.log && s.log.error('Failed to create module ' + name);
-    }
-
-};
-
-// Making it easier use different parts of the webvn
-s.use = function (requires, module) {
-
-    try {
+    /**
+     * A simple way to use modules
+     * @function webvn.use
+     * @param {Array=} requires
+     * @param {function} module
+     */
+    s.use = function (requires, module) {
+        if (isFunction(requires)) {
+            module = requires;
+            requires = [];
+        }
         requires = getModules(requires);
-    } catch (e) {
-        console.error(e.message);
+        requires.unshift(s);
+        module.apply(null, requires);
+    };
+
+    function getModules(requires) {
+        if (!isArray(requires)) {
+            requires = [requires];
+        }
+        return requires.map(function (value) {
+            return s[value];
+        });
     }
 
-    requires.unshift(s);
+    function isArray(array) {
+        return Object.prototype.toString.call(array) === '[object Array]';
+    }
 
-    module.apply(null, requires);
+    function isFunction(func) {
+        return typeof func === 'function';
+    }
+})(webvn);
 
-};
+// Look for config file and load files
+webvn.use(['loader'], function (s, loader) {
+    "use strict";
+    // Load webvn.json
+    var xhr = new window.XMLHttpRequest();
+    xhr.onload = function () {
+        var data = JSON.parse(xhr.responseText);
+        loadFiles(data);
+    };
+    xhr.open('get', '/webvn.json');
+    xhr.send();
 
-// Change the name of the requires to be actual functions.
-function getModules(requires) {
+    function loadFiles(data) {
+        var css = data.css,
+            js = data.js;
+        each(css, function (value) {
+            loader.cssPath = value.path;
+            loader.css(value.files);
+        });
+        each(js, function (value) {
+            loader.jsPath = value.path;
+            loader.js(value.files);
+        });
+    }
 
-    for (var i = 0, len = requires.length; i < len; i++) {
-        if (s[requires[i]]) {
-            requires[i] = s[requires[i]];
-        } else {
-            throw new Error('Module ' + requires[i] + " does'nt exist");
+    function each(object, fn) {
+        "use strict";
+        var key;
+        for (key in object) {
+            if (object.hasOwnProperty(key)) {
+                fn(object[key], key);
+            }
         }
     }
-
-    return requires;
-
-}
-
-})(webvn);
-
-// Look for config file and load some scripts
-(function (s) {
-
-// Load webvn.json
-var xhr = new window.XMLHttpRequest();
-xhr.onload = function () {
-
-    var data = JSON.parse(xhr.responseText);
-    loadFiles(data);
-
-};
-xhr.open('get', '/webvn.json');
-xhr.send();
-
-function loadFiles(fileList) {
-
-    var loader = s.loader,
-        css = fileList.css,
-        js = fileList.js,
-        key, item;
-
-    for (key in css) {
-        item = css[key];
-        loader.prefix(item.path);
-        loader.css(item.files);
-    }
-
-    for (key in js) {
-        item = js[key];
-        loader.prefix(item.path);
-        loader.script(item.files);
-    }
-
-    loader.wait(function () {
-        loader.readyTrigger();
-    });
-
-}
-
-})(webvn);
+});

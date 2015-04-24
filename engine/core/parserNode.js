@@ -2,7 +2,7 @@
  * Helper function related to wvnScript/javaScript translation
  */
 
-webvn.add('parserNode', ['class', 'util'],
+webvn.module('parserNode', ['class', 'util'],
     function (s, kclass, util) {
 
         var exports = {};

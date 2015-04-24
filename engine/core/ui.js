@@ -2,11 +2,11 @@
  * Manager of ui component
  * @namespace webvn.ui
  */
-webvn.add('ui', ['class', 'select', 'config', 'util', 'script'], 
+webvn.module('ui', ['class', 'select', 'config', 'util', 'script'],
     function (s, kclass, $, config, util, script) {
 
         var conf = config.create('core-ui');
-        conf.set(config.global.ui, false);
+        conf.set(config.ui, false);
 
         var ui = {},
             cache = {}, // Store all the ui components

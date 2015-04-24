@@ -4,7 +4,7 @@
  * Now I have to implement my own version :(
  */
 
-webvn.add('event', ['util', 'select', 'class'], function (s, util, select, kclass) {
+webvn.module('event', ['util', 'select', 'class'], function (s, util, select, kclass) {
 
 var event = {};
 

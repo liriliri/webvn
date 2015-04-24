@@ -2,7 +2,7 @@
  * Inspired by zepto fx.js
  */
 
-webvn.add('anim', ['config', 'util', 'select'],
+webvn.module('anim', ['config', 'util', 'select'],
     function (s, config, util, select) {
 
 var prefix = '',

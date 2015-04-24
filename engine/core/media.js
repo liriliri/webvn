@@ -2,7 +2,7 @@
  * Audio and video
  * @namespace webvn.media
  */
-webvn.add('media', ['class', 'log', 'util', 'tween'],
+webvn.module('media', ['class', 'log', 'util', 'tween'],
     function (s, kclass, log, util, tween) {
 
         var exports = {};
@@ -47,7 +47,6 @@ webvn.add('media', ['class', 'log', 'util', 'tween'],
                         self.state = STATE.PAUSE;
                     }
                 }
-                log.info('Loading media: ' + src);
                 // Start loading
                 this.el.src = src;
             },
@@ -171,7 +170,6 @@ webvn.add('media', ['class', 'log', 'util', 'tween'],
                         self.state = STATE.PAUSE;
                     }
                 }
-                log.info('Loading media: ' + src);
                 // Start loading
                 this.el.src = src;
             },

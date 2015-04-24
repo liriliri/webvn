@@ -3,7 +3,7 @@
  * Most code is modified from kissy and underscore.
  * @namespace webvn.util
  */
-webvn.add('util', function () {
+webvn.module('util', function () {
     var exports = {};
 
     // Quick references

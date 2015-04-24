@@ -1,9 +1,7 @@
-// Provide function for managing
+webvn.use(['config', 'storage', 'class'],
+    function (s, config, storage, kclass) {
 
-webvn.add('config', ['storage', 'class', 'util', 'conf'], function (s, storage, kclass, util, conf) {
-
-var config = {},
-    cache = {};
+var cache = {};
 
 // Create config
 config.create = function (name) {
@@ -15,8 +13,6 @@ config.create = function (name) {
     return newConfig;
 
 };
-
-config.global = conf;
 
 // Config class
 var Config = kclass.create({
@@ -44,7 +40,5 @@ var Config = kclass.create({
 
     }
 });
-
-return config;
 
 });

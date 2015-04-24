@@ -1,21 +1,23 @@
-// Global configuration
+/**
+ * Stores all configuration of all modules.
+ * @namespace webvn.config
+ */
+webvn.module('config', ['util'], function (s, util) {
 
-webvn.add('conf', ['util'], function (s, util) {
+    var exports = {};
 
-var config = {
-    debug: true
-};
+    exports.debug = true;
 
-// Config can be overitten by global config
-if (window.config) {
-    util.mix(config, window.config);
-}
+    // Config can be overitten by global config
+    if (window.config) {
+        util.mix(exports, window.config);
+    }
 
-// 3rd lib bower location
-config.bower = {
-    'engine/lib/TweenMax.js': 'gsap/src/uncompressed/TweenMax.js'
-};
+    // 3rd lib bower location
+    exports.bower = {
+        'engine/lib/TweenMax.js': 'gsap/src/uncompressed/TweenMax.js'
+    };
 
-return config;
+    return exports;
 
 });

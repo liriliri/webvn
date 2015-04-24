@@ -1,10 +1,10 @@
 // Module canvas
 
-webvn.add('canvas', ['class', 'loader', 'log', 'config', 'util', 'webgl', 'tween'],
+webvn.module('canvas', ['class', 'loader', 'log', 'config', 'util', 'webgl', 'tween'],
     function (s, kclass, loader, log, config, util, webgl, tween) {
 
 var conf = config.create('core-canvas');
-conf.set(config.global.canvas, false);
+conf.set(config.canvas, false);
 
 var canvas = {};
 
@@ -35,13 +35,15 @@ canvas.Entity = kclass.create({
     },
     fadeOut: function (duration) {
 
+        var self = this;
+
         duration = duration || 2000;
 
         tween.create(this).to({
             alpha: 0
         }, duration).call(function () {
 
-            this.visible = false;
+            self.visible = false;
 
         });
 

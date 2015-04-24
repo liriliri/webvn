@@ -2,7 +2,7 @@
  * localstorage
  */
 
-webvn.add('storage', ['class', 'util'], function (s, kclass, util) {
+webvn.module('storage', ['class', 'util'], function (s, kclass, util) {
 
 var storage = {},
     prefix = 'wv-',
@@ -10,13 +10,7 @@ var storage = {},
 
 // LocalStorage Session
 
-var localStore = null;
-if (window.localStorage) {
-    localStore = localStorage;
-    s.log.info('LocalStorage is supported');
-} else {
-    s.log.warn('LocalStorage is not supported');
-}
+var localStore = window.localStorage;
 
 // LocalStore class
 var LocalStore = kclass.create({

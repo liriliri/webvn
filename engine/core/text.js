@@ -2,7 +2,7 @@
  * All effects about text, such as animation is defined here
  */
 
-webvn.add('text', ['util', 'class', 'select'],
+webvn.module('text', ['util', 'class', 'select'],
     function (s, util, kclass, select) {
         
         var exports = {};

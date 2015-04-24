@@ -3,7 +3,7 @@
  * Also extends the loader module
  */
 
-webvn.add('ajax', ['util', 'promise'], function (s, util, Promise) {
+webvn.module('ajax', ['util'], function (s, util) {
 
 var ajaxSettings = {
     // Default type of request

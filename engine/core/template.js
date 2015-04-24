@@ -1,6 +1,6 @@
 // Small template engine
 
-webvn.add('template', ['util'], function (s, util) {
+webvn.module('template', ['util'], function (s, util) {
 
 var defaults = {
     openTag: '<%',

@@ -2,7 +2,7 @@
  * Everything that is about game saving and loading is defined here
  */
 
-webvn.add('save', ['util', 'class'], function (s, util, kclass) {
+webvn.module('save', ['util', 'class'], function (s, util, kclass) {
 
 var save = {},
     cache = {};

@@ -69,7 +69,7 @@ var parser = new Parser({
 var code = parser.generate();
 
 // Wrap inside webvn namespace
-code = ['webvn.add("parserNew", function () {',
+code = ['webvn.module("parserNew", function () {',
             'var exports = {}, require = function(){};',
             code,
             'return exports;',

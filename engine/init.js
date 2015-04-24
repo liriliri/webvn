@@ -1,11 +1,8 @@
 // Do some initialization work here
-
-webvn.use(['script', 'conf'],
-    function (s, script, conf) {
-
+webvn.use(['script', 'config'],
+    function (s, script, config) {
         // Load script and begin executing it
-        if (!conf.test) {
+        if (!config.test) {
             script.load();
         }
-
     });

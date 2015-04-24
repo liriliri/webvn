@@ -1,8 +1,8 @@
 // Module asset
 
 // TODO module asset
-webvn.add('asset', ['util'],
-    function (s, util) {
+webvn.module('asset',
+    function () {
 
         var exports = {};
 

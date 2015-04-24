@@ -40,6 +40,7 @@ gruntConfig.jsdoc = {
             'engine/core/*.js',
             'engine/ui/*.js',
             'engine/cmd/*.js',
+            'config/*.js',
             'README.md'
         ]
     }

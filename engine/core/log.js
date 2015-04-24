@@ -1,76 +1,58 @@
-/* Wrapper of console
- * Used to display logs
- * Notice that only under debug mode, the info is displayed
+/**
+ * Wrapper of Console <br>
+ * This module is used to display logs.
+ * and notice that only under debug mode, the info is displayed
+ * @namespace webvn.log
  */
+webvn.module('log', ['config'],
+    function (s, config) {
 
-webvn.add('log', ['conf'], function (s, conf) {
+        var exports = {},
+            conf = config.log;
+        // Colors
+        var colors = conf.colors;
 
-var log = function (str) {
+        /**
+         * Display error message in console.
+         * @function webvn.log.error
+         * @param {string} str error message
+         */
+        exports.error = function (str) {
+            if (!config.debug) {
+                return;
+            }
+            console.log('%c' + '!! ' + str,
+                'color: ' + colors.error);
+        };
 
-    if (!conf.debug) {
-        return;
-    }
-    console.log(str);
+        /**
+         * Display info in console.
+         * @function webvn.log.info
+         * @param {string} str info
+         */
+        var info = exports.info = function (str) {
+            if (!config.debug) {
+                return;
+            }
+            console.log('%c' + '> ' + str,
+                'color: ' + colors.info);
+        };
 
-};
+        /**
+         * Display warning in console
+         * @function webvn.log.warn
+         * @param {string} str warning message
+         */
+        exports.warn = function (str) {
+            if (!config.debug) {
+                return;
+            }
+            console.log('%c' + '! ' + str,
+                'color: ' + colors.warn);
+        };
 
-// Colors
-var colors = {
-    info: '#357ae8',
-    err: '#d84030',
-    warning: '#f9c621',
-    sys: {
-        back: '#357ae8',
-        font: '#fff'
-    }
-};
+        // Display version info
+        info('WebVN v' + s.version + ' | https://github.com/surunzi/WebVN');
 
-// Wrapper of console.error
-log.error = function (str) {
-
-    if (!conf.debug) {
-        return;
-    }
-    console.error('%c' + str, 'color: ' + colors.err);
-
-};
-
-// Wrapper of console.info
-log.info = function (str) {
-
-    if (!conf.debug) {
-        return;
-    }
-    console.info('%c' + str, 'color: ' + colors.info);
-
-};
-
-// System info
-log.sys = function (str) {
-
-    if (!conf.debug) {
-        return;
-    }
-    console.log('%c' + str, 
-        'background: ' + colors.sys.back +
-        ';color: ' + colors.sys.font + ' !important' +
-        ';padding: 0 5px;');
-
-};
-
-// Wrapper of console.warn
-log.warn = function (str) {
-
-    if (!conf.debug) {
-        return;
-    }
-    console.warn('%c' + str, 'color: ' + colors.warning);
-
-};
-
-// Log out version info
-log.sys('WebVN v' + s.VERSION + ' | https://github.com/surunzi/WebVN');
-
-return log;
-
-});
+        return exports;
+    });

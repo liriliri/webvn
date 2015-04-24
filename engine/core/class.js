@@ -1,7 +1,7 @@
 /* This module provide the basic class inheritance.
  */
 
-webvn.add('class', ['util'], function (s, util) {
+webvn.module('class', ['util'], function (s, util) {
 
 var kclass = {};
 

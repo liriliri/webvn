@@ -43,7 +43,6 @@
                 "storage",
                 "config",
                 "system",
-                "promise",
                 "ajax",
                 "loader",
                 "parserNode",

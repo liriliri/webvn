@@ -2,7 +2,7 @@
  * Animation control library
  */
 
-webvn.add('tween', ['util', 'class', 'anim'],
+webvn.module('tween', ['util', 'class', 'anim'],
     function (s, util, kclass, anim) {
 
         var exports = {};

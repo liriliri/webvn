@@ -2,7 +2,7 @@
  * Provide some common system info and function, such as the screen width and height
  */
 
-webvn.add('system', ['select', 'config'],
+webvn.module('system', ['select', 'config'],
 	function (s, select, config) {
 
 var defaults = {
@@ -14,7 +14,7 @@ var defaults = {
 var system = {};
 
 var conf = config.create('core-system');
-conf.set(defaults).set(config.global.system, true);
+conf.set(defaults).set(config.system, true);
 
 // Screen width and height
 system.screenWidth = screen.width;
