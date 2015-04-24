@@ -854,7 +854,7 @@ webvn.add('script',
                     case 'String':
                         return String(value);
                     case 'Boolean':
-                        return value === 'false' || value === '0';
+                        return !(value === 'false' || value === '0');
                     case 'Number':
                         return Number(value);
                     case 'Json':

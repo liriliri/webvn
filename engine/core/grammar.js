@@ -70,7 +70,7 @@ var code = parser.generate();
 
 // Wrap inside webvn namespace
 code = ['webvn.add("parserNew", function () {',
-            'var exports = {}, require = {};',
+            'var exports = {}, require = function(){};',
             code,
             'return exports;',
         '});'].join('\n');

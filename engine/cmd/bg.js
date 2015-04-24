@@ -1,13 +1,13 @@
-// Command bg
-
 webvn.use(['script', 'ui'],
     function (s, script, ui) {
-
         var background = ui.get('background');
-
+        /**
+         * Background Command
+         * @class webvn.cmd.BgCommand
+         * @extends webvn.script.Command
+         */
         var Command = script.Command.extend({
             constructor: function () {
-
                 var options = {
                     display: {
                         type: 'Boolean',
@@ -20,9 +20,7 @@ webvn.use(['script', 'ui'],
                         desc: 'Source of the current background image'
                     }
                 };
-
                 this.callSuper('bg', options);
-
             },
             execution: function (values) {
 
@@ -38,7 +36,5 @@ webvn.use(['script', 'ui'],
 
             }
         });
-
         new Command;
-
     });

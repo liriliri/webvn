@@ -1,5 +1,3 @@
-// Command dialog
-
 webvn.use(['script', 'ui'],
     function (s, script, ui) {
 
