@@ -1,8 +1,9 @@
-// UI component menu
-
-webvn.use(['ui', 'script', 'media', 'util'], 
+webvn.use(['ui', 'script', 'media', 'util'],
     function (s, ui, script, media, util) {
 
+        /**
+         * @class webvn.ui.Menu
+         */
         var exports = ui.create('menu', 'div');
 
         // Properties
@@ -76,28 +77,30 @@ webvn.use(['ui', 'script', 'media', 'util'],
             }
         });
 
+        /**
+         * Show Menu
+         * @method webvn.ui.Menu#show
+         */
         exports.show = function () {
-
             script.pause();
-
             if (exports.bgm) {
                 bgm.load(exports.bgm);
             }
-
             if (exports.fadeIn) {
                 $el.fadeIn(exports.duration);
             } else {
                 $el.show();
             }
-
         };
 
+        /**
+         * Decide which button should be displayed.
+         * @method webvn.ui.Menu#btn
+         * @param {object} buttons
+         */
         exports.btn = function (buttons) {
-
             util.each(buttons, function (value, key) {
-
                 var $e = $el.find('ul li.' + key);
-
                 if (value === true) {
                     $e.css('display', 'block');
                 } else if (value === false) {
@@ -105,9 +108,7 @@ webvn.use(['ui', 'script', 'media', 'util'],
                 } else if (util.isString(value)) {
                     $e.text(value);
                 }
-
             });
-
         };
 
     });
