@@ -559,12 +559,7 @@ webvn.module('script',
 
         //noinspection JSUnusedLocalSymbols
         var $$ = exports.$$ = function (type, value) {
-
-            var source = [type, value];
-
-            if (type === 'function') {
-                source.push(arguments[3]);
-            }
+            var source = util.makeArray(arguments);
 
             /* When executing,
              * command defined inside a if statement
@@ -575,7 +570,6 @@ webvn.module('script',
             } else {
                 middles.push(source);
             }
-
         };
 
         // Load scenarios and begin executing them
@@ -633,7 +627,9 @@ webvn.module('script',
         };
 
         function execCommand(command) {
-            command = parseCommand(command[1]);
+            var lineNum = command[2],
+                commandText = cmdBeautify(command[1]);
+            command = parseCommand(commandText);
             var name = command.name,
                 options = command.options;
             var cmd = commands[name];
@@ -641,14 +637,22 @@ webvn.module('script',
                 log.warn('Command ' + name + ' doesn\'t exist');
                 return;
             }
-            log.info('Command: ' + name);
+            log.info('Command: ' + commandText + ' ' + lineNum);
             cmd.exec(options);
         }
 
+        function cmdBeautify(str) {
+            "use strict";
+            return str.split('\n').
+                map(function (value) {
+                return util.trim(value);
+            }).join(' ');
+        }
+
         function execCode(code) {
-
+            var lineNum = code[2];
+            log.info('Code: ' + code[1] + ' ' + lineNum);
             jsEval(code[1]);
-
         }
 
         /* Indicate which line is being executed now,

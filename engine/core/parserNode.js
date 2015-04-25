@@ -7,11 +7,18 @@ webvn.module('parserNode', ['class', 'util'],
 
         var exports = {};
 
+        var lineNum = 0;
+
+        exports.lineNum = function (value) {
+            "use strict";
+            lineNum = value;
+        };
+
         exports.expression = function (content) {
 
             content = removeLastLineBreak(content);
 
-            return '$$(' + content + ');\n';
+            return '$$(' + content + ', ' + lineNum + ');\n';
 
         };
 

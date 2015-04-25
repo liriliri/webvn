@@ -51,8 +51,5 @@ webvn.module('log', ['config'],
                 'color: ' + colors.warn);
         };
 
-        // Display version info
-        info('WebVN v' + s.version + ' | https://github.com/surunzi/WebVN');
-
         return exports;
     });

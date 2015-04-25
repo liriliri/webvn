@@ -1,11 +1,18 @@
 // Initialization script
 
-menu -d                           \
-    -bgm=/asset/test/bgm1.ogg     \
-    -fi=false                     \
-    -fo=false                     \
-    -bhs=/asset/test/onmouse.wav  \
-    -bcs=/asset/test/onclick.wav  \
-    -btn='{"start":"开始旅程","load":false,"setting":false,"cg":false,"music":false}'
-
-
+if (true) {
+    menu -d                           \
+        -bgm=/asset/test/bgm1.ogg     \
+        -fi=false                     \
+        -fo=false                     \
+        -bhs=/asset/test/onmouse.wav  \
+        -bcs=/asset/test/onclick.wav  \
+        -btn='{"start":"开始旅程","load":false,"setting":false,"cg":false,"music":false}'
+} else {
+    menu -d                           \
+        -bgm=/asset/test/bgm1.ogg     \
+        -fi=false                     \
+        -fo=false                     \
+        -bhs=/asset/test/onmouse.wav  \
+        -bcs=/asset/test/onclick.wav
+}

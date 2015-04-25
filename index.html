@@ -137,19 +137,19 @@
     </ul>
 </div>
 <script>
-var i, len;
-var $testUi = $('#test-ui'),
-    $testCore = $('#test-core'),
+    var i, len;
+    var $testUi = $('#test-ui'),
+        $testCore = $('#test-core'),
+        body = '';
+    for (i = 0, len = testCore.length; i < len; i++) {
+        body += '<li><a href="/test/' + testCore[i] + '.html">' + testCore[i] + '</a></li>'
+    }
+    $testCore.html(body);
     body = '';
-for (i = 0, len = testCore.length; i < len; i++) {
-	body += '<li><a href="/test/' + testCore[i] + '.html">' + testCore[i] + '</a></li>'
-}
-$testCore.html(body);
-body = '';
-for (i = 0, len = testUi.length; i < len; i++) {
-    body += '<li><a href="/test/' + testUi[i] + '.html">' + testUi[i] + '</a></li>'
-}
-$testUi.html(body);
+    for (i = 0, len = testUi.length; i < len; i++) {
+        body += '<li><a href="/test/' + testUi[i] + '.html">' + testUi[i] + '</a></li>'
+    }
+    $testUi.html(body);
 </script>
 </body>
 </html>

@@ -1,9 +1,14 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title></title>
-<script src="/engine/core/webvn.js"></script>
+	<meta charset="utf-8">
+	<title></title>
+	<script src="/engine/core/webvn.js"></script>
+	<script>
+		webvn.call(function (s) {
+			s.log.info('WebVN v' + s.version + ' | https://github.com/surunzi/WebVN');
+		});
+	</script>
 </head>
 <body>
 <div class="center">

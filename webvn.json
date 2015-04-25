@@ -1,7 +1,7 @@
 {
     "css": {
         "ui": {
-            "path": "/engine/ui/",
+            "path": "/engine/ui/css/",
             "files": [
                 "ui"
             ]

@@ -25,16 +25,16 @@ var grammar = {
         ['Function', '$$ = $1']
     ],
     Command: [
-        ['COMMAND', '$$ = $1']
+        ['COMMAND', 'yy.lineNum(yylineno); $$ = $1;']
     ],
     CodeLine: [
-        ['CODE_LINE', '$$ = $1']
+        ['CODE_LINE', 'yy.lineNum(yylineno); $$ = $1']
     ],
     CodeBlock: [
-        ['CODE_BLOCK', '$$ = $1']
+        ['CODE_BLOCK', 'yy.lineNum(yylineno); $$ = $1']
     ],
     If: [
-        ['IF CONDITION Block', '$$ = yy["if"]($2, $3)'],
+        ['IF CONDITION Block', 'yy.lineNum(yylineno); $$ = yy["if"]($2, $3)'],
         ['If ELSE If', '$$ = yy.ifElse($1, $3)'],
         ['If ELSE Block', '$$ = yy.ifElse($1, $3)']
     ],

@@ -11,6 +11,32 @@ window.webvn = (function(){
      * @name webvn.version
      */
     exports.version = '0.0.1';
+    var fnList = [];
+    /**
+     * Whether all files are loaded.
+     * @name webvn.isReady
+     * @type {boolean}
+     */
+    var isReady = exports.isReady = false;
+    /**
+     * Functions to be called when all file is loaded.
+     * @function webvn.call
+     * @param {function} fn
+     */
+    exports.call = function (fn) {
+        if (fn === undefined) {
+            fnList.forEach(function (fn) {
+                fn.call(null, webvn);
+            });
+            fnList = [];
+            return;
+        }
+        if (isReady) {
+            fn.call(null, webvn);
+        } else {
+            fnList.push(fn);
+        }
+    };
     return exports;
 })();
 
