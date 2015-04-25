@@ -514,12 +514,11 @@ webvn.module('script',
         var emptyStr = '';
 
         function _jsEval(code, returnOrNot) {
+            "use strict";
 
             if (util.trim(code) === '') {
                 return emptyStr;
             }
-
-            "use strict";
 
             var scope = {};
 
