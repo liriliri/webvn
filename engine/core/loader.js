@@ -1,6 +1,8 @@
 webvn.use(['loader', 'util', 'log'],
     function (s, loader, util, log) {
 
+        var exports = loader;
+
         var ajaxSettings = {
             // Default type of request
             type: 'GET',
@@ -44,7 +46,7 @@ webvn.use(['loader', 'util', 'log'],
                         try {
                             switch (dataType) {
                                 case 'script':
-                                    (1, eval)(result);
+                                    eval(result);
                                     break;
                                 case 'xml':
                                     result = xhr.responseXML;
@@ -126,7 +128,7 @@ webvn.use(['loader', 'util', 'log'],
         function empty() {}
 
         // Load image
-        loader.image = function (source) {
+        exports.image = function (source) {
             log.info('Loading image: ' + source);
             return new Promise(function (resolve, reject) {
                 var image = new Image;
@@ -144,7 +146,7 @@ webvn.use(['loader', 'util', 'log'],
         /* Load scene
          * Scenes should be array
          */
-        loader.scenario = function (scenes, cb) {
+        exports.scenario = function (scenes, cb) {
             _scenario(scenes, 0, cb);
         };
 

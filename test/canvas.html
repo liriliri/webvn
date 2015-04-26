@@ -10,7 +10,6 @@
         };
         </script>
         <script src="/engine/core/webvn.js"></script>
-        <link type="stylesheet" href="/test/test.css">
         <style>
         #testParticle, #test {
             position: absolute;
@@ -25,61 +24,57 @@
             </div>
         </div>
     <script>
-        webvn.loader.ready(function () {
+        webvn.call(['canvas', 'tween'], function (s, canvas, tween) {
 
-            webvn.use(['canvas', 'tween'], function (s, canvas, tween) {
+            var scene = new canvas.Scene(document.getElementById('test'));
+            var img = new canvas.ImageEntity();
+            var img2 = new canvas.ImageEntity();
+            img2.load('/asset/test/fg1.png');
+            img.load('/asset/test/bg1.bmp');
+            img2.x = 400;
+            scene.add(img);
+            scene.add(img2);
+            canvas.renderer.add(scene);
+            setTimeout(function () {
+                img.load('/asset/test/bg2.bmp', 2000);
+                var myTween = tween.create(img);
+                myTween.loop = true;
+                myTween.to({
+                    x: 200
+                }, 1000).call(function () {
+                    console.log('finish');
+                }).to({
+                    x: 0,
+                    y: 200
+                }, 1000).wait(1000).to({
+                    y: 0
+                }, 1000);
 
-                var scene = new canvas.Scene(document.getElementById('test'));
-                var img = new canvas.ImageEntity();
-                var img2 = new canvas.ImageEntity();
-                img2.load('/asset/test/fg1.png');
-                img.load('/asset/test/bg1.bmp');
-                img2.x = 400;
-                scene.add(img);
-                scene.add(img2);
-                canvas.renderer.add(scene);
                 setTimeout(function () {
-                    img.load('/asset/test/bg2.bmp', 2000);
-                    var myTween = tween.create(img);
-                    myTween.loop = true;
-                    myTween.to({
-                        x: 200
-                    }, 1000).call(function () {
-                        console.log('finish');
-                    }).to({
-                        x: 0,
-                        y: 200
-                    }, 1000).wait(1000).to({
-                        y: 0
-                    }, 1000);
 
+                    myTween.pause();
                     setTimeout(function () {
-
-                        myTween.pause();
-                        setTimeout(function () {
-                            myTween.play();
-                        }, 2000);
-
-                    }, 4000);
-
-                    /*img.animate({
-                        x: 200,
-                        y: 200
-                    }, 2000, 'easeInOutBounce', function () {
-                        img.animate({
-                            x: 0,
-                            y: 0
-                        }, 2000, 'easeInOutBounce');
-                    });*/
-
-                }, 2000);
-                setTimeout(function() {
-
-                    img2.load('/asset/test/fg2.png', 2000);
+                        myTween.play();
+                    }, 2000);
 
                 }, 4000);
 
-            });
+                /*img.animate({
+                    x: 200,
+                    y: 200
+                }, 2000, 'easeInOutBounce', function () {
+                    img.animate({
+                        x: 0,
+                        y: 0
+                    }, 2000, 'easeInOutBounce');
+                });*/
+
+            }, 2000);
+            setTimeout(function() {
+
+                img2.load('/asset/test/fg2.png', 2000);
+
+            }, 4000);
 
         });
         </script>

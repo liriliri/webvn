@@ -36,13 +36,18 @@ webvn.module('log', ['config', 'util'],
          * Display info in console.
          * @function webvn.log.info
          * @param {string} str info
+         * @param {boolean=} displayFile
          */
-        var info = exports.info = function (str) {
-            var fileInfo = getFileInfo();
+        exports.info = function (str, displayFile) {
+            displayFile = displayFile || false;
+            var fileInfo;
+            if (displayFile) {
+                fileInfo = ' ' + getFileInfo();
+            }
             if (!config.debug) {
                 return;
             }
-            console.log('%c' + '> ' + str + ' ' + fileInfo,
+            console.log('%c' + '> ' + str + (displayFile ? fileInfo : ''),
                 'color: ' + colors.info);
         };
 

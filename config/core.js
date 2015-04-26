@@ -24,7 +24,8 @@ webvn.use(['config'], function (s, config) {
     config.ui = {
         container: 'webvn',
         width: 1280,
-        height: 720
+        height: 720,
+        autoResize: true
     };
 
     /**

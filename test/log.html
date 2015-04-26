@@ -13,7 +13,7 @@
 <body>
     <script>
         webvn.call(['log'], function (s, log) {
-            webvn.log.info('This is an info log');
+            webvn.log.info('This is an info log', true);
             var e = new Error('Something is wrong!');
             webvn.log.error(e);
             webvn.log.error('Fuck');

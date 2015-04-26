@@ -11,25 +11,52 @@ webvn.module('ui', ['class', 'select', 'config', 'util', 'script'],
         var ui = {},
             cache = {}; // Store all the ui components
 
-        var $container;
-        if (config.test) {
+        var $container = select.get('#' + conf.get('container'));
+        if ($container.length === 0) {
             select.get('body').append('<div class="center">'+
             '<div id="' + conf.get('container') + '"></div>' +
             '</div>');
         }
-
         $container = select.get('#' + conf.get('container'));
-
-        // When the ui is clicked, execute the script
-        $container.on('click', function () {
-            script.play();
-        });
 
         // Init container width and height
         $container.css({
             width: conf.get('width'),
             height: conf.get('height')
         });
+
+        // When the ui is clicked, execute the script
+        $container.on('click', function () {
+            script.play();
+        });
+
+        // Auto fill windows
+        var autoResize = conf.get('autoResize');
+        if (autoResize) {
+            window.onresize = function () {
+                "use strict";
+                resize();
+            };
+        }
+        var width = conf.get('width'),
+            height = conf.get('height'),
+            ratio = width / height;
+        function resize() {
+            "use strict";
+            var ww = window.innerWidth,
+                wh = window.innerHeight;
+            var scale;
+            var windowRatio = ww / wh;
+            if (ratio > windowRatio) {
+                scale = ww / width;
+            } else {
+                scale = wh / height;
+            }
+            $container.css('transform', 'scale(' + scale + ')');
+        }
+        if (autoResize) {
+            resize();
+        }
 
         // Create and add ui component
         ui.create = function (name, type) {

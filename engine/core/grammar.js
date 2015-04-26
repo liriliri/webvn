@@ -1,7 +1,6 @@
 /* This file is used to generate parser.
  * Usage: node grammar
  */
-
 var Parser = require('jison').Parser,
     fs = require('fs');
 
