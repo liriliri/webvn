@@ -5,32 +5,32 @@
 webvn.module('system', ['select', 'config'],
 	function (s, select, config) {
 
-    var defaults = {
-        width: 960,
-        height: 480,
-        title: 'WebVN'
-    };
+        var defaults = {
+            width: 960,
+            height: 480,
+            title: 'WebVN'
+        };
 
-    var system = {};
+        var system = {};
 
-    var conf = config.create('core-system');
-    conf.set(defaults).set(config.system, true);
+        var conf = config.create('core-system');
+        conf.set(defaults).set(config.system, true);
 
-    // Screen width and height
-    system.screenWidth = screen.width;
-    system.screenHeight = screen.height;
+        // Screen width and height
+        system.screenWidth = screen.width;
+        system.screenHeight = screen.height;
 
-    var $title = select('title');
+        var $title = select.create('title');
 
-    // Set window title
-    system.setTitle = function (text) {
+        // Set window title
+        system.setTitle = function (text) {
 
-        $title.text(text);
+            $title.text(text);
 
-    };
-    // Set default title
-    system.setTitle(conf.get('title'));
+        };
+        // Set default title
+        system.setTitle(conf.get('title'));
 
-    return system;
+        return system;
 
     });

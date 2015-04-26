@@ -3,20 +3,18 @@
  * @namespace webvn.ui
  */
 webvn.module('ui', ['class', 'select', 'config', 'util', 'script'],
-    function (s, kclass, $, config, util, script) {
+    function (s, kclass, select, config, util, script) {
 
         var conf = config.create('core-ui');
         conf.set(config.ui, false);
 
         var ui = {},
             cache = {}, // Store all the ui components
-            $container = $(conf.get('container'));
+            $container = select.get(conf.get('container'));
 
         // When the ui is clicked, execute the script
         $container.on('click', function () {
-
             script.play();
-
         });
 
         // Init container width and height
@@ -33,9 +31,6 @@ webvn.module('ui', ['class', 'select', 'config', 'util', 'script'],
             switch (type) {
                 case 'canvas':
                     newUi = new CanvasUi(name);
-                    break;
-                case 'svg':
-                    newUi = new SvgUi(name);
                     break;
                 default:
                     newUi = new DivUi(name);
@@ -92,7 +87,8 @@ webvn.module('ui', ['class', 'select', 'config', 'util', 'script'],
             constructor: function DivUI(name) {
 
                 this.callSuper();
-                this.$el = $('<div id="' + name + '">');
+                this.$el = select.create('div');
+                this.$el.attr('id', name);
                 this.init();
 
             },
@@ -135,7 +131,8 @@ webvn.module('ui', ['class', 'select', 'config', 'util', 'script'],
 
                 this.callSuper();
 
-                this.$el = $('<canvas id="' + name + '">');
+                this.$el = select.create('canvas');
+                this.$el.attr('id', name);
 
                 this.canvas = this.$el.get(0);
 

@@ -1,15 +1,19 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Select</title>
-<script src="/engine/core/webvn.js"></script>
-<script src="/engine/core/init.js"></script>
-<style>
-.a {
-	width: 5px;
-}
-</style>
+    <meta charset="utf-8">
+    <title>Select</title>
+    <script src="/engine/core/webvn.js"></script>
+    <style>
+    .a {
+        width: 5px;
+    }
+    </style>
+    <script>
+        var config = {
+            test: true
+        };
+    </script>
 </head>
 <body>
 <div class="a ff">
@@ -17,38 +21,36 @@
 </div>
 <div class="a"></div>
 <script>
-webvn.loader.ready(function () {
+    webvn.call(['select', 'log'], function (s, select, log) {
 
-webvn.use(['select', 'log'], function (s, select, log) {
+        // var b = select('<div>');
 
-var b = select('<div>');
+        var a = select.create('.a');
+        a.addClass('b ff d');
+        console.log(a.hasClass('a'));
 
-var a = select('.a');
+        a.css({
+            'width': 100,
+            'height': 100,
+            'background': '#08c',
+            'color': '#fff'
+        });
 
-a.html(function () {
-	return 'Hello World!';
-});
+        /*a.html(function () {
+            return 'Hello World!';
+        });
 
-console.log(a.hasClass("ff"));
+        console.log(a.hasClass("ff"));
 
-a.addClass('bb ff');
+        a.addClass('bb ff');
 
-a.text('Fuck this world');
+        a.text('Fuck this world');
 
-a.css({
-	'width': 100,
-	'height': 100,
-	'background': '#08c',
-	'color': '#fff'
-});
+        console.log(select.isSelect(a));
 
-console.log(select.isSelect(a));
+        a.append(document.createElement('div'));*/
 
-a.append(document.createElement('div'));
-
-});
-
-});
-</script>
+    });
+    </script>
 </body>
 </html>

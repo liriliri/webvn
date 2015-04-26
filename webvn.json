@@ -38,8 +38,8 @@
             "path": "/engine/core/",
             "files": [
                 "log",
-                "select",
                 "class",
+                "select",
                 "storage",
                 "config",
                 "system",

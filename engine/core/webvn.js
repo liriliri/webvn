@@ -11,32 +11,6 @@ window.webvn = (function(){
      * @name webvn.version
      */
     exports.version = '0.0.1';
-    var fnList = [];
-    /**
-     * Whether all files are loaded.
-     * @name webvn.isReady
-     * @type {boolean}
-     */
-    var isReady = exports.isReady = false;
-    /**
-     * Functions to be called when all file is loaded.
-     * @function webvn.call
-     * @param {function} fn
-     */
-    exports.call = function (fn) {
-        if (fn === undefined) {
-            fnList.forEach(function (fn) {
-                fn.call(null, webvn);
-            });
-            fnList = [];
-            return;
-        }
-        if (isReady) {
-            fn.call(null, webvn);
-        } else {
-            fnList.push(fn);
-        }
-    };
     return exports;
 })();
 
@@ -186,6 +160,42 @@ window.webvn = (function(){
         requires = getModules(requires);
         requires.unshift(s);
         module.apply(null, requires);
+    };
+
+    var fnList = [];
+    /**
+     * Whether all files are loaded.
+     * @name webvn.isReady
+     * @type {boolean}
+     */
+    var isReady = exports.isReady = false;
+    /**
+     * Functions to be called when all file is loaded.
+     * @function webvn.call
+     * @param {function} fn
+     */
+    s.call = function (requires, module) {
+        if (requires === undefined) {
+            fnList.forEach(function (fn) {
+                requires = getModules(fn[0]);
+                requires.unshift(s);
+                fn[1].apply(null, requires);
+            });
+            fnList = [];
+            return;
+        }
+        if (isFunction(requires)) {
+            module = requires;
+            requires = [];
+        }
+        var fn = [requires, module];
+        if (isReady) {
+            requires = getModules(fn[0]);
+            requires.unshift(s);
+            fn[1].apply(null, requires);
+        } else {
+            fnList.push(fn);
+        }
     };
 
     function getModules(requires) {
