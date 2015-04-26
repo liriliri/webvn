@@ -1,17 +1,24 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Log Test</title>
-<script src="../core/webvn.js"></script>
-<script src="../core/log.js"></script>
+    <meta charset="utf-8">
+    <title>Log</title>
+    <script src="/engine/core/webvn.js"></script>
+    <script>
+        var config = {
+            test: true
+        };
+    </script>
 </head>
 <body>
-<script>
-    webvn.log('This is a normal log');
-    webvn.log.info('This is an info log');
-    webvn.log.err('This is an error log');
-    webvn.log.warn('This is an warning log');
-</script>
+    <script>
+        webvn.call(['log'], function (s, log) {
+            webvn.log.info('This is an info log');
+            var e = new Error('Something is wrong!');
+            webvn.log.error(e);
+            webvn.log.error('Fuck');
+            webvn.log.warn('This is an warning log');
+        });
+    </script>
 </body>
 </html>

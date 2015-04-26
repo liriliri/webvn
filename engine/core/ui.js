@@ -9,8 +9,16 @@ webvn.module('ui', ['class', 'select', 'config', 'util', 'script'],
         conf.set(config.ui, false);
 
         var ui = {},
-            cache = {}, // Store all the ui components
-            $container = select.get(conf.get('container'));
+            cache = {}; // Store all the ui components
+
+        var $container;
+        if (config.test) {
+            select.get('body').append('<div class="center">'+
+            '<div id="' + conf.get('container') + '"></div>' +
+            '</div>');
+        }
+
+        $container = select.get('#' + conf.get('container'));
 
         // When the ui is clicked, execute the script
         $container.on('click', function () {

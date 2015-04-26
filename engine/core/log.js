@@ -4,8 +4,8 @@
  * and notice that only under debug mode, the info is displayed
  * @namespace webvn.log
  */
-webvn.module('log', ['config'],
-    function (s, config) {
+webvn.module('log', ['config', 'util'],
+    function (s, config, util) {
 
         var exports = {},
             conf = config.log;
@@ -15,13 +15,20 @@ webvn.module('log', ['config'],
         /**
          * Display error message in console.
          * @function webvn.log.error
-         * @param {string} str error message
+         * @param {string|Error} str error message or Error instance
          */
         exports.error = function (str) {
+            var errStack;
+            if (str instanceof Error) {
+                errStack = getErrorStack(str);
+                str = str.message;
+            } else {
+                errStack = getErrorStack();
+            }
             if (!config.debug) {
                 return;
             }
-            console.log('%c' + '!! ' + str,
+            console.log('%c' + '!! ' + str + '\n' + errStack,
                 'color: ' + colors.error);
         };
 
@@ -31,10 +38,11 @@ webvn.module('log', ['config'],
          * @param {string} str info
          */
         var info = exports.info = function (str) {
+            var fileInfo = getFileInfo();
             if (!config.debug) {
                 return;
             }
-            console.log('%c' + '> ' + str,
+            console.log('%c' + '> ' + str + ' ' + fileInfo,
                 'color: ' + colors.info);
         };
 
@@ -44,12 +52,36 @@ webvn.module('log', ['config'],
          * @param {string} str warning message
          */
         exports.warn = function (str) {
+            var fileInfo = getFileInfo();
             if (!config.debug) {
                 return;
             }
-            console.log('%c' + '! ' + str,
+            console.log('%c' + '! ' + str + ' ' + fileInfo,
                 'color: ' + colors.warn);
         };
+
+        // Get info of file that logs the message
+        function getFileInfo() {
+            "use strict";
+            var err = new Error,
+                stack = err.stack;
+            var stacks = stack.split('\n');
+            return util.trim(stacks[3]);
+        }
+
+        function getErrorStack(e) {
+            "use strict";
+            var spliceNum = 3;
+            if (e === undefined) {
+                e = new Error;
+            } else {
+                spliceNum = 1;
+            }
+            var stack = e.stack,
+                stacks = stack.split('\n');
+            stacks.splice(0, spliceNum);
+            return stacks.join('\n');
+        }
 
         return exports;
     });

@@ -22,7 +22,7 @@ webvn.use(['config'], function (s, config) {
     };
 
     config.ui = {
-        container: '#webvn',
+        container: 'webvn',
         width: 1280,
         height: 720
     };

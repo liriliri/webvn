@@ -20,7 +20,7 @@ webvn.module('system', ['select', 'config'],
         system.screenWidth = screen.width;
         system.screenHeight = screen.height;
 
-        var $title = select.create('title');
+        var $title = select.get('title');
 
         // Set window title
         system.setTitle = function (text) {
