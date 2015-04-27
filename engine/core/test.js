@@ -12,7 +12,7 @@ var test = {};
 test.Component = kclass.create({
     constructor: function Component(scenarioId) {
 
-        this.scenario = util.trim(select('#' + scenarioId).text());
+        this.scenario = util.trim(select.get('#' + scenarioId).text());
 
     },
     start: function () {

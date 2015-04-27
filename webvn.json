@@ -3,6 +3,9 @@
         "ui": {
             "path": "/engine/ui/css/",
             "files": [
+                "animate",
+                "reset",
+                "component",
                 "ui"
             ]
         },

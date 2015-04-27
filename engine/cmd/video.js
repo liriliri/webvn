@@ -8,32 +8,32 @@ webvn.use(['script', 'ui'],
          */
         var Command = script.Command.extend({
             constructor: function () {
-                /**
-                 * @memberof webvn.cmd.VideoCommand
-                 * @property {boolean} display(d) display or not
-                 * @property {string} click(c) stop or pause when clicked
-                 * @property {boolean} play(pl) play or pause
-                 * @property {string} src(s) load video and play
-                 */
-                var options = {
-                    display: {
-                        type: 'Boolean',
-                        shortHand: 'd'
-                    },
-                    click: {
-                        type: 'String',
-                        shortHand: 'c'
-                    },
-                    play: {
-                        type: 'Boolean',
-                        shortHand: 'pl'
-                    },
-                    src: {
-                        type: 'String',
-                        shortHand: 's'
-                    }
-                };
-                this.callSuper('video', options);
+                this.callSuper('video');
+            },
+            /**
+             * @memberof webvn.cmd.VideoCommand
+             * @property {boolean} display(d) display or not
+             * @property {string} click(c) stop or pause when clicked
+             * @property {boolean} play(pl) play or pause
+             * @property {string} src(s) load video and play
+             */
+            options: {
+                display: {
+                    type: 'Boolean',
+                    shortHand: 'd'
+                },
+                click: {
+                    type: 'String',
+                    shortHand: 'c'
+                },
+                play: {
+                    type: 'Boolean',
+                    shortHand: 'pl'
+                },
+                src: {
+                    type: 'String',
+                    shortHand: 's'
+                }
             },
             execution: function (values) {
                 if (values.display === true) {

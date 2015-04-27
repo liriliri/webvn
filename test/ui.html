@@ -1,25 +1,91 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>UI</title>
-<script src="../core/webvn.js"></script>
-<script src="../core/loader.js"></script>
-<script src="../core/init.js"></script>
+    <meta charset="utf-8">
+    <title>UI</title>
+    <link rel="stylesheet" href="ui.css">
+    <script>
+        var config = {
+            test: true
+        }
+    </script>
+    <script src="/engine/core/webvn.js"></script>
 </head>
 <body>
+<div class="center">
+    <div id="webvn">
+        <div id="grid" class="fill">
+            <div class="row">
+                <div class="col-12 column">
+                    <p>Grid System</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 column">
+                    <p>12</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 column">
+                    <p>6</p>
+                </div>
+                <div class="col-6 column">
+                    <p>6</p>
+                    <div class="row">
+                        <div class="col-6 column">
+                            <p>6</p>
+                        </div>
+                        <div class="col-6 column">
+                            <p>6</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 column">
+                    <p>4</p>
+                    <div class="row">
+                        <div class="col-4 column">
+                            <p>4</p>
+                        </div>
+                        <div class="col-8 column">
+                            <p>8</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 column">
+                    <p>4</p>
+                    <div class="row">
+                        <div class="col-3 column">
+                            <p>3</p>
+                        </div>
+                        <div class="col-9 column">
+                            <p>9</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 column">
+                    <p>4</p>
+                    <div class="row">
+                        <div class="col-3 column">
+                            <p>3</p>
+                        </div>
+                        <div class="col-3 column">
+                            <p>3</p>
+                        </div>
+                        <div class="col-6 column">
+                            <p>6</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
-webvn.loader.ready(function () {
+    webvn.call(['ui'], function (s, ui) {
 
-webvn.use(['ui'], function (s, ui) {
-
-console.dir(ui.get('background'));
-
-console.dir(ui.get('rain').getContext2d());
-
-});
-
-});
+    });
 </script>
 </body>
 </html>

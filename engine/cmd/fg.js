@@ -7,40 +7,37 @@ webvn.use(['script', 'ui'],
 
         var Command = script.Command.extend({
             constructor: function () {
-
-                var options = {
-                    display: {
-                        type: 'Boolean',
-                        shortHand: 'd'
-                    },
-                    select: {
-                        type: 'Number',
-                        shortHand: 'sel'
-                    },
-                    src: {
-                        type: 'String',
-                        shortHand: 's'
-                    },
-                    x: {
-                        type: 'Number',
-                        shortHand: 'x'
-                    },
-                    y: {
-                        type: 'Number',
-                        shortHand: 'y'
-                    },
-                    position: {
-                        type: 'String',
-                        shortHand: 'pos'
-                    }
-                };
-
-                this.callSuper('fg', options);
-
+                this.callSuper('fg');
+            },
+            options: {
+                display: {
+                    type: 'Boolean',
+                    shortHand: 'd'
+                },
+                select: {
+                    type: 'Number',
+                    shortHand: 'sel'
+                },
+                src: {
+                    type: 'String',
+                    shortHand: 's'
+                },
+                x: {
+                    type: 'Number',
+                    shortHand: 'x'
+                },
+                y: {
+                    type: 'Number',
+                    shortHand: 'y'
+                },
+                position: {
+                    type: 'String',
+                    shortHand: 'pos'
+                }
             },
             execution: function (values) {
 
-                if (values.select) {
+                if (values.select !== undefined) {
                     figure.select(values.select);
                 }
 

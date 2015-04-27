@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Test</title>
+		<title>Figure</title>
 		<script>
 		var config = {
 			debug: true,
@@ -16,7 +16,10 @@
 			<div id="webvn"></div>
 		</div>
 		<div id="scenario" class="hidden">
-			video -d -pl -c=pause -s=/asset/test/video.mp4
+			fg -d -sel=0 -s=/asset/test/fg1.png -pos=left
+			fg -sel=1 -s=/asset/test/fg4.png -pos=center
+			fg -sel=2 -s=/asset/test/fg3.png -pos=right
+			fg -sel=0 -s=/asset/test/fg2.png
 		</div>
 		<script>
 		webvn.call(['test'], function (s, test) {

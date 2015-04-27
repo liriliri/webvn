@@ -5,45 +5,45 @@ webvn.use(['script', 'ui'],
 
         var Command = script.Command.extend({
             constructor: function () {
-                var options = {
-                    display: {
-                        type: 'Boolean',
-                        shortHand: 'd'
-                    },
-                    duration: {
-                        type: 'Number',
-                        shortHand: 'du'
-                    },
-                    fadeIn: {
-                        type: 'Boolean',
-                        shortHand: 'fi'
-                    },
-                    fadeOut: {
-                        type: 'Boolean',
-                        shortHand: 'fo'
-                    },
-                    name: {
-                        type: 'String',
-                        shortHand: 'n'
-                    },
-                    text: {
-                        type: 'String',
-                        shortHand: 't'
-                    },
-                    textDuration: {
-                        type: 'Number',
-                        shortHand: 'td'
-                    },
-                    textType: {
-                        type: 'String',
-                        shortHand: 'tt'
-                    },
-                    voice: {
-                        type: 'String',
-                        shortHand: 'v'
-                    }
-                };
-                this.callSuper('dialog', options);
+                this.callSuper('dialog');
+            },
+            options: {
+                display: {
+                    type: 'Boolean',
+                    shortHand: 'd'
+                },
+                duration: {
+                    type: 'Number',
+                    shortHand: 'du'
+                },
+                fadeIn: {
+                    type: 'Boolean',
+                    shortHand: 'fi'
+                },
+                fadeOut: {
+                    type: 'Boolean',
+                    shortHand: 'fo'
+                },
+                name: {
+                    type: 'String',
+                    shortHand: 'n'
+                },
+                text: {
+                    type: 'String',
+                    shortHand: 't'
+                },
+                textDuration: {
+                    type: 'Number',
+                    shortHand: 'td'
+                },
+                textType: {
+                    type: 'String',
+                    shortHand: 'tt'
+                },
+                voice: {
+                    type: 'String',
+                    shortHand: 'v'
+                }
             },
             execution: function (values) {
                 if (values.fadeIn === true) {

@@ -26,7 +26,7 @@ exports.select = function (num) {
 
 exports.src = function (src) {
 
-    currentFigure.load(src);
+    currentFigure.load(src, 2000);
 
 };
 

@@ -11,45 +11,45 @@ webvn.use(['script', 'ui'],
          */
         var Command = script.Command.extend({
             constructor: function () {
-                /**
-                 * @memberof webvn.cmd.MenuCommand
-                 * @property {String} bgm{bgm} background music
-                 */
-                var options = {
-                    'bgm': {
-                        type: 'String',
-                        shortHand: 'bgm'
-                    },
-                    'btn': {
-                        type: 'Json',
-                        shortHand: 'btn'
-                    },
-                    'btnHoverSound': {
-                        type: 'String',
-                        shortHand: 'bhs'
-                    },
-                    'btnClickSound': {
-                        type: 'String',
-                        shortHand: 'bcs'
-                    },
-                    'display': {
-                        type: 'Boolean',
-                        shortHand: 'd'
-                    },
-                    'duration': {
-                        type: 'Number',
-                        shortHand: 'du'
-                    },
-                    'fadeIn': {
-                        type: 'Boolean',
-                        shortHand: 'fi'
-                    },
-                    'fadeOut': {
-                        type: 'Boolean',
-                        shortHand: 'fo'
-                    }
-                };
-                this.callSuper('menu', options);
+                this.callSuper('menu');
+            },
+            /**
+             * @memberof webvn.cmd.MenuCommand
+             * @property {String} bgm{bgm} background music
+             */
+            options: {
+                'bgm': {
+                    type: 'String',
+                    shortHand: 'bgm'
+                },
+                'btn': {
+                    type: 'Json',
+                    shortHand: 'btn'
+                },
+                'btnHoverSound': {
+                    type: 'String',
+                    shortHand: 'bhs'
+                },
+                'btnClickSound': {
+                    type: 'String',
+                    shortHand: 'bcs'
+                },
+                'display': {
+                    type: 'Boolean',
+                    shortHand: 'd'
+                },
+                'duration': {
+                    type: 'Number',
+                    shortHand: 'du'
+                },
+                'fadeIn': {
+                    type: 'Boolean',
+                    shortHand: 'fi'
+                },
+                'fadeOut': {
+                    type: 'Boolean',
+                    shortHand: 'fo'
+                }
             },
             execution: function (values) {
                 if (values.bgm) {

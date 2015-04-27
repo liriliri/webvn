@@ -8,19 +8,19 @@ webvn.use(['script', 'ui'],
          */
         var Command = script.Command.extend({
             constructor: function () {
-                var options = {
-                    display: {
-                        type: 'Boolean',
-                        shortHand: 'd',
-                        desc: 'Whether the background is displayed'
-                    },
-                    src: {
-                        type: 'String',
-                        shortHand: 's',
-                        desc: 'Source of the current background image'
-                    }
-                };
-                this.callSuper('bg', options);
+                this.callSuper('bg');
+            },
+            options: {
+                display: {
+                    type: 'Boolean',
+                    shortHand: 'd',
+                    desc: 'Whether the background is displayed'
+                },
+                src: {
+                    type: 'String',
+                    shortHand: 's',
+                    desc: 'Source of the current background image'
+                }
             },
             execution: function (values) {
 

@@ -9,52 +9,52 @@ webvn.use(['script', 'media'],
          */
         var BgmCommand = script.Command.extend({
             constructor: function () {
-                /**
-                 * @memberof webvn.cmd.BgmCommand
-                 * @property {number} duration(du) duration of fadein and fadeout
-                 * @property {boolean} fadeIn(fi) fade in bgm or not
-                 * @property {boolean} fadeOut(fo) fade out bgm or not
-                 * @property {boolean} loop(l) loop bgm or not
-                 * @property {boolean} play(p) play bgm or pause bgm
-                 * @property {string} src(s) load bgm and play
-                 * @property {boolean} stop(st) stop bgm
-                 * @property {number} volume(v) set volume of bgm
-                 */
-                var options = {
-                    duration: {
-                        type: 'Number',
-                        shortHand: 'du'
-                    },
-                    fadeIn: {
-                        type: 'Boolean',
-                        shortHand: 'fi'
-                    },
-                    fadeOut: {
-                        type: 'Boolean',
-                        shortHand: 'fo'
-                    },
-                    loop: {
-                        type: 'Boolean',
-                        shortHand: 'l'
-                    },
-                    play: {
-                        type: 'Boolean',
-                        shortHand: 'p'
-                    },
-                    src: {
-                        type: 'String',
-                        shortHand: 's'
-                    },
-                    stop: {
-                        type: 'Boolean',
-                        shortHand: 'st'
-                    },
-                    volume: {
-                        type: 'Number',
-                        shortHand: 'v'
-                    }
-                };
-                this.callSuper('bgm', options);
+                this.callSuper('bgm');
+            },
+            /**
+             * @memberof webvn.cmd.BgmCommand
+             * @property {number} duration(du) duration of fadein and fadeout
+             * @property {boolean} fadeIn(fi) fade in bgm or not
+             * @property {boolean} fadeOut(fo) fade out bgm or not
+             * @property {boolean} loop(l) loop bgm or not
+             * @property {boolean} play(p) play bgm or pause bgm
+             * @property {string} src(s) load bgm and play
+             * @property {boolean} stop(st) stop bgm
+             * @property {number} volume(v) set volume of bgm
+             */
+            options: {
+                duration: {
+                    type: 'Number',
+                    shortHand: 'du'
+                },
+                fadeIn: {
+                    type: 'Boolean',
+                    shortHand: 'fi'
+                },
+                fadeOut: {
+                    type: 'Boolean',
+                    shortHand: 'fo'
+                },
+                loop: {
+                    type: 'Boolean',
+                    shortHand: 'l'
+                },
+                play: {
+                    type: 'Boolean',
+                    shortHand: 'p'
+                },
+                src: {
+                    type: 'String',
+                    shortHand: 's'
+                },
+                stop: {
+                    type: 'Boolean',
+                    shortHand: 'st'
+                },
+                volume: {
+                    type: 'Number',
+                    shortHand: 'v'
+                }
             },
             execution: function (values) {
                 if (values.fadeIn === true) {
@@ -99,22 +99,22 @@ webvn.use(['script', 'media'],
         var se = media.getAudio('se');
         var SeCommand = script.Command.extend({
             constructor: function () {
-                /**
-                 * @memberof webvn.cmd.SeCommand
-                 * @property {Boolean} loop(l) loop bgm or not
-                 * @property {String} src(s) load bgm and play
-                 */
-                var options = {
-                    loop: {
-                        type: 'Boolean',
-                        shortHand: 'l'
-                    },
-                    src: {
-                        type: 'String',
-                        shortHand: 's'
-                    }
-                };
-                this.callSuper('se', options);
+                this.callSuper('se');
+            },
+            /**
+             * @memberof webvn.cmd.SeCommand
+             * @property {Boolean} loop(l) loop bgm or not
+             * @property {String} src(s) load bgm and play
+             */
+            options: {
+                loop: {
+                    type: 'Boolean',
+                    shortHand: 'l'
+                },
+                src: {
+                    type: 'String',
+                    shortHand: 's'
+                }
             },
             execution: function (values) {
                 if (values.src) {
@@ -138,22 +138,22 @@ webvn.use(['script', 'media'],
          */
         var VoiceCommand = script.Command.extend({
             constructor: function () {
-                /**
-                 * @memberof webvn.cmd.VoiceCommand
-                 * @property {Boolean} loop(l) loop bgm or not
-                 * @property {String} src(s) load bgm and play
-                 */
-                var options = {
-                    loop: {
-                        type: 'Boolean',
-                        shortHand: 'l'
-                    },
-                    src: {
-                        type: 'String',
-                        shortHand: 's'
-                    }
-                };
-                this.callSuper('voice', options);
+                this.callSuper('voice');
+            },
+            /**
+             * @memberof webvn.cmd.VoiceCommand
+             * @property {Boolean} loop(l) loop bgm or not
+             * @property {String} src(s) load bgm and play
+             */
+            options: {
+                loop: {
+                    type: 'Boolean',
+                    shortHand: 'l'
+                },
+                src: {
+                    type: 'String',
+                    shortHand: 's'
+                }
             },
             execution: function (values) {
                 if (values.src) {

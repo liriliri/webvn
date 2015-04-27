@@ -16,19 +16,16 @@
 			<div id="webvn"></div>
 		</div>
 		<div id="scenario" class="hidden">
-		dialog -d --name=RedHoodSu -t="Hello world!"
-		dialog -t="Hello world again!" -tt=bounceIn
-		dialog -n=Surunzi -t="Hello world plus!!!" -td=1000
-		dialog -d=false
-		dialog -d
+			dialog -d --name=RedHoodSu -t="Hello world!"
+			dialog -t="Hello world again!" -tt=bounceIn
+			dialog -n=Surunzi -t="Hello world plus!!!" -td=1000
+			dialog -d=false
+			dialog -d
 		</div>
 		<script>
-		webvn.loader.ready(function () {
-
-			var test = webvn.test;
+		webvn.call(['test'], function (s, test) {
 			var component = new test.Component('scenario');
 			component.start();
-
 		});
 		</script>
 	</body>

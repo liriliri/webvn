@@ -591,22 +591,23 @@ webvn.module('script',
 
             loader.scenario(scenarios, function (data, isLast) {
 
-                _load(data, isLast);
+                loadText(data, isLast);
 
             });
 
         };
 
-        function _load(str, startGame) {
-
-            // console.log(parse(str));
+        /**
+         * @function webvn.script.loadText
+         * @param {string} str
+         * @param {boolean=} startGame
+         */
+        var loadText = exports.loadText = function (str, startGame) {
             wvnEval(str);
-
             if (startGame) {
                 start();
             }
-
-        }
+        };
 
         // Execute command or code
         var exec = exports.exec = function (unit) {
@@ -777,7 +778,10 @@ webvn.module('script',
                     log.warn('The command ' + name + ' is overwritten');
                 }
                 commands[name] = this;
-                this.options = options || {};
+                if (options !== undefined) {
+                    this.options = options;
+                }
+                this.options = this.options || {};
                 // Init shortHands
                 var shortHands = {};
                 util.each(this.options, function (value, key) {

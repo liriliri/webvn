@@ -5,20 +5,17 @@ webvn.use(['script', 'ui'],
 
         var Command = script.Command.extend({
             constructor: function () {
-
-                var options = {
-                    display: {
-                        type: 'Boolean',
-                        shortHand: 'd'
-                    },
-                    type: {
-                        type: 'String',
-                        shortHand: 't'
-                    }
-                };
-
-                this.callSuper('particle', options);
-
+                this.callSuper('particle');
+            },
+            options: {
+                display: {
+                    type: 'Boolean',
+                    shortHand: 'd'
+                },
+                type: {
+                    type: 'String',
+                    shortHand: 't'
+                }
             },
             execution: function (values) {
 

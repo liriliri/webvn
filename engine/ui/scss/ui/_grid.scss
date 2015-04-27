@@ -1,0 +1,38 @@
+$total-columns: 12;
+
+@function grid-calc($colNumber, $totalColumns) {
+    $result: percentage($colNumber / $totalColumns);
+    @if $result == 0% {
+        $result: 0;
+    }
+    @return $result;
+}
+
+.row {
+    margin: 0 auto;
+    width: 100%;
+    &:before, &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+    @for $i from 1 through $total-columns {
+        .col-#{$i} {
+            width: grid-calc($i, $total-columns);
+        }
+    }
+}
+
+.column {
+    float: left;
+}
+
+.column +
+.column:last-child {
+    float: right;
+}
+
+
+

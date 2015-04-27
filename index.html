@@ -4,105 +4,20 @@
     <meta charset="utf-8">
     <title>WebVN</title>
     <script src="/bower_components/jquery/dist/jquery.js"></script>
-	<style>
-        body {
-            font-family: 'Microsoft YaHei',Helvetica,Arial,sans-serif;
-        }
-        body {
-            margin: 0;
-            font-size: 18px;
-            text-align: center;
-            background: #eb6864;
-        }
-        ul {
-            text-align: left;
-            display: block;
-            padding: 15px 4px 17px 0;
-            position: relative;
-            float: left;
-            left: 50%;
-        }
-        ul li {
-            position: relative;
-            padding: 15px 20px;
-            background: #f0f2f1;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.2s;
-            float: left;
-            display: block;
-            right: 50%;
-            color: #525252;
-        }
-        ul li:hover {
-            background: #07a;
-            color: #fff;
-        }
-        ul li ul {
-            padding: 0;
-            position: absolute;
-            top: 54px;
-            left: 0;
-            float: none;
-            display: none;
-            box-shadow: 0 0 5px #666;
-        }
-        ul li ul li {
-            background: #f0f2f1;
-            display: block;
-            padding: 0;
-            text-align: left;
-            width: auto;
-            color: #525252;
-            right: 0;
-            float: none;
-        }
-        ul li ul li:hover {
-            background: #07a;
-        }
-        ul li:hover ul {
-            display: block;
-        }
-        ul li ul li a {
-            color: #525252;
-            text-decoration: none;
-            display: block;
-            padding: 15px 20px;
-            width: 160px;
-            white-space: nowrap;
-        }
-        ul li ul li a:hover {
-            color: #fff;
-        }
-        .first {
-            border-top-left-radius: 3px;
-            border-bottom-left-radius: 3px;
-        }
-        .last {
-            border-top-right-radius: 3px;
-            border-bottom-right-radius: 3px;
-        }
-        #menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            padding-top: 200px;
-            overflow: hidden;
-        }
-	</style>
+    <link rel="stylesheet" href="/engine/ui/css/index.css">
     <script>
         var testCore = [
                 'util',
                 'canvas',
                 'script',
                 'log',
-                'select'
+                'select',
+                'ui'
             ];
         var testUi = [
                 'dialog',
-                'video'
+                'video',
+                'figure'
             ];
     </script>
 </head>

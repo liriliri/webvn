@@ -1,0 +1,19 @@
+#grid .row {
+    margin: 5px;
+    width: auto;
+    border: 1px solid #c6c6c6;
+}
+
+#grid .column {
+    background: #eee;
+    border: 3px solid #fff;
+}
+
+#grid .column:nth-child(2) {
+    background: #e1e1e1;
+}
+
+#grid .column p {
+    padding: 10px;
+    text-align: center;
+}

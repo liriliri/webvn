@@ -45,6 +45,19 @@ gruntConfig.jsdoc = {
         ]
     }
 };
+gruntConfig.sass = {
+    options: {
+        sourcemap: 'none'
+    },
+    ui: {
+        files: {
+            'engine/ui/css/animate.css': 'engine/ui/scss/animate.scss',
+            'engine/ui/css/reset.css': 'engine/ui/scss/reset.scss',
+            'engine/ui/css/component.css': 'engine/ui/scss/component.scss',
+            'engine/ui/css/ui.css': 'engine/ui/scss/ui.scss'
+        }
+    }
+};
 
 function initConfig(grunt) {
     "use strict";
