@@ -35,24 +35,35 @@ webvn.use(['script', 'ui'],
                     shortHand: 's'
                 }
             },
-            execution: function (values) {
-                if (values.display === true) {
+            orders: [
+                'display',
+                'src',
+                'play',
+                'click'
+            ],
+            display: function (value) {
+                "use strict";
+                if (value) {
                     video.show();
-                } else if (values.display === false) {
+                } else {
                     video.hide();
                 }
-                if (values.src) {
-                    video.src(values.src);
-                }
-                if (values.play === true) {
+            },
+            src: function (value) {
+                "use strict";
+                video.src(value);
+            },
+            play: function (value) {
+                "use strict";
+                if (value) {
                     video.play();
-                } else if (values.play === false) {
+                } else {
                     video.stop();
                 }
-                if (!values.click) {
-                    values.click = 'stop';
-                }
-                video.clickAction(values.click);
+            },
+            click: function (value) {
+                "use strict";
+                video.clickAction(value);
             }
         });
         new Command;

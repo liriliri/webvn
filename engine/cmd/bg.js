@@ -22,18 +22,21 @@ webvn.use(['script', 'ui'],
                     desc: 'Source of the current background image'
                 }
             },
-            execution: function (values) {
-
-                if (values.display === true) {
+            orders: [
+                'display',
+                'src'
+            ],
+            display: function (value) {
+                "use strict";
+                if (value) {
                     background.show();
-                } else if (values.display === false) {
+                } else {
                     background.hide();
                 }
-
-                if (values.src) {
-                    background.src(values.src);
-                }
-
+            },
+            src: function (value) {
+                "use strict";
+                background.src(value);
             }
         });
         new Command;

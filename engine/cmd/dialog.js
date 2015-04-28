@@ -45,6 +45,9 @@ webvn.use(['script', 'ui'],
                     shortHand: 'v'
                 }
             },
+            orders: [
+
+            ],
             execution: function (values) {
                 if (values.fadeIn === true) {
                     dialog.fadeIn = true;

@@ -51,35 +51,49 @@ webvn.use(['script', 'ui'],
                     shortHand: 'fo'
                 }
             },
-            execution: function (values) {
-                if (values.bgm) {
-                    menu.bgm = values.bgm;
-                }
-                if (values.btn) {
-                    menu.btn(values.btn);
-                }
-                if (values.btnClickSound) {
-                    menu.btnClickSound = values.btnClickSound;
-                }
-                if (values.btnHoverSound) {
-                    menu.btnHoverSound = values.btnHoverSound;
-                }
-                if (values.duration) {
-                    menu.duration = values.duration;
-                }
-                if (values.fadeIn === true) {
-                    menu.fadeIn = true;
-                } else if (values.fadeIn === false) {
-                    menu.fadeIn = false;
-                }
-                if (values.fadeOut === true) {
-                    menu.fadeOut = true;
-                } else if (values.fadeOut === false) {
-                    menu.fadeOut = false;
-                }
-                if (values.display === true) {
+            orders: [
+                'bgm',
+                'btn',
+                'btnClickSound',
+                'btnHoverSound',
+                'duration',
+                'fadeIn',
+                'fadeOut',
+                'display'
+            ],
+            bgm: function (value) {
+                "use strict";
+                menu.bgm = value;
+            },
+            btn: function (value) {
+                "use strict";
+                menu.btn(value);
+            },
+            btnClickSound: function (value) {
+                "use strict";
+                menu.btnClickSound = value;
+            },
+            btnHoverSound: function (value) {
+                "use strict";
+                menu.btnHoverSound = value;
+            },
+            duration: function (value) {
+                "use strict";
+                menu.duration = value;
+            },
+            fadeIn: function (value) {
+                "use strict";
+                menu.fadeIn = value;
+            },
+            fadeOut: function (value) {
+                "use strict";
+                menu.fadeOut = value;
+            },
+            display: function (value) {
+                "use strict";
+                if (value) {
                     menu.show();
-                } else if (values.display === false) {
+                } else {
                     menu.hide();
                 }
             }

@@ -56,36 +56,48 @@ webvn.use(['script', 'media'],
                     shortHand: 'v'
                 }
             },
-            execution: function (values) {
-                if (values.fadeIn === true) {
-                    bgm.fadeIn = true;
-                } else if (values.fadeIn === false) {
-                    bgm.fadeIn = false;
-                }
-                if (values.fadeOut === true) {
-                    bgm.fadeOut = true;
-                } else if (values.fadeOut === false) {
-                    bgm.fadeOut = false;
-                }
-                if (values.duration) {
-                    bgm.duration = values.duration;
-                }
-                if (values.play === true) {
+            orders: [
+                'fadeIn',
+                'fadeOut',
+                'duration',
+                'play',
+                'loop',
+                'stop',
+                'src'
+            ],
+            fadeIn: function (value) {
+                "use strict";
+                bgm.fadeIn = value;
+            },
+            fadeOut: function (value) {
+                "use strict";
+                bgm.fadeOut = value;
+            },
+            duration: function (value) {
+                "use strict";
+                bgm.duration = value;
+            },
+            play: function (value) {
+                "use strict";
+                if (value) {
                     bgm.play();
-                } else if (values.play === false) {
+                } else {
                     bgm.pause();
                 }
-                if (values.loop === true) {
-                    bgm.loop(true);
-                } else if (values.loop === false) {
-                    bgm.loop(false);
-                }
-                if (values.stop === true) {
+            },
+            loop: function (value) {
+                "use strict";
+                bgm.loop(value);
+            },
+            stop: function (value) {
+                "use strict";
+                if (value) {
                     bgm.stop();
                 }
-                if (values.src) {
-                    bgm.load(values.src);
-                }
+            },
+            src: function (value) {
+                "use strict";
+                bgm.load(value);
             }
         });
         new BgmCommand;
@@ -116,15 +128,17 @@ webvn.use(['script', 'media'],
                     shortHand: 's'
                 }
             },
-            execution: function (values) {
-                if (values.src) {
-                    se.load(values.src);
-                }
-                if (values.loop === true) {
-                    se.setloop(true);
-                } else if (values.loop === false) {
-                    se.setloop(false);
-                }
+            orders: [
+                'src',
+                'loop'
+            ],
+            src: function (value) {
+                "use strict";
+                se.load(value);
+            },
+            loop: function (value) {
+                "use strict";
+                se.loop(value);
             }
         });
         new SeCommand;
@@ -155,15 +169,17 @@ webvn.use(['script', 'media'],
                     shortHand: 's'
                 }
             },
-            execution: function (values) {
-                if (values.src) {
-                    voice.load(values.src);
-                }
-                if (values.loop === true) {
-                    voice.loop(true);
-                } else if (values.loop === false) {
-                    voice.loop(false);
-                }
+            orders: [
+                'src',
+                'loop'
+            ],
+            src: function (value) {
+                "use strict";
+                voice.load(value);
+            },
+            loop: function (value) {
+                "use strict";
+                voice.loop(value);
             }
         });
         new VoiceCommand;

@@ -769,19 +769,14 @@ webvn.module('script',
          * otherwise, the command may not be executed properly by the script interpreter.
          * @class webvn.script.Command
          * @param {string} name command name
-         * @param {object} options option definitions
          */
         exports.Command = kclass.create({
-            constructor: function (name, options) {
+            constructor: function (name) {
                 // Add to commands first
                 if (commands[name]) {
                     log.warn('The command ' + name + ' is overwritten');
                 }
                 commands[name] = this;
-                if (options !== undefined) {
-                    this.options = options;
-                }
-                this.options = this.options || {};
                 // Init shortHands
                 var shortHands = {};
                 util.each(this.options, function (value, key) {
@@ -791,6 +786,9 @@ webvn.module('script',
                 });
                 this.shortHands = shortHands;
             },
+            shortHands: {},
+            options: {},
+            orders: [],
             /**
              * Execute command with given options.
              * @method webvn.script.Command#exec
@@ -801,11 +799,22 @@ webvn.module('script',
                 this.execution(values);
             },
             /**
-             * The real execution method, all commands should re-implement it.
+             * Call functions according to option values.
+             * If you like, you can re-implement it.
              * @method webvn.script.Command#execution
              * @param {object} values values parsed from scripts
              */
-            execution: function (values) { },
+            execution: function (values) {
+                "use strict";
+                var orders = this.orders, value, order;
+                for (var i = 0, len = orders.length; i < len; i++) {
+                    order = orders[i];
+                    value = values[order];
+                    if (value && this[order] && util.isFunction(this[order])) {
+                        this[order](value);
+                    }
+                }
+            },
             /**
              * Parse options for final usage in execution function.
              * @param values

@@ -17,21 +17,22 @@ webvn.use(['script', 'ui'],
                     shortHand: 't'
                 }
             },
-            execution: function (values) {
-
-                if (values.display === true) {
+            orders: [
+                'display',
+                'type'
+            ],
+            display: function (value) {
+                "use strict";
+                if (value) {
                     particle.show();
-                } else if (values.display === false) {
+                } else {
                     particle.hide();
                 }
-
-                if (values.type) {
-                    particle.type(values.type);
-                }
-
+            },
+            type: function (value) {
+                "use strict";
+                particle.type(value);
             }
         });
-
         new Command;
-
     });

@@ -1,0 +1,35 @@
+@import "variables";
+
+$button-color: $blue;
+$button-hover-color: $blue-dark;
+$alert-color: $pink;
+$alert-hover-color: $pink-dark;
+$disable-color: $gray;
+
+@mixin button-style($bg, $bg-hover) {
+    background-color: $bg;
+    &:hover,
+    &:focus {
+        background-color: $bg-hover;
+    }
+}
+
+button, .button {
+    cursor: pointer;
+    border-width: 0;
+    text-decoration: none;
+    color: #fff;
+    background-color: $button-color;
+    padding: 15px 28px;
+    display: inline-block;
+    transition: background-color .3s ease-out;
+    &:hover {
+        background-color: $button-hover-color;
+    }
+    &.alert {
+        @include button-style($alert-color, $alert-hover-color);
+    }
+    &.disabled {
+        @include button-style($disable-color, $disable-color);
+    }
+}

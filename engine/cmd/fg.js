@@ -35,34 +35,41 @@ webvn.use(['script', 'ui'],
                     shortHand: 'pos'
                 }
             },
-            execution: function (values) {
-
-                if (values.select !== undefined) {
-                    figure.select(values.select);
-                }
-
-                if (values.display === true) {
+            orders: [
+                'select',
+                'display',
+                'src',
+                'x',
+                'y',
+                'position'
+            ],
+            select: function (value) {
+                "use strict";
+                figure.select(value);
+            },
+            display: function (value) {
+                "use strict";
+                if (value) {
                     figure.show();
-                } else if (values.display === false) {
+                } else {
                     figure.hide();
                 }
-
-                if (values.src) {
-                    figure.src(values.src);
-                }
-
-                if (values.x) {
-                    figure.pos(values.x);
-                }
-
-                if (values.y) {
-                    figure.pos(null, values.y);
-                }
-
-                if (values.position) {
-                    figure.pos(values.position);
-                }
-
+            },
+            src: function (value) {
+                "use strict";
+                figure.src(value);
+            },
+            x: function (value) {
+                "use strict";
+                figure.pos(value);
+            },
+            y: function (value) {
+                "use strict";
+                figure.pos(null, value);
+            },
+            pos: function (value) {
+                "use strict";
+                figure.pos(value);
             }
         });
 
