@@ -72,7 +72,11 @@ webvn.module('class', ['util'],
         function extend(superClass, px, sx) {
             var _class = create(px, sx),
                 newPx = createObj(superClass.prototype, _class);
-            util.mix(newPx, px);
+            var keys = util.keys(px), key;
+            for (var i = 0, len = keys.length; i < len; i++) {
+                key = keys[i];
+                newPx[key] = px[key];
+            }
             _class.prototype = newPx;
             _class.superclass = superClass.prototype;
             return _class;

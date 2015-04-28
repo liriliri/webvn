@@ -20,16 +20,10 @@ webvn.use(['ui', 'script', 'media', 'util'],
         var $el = exports.$el;
         $el.addClass('fill');
 
-        var tpl = [
-                '<ul>',
-                    '<li class="start">开始游戏</li>',
-                    '<li class="load">读取存档</li>',
-                    '<li class="cg">图像鉴赏</li>',
-                    '<li class="music">音乐鉴赏</li>',
-                    '<li class="setting">环境设定</li>',
-                '</ul>'
-            ].join('');
+        var tpl = ui.getTemplate('menu');
         exports.body(tpl);
+
+        var cg = ui.get('cg');
 
         exports.event({
             'click .start': function () {
@@ -59,6 +53,10 @@ webvn.use(['ui', 'script', 'media', 'util'],
 
                 console.log('setting');
 
+            },
+            'click .cg': function () {
+                "use strict";
+                cg.show();
             },
             // Btn sound
             'mouseover li': function () {

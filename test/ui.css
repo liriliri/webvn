@@ -22,3 +22,12 @@
     padding-top: 20px;
     text-align: center;
 }
+
+#thumbs .th {
+    text-align: center;
+}
+
+#thumbs .th {
+    width: 480px;
+    margin: 5px 15px;
+}

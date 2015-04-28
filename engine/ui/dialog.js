@@ -14,13 +14,7 @@ webvn.use(['ui', 'text', 'media'],
         var $el = exports.$el;
         $el.addClass('fill');
 
-        var tpl = [
-                '<div class="name"></div>',
-                '<div class="content">',
-                    '<img class="face" src=""/>',
-                    '<span class="text"></span>',
-                '</div>'
-            ].join('');
+        var tpl = ui.getTemplate('dialog');
         exports.body(tpl);
 
         var $content = $el.find('.content'),

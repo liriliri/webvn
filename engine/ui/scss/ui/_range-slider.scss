@@ -1,0 +1,18 @@
+@import "variables";
+
+.range-slider {
+    -webkit-appearance: none !important;
+    height: 15px;
+    width: 100%;
+    border: 1px solid $gray-dark;
+    margin: 18px 0;
+    background: $gray;
+    outline: none;
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none !important;
+        height: 34px;
+        width: 34px;
+        border-radius: 50%;
+        background: $blue;
+    }
+}

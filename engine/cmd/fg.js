@@ -1,12 +1,10 @@
-// Command fg
-
 webvn.use(['script', 'ui'],
     function (s, script, ui) {
 
         var figure = ui.get('figure');
 
         var Command = script.Command.extend({
-            constructor: function () {
+            constructor: function FigureCommand() {
                 this.callSuper('fg');
             },
             options: {
@@ -67,7 +65,7 @@ webvn.use(['script', 'ui'],
                 "use strict";
                 figure.pos(null, value);
             },
-            pos: function (value) {
+            position: function (value) {
                 "use strict";
                 figure.pos(value);
             }

@@ -4,7 +4,7 @@ webvn.use(['script', 'ui'],
         var particle = ui.get('particle');
 
         var Command = script.Command.extend({
-            constructor: function () {
+            constructor: function ParticleCommand() {
                 this.callSuper('particle');
             },
             options: {

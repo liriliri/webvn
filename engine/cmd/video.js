@@ -7,7 +7,7 @@ webvn.use(['script', 'ui'],
          * @extends webvn.script.Command
          */
         var Command = script.Command.extend({
-            constructor: function () {
+            constructor: function VideoCommand() {
                 this.callSuper('video');
             },
             /**

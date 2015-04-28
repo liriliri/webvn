@@ -1,8 +1,5 @@
-/* Command log
- * log -t=info -m='This is the log message'
- */
-
-webvn.use(['script', 'log'], function (s, script, log) {
+webvn.use(['script', 'log'],
+    function (s, script, log) {
 
 script.createCommand('log', {
     type: {

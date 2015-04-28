@@ -771,7 +771,7 @@ webvn.module('script',
          * @param {string} name command name
          */
         exports.Command = kclass.create({
-            constructor: function (name) {
+            constructor: function Command(name) {
                 // Add to commands first
                 if (commands[name]) {
                     log.warn('The command ' + name + ' is overwritten');

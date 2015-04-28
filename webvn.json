@@ -53,7 +53,6 @@
                 "event",
                 "anim",
                 "tween",
-                "template",
                 "webgl",
                 "transition",
                 "canvas",
@@ -76,6 +75,8 @@
         "ui": {
             "path": "/engine/ui/",
             "files": [
+                "template",
+                "cg",
                 "menu",
                 "background",
                 "dialog",

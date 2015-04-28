@@ -4,7 +4,7 @@ webvn.use(['script', 'ui'],
         var dialog = ui.get('dialog');
 
         var Command = script.Command.extend({
-            constructor: function () {
+            constructor: function DialogCommand() {
                 this.callSuper('dialog');
             },
             options: {

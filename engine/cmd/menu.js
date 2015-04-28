@@ -1,5 +1,3 @@
-// Command menu
-
 webvn.use(['script', 'ui'],
     function (s, script, ui) {
 
@@ -10,7 +8,7 @@ webvn.use(['script', 'ui'],
          * @extends webvn.script.Command
          */
         var Command = script.Command.extend({
-            constructor: function () {
+            constructor: function MenuCommand() {
                 this.callSuper('menu');
             },
             /**

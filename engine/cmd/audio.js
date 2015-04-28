@@ -8,7 +8,7 @@ webvn.use(['script', 'media'],
          * @extends webvn.script.Command
          */
         var BgmCommand = script.Command.extend({
-            constructor: function () {
+            constructor: function BgmCommand() {
                 this.callSuper('bgm');
             },
             /**
@@ -110,7 +110,7 @@ webvn.use(['script', 'media'],
         // Sound Effect
         var se = media.getAudio('se');
         var SeCommand = script.Command.extend({
-            constructor: function () {
+            constructor: function SeCommand() {
                 this.callSuper('se');
             },
             /**
@@ -151,7 +151,7 @@ webvn.use(['script', 'media'],
          * @extends webvn.script.Command
          */
         var VoiceCommand = script.Command.extend({
-            constructor: function () {
+            constructor: function VoiceCommand() {
                 this.callSuper('voice');
             },
             /**
