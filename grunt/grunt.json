@@ -12,5 +12,6 @@
         "grunt-exec",
         "grunt-jsdoc"
     ],
-    "serverPort": 8002
+    "serverPort": 8002,
+    "taskDir": "grunt/task"
 }

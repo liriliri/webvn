@@ -58,6 +58,20 @@ gruntConfig.sass = {
         }
     }
 };
+gruntConfig.generateTpl = {
+    ui: {
+        files: {
+            'engine/ui/template.js': ['engine/ui/tpl/*.html']
+        }
+    }
+};
+gruntConfig.generateFrag = {
+    transition: {
+        files: {
+            'engine/core/transition.js': ['engine/core/transition/*.frag']
+        }
+    }
+};
 
 function initConfig(grunt) {
     "use strict";
@@ -72,6 +86,7 @@ function initTasks(grunt) {
     util.each(gruntTasks, function (value, key) {
         grunt.registerTask(key, value);
     });
+    grunt.loadTasks(config['taskDir']);
 }
 
 function exportsFunc(grunt) {
