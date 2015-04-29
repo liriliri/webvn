@@ -1,46 +1,8 @@
-$index-dialog: 1200;
-$index-menu: 2000;
-$index-particle: 1000;
-$index-background: 500;
-$index-figure: 800;
-
-#menu {
-    position: absolute;
-    z-index: $index-menu;
-    ul {
-        li {
-            cursor: pointer;
-        }
-    }
-}
-
-#particle {
-    position: absolute;
-    z-index: $index-particle;
-}
-
-#background {
-    position: absolute;
-    z-index: $index-background;
-}
-
-#figure {
-    position: absolute;
-    z-index: $index-figure;
-}
-
-#dialog {
-    z-index: $index-dialog;
-    position: absolute;
-    .name {
-
-    }
-    .content {
-        .face {
-
-        }
-        .text {
-
-        }
-    }
-}
+@import "component/global";
+@import "component/background";
+@import "component/cg";
+@import "component/dialog";
+@import "component/figure";
+@import "component/menu";
+@import "component/particle";
+@import "component/variables";

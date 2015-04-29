@@ -52,7 +52,8 @@ webvn.module('ui', ['class', 'select', 'config', 'util', 'script'],
             } else {
                 scale = wh / height;
             }
-            $container.css('transform', 'scale(' + scale + ')');
+            // Zoom is better than transform scale
+            $container.css('zoom', scale);
         }
         if (autoResize) {
             resize();

@@ -1,0 +1,33 @@
+@import "variables";
+
+#cg {
+    position: absolute;
+    z-index: $index-cg;
+    background: #fff;
+    padding: 10px 30px;
+    .container {
+        padding: 25px 0;
+        margin-right: -30px;
+        li {
+            width: percentage(1 / 3);
+            cursor: pointer;
+            margin-bottom: 30px;
+            float: left;
+            padding-right: 30px;
+        }
+        &:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+    }
+    .close {
+        position: absolute;
+        bottom: 30px;
+    }
+    .viewer {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}

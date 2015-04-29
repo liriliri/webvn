@@ -1,0 +1,13 @@
+@import "variables";
+
+* {
+    font-family: 'Microsoft YaHei',Helvetica,Arial,sans-serif;
+}
+
+.title {
+    color: $primary-color;
+    font-size: 45px;
+    margin-top: 10px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid $secondary-color;
+}

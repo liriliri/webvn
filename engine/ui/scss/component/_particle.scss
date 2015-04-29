@@ -1,0 +1,6 @@
+@import "variables";
+
+#particle {
+    position: absolute;
+    z-index: $index-particle;
+}

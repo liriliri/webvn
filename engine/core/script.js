@@ -810,7 +810,7 @@ webvn.module('script',
                 for (var i = 0, len = orders.length; i < len; i++) {
                     order = orders[i];
                     value = values[order];
-                    if (value && this[order] && util.isFunction(this[order])) {
+                    if (value !== undefined && this[order] && util.isFunction(this[order])) {
                         this[order](value);
                     }
                 }

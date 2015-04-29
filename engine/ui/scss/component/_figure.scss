@@ -1,0 +1,6 @@
+@import "variables";
+
+#figure {
+    position: absolute;
+    z-index: $index-figure;
+}
