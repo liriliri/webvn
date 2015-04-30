@@ -11,25 +11,26 @@ webvn.use(['ui', 'select'],
         var $viewer = $el.find('.viewer');
         $viewer.on('click', function () {
             var $this = select.get(this);
-            $this.fadeOut();
+            $this.fadeOut(300);
         });
 
         exports.event({
             'click .close': function () {
                 hide();
             },
-            'click img': function () {
+            'click li img': function () {
                 var $this = select.get(this),
                     src = $this.attr('src');
-                $viewer.attr('src', src).fadeIn();
+                $viewer.find('img').attr('src', src);
+                $viewer.removeClass('hidden').fadeIn(300);
             }
         });
 
         exports.show = function () {
-            $el.fadeIn();
+            $el.fadeIn(300);
         };
 
         var hide = exports.hide = function () {
-            $el.fadeOut();
+            $el.fadeOut(300);
         };
     });

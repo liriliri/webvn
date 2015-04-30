@@ -2,8 +2,8 @@
  * Audio and video
  * @namespace webvn.media
  */
-webvn.module('media', ['class', 'log', 'util', 'tween'],
-    function (s, kclass, log, util, tween) {
+webvn.module('media', ['class', 'log', 'util', 'anim'],
+    function (s, kclass, log, util, anim) {
 
         var exports = {};
 
@@ -180,10 +180,10 @@ webvn.module('media', ['class', 'log', 'util', 'tween'],
                     var self = this;
                     this._volume = this.volume();
                     this.volume(0);
-                    this._tween = tween.create(this.el).to({
+                    this._anim = anim.create(this.el).to({
                         volume: this._volume
                     }, this.duration).call(function () {
-                        self._tween = null;
+                        self._anim = null;
                     });
                 }
             },
@@ -196,10 +196,10 @@ webvn.module('media', ['class', 'log', 'util', 'tween'],
                     this._stopTween();
                     this.state = STATE.FADE_OUT;
                     this._volume = this.volume();
-                    this._tween = tween.create(this.el).to({
+                    this._anim = anim.create(this.el).to({
                         volume: 0
                     }, this.duration).call(function () {
-                        self._tween = null;
+                        self._anim = null;
                         self.volume(self._volume);
                         self.el.pause();
                         self.state = STATE.PAUSE;
@@ -210,8 +210,8 @@ webvn.module('media', ['class', 'log', 'util', 'tween'],
                 }
             },
             _stopTween: function () {
-                if (this._tween) {
-                    this._tween.stop();
+                if (this._anim) {
+                    this._anim.stop();
                     this.volume(this._volume);
                 }
             }

@@ -55,6 +55,8 @@ webvn.module('select', ['class', 'util'],
                     this.length = 1;
                 }
             },
+            // This function will be overwritten by animate module
+            initAnim: function () {},
             /**
              * Get the descendants of each element in the current set
              * of matched elements, filtered by a selector.
@@ -132,6 +134,21 @@ webvn.module('select', ['class', 'util'],
                 });
             },
             /**
+             * Removes class(es)
+             * @method webvn.select.Select#removeClass
+             * @param {string} name
+             * @returns {Select}
+             */
+            removeClass: function (name) {
+                return this.each(function () {
+                    var classList = this.className;
+                    name.split(/\s+/g).forEach(function (kclass) {
+                        classList = classList.replace(new RegExp('(^|\\s)' + kclass + '(\\s|$)'), " ");
+                    });
+                    this.className = classList;
+                });
+            },
+            /**
              * Set Text
              * @method webvn.select.Select#text
              * @param {string} text
@@ -179,17 +196,20 @@ webvn.module('select', ['class', 'util'],
              */
             css: function (property, value) {
                 // Get style value
+                var ret;
                 if (value === undefined) {
                     var computedStyle, element = this[0];
                     computedStyle = getComputedStyle(element, '');
                     // Handle: String
                     if (util.isString(property)) {
-                        return element.style[camelize(property)];
+                        ret = element.style[camelize(property)] || computedStyle.getPropertyValue(property);
+                        return removePx(property, ret);
                     } else if (util.isArray(property)) {
                         // Handle: Array
                         var props = {};
                         util.each(property, function (prop) {
-                            props[prop] = element.style[camelize(prop)];
+                            props[prop] = element.style[camelize(prop)] || computedStyle.getPropertyValue(property);
+                            props[prop] = removePx(prop, props[prop]);
                         });
                         return props;
                     }
@@ -477,6 +497,17 @@ webvn.module('select', ['class', 'util'],
         function addPx(name, value) {
             if (util.isNumber(value) && !cssNumber[dasherize(name)]) {
                 return value + 'px';
+            }
+            return value;
+        }
+
+        // Remove px suffix to value if necessary and change string to number if possible
+        function removePx(name, value) {
+            if (util.endsWith(value, 'px')) {
+                return Number(value.substr(0, value.length-2));
+            }
+            if (util.isNumber(Number(value))) {
+                return Number(value);
             }
             return value;
         }

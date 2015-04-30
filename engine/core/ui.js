@@ -122,8 +122,11 @@ webvn.module('ui', ['class', 'select', 'config', 'util', 'script'],
                     events[type] = fn;
                 }
                 util.each(events, function (fn, type) {
-                    var parts = type.split(/\s/);
-                    self.$el.on(parts[0], parts[parts.length - 1], fn);
+                    var parts = type.split(/\s/),
+                        eventType = parts[0];
+                    parts.shift();
+                    var selector = parts.join(' ');
+                    self.$el.on(eventType, selector, fn);
                 });
                 return this;
             }
@@ -147,6 +150,11 @@ webvn.module('ui', ['class', 'select', 'config', 'util', 'script'],
 
         // UI Templates
         var templates = {};
+        /**
+         * @function webvn.ui.createTemplate
+         * @param {string} name
+         * @param {string} content
+         */
         exports.createTemplate = function (name, content) {
             if (util.isObject(name)) {
                 util.each(name, function (value, key) {
@@ -156,6 +164,11 @@ webvn.module('ui', ['class', 'select', 'config', 'util', 'script'],
                 templates[name] = content;
             }
         };
+        /**
+         * @function webvn.ui.getTemplate
+         * @param name
+         * @returns {*}
+         */
         exports.getTemplate = function (name) {
             return templates[name];
         };

@@ -17,6 +17,22 @@ webvn.module('class', ['util'],
             return Base.extend(px, sx);
         };
 
+        /**
+         * @function webvn.class.module
+         */
+        exports.module = function (requires, fn) {
+            "use strict";
+            var exports;
+            if (util.isFunction(requires) && fn === undefined) {
+                fn = requires;
+                requires = [];
+            }
+            webvn.use(requires, function() {
+                exports = fn.call(null, arguments);
+            });
+            return exports;
+        };
+
         /* Create a new class using px's constructor if exists.
          * Also set static method of the class
          */

@@ -1,7 +1,7 @@
 // Module canvas
 
-webvn.module('canvas', ['class', 'loader', 'log', 'config', 'util', 'webgl', 'tween'],
-    function (s, kclass, loader, log, config, util, webgl, tween) {
+webvn.module('canvas', ['class', 'loader', 'log', 'config', 'util', 'webgl', 'anim'],
+    function (s, kclass, loader, log, config, util, webgl, anim) {
 
 var conf = config.create('core-canvas');
 conf.set(config.canvas, false);
@@ -28,7 +28,7 @@ canvas.Entity = kclass.create({
 
         duration = duration || 2000;
 
-        tween.create(this).to({
+        anim.create(this).to({
             alpha: 1
         }, duration);
 
@@ -39,7 +39,7 @@ canvas.Entity = kclass.create({
 
         duration = duration || 2000;
 
-        tween.create(this).to({
+        anim.create(this).to({
             alpha: 0
         }, duration).call(function () {
 
@@ -118,7 +118,7 @@ canvas.ImageEntity = canvas.Entity.extend({
 
             self.image2 = image;
             self.progress = 0;
-            tween.create(self).to({
+            anim.create(self).to({
                 progress: 1
             }, duration).call(function () {
 
