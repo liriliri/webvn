@@ -196,20 +196,17 @@ webvn.module('select', ['class', 'util'],
              */
             css: function (property, value) {
                 // Get style value
-                var ret;
                 if (value === undefined) {
                     var computedStyle, element = this[0];
                     computedStyle = getComputedStyle(element, '');
                     // Handle: String
                     if (util.isString(property)) {
-                        ret = element.style[camelize(property)] || computedStyle.getPropertyValue(property);
-                        return removePx(property, ret);
+                        return element.style[camelize(property)] || computedStyle.getPropertyValue(property);
                     } else if (util.isArray(property)) {
                         // Handle: Array
                         var props = {};
                         util.each(property, function (prop) {
                             props[prop] = element.style[camelize(prop)] || computedStyle.getPropertyValue(property);
-                            props[prop] = removePx(prop, props[prop]);
                         });
                         return props;
                     }
@@ -227,6 +224,25 @@ webvn.module('select', ['class', 'util'],
                 return this.each(function () {
                     this.style.cssText += ';' + css;
                 });
+            },
+            cssComputed: function (property) {
+                var computedStyle, element = this[0], ret;
+                computedStyle = getComputedStyle(element, '');
+                if (util.isString(property)) {
+                    ret = computedStyle.getPropertyValue(property);
+                    return removePx(property, ret);
+                } else if (util.isArray(property)) {
+                    // Handle: Array
+                    var props = {};
+                    util.each(property, function (prop) {
+                        props[prop] = computedStyle.getPropertyValue(property);
+                        props[prop] = removePx(prop, props[prop]);
+                    });
+                    return props;
+                }
+            },
+            width: function () {
+                return this.cssComputed('width');
             },
             /**
              * Set Element Attribute
@@ -506,7 +522,7 @@ webvn.module('select', ['class', 'util'],
             if (util.endsWith(value, 'px')) {
                 return Number(value.substr(0, value.length-2));
             }
-            if (util.isNumber(Number(value))) {
+            if (Number(value) === Number(value)) {
                 return Number(value);
             }
             return value;

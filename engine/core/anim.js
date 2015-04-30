@@ -227,7 +227,7 @@ webvn.module('anim', ['class', 'select', 'util'],
                 }
                 util.each(step.props, function (value, key) {
                     if (isSelect) {
-                        origin[key] = self.target.css(key);
+                        origin[key] = self.target.cssComputed(key);
                     } else {
                         origin[key] = self.target[key];
                     }

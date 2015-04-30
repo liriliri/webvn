@@ -30,6 +30,7 @@ webvn.module('ui', ['class', 'select', 'config', 'util', 'script'],
             script.play();
         });
 
+        exports.scale = 1;
         // Auto fill windows
         var autoResize = conf.get('autoResize');
         if (autoResize) {
@@ -52,6 +53,7 @@ webvn.module('ui', ['class', 'select', 'config', 'util', 'script'],
             } else {
                 scale = wh / height;
             }
+            exports.scale = scale;
             // Zoom is better than transform scale
             $container.css('zoom', scale);
         }

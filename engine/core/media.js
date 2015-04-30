@@ -70,6 +70,10 @@ webvn.module('media', ['class', 'log', 'util', 'anim'],
                     this.state = STATE.PLAY;
                 }
             },
+            isPlaying: function () {
+                "use strict";
+                return this.state === STATE.PLAY;
+            },
             /**
              * Stop media
              * @method webvn.media.Base#stop
@@ -162,11 +166,13 @@ webvn.module('media', ['class', 'log', 'util', 'anim'],
                 // Autoplay init
                 if (autoplay) {
                     this.el.onloadeddata = function () {
+                        self.duration = self.el.duration;
                         self.state = STATE.PAUSE;
                         self.play();
                     };
                 } else {
                     this.el.onloadeddata = function () {
+                        self.duration = self.el.duration;
                         self.state = STATE.PAUSE;
                     }
                 }

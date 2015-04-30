@@ -1,0 +1,32 @@
+@import "variables";
+
+#music {
+    z-index: $index-music;
+    background: #fff;
+    padding: 10px 30px;
+    .container {
+        padding: 25px 0;
+        li {
+            cursor: pointer;
+            padding: 15px 5px;
+            transition: all .3s;
+            &:hover, &.playing {
+                background-color: $secondary-color;
+                color: #fff;
+            }
+        }
+    }
+    .progress {
+        height: 20px;
+        background-color: $gray;
+        span {
+            background-color: $secondary-color;
+            height: 100%;
+            display: inline-block;
+        }
+    }
+    .close {
+        position: absolute;
+        bottom: 30px;
+    }
+}

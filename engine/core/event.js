@@ -87,13 +87,13 @@ webvn.module('event', ['util', 'select', 'class'],
 
             return false;
 
-        };
+        }
 
         function returnTrue() {
 
             return true;
 
-        };
+        }
 
         function trigger(e) {
 
@@ -111,7 +111,7 @@ webvn.module('event', ['util', 'select', 'class'],
                 j = 0;
                 while ((handleObj = matched.handlers[j++]) &&
                     !e.isImmediatePropagationStopped() ) {
-                    ret = handleObj.handler.apply(matched.elem, [e]);
+                    ret = handleObj.handler.apply(matched.elem, [e.originalEvent]);
                     if (ret === false) {
                         e.preventDefault();
                         e.stopPropagation();

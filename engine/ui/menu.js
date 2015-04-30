@@ -23,7 +23,8 @@ webvn.use(['ui', 'script', 'media', 'util'],
         var tpl = ui.getTemplate('menu');
         exports.body(tpl);
 
-        var cg = ui.get('cg');
+        var cg = ui.get('cg'),
+            music = ui.get('music');
 
         exports.event({
             'click .start': function () {
@@ -57,6 +58,13 @@ webvn.use(['ui', 'script', 'media', 'util'],
             'click .cg': function () {
                 "use strict";
                 cg.show();
+            },
+            'click .music': function () {
+                "use strict";
+                if (exports.bgm) {
+                    bgm.stop();
+                }
+                music.show();
             },
             // Btn sound
             'mouseover li': function () {
@@ -107,6 +115,13 @@ webvn.use(['ui', 'script', 'media', 'util'],
                     $e.text(value);
                 }
             });
+        };
+
+        exports.playBgm = function () {
+            "use strict";
+            if (exports.bgm) {
+                bgm.load(exports.bgm);
+            }
         };
 
     });

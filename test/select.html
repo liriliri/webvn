@@ -20,12 +20,16 @@
 	<div class="b">fdsfsdf</div>
 </div>
 <div class="a"></div>
+<div id="test"></div>
 <script>
     webvn.call(['select', 'log'], function (s, select, log) {
 
         // var b = select('<div>');
 
-        var a = select.create('.a');
+        var $test = select.get('#test');
+        console.log($test.css('width'));
+
+        var a = select.get('.a');
         a.addClass('b ff d');
         console.log(a.hasClass('a'));
 
