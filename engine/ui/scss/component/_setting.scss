@@ -1,0 +1,39 @@
+@import "variables";
+
+#setting {
+    z-index: $index-setting;
+    position: absolute;
+    background: #fff;
+    padding: 10px 30px;
+    .container {
+        margin-right: -50px;
+        li {
+            width: 50%;
+            float: left;
+            height: 50px;
+            margin: 15px 0;
+            padding-right: 50px;
+            display: table;
+            label {
+                display: table-cell;
+                font-size: 20px;
+                width: 150px;
+                vertical-align: middle;
+            }
+            input {
+                display: table-cell;
+                position: relative;
+                top: 2px;
+            }
+        }
+        &:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+    }
+    .close {
+        position: absolute;
+        bottom: 30px;
+    }
+}

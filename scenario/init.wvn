@@ -7,7 +7,7 @@ if (true) {
         -fo=false                     \
         -bhs=/asset/test/onmouse.wav  \
         -bcs=/asset/test/onclick.wav  \
-        -btn='{"start":"开始旅程","load":false,"setting":false}'
+        -btn='{"start":"开始旅程","load":false}'
 } else {
     menu -d                           \
         -bgm=/asset/test/bgm1.ogg     \

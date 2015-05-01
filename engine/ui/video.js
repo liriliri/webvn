@@ -51,7 +51,7 @@ vid.stop = function () {
 video.event({
     'ended': function () {
         // When the video is ended, execute the next command
-        $el.fadeOut(function () {
+        $el.fadeOut(300, function () {
 
             script.resume();
 
@@ -64,7 +64,7 @@ vid.event({
 
         switch (clickAction) {
             case 'stop': {
-                $el.fadeOut(function () {
+                $el.fadeOut(300, function () {
 
                     video.stop();
                     script.resume();

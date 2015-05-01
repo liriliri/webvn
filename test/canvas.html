@@ -24,7 +24,7 @@
             </div>
         </div>
     <script>
-        webvn.call(['canvas', 'tween'], function (s, canvas, tween) {
+        webvn.call(['canvas', 'anim'], function (s, canvas, anim) {
 
             var scene = new canvas.Scene(document.getElementById('test'));
             var img = new canvas.ImageEntity();
@@ -37,16 +37,16 @@
             canvas.renderer.add(scene);
             setTimeout(function () {
                 img.load('/asset/test/bg2.bmp', 2000);
-                var myTween = tween.create(img);
+                var myTween = anim.create(img);
                 myTween.loop = true;
                 myTween.to({
                     x: 200
-                }, 1000).call(function () {
+                }, 3000, 'easeInElastic').call(function () {
                     console.log('finish');
                 }).to({
                     x: 0,
                     y: 200
-                }, 1000).wait(1000).to({
+                }, 3000, 'easeInElastic').wait(1000).to({
                     y: 0
                 }, 1000);
 

@@ -1,6 +1,6 @@
 webvn.use(['ui', 'script', 'media', 'util'],
     function (s, ui, script, media, util) {
-
+        "use strict";
         /**
          * @class webvn.ui.Menu
          */
@@ -24,43 +24,33 @@ webvn.use(['ui', 'script', 'media', 'util'],
         exports.body(tpl);
 
         var cg = ui.get('cg'),
-            music = ui.get('music');
+            music = ui.get('music'),
+            setting = ui.get('setting');
 
         exports.event({
             'click .start': function () {
-
                 if (exports.bgm) {
                     bgm.stop();
                 }
-
                 if (exports.fadeOut) {
                     $el.fadeOut(exports.duration, function () {
-
                         script.resume();
-
                     });
                 } else {
                     $el.hide();
                     script.resume();
                 }
-
             },
             'click .load': function () {
-
                 console.log('Load game!');
-
             },
             'click .setting': function () {
-
-                console.log('setting');
-
+                setting.show();
             },
             'click .cg': function () {
-                "use strict";
                 cg.show();
             },
             'click .music': function () {
-                "use strict";
                 if (exports.bgm) {
                     bgm.stop();
                 }
@@ -68,18 +58,14 @@ webvn.use(['ui', 'script', 'media', 'util'],
             },
             // Btn sound
             'mouseover li': function () {
-
                 if (exports.btnHoverSound) {
                     sysAudio.load(exports.btnHoverSound);
                 }
-
             },
             'click li': function () {
-
                 if (exports.btnClickSound) {
                     sysAudio.load(exports.btnClickSound);
                 }
-
             }
         });
 
@@ -118,7 +104,6 @@ webvn.use(['ui', 'script', 'media', 'util'],
         };
 
         exports.playBgm = function () {
-            "use strict";
             if (exports.bgm) {
                 bgm.load(exports.bgm);
             }

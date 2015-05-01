@@ -13,7 +13,7 @@ console.log(x+5);
 ```
 */
 
-// video -d -pl -c=stop -s=/asset/test/video.mp4
+video -d -pl -c=stop -s=/asset/test/video.mp4
 
 bgm -s=/asset/test/bgm2.ogg -fi=true -du=2000
 
