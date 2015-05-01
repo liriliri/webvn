@@ -4,7 +4,7 @@
  */
 
 webvn.module('test', ['class', 'select', 'script', 'util'],
-    function (s, kclass, select, script, util) {
+    function (kclass, select, script, util) {
 
 var test = {};
 

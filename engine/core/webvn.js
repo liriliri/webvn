@@ -142,8 +142,17 @@ window.webvn = (function(){
             requires = [];
         }
         requires = getModules(requires);
-        requires.unshift(s);
         s[name] = module.apply(null, requires);
+    };
+
+    s.extend = function (name, requires, module) {
+        if (isFunction(requires)) {
+            module = requires;
+            requires = [];
+        }
+        requires = getModules(requires);
+        requires.unshift(s[name]);
+        module.apply(null, requires);
     };
 
     /**
@@ -158,7 +167,6 @@ window.webvn = (function(){
             requires = [];
         }
         requires = getModules(requires);
-        requires.unshift(s);
         module.apply(null, requires);
     };
 
@@ -178,7 +186,6 @@ window.webvn = (function(){
         if (requires === undefined) {
             fnList.forEach(function (fn) {
                 requires = getModules(fn[0]);
-                requires.unshift(s);
                 fn[1].apply(null, requires);
             });
             fnList = [];
@@ -191,7 +198,6 @@ window.webvn = (function(){
         var fn = [requires, module];
         if (isReady) {
             requires = getModules(fn[0]);
-            requires.unshift(s);
             fn[1].apply(null, requires);
         } else {
             fnList.push(fn);
@@ -202,9 +208,11 @@ window.webvn = (function(){
         if (!isArray(requires)) {
             requires = [requires];
         }
-        return requires.map(function (value) {
+        var ret = requires.map(function (value) {
             return s[value];
         });
+        ret.push(s);
+        return ret;
     }
 
     function isArray(array) {
@@ -217,7 +225,7 @@ window.webvn = (function(){
 })(webvn);
 
 // Look for config file and load files
-webvn.use(['loader'], function (s, loader) {
+webvn.use(['loader'], function (loader) {
     "use strict";
     // Load webvn.json
     var xhr = new window.XMLHttpRequest();

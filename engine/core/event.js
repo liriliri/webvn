@@ -5,7 +5,7 @@
  */
 
 webvn.module('event', ['util', 'select', 'class'],
-    function (s, util, select, kclass) {
+    function (util, select, kclass) {
 
         var event = {};
 

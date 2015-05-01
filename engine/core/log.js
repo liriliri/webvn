@@ -5,7 +5,7 @@
  * @namespace webvn.log
  */
 webvn.module('log', ['config', 'util'],
-    function (s, config, util) {
+    function (config, util) {
 
         var exports = {},
             conf = config.log;

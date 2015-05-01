@@ -1,5 +1,5 @@
 webvn.use(['script', 'log'],
-    function (s, script, log) {
+    function (script, log) {
 
 script.createCommand('log', {
     type: {

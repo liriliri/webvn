@@ -1,5 +1,5 @@
 webvn.use(['loader', 'util', 'log'],
-    function (s, loader, util, log) {
+    function (loader, util, log) {
 
         var exports = loader;
 

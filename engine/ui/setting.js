@@ -1,5 +1,5 @@
 webvn.use(['ui'],
-    function (s, ui) {
+    function (ui) {
         "use strict";
         var exports = ui.create('setting'),
             $el = exports.$el;

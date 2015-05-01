@@ -1,5 +1,5 @@
 webvn.use(['ui', 'select', 'media'],
-    function (s, ui, select, media) {
+    function (ui, select, media) {
         "use strict";
         var exports = ui.create('music'),
             $el = exports.$el;

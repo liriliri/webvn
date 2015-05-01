@@ -2,7 +2,7 @@
  * localstorage
  */
 
-webvn.module('storage', ['class', 'util'], function (s, kclass, util) {
+webvn.module('storage', ['class', 'util'], function (kclass, util) {
 
 var storage = {},
     prefix = 'wv-',

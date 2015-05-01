@@ -1,6 +1,6 @@
 // Do some initialization work here
 webvn.use(['script', 'config'],
-    function (s, script, config) {
+    function (script, config, s) {
         // Trigger functions when files are all loaded.
         s.isReady = true;
         s.call();

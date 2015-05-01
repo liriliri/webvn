@@ -1,5 +1,5 @@
 webvn.use(['config', 'storage', 'class'],
-    function (s, config, storage, kclass) {
+    function (config, storage, kclass) {
 
 var cache = {};
 

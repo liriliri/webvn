@@ -1,7 +1,7 @@
 // UI component dialog
 
 webvn.use(['ui', 'text', 'media'],
-    function (s, ui, text, media) {
+    function (ui, text, media) {
 
         var exports = ui.create('dialog', 'div');
 

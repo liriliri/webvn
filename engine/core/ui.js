@@ -3,7 +3,7 @@
  * @namespace webvn.ui
  */
 webvn.module('ui', ['class', 'select', 'config', 'util', 'script'],
-    function (s, kclass, select, config, util, script) {
+    function (kclass, select, config, util, script) {
 
         var conf = config.create('core-ui');
         conf.set(config.ui, false);

@@ -3,7 +3,7 @@
  */
 
 webvn.module('text', ['util', 'class', 'select'],
-    function (s, util, kclass, select) {
+    function (util, kclass, select) {
         
         var exports = {};
 

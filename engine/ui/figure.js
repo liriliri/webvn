@@ -1,7 +1,7 @@
 // UI component figure
 
 webvn.use(['ui', 'canvas', 'util'], 
-    function (s, ui, canvas, util) {
+    function (ui, canvas, util) {
 
 var exports = ui.create('figure', 'canvas');
     
@@ -26,7 +26,7 @@ exports.select = function (num) {
 
 exports.src = function (src) {
 
-    currentFigure.load(src, 2000);
+    currentFigure.load(src, 300);
 
 };
 

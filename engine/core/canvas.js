@@ -1,7 +1,7 @@
 // Module canvas
 
 webvn.module('canvas', ['class', 'loader', 'log', 'config', 'util', 'webgl', 'anim'],
-    function (s, kclass, loader, log, config, util, webgl, anim) {
+    function (kclass, loader, log, config, util, webgl, anim) {
 
 var conf = config.create('core-canvas');
 conf.set(config.canvas, false);
@@ -140,7 +140,7 @@ canvas.ImageEntity = canvas.Entity.extend({
 
         self.visible = true;
         self.alpha = 0;
-        self.fadeIn();
+        self.fadeIn(300);
 
     },
     isTransition: function () {

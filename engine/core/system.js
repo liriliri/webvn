@@ -3,7 +3,7 @@
  * @namespace webvn.system
  */
 webvn.module('system', ['select', 'config'],
-	function (s, select, config) {
+	function (select, config) {
 
         var defaults = {
             width: 960,

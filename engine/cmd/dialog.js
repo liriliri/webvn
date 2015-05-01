@@ -1,5 +1,5 @@
 webvn.use(['script', 'ui'],
-    function (s, script, ui) {
+    function (script, ui) {
 
         var dialog = ui.get('dialog');
 

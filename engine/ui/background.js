@@ -1,6 +1,6 @@
 // Background ui component
 
-webvn.use(['ui', 'canvas'], function (s, ui, canvas) {
+webvn.use(['ui', 'canvas'], function (ui, canvas) {
 
 var background = ui.create('background', 'canvas'),
 	$el = background.$el;
@@ -14,7 +14,7 @@ canvas.renderer.add(scene);
 
 background.src = function (src) {
 
-    image.load(src, 500);
+    image.load(src, 300);
 
 };
 

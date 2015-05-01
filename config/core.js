@@ -1,4 +1,4 @@
-webvn.use(['config'], function (s, config) {
+webvn.use(['config'], function (config) {
     /**
      * @name webvn.config.canvas
      * @property {number} fps

@@ -2,7 +2,7 @@
 var util = require('../util'),
     path = require('path');
 
-var intro = 'webvn.use(["webgl"], function (s, webgl) { webgl.Transition.addTransition(',
+var intro = 'webvn.use(["webgl"], function (webgl) { webgl.Transition.addTransition(',
     outro = ');});';
 
 function exportsFunc(grunt) {

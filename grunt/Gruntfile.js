@@ -68,7 +68,7 @@ gruntConfig.generateTpl = {
 gruntConfig.generateFrag = {
     transition: {
         files: {
-            'engine/core/transition.js': ['engine/core/transition/*.frag']
+            'engine/core/transition/transition.js': ['engine/core/transition/*.frag']
         }
     }
 };

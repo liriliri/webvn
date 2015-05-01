@@ -1,5 +1,5 @@
 webvn.use(['script', 'media'],
-    function (s, script, media) {
+    function (script, media) {
         // Background music
         var bgm = media.getAudio('bgm');
         /**

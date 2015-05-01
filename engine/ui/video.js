@@ -1,6 +1,6 @@
 // Video ui component
 
-webvn.use(['ui', 'media', 'script'], function (s, ui, media, script) {
+webvn.use(['ui', 'media', 'script'], function (ui, media, script) {
 
 var vid = ui.create('video', 'div'),
     clickAction = 'stop',

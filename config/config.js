@@ -2,7 +2,7 @@
  * Stores all configuration of all modules.
  * @namespace webvn.config
  */
-webvn.module('config', ['util'], function (s, util) {
+webvn.module('config', ['util'], function (util) {
 
     var exports = {};
 

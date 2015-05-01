@@ -1,6 +1,6 @@
 // Particle ui component
 
-webvn.use(['ui', 'canvas'], function (s, ui, canvas) {
+webvn.use(['ui', 'canvas'], function (ui, canvas) {
 
 var particle = ui.create('particle', 'canvas'),
     $el = particle.$el;

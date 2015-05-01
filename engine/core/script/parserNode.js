@@ -3,7 +3,7 @@
  */
 
 webvn.module('parserNode', ['class', 'util'],
-    function (s, kclass, util) {
+    function (kclass, util) {
 
         var exports = {};
 

@@ -1,5 +1,5 @@
 webvn.use(['ui', 'script', 'media', 'util'],
-    function (s, ui, script, media, util) {
+    function (ui, script, media, util) {
         "use strict";
         /**
          * @class webvn.ui.Menu

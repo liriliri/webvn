@@ -1,6 +1,6 @@
 // Module webgl
 
-webvn.module('webgl', ['class', 'util'], function (s, kclass, util) {
+webvn.module('webgl', ['class', 'util'], function (kclass, util) {
 
 var webgl = {};
 

@@ -3,7 +3,7 @@
  * @namespace webvn.class
  */
 webvn.module('class', ['util'],
-    function (s, util) {
+    function (util) {
         var exports = {};
         var ObjCreate = Object.create;
 

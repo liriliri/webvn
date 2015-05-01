@@ -1,5 +1,5 @@
 webvn.use(['ui', 'select'],
-    function (s, ui, select) {
+    function (ui, select) {
         "use strict";
         var exports = ui.create('cg', 'div'),
             $el = exports.$el;

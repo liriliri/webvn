@@ -3,7 +3,7 @@
  * @namespace webvn.media
  */
 webvn.module('media', ['class', 'log', 'util', 'anim'],
-    function (s, kclass, log, util, anim) {
+    function (kclass, log, util, anim) {
 
         var exports = {};
 
