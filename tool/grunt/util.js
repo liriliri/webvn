@@ -1,5 +1,5 @@
 // Iterate an object
-exports.each = function (object, func) {
+var each = exports.each = function (object, func) {
     "use strict";
     var key;
     if (object.length === +object.length) {
@@ -13,4 +13,15 @@ exports.each = function (object, func) {
             }
         }
     }
+};
+
+exports.webvnFiles = function (o, ext) {
+    "use strict";
+    var path = o.path,
+        files = o.files,
+        ret = [];
+    each(files, function (value) {
+        ret.push(path.substr(1) + value + '.' + ext);
+    });
+    return ret;
 };

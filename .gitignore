@@ -9,7 +9,9 @@
 /engine/theme/**/*.css.map
 /engine/ui/**/*.css.map
 /.sass-cache/
-/build/
-/asset/
+/dist/
+/asset/footage/
+/asset/test/
 /custom/
+/tool/grunt/temp/
 /.idea/

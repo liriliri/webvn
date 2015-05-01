@@ -33,7 +33,7 @@ var LocalStore = kclass.create({
         this.save();
 
     },
-    delete: function () {
+    'delete': function () {
 
         removeLocal(this.key);
 
@@ -62,8 +62,7 @@ var LocalStore = kclass.create({
     // Set value
     set: function (key, value, overwrite) {
 
-        var attrs,
-            self = this;
+        var attrs;
 
         if (util.isObject(key)) {
             attrs = key;

@@ -1,3 +1,6 @@
+/**
+ * @namespace webvn.anim
+ */
 webvn.module('anim', function () {
     "use strict";
 

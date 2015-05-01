@@ -1,0 +1,41 @@
+{
+    "css": {
+        "engine": {
+            "path": "/engine/",
+            "files": [
+                "webvn"
+            ]
+        },
+        "custom": {
+            "path": "/custom/",
+            "files": [
+                "base",
+                "ui"
+            ]
+        }
+    },
+    "js": {
+        "basic": {
+            "path": "/engine/",
+            "files": [
+                "basic"
+            ]
+        },
+        "config": {
+            "path": "/config/",
+            "files": [
+                "config",
+                "core"
+            ]
+        },
+        "engine": {
+            "path": "/engine/",
+            "files": [
+                "core",
+                "ui",
+                "cmd",
+                "init"
+            ]
+        }
+    }
+}
