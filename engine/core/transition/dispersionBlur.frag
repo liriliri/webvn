@@ -1,5 +1,5 @@
 #ifdef GL_ES
-precision highp float;
+precision mediump float;
 #endif
 #define QUALITY 32
 uniform sampler2D from;

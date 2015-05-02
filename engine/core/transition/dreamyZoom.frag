@@ -1,5 +1,5 @@
 #ifdef GL_ES
-precision highp float;
+precision mediump float;
 #endif
 #define DEG2RAD 0.03926990816987241548078304229099
 uniform sampler2D from, to;

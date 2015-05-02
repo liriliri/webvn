@@ -1,5 +1,5 @@
 #ifdef GL_ES
-precision highp float;
+precision mediump float;
 #endif
 #define PI 3.141592653589
 uniform sampler2D from, to;

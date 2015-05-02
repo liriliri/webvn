@@ -281,7 +281,7 @@ var Filter = webgl.Filter = kclass.create({
     getVertexShaderSource: function () {
 
         return [
-            'precision highp float;',
+            'precision mediump float;',
             'attribute vec2 pos;',
             'attribute vec2 uv;',
             'varying vec2 vUv;',
@@ -586,7 +586,7 @@ var Filter = webgl.Filter = kclass.create({
 }, {
     fragmentShader: {
         colorMatrix: [
-            'precision highp float;',
+            'precision mediump float;',
             'varying vec2 vUv;',
             'uniform sampler2D texture;',
             'uniform float m[20];',
@@ -599,7 +599,7 @@ var Filter = webgl.Filter = kclass.create({
             '}'
         ].join('\n'),
         convolution: [
-            'precision highp float;',
+            'precision mediump float;',
             'varying vec2 vUv;',
             'uniform sampler2D texture;',
             'uniform vec2 px;',
@@ -792,7 +792,7 @@ var Transition = webgl.Transition = kclass.create({
     fragmentShader: {
         'default': [
             '#ifdef GL_ES',
-            'precision highp float;',
+            'precision mediump float;',
             '#endif',
             'uniform sampler2D from, to;',
             'uniform float progress;',
@@ -945,7 +945,7 @@ var WebGL2D = webgl.WebGL2D = kclass.create({
 
         return [
             '#ifdef GL_ES',
-                'precision highp float;',
+                'precision mediump float;',
             '#endif',
             '#define hasTexture ' + ((sMask & WebGL2D.shaderMask.texture) ? '1' : '0'),
             '#define hasCrop ' + ((sMask & WebGL2D.shaderMask.crop) ? '1' : '0'),

@@ -1,16 +1,16 @@
 #ifdef GL_ES
-precision highp float;
+precision mediump float;
 #endif
 uniform sampler2D from, to;
 uniform float progress;
 uniform vec2 resolution;
-highp float random(vec2 co)
+mediump float random(vec2 co)
 {
-    highp float a = 12.9898;
-    highp float b = 78.233;
-    highp float c = 43758.5453;
-    highp float dt= dot(co.xy ,vec2(a,b));
-    highp float sn= mod(dt,3.14);
+    mediump float a = 12.9898;
+    mediump float b = 78.233;
+    mediump float c = 43758.5453;
+    mediump float dt= dot(co.xy ,vec2(a,b));
+    mediump float sn= mod(dt,3.14);
     return fract(sin(sn) * c);
 }
 float voronoi( in vec2 x ) {
