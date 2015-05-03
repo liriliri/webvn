@@ -1,36 +1,27 @@
 /**
- * Provide some common system info and function, such as the screen width and height.
+ * Provide some common system info and function,
+ * such as the screen width and height.
  * @namespace webvn.system
  */
-webvn.module('system', ['select', 'config'],
-	function (select, config) {
+webvn.module('system', ['select', 'config'], function (select, config) {
+    "use strict";
+    var exports = {};
 
-        var defaults = {
-            width: 960,
-            height: 480,
-            title: 'WebVN'
-        };
+    var conf = config.create('system');
 
-        var system = {};
+    // Screen width and height
+    exports.screenWidth = screen.width;
+    exports.screenHeight = screen.height;
 
-        var conf = config.create('core-system');
-        conf.set(defaults).set(config.system, true);
+    var $title = select.get('title');
 
-        // Screen width and height
-        system.screenWidth = screen.width;
-        system.screenHeight = screen.height;
+    // Set window title
+    var setTitle = exports.setTitle = function (text) {
+        $title.text(text);
+    };
 
-        var $title = select.get('title');
+    // Set default title
+    setTitle(conf.get('title'));
 
-        // Set window title
-        system.setTitle = function (text) {
-
-            $title.text(text);
-
-        };
-        // Set default title
-        system.setTitle(conf.get('title'));
-
-        return system;
-
-    });
+    return exports;
+});

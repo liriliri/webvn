@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Test</title>
+    <script>
+        var config = {
+            debug: true,
+            test: true
+        };
+    </script>
+    <script src="/engine/core/webvn.js"></script>
+    <style>
+        #testParticle, #test {
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div class="center">
+    <div id="webvn">
+        <canvas id="test" class="fill" width="1280" height="720"></canvas>
+    </div>
+</div>
+<script>
+    webvn.call(['canvas', 'anim'], function (s, canvas, anim) {
+
+
+    });
+</script>
+</body>
+</html>

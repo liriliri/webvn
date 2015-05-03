@@ -1,82 +1,81 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Test</title>
-        <script>
+<head>
+    <meta charset="utf-8">
+    <title>Test</title>
+    <script>
         var config = {
             debug: true,
             test: true
         };
-        </script>
-        <script src="/engine/core/webvn.js"></script>
-        <style>
+    </script>
+    <script src="/engine/core/webvn.js"></script>
+    <style>
         #testParticle, #test {
             position: absolute;
         }
-        </style>
-    </head>
-    <body>
-        <div class="center">
-            <div id="webvn">
-                <canvas id="test" class="fill" width="1280" height="720"></canvas>
-                <canvas id="testParticle" class="fill" width="1280" height="720"></canvas>
-            </div>
-        </div>
-    <script>
-        webvn.call(['canvas', 'anim'], function (s, canvas, anim) {
+    </style>
+</head>
+<body>
+<div class="center">
+    <div id="webvn">
+        <canvas id="test" class="fill" width="1280" height="720"></canvas>
+    </div>
+</div>
+<script>
+    webvn.call(['canvas', 'anim'], function (canvas, anim) {
 
-            var scene = new canvas.Scene(document.getElementById('test'));
-            var img = new canvas.ImageEntity();
-            var img2 = new canvas.ImageEntity();
-            img2.load('/asset/test/fg1.png');
-            img.load('/asset/test/bg1.bmp');
-            img2.x = 400;
-            scene.add(img);
-            scene.add(img2);
-            canvas.renderer.add(scene);
+        var scene = canvas.createScene(document.getElementById('test'));
+        var img = new canvas.ImageEntity();
+        var img2 = new canvas.ImageEntity();
+        img2.load('/asset/test/fg1.png');
+        img.load('/asset/test/bg1.bmp');
+        img2.x = 400;
+        scene.add(img);
+        scene.add(img2);
+        canvas.renderer.add(scene);
+        setTimeout(function () {
+            img.load('/asset/test/bg2.bmp', 2000);
+            var myTween = anim.create(img);
+            myTween.loop = true;
+            myTween.to({
+                x: 200
+            }, 3000, 'easeInElastic').call(function () {
+                console.log('finish');
+            }).to({
+                x: 0,
+                y: 200
+            }, 3000, 'easeInElastic').wait(1000).to({
+                y: 0
+            }, 1000);
+
             setTimeout(function () {
-                img.load('/asset/test/bg2.bmp', 2000);
-                var myTween = anim.create(img);
-                myTween.loop = true;
-                myTween.to({
-                    x: 200
-                }, 3000, 'easeInElastic').call(function () {
-                    console.log('finish');
-                }).to({
-                    x: 0,
-                    y: 200
-                }, 3000, 'easeInElastic').wait(1000).to({
-                    y: 0
-                }, 1000);
 
+                myTween.pause();
                 setTimeout(function () {
-
-                    myTween.pause();
-                    setTimeout(function () {
-                        myTween.play();
-                    }, 2000);
-
-                }, 4000);
-
-                /*img.animate({
-                    x: 200,
-                    y: 200
-                }, 2000, 'easeInOutBounce', function () {
-                    img.animate({
-                        x: 0,
-                        y: 0
-                    }, 2000, 'easeInOutBounce');
-                });*/
-
-            }, 2000);
-            setTimeout(function() {
-
-                img2.load('/asset/test/fg2.png', 2000);
+                    myTween.play();
+                }, 2000);
 
             }, 4000);
 
-        });
-        </script>
-    </body>
+            /*img.animate({
+             x: 200,
+             y: 200
+             }, 2000, 'easeInOutBounce', function () {
+             img.animate({
+             x: 0,
+             y: 0
+             }, 2000, 'easeInOutBounce');
+             });*/
+
+        }, 2000);
+        setTimeout(function () {
+
+            img2.load('/asset/test/fg2.png', 2000);
+
+        }, 4000);
+
+    });
+</script>
+</body>
 </html>

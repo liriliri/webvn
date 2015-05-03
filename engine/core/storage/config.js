@@ -31,6 +31,10 @@ webvn.extend('config', ['class', 'storage'], function (exports, kclass, storage)
             configs[name] = new Config(name);
         }
 
+        if (exports[name]) {
+            configs[name].set(exports[name], false);
+        }
+
         return configs[name];
     };
 

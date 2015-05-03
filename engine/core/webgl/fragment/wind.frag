@@ -1,14 +1,17 @@
 #ifdef GL_ES
-precision mediump float;
+    precision mediump float;
 #endif
+
 uniform sampler2D from;
 uniform sampler2D to;
 uniform float progress;
 uniform vec2 resolution;
 const float size = 0.2;
+
 float rand (vec2 co) {
     return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
 }
+
 void main() {
     vec2 p = gl_FragCoord.xy / resolution.xy;
     float r = rand(vec2(0, p.y));

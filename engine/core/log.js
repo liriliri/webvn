@@ -5,9 +5,10 @@
  * @namespace webvn.log
  */
 webvn.module('log', ['config', 'util'], function (config, util) {
+    "use strict";
     var exports = {};
+
     var conf = config.log;
-    // Colors
     var colors = conf.colors;
 
     /**
@@ -65,15 +66,14 @@ webvn.module('log', ['config', 'util'], function (config, util) {
 
     // Get info of file that logs the message
     function getFileInfo() {
-        "use strict";
         var err = new Error,
             stack = err.stack;
         var stacks = stack.split('\n');
+
         return util.trim(stacks[3]);
     }
 
     function getErrorStack(e) {
-        "use strict";
         var spliceNum = 3;
         if (e === undefined) {
             e = new Error;
@@ -83,6 +83,7 @@ webvn.module('log', ['config', 'util'], function (config, util) {
         var stack = e.stack,
             stacks = stack.split('\n');
         stacks.splice(0, spliceNum);
+
         return stacks.join('\n');
     }
 

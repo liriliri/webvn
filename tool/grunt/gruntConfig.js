@@ -58,10 +58,21 @@ exports.generateTpl = {
     }
 };
 
-exports.generateFrag = {
-    transition: {
+exports.generateShader = {
+    fragment: {
+        options: {
+            type: 'fragShader'
+        },
         files: {
-            'engine/core/transition/transition.js': ['engine/core/transition/*.frag']
+            'engine/core/webgl/fragShader.js': ['engine/core/webgl/fragment/*.frag']
+        }
+    },
+    vertex: {
+        options: {
+            type: 'vertexShader'
+        },
+        files: {
+            'engine/core/webgl/vertexShader.js': ['engine/core/webgl/vertex/*.vert']
         }
     }
 };

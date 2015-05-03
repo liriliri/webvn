@@ -1,14 +1,6 @@
-webvn.use(['config'], function (config) {
-    /**
-     * @name webvn.config.canvas
-     * @property {number} fps
-     */
-    config.canvas = {
-        fps: 60,
-        duration: 200
-    };
+webvn.extend('config', function (exports) {
 
-    config.script = {
+    exports.script = {
         scenarios: [
             'init',
             'first'
@@ -17,11 +9,11 @@ webvn.use(['config'], function (config) {
         fileType: 'wvn'
     };
 
-    config.system = {
+    exports.system = {
         title: 'WebVN'
     };
 
-    config.ui = {
+    exports.ui = {
         container: 'webvn',
         width: 1280,
         height: 720,
@@ -32,7 +24,7 @@ webvn.use(['config'], function (config) {
      * @name webvn.config.log
      * @property {object} colors console colors
      */
-    config.log = {
+    exports.log = {
         colors: {
             info: '#07a',
             error: '#eb6864',

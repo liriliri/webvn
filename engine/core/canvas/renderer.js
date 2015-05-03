@@ -1,74 +1,51 @@
-webvn.module('canvas', ['config'], function (config) {
+/**
+ * @namespace webvn.canvas
+ */
+webvn.module('canvas', ['class', 'util'], function (kclass, util) {
     "use strict";
     var exports = {};
 
-    var conf = config.create('core-canvas');
-    conf.set(config.canvas, false);
+    exports.renderer = kclass.module(function () {
+        var exports = {};
 
-    var requestAnim = window.requestAnimationFrame;
+        var requestAnim = window.requestAnimationFrame;
 
-    exports.renderer = {
-        isPaused: true,
-        interval: 20,
-        scenes: [],
-        add: function (scene) {
+        var isPaused = true;
 
-            scene.order = this.scenes.length;
-            this.scenes.push(scene);
+        var scenes = [];
 
-            return this;
-
-        },
-        remove: function (scene) {
-
-            this.scenes.splice(scene.order, 1);
-
-        },
-        render: function (timestamp) {
-
-            var scenes = this.scenes;
-
-            if (this.isPaused) {
+        function render(timestamp) {
+            if (isPaused) {
                 return;
             }
-            for (var i = 0, len = scenes.length; i < len; i++) {
-                scenes[i].render(timestamp);
-            }
-            requestAnim(this.render.bind(this));
 
-        },
-        fps: function (fps) {
+            util.each(scenes, function (scene) {
+                scene.render(timestamp);
+            });
 
-            this.interval = Math.floor(1000 / fps);
-
-            return this;
-
-        },
-        start: function () {
-
-            var self = this;
-
-            if (!this.isPaused) {
-                return;
-            }
-            this.isPaused = false;
-
-            setTimeout(function () {
-
-                requestAnim(self.render.bind(self));
-
-            }, this.interval);
-
-        },
-        stop: function () {
-
-            this.isPaused = true;
-
+            requestAnim(render);
         }
-    };
 
-    exports.renderer.fps(conf.get('fps')).
-        start();
+        exports.start = function () {
+            if (!isPaused) {
+                return;
+            }
+            isPaused = false;
+
+            requestAnim(render);
+        };
+
+        exports.stop = function () {
+            isPaused = true;
+        };
+
+        exports.add = function (scene) {
+            scene.index = scenes.length;
+            scenes.push(scene);
+        };
+
+        return exports;
+    });
 
     return exports;
 });
