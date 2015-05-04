@@ -13,7 +13,7 @@ console.log(x+5);
 ```
 */
 
-video -d -pl -c=stop -s=/asset/test/video.webm
+// video -d -pl -c=stop -s=/asset/test/video.webm
 
 bgm -s=/asset/test/bgm2.ogg -fi=true -du=2000
 
@@ -21,9 +21,9 @@ bg --src=/asset/test/bg2.bmp -d
 
 bgm -p=false -fo=true
 
-particle -d -t=snow
+/*particle -d -t=snow
 particle -d -t=smoke
-particle -d -t=rain
+particle -d -t=rain*/
 
 bgm -s=/asset/test/bgm2.ogg
 

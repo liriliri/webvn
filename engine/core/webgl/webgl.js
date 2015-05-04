@@ -1,42 +1,43 @@
 webvn.extend('webgl', ['class'], function (exports, kclass) {
     "use strict";
 
-    var Shader = exports.Shader,
-        Program = exports.Program;
+    var DrawImageProgram = exports.DrawImageProgram;
 
-    exports.WebGL2D = kclass.create({
+    var WebGL2D = exports.WebGL2D = kclass.create({
 
         constructor: function WebGL2D(view) {
             this.view = view;
             this.gl = view.getContext('webgl');
+            this.width = view.width;
+            this.height = view.height;
 
-            this._initShader();
-            this._initBuffer();
-            this._initProgram();
+            this._init();
         },
 
-        _initShader: function () {
+        _init: function () {
             var gl = this.gl;
 
+            gl.enable(gl.BLEND);
+            gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
+            this.drawImageProgram = new DrawImageProgram(this.gl, this.view);
         },
 
-        _initBuffer: function () {
-
+        drawImage: function (image, x, y) {
+            this.drawImageProgram.use().render(image, x, y);
         },
 
-        _initProgram: function () {
+        clear: function () {
+            var gl = this.gl;
 
-        },
-
-        drawImage: function () {
-
+            gl.clearColor(0.0, 0.0, 0.0, 0.0);
+            gl.clear(gl.COLOR_BUFFER_BIT);
         }
 
     });
 
-    exports.create = function () {
-
+    exports.create = function (view) {
+        return new WebGL2D(view);
     };
 
 });

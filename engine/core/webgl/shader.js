@@ -1,4 +1,4 @@
-webvn.module('webgl', ['class', 'util'], function (kclass, util) {
+webvn.module('webgl', ['class', 'util', 'log'], function (kclass, util, log) {
     "use strict";
     var exports = {};
 
@@ -46,10 +46,11 @@ webvn.module('webgl', ['class', 'util'], function (kclass, util) {
         return exports;
     });
 
-    exports.Shader = kclass.create({
+    var Shader = exports.Shader = kclass.create({
 
-        constructor: function (gl, type) {
+        constructor: function Shader(gl, type) {
             this.gl = gl;
+            this.type = type;
             if (type === 'frag') {
                 this.value = gl.createShader(gl.FRAGMENT_SHADER);
             } else {
@@ -60,11 +61,27 @@ webvn.module('webgl', ['class', 'util'], function (kclass, util) {
         source: function (source) {
             var gl = this.gl;
 
+            if (exports[this.type + 'Shader'].get(source)) {
+                source = exports[this.type + 'Shader'].get(source);
+            }
+
             gl.shaderSource(this.value, source);
             gl.compileShader(this.value);
+
+            var compileStatus = gl.getShaderParameter(this.value, gl.COMPILE_STATUS);
+            // If compileStatus not true, something is wrong.
+            if (!compileStatus) {
+                var lastError = gl.getShaderInfoLog(this.value);
+                log.error('Error compiling shader: ' + lastError);
+                gl.deleteShader(this.value);
+            }
         }
 
     });
+
+    exports.createShader = function (gl, type) {
+        return new Shader(gl, type);
+    };
 
     return exports;
 });

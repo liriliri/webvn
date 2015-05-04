@@ -22,6 +22,7 @@ webvn.extend('canvas', ['class', 'loader'], function (exports, kclass, loader) {
 
             this.width = 0;
             this.height = 0;
+            this.loaded = false;
             this.progress = 1;
         },
 
@@ -39,11 +40,22 @@ webvn.extend('canvas', ['class', 'loader'], function (exports, kclass, loader) {
             this.image = image;
             this.width = image.width;
             this.height = image.height;
+            this.loaded = true;
         },
 
         render: function (scene) {
             "use strict";
-            console.log('fuck');
+            if (!this.loaded) {
+                return;
+            }
+
+            var ctx = scene.ctx;
+
+            var image = this.image,
+                x = this.x,
+                y = this.y;
+
+            ctx.drawImage(image, x, y);
         }
 
     });

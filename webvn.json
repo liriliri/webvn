@@ -60,6 +60,8 @@
                 "webgl/shader",
                 "webgl/fragShader",
                 "webgl/vertexShader",
+                "webgl/matrix4",
+                "webgl/texture",
                 "webgl/program",
                 "webgl/webgl",
                 "canvas/renderer",

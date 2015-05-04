@@ -1,4 +1,4 @@
-webvn.extend('canvas', ['class', 'webgl'], function (exports, kclass, webgl) {
+webvn.extend('canvas', ['class', 'webgl', 'util'], function (exports, kclass, webgl, util) {
     "use strict";
 
     var Scene = exports.Scene = kclass.create({
@@ -11,6 +11,10 @@ webvn.extend('canvas', ['class', 'webgl'], function (exports, kclass, webgl) {
             this.children = [];
         },
 
+        clear: function () {
+            this.ctx.clear();
+        },
+
         add: function (entity) {
             var children = this.children;
 
@@ -21,6 +25,8 @@ webvn.extend('canvas', ['class', 'webgl'], function (exports, kclass, webgl) {
         render: function () {
             var self = this,
                 children = this.children;
+
+            this.clear();
 
             util.each(children, function (child) {
                 child.render(self);

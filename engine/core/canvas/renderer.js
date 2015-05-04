@@ -5,7 +5,7 @@ webvn.module('canvas', ['class', 'util'], function (kclass, util) {
     "use strict";
     var exports = {};
 
-    exports.renderer = kclass.module(function () {
+    var renderer = exports.renderer = kclass.module(function () {
         var exports = {};
 
         var requestAnim = window.requestAnimationFrame;
@@ -46,6 +46,8 @@ webvn.module('canvas', ['class', 'util'], function (kclass, util) {
 
         return exports;
     });
+
+    renderer.start();
 
     return exports;
 });

@@ -149,7 +149,7 @@ webvn.extend('loader', ['util'], function (exports, util) {
                     count++;
                     if (count === len) {
                         if (len === 1) {
-                            resolve(image[0]);
+                            resolve(images[0]);
                         } else {
                             resolve(images);
                         }
@@ -159,6 +159,8 @@ webvn.extend('loader', ['util'], function (exports, util) {
                 image.onerror = function () {
                     reject();
                 };
+
+                image.src = source;
             });
 
         });
