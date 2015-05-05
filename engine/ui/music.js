@@ -24,6 +24,7 @@ webvn.use(['ui', 'select', 'media'],
                 return;
             }
             // OffsetX has to divided by scale
+            e = e.originalEvent;
             var x = e.offsetX / ui.scale,
                 percentage = x / $progress.width();
             music.currentTime(music.duration * percentage);

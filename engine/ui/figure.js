@@ -1,9 +1,13 @@
-webvn.use(['ui', 'canvas', 'util'], function (ui, canvas, util) {
+webvn.use(['ui', 'canvas', 'util', 'config', 'storage'], function (ui, canvas, util, config, storage) {
 
     var exports = ui.create('figure', 'canvas');
 
     var $el = exports.$el;
     $el.addClass('fill');
+
+    var conf = config.create('uiFigure');
+
+    var asset = storage.createAsset(conf.get('path'), conf.get('extension'));
 
     // Scene init
     var scene = canvas.createScene(exports.getCanvas());
@@ -23,7 +27,7 @@ webvn.use(['ui', 'canvas', 'util'], function (ui, canvas, util) {
 
     exports.src = function (src) {
 
-        currentFigure.load(src, 300);
+        currentFigure.load(asset.get(src), 300);
 
     };
 

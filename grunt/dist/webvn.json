@@ -1,13 +1,13 @@
 {
     "css": {
         "engine": {
-            "path": "/engine/",
+            "path": "engine/",
             "files": [
                 "webvn"
             ]
         },
         "custom": {
-            "path": "/custom/",
+            "path": "custom/",
             "files": [
                 "base",
                 "ui"
@@ -16,20 +16,21 @@
     },
     "js": {
         "basic": {
-            "path": "/engine/",
+            "path": "engine/",
             "files": [
                 "basic"
             ]
         },
         "config": {
-            "path": "/config/",
+            "path": "config/",
             "files": [
                 "config",
-                "core"
+                "core",
+                "ui"
             ]
         },
         "engine": {
-            "path": "/engine/",
+            "path": "engine/",
             "files": [
                 "core",
                 "ui",

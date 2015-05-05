@@ -21,7 +21,7 @@ exports.webvnFiles = function (o, ext) {
         files = o.files,
         ret = [];
     each(files, function (value) {
-        ret.push(path.substr(1) + value + '.' + ext);
+        ret.push(path + value + '.' + ext);
     });
     return ret;
 };

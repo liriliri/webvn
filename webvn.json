@@ -1,7 +1,7 @@
 {
     "css": {
         "ui": {
-            "path": "/engine/ui/css/",
+            "path": "engine/ui/css/",
             "files": [
                 "animate",
                 "reset",
@@ -10,12 +10,12 @@
             ]
         },
         "theme": {
-            "path": "/engine/theme/",
+            "path": "engine/theme/",
             "files": [
             ]
         },
         "custom": {
-            "path": "/custom/",
+            "path": "custom/",
             "files": [
                 "base",
                 "ui"
@@ -24,26 +24,28 @@
     },
     "js": {
         "basic": {
-            "path": "/engine/core/",
+            "path": "engine/core/",
             "files": [
                 "util"
             ]
         },
         "config": {
-            "path": "/config/",
+            "path": "config/",
             "files": [
                 "config",
-                "core"
+                "core",
+                "ui"
             ]
         },
         "core": {
-            "path": "/engine/core/",
+            "path": "engine/core/",
             "files": [
                 "log",
                 "class",
                 "storage/storage",
                 "storage/save",
                 "storage/config",
+                "storage/asset",
                 "select/util",
                 "select/select",
                 "system",
@@ -76,12 +78,12 @@
             ]
         },
         "lib": {
-            "path": "/engine/lib/",
+            "path": "engine/lib/",
             "files": [
             ]
         },
         "ui": {
-            "path": "/engine/ui/",
+            "path": "engine/ui/",
             "files": [
                 "template",
                 "cg",
@@ -96,7 +98,7 @@
             ]
         },
         "cmd": {
-            "path": "/engine/cmd/",
+            "path": "engine/cmd/",
             "files": [
                 "menu",
                 "video",
@@ -108,7 +110,7 @@
             ]
         },
         "init": {
-            "path": "/engine/",
+            "path": "engine/",
             "files": [
                 "init"
             ]

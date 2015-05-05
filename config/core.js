@@ -5,8 +5,8 @@ webvn.extend('config', function (exports) {
             'init',
             'first'
         ],
-        prefix: '/scenario/',
-        fileType: 'wvn'
+        path: 'scenario/',
+        extension: 'wvn'
     };
 
     exports.system = {
@@ -20,10 +20,6 @@ webvn.extend('config', function (exports) {
         autoResize: true
     };
 
-    /**
-     * @name webvn.config.log
-     * @property {object} colors console colors
-     */
     exports.log = {
         colors: {
             info: '#07a',

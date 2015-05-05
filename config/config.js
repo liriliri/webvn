@@ -2,11 +2,7 @@
  * Stores all configuration of all modules.
  * @namespace webvn.config
  */
-webvn.module('config', ['util'], function (util) {
-
-    var exports = {};
-
-    exports.debug = true;
+webvn.extend('config', ['util'], function (exports, util) {
 
     // Config can be overitten by global config
     if (window.config) {
@@ -17,7 +13,5 @@ webvn.module('config', ['util'], function (util) {
     exports.bower = {
         'engine/lib/TweenMax.js': 'gsap/src/uncompressed/TweenMax.js'
     };
-
-    return exports;
 
 });

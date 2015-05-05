@@ -1,90 +1,90 @@
-// Video ui component
+webvn.use(['ui', 'media', 'script', 'config', 'storage'], function (ui, media, script, config, storage) {
 
-webvn.use(['ui', 'media', 'script'], function (ui, media, script) {
+    var conf = config.create('uiVideo');
+    var asset = storage.createAsset(conf.get('path'), conf.get('extension'));
 
-var vid = ui.create('video', 'div'),
-    clickAction = 'stop',
-    $el = vid.$el;
+    var vid = ui.create('video', 'div'),
+        clickAction = 'stop',
+        $el = vid.$el;
+    
+    var tpl = '<video class="video fill"></video>';
 
-var tpl = '<video class="video fill"></video>';
+    vid.body(tpl);
 
-vid.body(tpl);
 
-var video = media.createVideo($el.find('.video').get(0));
+    var video = media.createVideo($el.find('.video').get(0));
 
-/* Set action when video is clicked
- * Type listed as below:
- * stop: stop playing video and fade out the video
- * pause: pause the video and play again when clicked again
- */
-vid.clickAction = function (action) {
+    /* Set action when video is clicked
+     * Type listed as below:
+     * stop: stop playing video and fade out the video
+     * pause: pause the video and play again when clicked again
+     */
+    vid.clickAction = function (action) {
 
-    clickAction = action;
+        clickAction = action;
 
-};
+    };
 
-vid.play = function () {
+    vid.play = function () {
 
-    video.play();
+        video.play();
 
-};
+    };
 
-vid.show = function () {
+    vid.show = function () {
 
-    $el.show();
-    script.pause();
+        $el.show();
+        script.pause();
 
-};
+    };
 
-vid.src = function (src) {
+    vid.src = function (src) {
+        video.load(asset.get(src));
+    };
 
-    video.load(src);
+    vid.stop = function () {
 
-};
+        video.stop();
 
-vid.stop = function () {
+    };
 
-    video.stop();
+    video.event({
+        'ended': function () {
+            // When the video is ended, execute the next command
+            $el.fadeOut(300, function () {
 
-};
+                script.resume();
 
-video.event({
-    'ended': function () {
-        // When the video is ended, execute the next command
-        $el.fadeOut(300, function () {
-
-            script.resume();
-
-        });
-    }
-});
-
-vid.event({
-    'click .video': function () {
-
-        switch (clickAction) {
-            case 'stop': {
-                $el.fadeOut(300, function () {
-
-                    video.stop();
-                    script.resume();
-
-                });
-                break;
-            }
-            case 'pause': {
-                if (video.isPlaying()) {
-                    video.pause();
-                } else {
-                    video.play();
-                }
-                break;
-            }
-            default:
-                break;
+            });
         }
+    });
 
-    }
-});
+    vid.event({
+        'click .video': function () {
+
+            switch (clickAction) {
+                case 'stop': {
+                    $el.fadeOut(300, function () {
+
+                        video.stop();
+                        script.resume();
+
+                    });
+                    break;
+                }
+                case 'pause': {
+                    if (video.isPlaying()) {
+                        video.pause();
+                    } else {
+                        video.play();
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+
+        }
+    });
 
 });

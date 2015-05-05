@@ -1,6 +1,6 @@
 var config = require('./grunt.json'),
     util = require('./util'),
-    webvn = require('../../webvn.json');
+    webvn = require('../webvn.json');
 
 var exports = {};
 
@@ -24,7 +24,7 @@ exports.jsdoc = {
         options: {
             destination: 'doc/jsdoc',
             template: "../WebVN-jsdoc3",
-            configure: "task/jsdoc.json"
+            configure: "grunt/jsdoc.json"
         },
         src: [
             'engine/core/*.js',

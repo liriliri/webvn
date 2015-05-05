@@ -14,7 +14,7 @@ webvn.extend('storage', ['class', 'util'], function (exports, kclass, util) {
         save: function (fn) {
             if (util.isFunction(fn)) {
                 this.saveFn = fn;
-                return;
+                return this;
             }
 
             this.saveFn.call(null, fn);
@@ -23,7 +23,7 @@ webvn.extend('storage', ['class', 'util'], function (exports, kclass, util) {
         load: function (fn) {
             if (util.isFunction(fn)) {
                 this.loadFn = fn;
-                return;
+                return this;
             }
 
             this.loadFn.call(null, fn);

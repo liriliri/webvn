@@ -23,7 +23,7 @@ webvn.extend('canvas', ['class', 'loader', 'anim'], function (exports, kclass, l
             this.height = 0;
             this.loaded = false;
             this.progress = 1;
-            this.transitionType = 'linearBlur';
+            this.transition = 'linear';
         },
 
         fadeIn: function (duration) {
@@ -74,11 +74,11 @@ webvn.extend('canvas', ['class', 'loader', 'anim'], function (exports, kclass, l
                 x = this.x,
                 y = this.y,
                 alpha = this.alpha,
-                transitionType = this.transitionType,
+                transition = this.transition,
                 progress = this.progress;
 
             if (progress !== 1) {
-                ctx.drawTransition(this.image2, image, progress, transitionType, x, y, alpha);
+                ctx.drawTransition(this.image2, image, progress, transition, x, y, alpha);
             } else {
                 ctx.drawImage(image, x, y, alpha);
             }

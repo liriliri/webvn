@@ -13,21 +13,16 @@ console.log(x+5);
 ```
 */
 
-// video -d -pl -c=stop -s=/asset/test/video.webm
+video -d -pl -c=stop -s=video
 
 bgm -s=/asset/test/bgm2.ogg -fi=true -du=2000
 
+bg -d -s=living_room
 
-bgm -p=false -fo=true
-
-/*particle -d -t=snow
-particle -d -t=smoke
-particle -d -t=rain*/
-
-fg -d -sel=0 -s=/asset/test/fg1.png -pos=left
-fg -sel=1 -s=/asset/test/fg4.png -pos=center
-fg -sel=2 -s=/asset/test/fg3.png -pos=right
-fg -sel=0 -s=/asset/test/fg2.png
+fg -d -sel=0 -s=fg1 -pos=left
+fg -sel=1 -s=fg4 -pos=center
+fg -sel=2 -s=fg3 -pos=right
+fg -sel=0 -s=fg2
 
 dialog -d\
     --name=ユルシュール --text="モトカレ、何をしていますの！？　冗談では済まされませんわよ！"\

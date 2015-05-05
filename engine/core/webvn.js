@@ -226,25 +226,46 @@ window.webvn = (function(){
 
 // Look for config file and load files
 webvn.use(['loader'], function (loader) {
-    "use strict";
+    // Get build info, dev, test, debug or release
+    var scripts = document.getElementsByTagName('script'), build;
+    for (var i = 0, len = scripts.length; i < len; i++) {
+        build = scripts[i].getAttribute('data-build');
+        if (build) {
+            break;
+        }
+    }
+
+    webvn.module('config', function () {
+        "use strict";
+        return {
+            build: build
+        }
+    });
+
+    var basePath = '';
+    if (build === 'test') {
+        basePath = '../';
+    }
+
     // Load webvn.json
     var xhr = new window.XMLHttpRequest();
     xhr.onload = function () {
         var data = JSON.parse(xhr.responseText);
         loadFiles(data);
     };
-    xhr.open('get', '/webvn.json');
+
+    xhr.open('get', basePath + 'webvn.json');
     xhr.send();
 
     function loadFiles(data) {
         var css = data.css,
             js = data.js;
         each(css, function (value) {
-            loader.cssPath = value.path;
+            loader.cssPath = basePath + value.path;
             loader.css(value.files);
         });
         each(js, function (value) {
-            loader.jsPath = value.path;
+            loader.jsPath = basePath + value.path;
             loader.js(value.files);
         });
     }

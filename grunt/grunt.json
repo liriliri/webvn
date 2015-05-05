@@ -1,5 +1,5 @@
 {
-    "fileBase": "../../",
+    "fileBase": "../",
     "npmTasks": [
         "grunt-contrib-connect",
         "grunt-contrib-jshint",
@@ -13,5 +13,5 @@
         "grunt-jsdoc"
     ],
     "serverPort": 8002,
-    "taskDir": "tool/grunt/task"
+    "taskDir": "grunt/task"
 }

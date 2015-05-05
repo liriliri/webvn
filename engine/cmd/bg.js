@@ -15,8 +15,7 @@ webvn.use(['script', 'ui'], function (script, ui) {
         options: {
             display: {
                 type: 'Boolean',
-                shortHand: 'd',
-                desc: 'Whether the background is displayed'
+                shortHand: 'd'
             },
             duration: {
                 type: 'Number',
@@ -24,12 +23,11 @@ webvn.use(['script', 'ui'], function (script, ui) {
             },
             transition: {
                 type: 'String',
-                shortHand: 'trans'
+                shortHand: 't'
             },
             src: {
                 type: 'String',
-                shortHand: 's',
-                desc: 'Source of the current background image'
+                shortHand: 's'
             }
         },
 
@@ -53,11 +51,11 @@ webvn.use(['script', 'ui'], function (script, ui) {
         },
 
         transition: function (value) {
-            background.transitionType(value);
+            background.transition = value;
         },
 
         src: function (value) {
-            background.src(value);
+            background.load(value);
         }
 
     });

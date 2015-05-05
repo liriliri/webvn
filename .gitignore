@@ -10,8 +10,7 @@
 /engine/ui/**/*.css.map
 /.sass-cache/
 /dist/
-/asset/footage/
-/asset/test/
+/asset/
 /custom/
-/tool/grunt/temp/
+/grunt/temp/
 /.idea/
