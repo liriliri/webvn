@@ -17,15 +17,12 @@ console.log(x+5);
 
 bgm -s=/asset/test/bgm2.ogg -fi=true -du=2000
 
-bg --src=/asset/test/bg2.bmp -d
 
 bgm -p=false -fo=true
 
 /*particle -d -t=snow
 particle -d -t=smoke
 particle -d -t=rain*/
-
-bgm -s=/asset/test/bgm2.ogg
 
 fg -d -sel=0 -s=/asset/test/fg1.png -pos=left
 fg -sel=1 -s=/asset/test/fg4.png -pos=center

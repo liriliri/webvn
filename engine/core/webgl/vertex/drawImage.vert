@@ -4,11 +4,11 @@ varying vec2 v_TexCoord;
 uniform vec2 u_Resolution;
 
 void main() {
-    // float w = 2.0 / u_Resolution.x;
-    // float h = -2.0 / u_Resolution.y;
+    float w = 2.0 / u_Resolution.x;
+    float h = -2.0 / u_Resolution.y;
     mat4 ViewMatrix = mat4(
-        0.0015625, 0, 0, 0,
-        0, -0.002777777777777778, 0, 0,
+        w, 0, 0, 0,
+        0, h, 0, 0,
         0, 0, 1.0, 1.0,
         -1.0, 1.0, 0, 0
     );

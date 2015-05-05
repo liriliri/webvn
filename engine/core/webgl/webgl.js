@@ -1,7 +1,9 @@
 webvn.extend('webgl', ['class'], function (exports, kclass) {
     "use strict";
 
-    var DrawImageProgram = exports.DrawImageProgram;
+    var DrawImageProgram = exports.DrawImageProgram,
+        createFrameBuffer = exports.createFrameBuffer,
+        TransitionProgram = exports.TransitionProgram;
 
     var WebGL2D = exports.WebGL2D = kclass.create({
 
@@ -15,16 +17,34 @@ webvn.extend('webgl', ['class'], function (exports, kclass) {
         },
 
         _init: function () {
-            var gl = this.gl;
+            var gl = this.gl,
+                view = this.view;
 
             gl.enable(gl.BLEND);
             gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
-            this.drawImageProgram = new DrawImageProgram(this.gl, this.view);
+            this.drawImageProgram = new DrawImageProgram(gl, view);
+            this.transitionProgram = new TransitionProgram(gl, view);
         },
 
-        drawImage: function (image, x, y) {
-            this.drawImageProgram.use().render(image, x, y);
+        drawImage: function (image, x, y, alpha) {
+            this.drawImageProgram.use().render(image, x, y, alpha);
+        },
+
+        drawTransition: function (image1, image2, progress, type, x, y, alpha) {
+            var gl = this.gl,
+                view = this.view;
+
+            var frameBuffer1 = createFrameBuffer(gl, view, 0),
+                frameBuffer2 = createFrameBuffer(gl, view, 1);
+            frameBuffer1.start();
+            this.drawImage(image1, x, y, alpha);
+            frameBuffer1.end();
+            frameBuffer2.start();
+            this.drawImage(image2, x, y, alpha);
+            frameBuffer2.end();
+            this.transitionProgram.render(frameBuffer1.get(),
+                frameBuffer2.get(), progress, type);
         },
 
         clear: function () {

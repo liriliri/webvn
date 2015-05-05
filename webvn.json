@@ -62,6 +62,7 @@
                 "webgl/vertexShader",
                 "webgl/matrix4",
                 "webgl/texture",
+                "webgl/frameBuffer",
                 "webgl/program",
                 "webgl/webgl",
                 "canvas/renderer",

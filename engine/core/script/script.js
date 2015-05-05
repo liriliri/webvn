@@ -9,8 +9,7 @@ webvn.module('script', ['config', 'parser', 'parserNode', 'util', 'loader', 'lex
     "use strict";
     var exports = {};
 
-    var conf = config.create('core-script');
-    conf.set(config.script, false);
+    var conf = config.create('script');
 
     lexer = lexer.lexer;
 

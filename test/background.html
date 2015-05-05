@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Background</title>
+    <script>
+        var config = {
+            debug: true,
+            test: true
+        };
+    </script>
+    <script src="/engine/core/webvn.js"></script>
+</head>
+<body>
+<div class="center">
+    <div id="webvn"></div>
+</div>
+<div id="scenario" class="hidden">
+    bg -d -src=/asset/test/bg1.bmp
+    bg -trans=crossHatch -du=3000 -src=/asset/test/bg2.bmp
+    bg -trans=burn -du=4000 -src=/asset/test/cg1.bmp
+    bg -trans=colourDistance -du=5000 -src=/asset/test/cg2.bmp
+    bg -trans=dissolve -du=6000 -src=/asset/test/cg3.bmp
+    bg -trans=dreamy -du=7000 -src=/asset/test/cg4.bmp
+    bg -trans=advancedMosaic -du=8000 -src=/asset/test/cg5.bmp
+    bg -trans=ripple -du=9000 -src=/asset/test/cg6.bmp
+    bg -trans=wind -du=10000 -src=/asset/test/cg7.bmp
+    bg -trans=randomSquares -du=11000 -src=/asset/test/cg8.bmp
+</div>
+<script>
+    webvn.call(['test'], function (test) {
+        var component = new test.Component('scenario');
+        component.start();
+    });
+</script>
+</body>
+</html>

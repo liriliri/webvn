@@ -1,21 +1,31 @@
-// Background ui component
-
 webvn.use(['ui', 'canvas'], function (ui, canvas) {
+    "use strict";
+    var exports = ui.create('background', 'canvas'),
+	    $el = exports.$el;
 
-var background = ui.create('background', 'canvas'),
-	$el = background.$el;
-    
-$el.addClass('fill');
+    $el.addClass('fill');
 
-var image = new canvas.ImageEntity(),
-    scene = new canvas.Scene(background.getCanvas());
-scene.add(image);
-canvas.renderer.add(scene);
+    var image = new canvas.ImageEntity(),
+        scene = new canvas.Scene(exports.getCanvas());
+    scene.add(image);
+    canvas.renderer.add(scene);
 
-background.src = function (src) {
+    exports.duration = 300;
 
-    image.load(src, 300);
+    exports.src = function (src) {
+        image.load(src, exports.duration);
+    };
 
-};
+    exports.show = function () {
+        $el.fadeIn(exports.duration);
+    };
+
+    exports.transitionType = function (name) {
+        image.transitionType = name;
+    };
+
+    exports.hide = function () {
+        $el.fadeOut(exports.duration);
+    };
 
 });

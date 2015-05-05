@@ -28,8 +28,8 @@
         var scene = canvas.createScene(document.getElementById('test'));
         var img = new canvas.ImageEntity();
         var img2 = new canvas.ImageEntity();
-        img2.load('/asset/test/fg1.png');
-        img.load('/asset/test/bg1.bmp');
+        img2.load('/asset/test/fg1.png', 2000);
+        img.load('/asset/test/bg1.bmp', 2000);
         img2.x = 400;
         scene.add(img);
         scene.add(img2);
@@ -48,27 +48,7 @@
             }, 3000, 'easeInElastic').wait(1000).to({
                 y: 0
             }, 1000);
-
-            setTimeout(function () {
-
-                myTween.pause();
-                setTimeout(function () {
-                    myTween.play();
-                }, 2000);
-
-            }, 4000);
-
-            /*img.animate({
-             x: 200,
-             y: 200
-             }, 2000, 'easeInOutBounce', function () {
-             img.animate({
-             x: 0,
-             y: 0
-             }, 2000, 'easeInOutBounce');
-             });*/
-
-        }, 2000);
+        }, 0);
         setTimeout(function () {
 
             img2.load('/asset/test/fg2.png', 2000);

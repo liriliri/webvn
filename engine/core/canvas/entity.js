@@ -1,4 +1,4 @@
-webvn.extend('canvas', ['class', 'loader'], function (exports, kclass, loader) {
+webvn.extend('canvas', ['class', 'loader', 'anim'], function (exports, kclass, loader, anim) {
 
     var Entiy = kclass.create({
 
@@ -6,9 +6,7 @@ webvn.extend('canvas', ['class', 'loader'], function (exports, kclass, loader) {
             "use strict";
             this.x = 0;
             this.y = 0;
-            this.alpha = 1;
             this.visible = false;
-            this.duration = 0;
         },
 
         render: function () {}
@@ -20,18 +18,40 @@ webvn.extend('canvas', ['class', 'loader'], function (exports, kclass, loader) {
         constructor: function ImageEntity() {
             this.callSuper();
 
+            this.alpha = 1;
             this.width = 0;
             this.height = 0;
             this.loaded = false;
             this.progress = 1;
+            this.transitionType = 'linearBlur';
         },
 
-        load: function (src) {
+        fadeIn: function (duration) {
+            this.alpha = 0;
+            this.visible = true;
+            anim.create(this).to({
+                alpha: 1
+            }, duration);
+        },
+
+        load: function (src, duration) {
             "use strict";
             var self = this;
 
             loader.image(src).then(function (image) {
-                self._load(image);
+                if (self.image) {
+                    self.image2 = self.image;
+                    self._load(image);
+                } else {
+                    self._load(image);
+                    self.fadeIn(duration);
+                    return;
+                }
+
+                self.progress = 0;
+                anim.create(self).to({
+                    progress: 1
+                }, duration);
             });
         },
 
@@ -40,12 +60,11 @@ webvn.extend('canvas', ['class', 'loader'], function (exports, kclass, loader) {
             this.image = image;
             this.width = image.width;
             this.height = image.height;
-            this.loaded = true;
         },
 
         render: function (scene) {
             "use strict";
-            if (!this.loaded) {
+            if (!this.visible) {
                 return;
             }
 
@@ -53,9 +72,16 @@ webvn.extend('canvas', ['class', 'loader'], function (exports, kclass, loader) {
 
             var image = this.image,
                 x = this.x,
-                y = this.y;
+                y = this.y,
+                alpha = this.alpha,
+                transitionType = this.transitionType,
+                progress = this.progress;
 
-            ctx.drawImage(image, x, y);
+            if (progress !== 1) {
+                ctx.drawTransition(this.image2, image, progress, transitionType, x, y, alpha);
+            } else {
+                ctx.drawImage(image, x, y, alpha);
+            }
         }
 
     });
