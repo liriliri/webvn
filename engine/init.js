@@ -4,7 +4,7 @@ webvn.use(['script', 'config'], function (script, config, s) {
     s.isReady = true;
     s.call();
     // Load script and begin executing it
-    if (!config.test) {
+    if (config.build !== 'test') {
         script.load();
     }
 });

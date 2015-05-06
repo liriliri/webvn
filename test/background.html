@@ -10,9 +10,10 @@
     <div id="webvn"></div>
 </div>
 <div id="scenario" class="hidden">
-    bg -d -s=corridor
-    bg -s=living_room
+    bg -d -s=corridor -sc=2 -x=-640 -y=-360
+    bg -s=living_room -f='{"name":"emboss", "value":2}'
     bg -du=2000 -s=corridor
+    bg -a='{"scaleX":1, "scaleY":1, "x":0, "y":0}' -du=10000
     bg -t=linearBlur -s=living_room
     bg -d=false
 </div>

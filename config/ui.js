@@ -6,13 +6,17 @@ webvn.extend('config', function (exports) {
         extension: 'jpg',
         duration: 300,
         fadeIn: true,
-        transition: 'linear',
-        fadeOut: true
+        fadeOut: true,
+        transition: 'linear'
     };
 
     exports.uiFigure = {
         path: 'asset/fgimage/',
-        extension: 'png'
+        extension: 'png',
+        duration: 300,
+        fadeIn: true,
+        fadeOut: true,
+        transition: 'linear'
     };
 
     exports.uiVideo = {

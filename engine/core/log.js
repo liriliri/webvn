@@ -24,9 +24,11 @@ webvn.module('log', ['config', 'util'], function (config, util) {
         } else {
             errStack = getErrorStack();
         }
-        if (!config.debug) {
+
+        if (config.build === 'release') {
             return;
         }
+
         console.log('%c' + '!! ' + str + '\n' + errStack,
             'color: ' + colors.error);
     };
@@ -43,9 +45,11 @@ webvn.module('log', ['config', 'util'], function (config, util) {
         if (displayFile) {
             fileInfo = ' ' + getFileInfo();
         }
-        if (!config.debug) {
+
+        if (config.build === 'release') {
             return;
         }
+
         console.log('%c' + '> ' + str + (displayFile ? fileInfo : ''),
             'color: ' + colors.info);
     };
@@ -57,9 +61,11 @@ webvn.module('log', ['config', 'util'], function (config, util) {
      */
     exports.warn = function (str) {
         var fileInfo = getFileInfo();
-        if (!config.debug) {
+
+        if (config.build === 'release') {
             return;
         }
+
         console.log('%c' + '! ' + str + ' ' + fileInfo,
             'color: ' + colors.warn);
     };

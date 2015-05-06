@@ -1,76 +1,96 @@
 webvn.use(['ui', 'canvas', 'util', 'config', 'storage'], function (ui, canvas, util, config, storage) {
-
+    "use strict";
     var exports = ui.create('figure', 'canvas');
-
-    var $el = exports.$el;
-    $el.addClass('fill');
 
     var conf = config.create('uiFigure');
 
     var asset = storage.createAsset(conf.get('path'), conf.get('extension'));
 
-    // Scene init
+    var $el = exports.$el;
+    $el.addClass('fill');
+
     var scene = canvas.createScene(exports.getCanvas());
     canvas.renderer.add(scene);
 
-    // Figure container
-    var cache = [],
-        currentFigure;
+    var figures = [],
+        curFigure;
 
-    currentFigure = createFigure(0);
-
-    exports.select = function (num) {
-
-        currentFigure = createFigure(num);
-
-    };
-
-    exports.src = function (src) {
-
-        currentFigure.load(asset.get(src), 300);
-
-    };
-
-    exports.pos = function (x, y) {
-
-        if (util.isString(x)) {
-            var imageWidth = currentFigure.width,
-                canvasWidth = scene.height;
-            switch (x) {
-                case 'center':
-                    currentFigure.x = (canvasWidth - imageWidth) / 2;
-                    break;
-                case 'left':
-                    currentFigure.x = 0;
-                    break;
-                case 'right':
-                    currentFigure.x = canvasWidth - imageWidth;
-                    break;
-            }
-            return;
-        }
-
-        if (x) {
-            currentFigure.x = x;
-        }
-        if (y) {
-            currentFigure.y = y;
-        }
-
-    };
+    curFigure = createFigure(0);
 
     function createFigure(num) {
-
-        if (cache[num]) {
-            return cache[num];
+        if (figures[num]) {
+            return figures[num];
         }
 
-        var figure = cache[num] = new canvas.ImageEntity();
-
+        var figure = figures[num] = canvas.createImage();
         scene.add(figure);
 
         return figure;
-
     }
+
+    exports.duration = conf.get('duration');
+    exports.fadeIn = conf.get('fadeIn');
+    exports.fadeOut = conf.get('fadeOut');
+    exports.transition = conf.get('transition');
+
+    exports.select = function (num) {
+        curFigure = createFigure(num);
+    };
+
+    exports.scaleX = function (value) {
+        curFigure.scaleX = value;
+    };
+
+    exports.scaleY = function (value) {
+        curFigure.scaleY = value;
+    };
+
+    exports.scale = function (value) {
+        curFigure.scaleX = curFigure.scaleY = value;
+    };
+
+    exports.alpha = function (value) {
+        curFigure.alpha = value;
+    };
+
+    exports.filter = function (value) {
+        curFigure.filter = value;
+    };
+
+    exports.load = function (src) {
+        curFigure.transition = exports.transition;
+        curFigure.load(asset.get(src), exports.duration);
+    };
+
+    exports.position = function (x, y) {
+        curFigure.setPosition(x, y);
+    };
+
+    exports.show = function () {
+        if (exports.fadeIn) {
+            $el.fadeIn(exports.duration);
+        } else {
+            $el.show();
+        }
+    };
+
+    exports.hide = function () {
+        if (exports.fadeOut) {
+            $el.fadeOut(exports.duration);
+        } else {
+            $el.hide();
+        }
+    };
+
+    exports.animate = function (to) {
+        curFigure.animate(to, exports.duration);
+    };
+
+    var save = storage.create('figure');
+    save.save(function (value) {
+        // Save something here
+    }).load(function (value) {
+        // Restore something here
+    });
 
 });

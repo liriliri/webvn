@@ -1,31 +1,35 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Figure</title>
-		<script>
-		var config = {
-			debug: true,
-			test: true
-		};
-		</script>
-		<script src="/engine/core/webvn.js"></script>
-	</head>
-	<body>
-		<div class="center">
-			<div id="webvn"></div>
-		</div>
-		<div id="scenario" class="hidden">
-			fg -d -sel=0 -s=/asset/test/fg1.png -pos=left
-			fg -sel=1 -s=/asset/test/fg4.png -pos=center
-			fg -sel=2 -s=/asset/test/fg3.png -pos=right
-			fg -sel=0 -s=/asset/test/fg2.png
-		</div>
-		<script>
-		webvn.call(['test'], function (s, test) {
-			var component = new test.Component('scenario');
-			component.start();
-		});
-		</script>
-	</body>
+<head>
+    <meta charset="utf-8">
+    <title>Figure</title>
+    <script src="/engine/core/webvn.js" data-build="test"></script>
+</head>
+<body>
+<div class="center">
+    <div id="webvn"></div>
+</div>
+<div id="scenario" class="hidden">
+    fg -d -sel=0 -s=fg1 -pos=center -f='{"name":"emboss", "value":2}'
+    fg -s=fg2 -t=burn -sx=1.5
+    fg -a='{"x":0, "y":200, "alpha":0.8, "ease":"easeInElastic"}' -du=3000
+    fg -pos=bottomCenter -al=1
+    fg -pos=topCenter
+    fg -sel=1 -s=fg3 -pos=left
+    fg -pos=bottomLeft
+    fg -pos=topLeft
+    fg -sel=2 -s=fg4 -pos=right
+    fg -pos=bottomRight
+    fg -pos=topRight
+    fg -sel=0 -pos=bottomCenter
+    fg -sel=1 -pos=bottomLeft
+    fg -sel=2 -pos=bottomRight
+</div>
+<script>
+    webvn.call(['test'], function (test) {
+        var component = new test.Component('scenario');
+        component.start();
+    });
+</script>
+</body>
 </html>

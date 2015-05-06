@@ -3,7 +3,8 @@ webvn.extend('webgl', ['class'], function (exports, kclass) {
 
     var DrawImageProgram = exports.DrawImageProgram,
         createFrameBuffer = exports.createFrameBuffer,
-        TransitionProgram = exports.TransitionProgram;
+        TransitionProgram = exports.TransitionProgram,
+        FilterProgram = exports.FilterProgram;
 
     var WebGL2D = exports.WebGL2D = kclass.create({
 
@@ -25,26 +26,45 @@ webvn.extend('webgl', ['class'], function (exports, kclass) {
 
             this.drawImageProgram = new DrawImageProgram(gl, view);
             this.transitionProgram = new TransitionProgram(gl, view);
+            this.filterProgram = new FilterProgram(gl, view);
         },
 
-        drawImage: function (image, x, y, alpha) {
-            this.drawImageProgram.use().render(image, x, y, alpha);
+        drawImage: function (image, x, y, alpha, scaleX, scaleY) {
+            this.drawImageProgram.use().render(image, x, y, alpha, scaleX, scaleY);
         },
 
-        drawTransition: function (image1, image2, progress, type, x, y, alpha) {
+        drawTransition: function (image1, image2, progress, type, x1, y1, x2, y2, alpha, scaleX, scaleY, filter) {
             var gl = this.gl,
                 view = this.view;
 
             var frameBuffer1 = createFrameBuffer(gl, view, 0),
                 frameBuffer2 = createFrameBuffer(gl, view, 1);
             frameBuffer1.start();
-            this.drawImage(image1, x, y, alpha);
+            this.drawImage(image1, x1, y1, alpha, scaleX, scaleY);
             frameBuffer1.end();
             frameBuffer2.start();
-            this.drawImage(image2, x, y, alpha);
+            this.drawImage(image2, x2, y2, alpha, scaleX, scaleY);
             frameBuffer2.end();
+
+            if (filter) this.bufferFilter();
             this.transitionProgram.render(frameBuffer1.get(),
-                frameBuffer2.get(), progress, type);
+                frameBuffer2.get(), progress, type, filter);
+            if (filter) this.drawFilter(filter.name, filter.value);
+        },
+
+        bufferFilter: function () {
+            var gl = this.gl,
+                view = this.view;
+
+            this.filterFrameBuffer = createFrameBuffer(gl, view, 2);
+            this.filterFrameBuffer.start();
+        },
+
+        drawFilter: function (type, value) {
+            var filterFrameBuffer = this.filterFrameBuffer;
+
+            filterFrameBuffer.end();
+            this.filterProgram.render(filterFrameBuffer.get(), type, value);
         },
 
         clear: function () {

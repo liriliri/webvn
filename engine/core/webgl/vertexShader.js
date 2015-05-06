@@ -1,4 +1,5 @@
 webvn.use(["webgl"], function (webgl) { webgl.vertexShader.create({
     "drawImage": "attribute vec2 a_Position;\r\nuniform mat4 u_ModelMatrix;\r\nvarying vec2 v_TexCoord;\r\nuniform vec2 u_Resolution;\r\n\r\nvoid main() {\r\n    float w = 2.0 / u_Resolution.x;\r\n    float h = -2.0 / u_Resolution.y;\r\n    mat4 ViewMatrix = mat4(\r\n        w, 0, 0, 0,\r\n        0, h, 0, 0,\r\n        0, 0, 1.0, 1.0,\r\n        -1.0, 1.0, 0, 0\r\n    );\r\n\r\n    gl_Position = ViewMatrix * u_ModelMatrix * vec4(a_Position, 1.0, 1.0);\r\n    v_TexCoord = a_Position;\r\n}",
+    "filter": "precision mediump float;\r\nattribute vec2 a_Position;\r\nattribute vec2 a_Uv;\r\nvarying vec2 v_Uv;\r\nvoid main() {\r\n    v_Uv = a_Uv;\r\n    gl_Position = vec4(a_Position.x, -a_Position.y, 0.0, 1.0);\r\n}",
     "transition": "attribute vec2 a_Position;\r\n\r\nvoid main() {\r\n    gl_Position = vec4(2.0 * a_Position - 1.0, 0.0, 1.0);\r\n}"
 });});

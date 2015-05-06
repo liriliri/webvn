@@ -19,16 +19,14 @@ bgm -s=/asset/test/bgm2.ogg -fi=true -du=2000
 
 bg -d -s=living_room
 
-fg -d -sel=0 -s=fg1 -pos=left
-fg -sel=1 -s=fg4 -pos=center
-fg -sel=2 -s=fg3 -pos=right
+fg -d -sel=0 -s=fg1 -pos=bl
+fg -sel=1 -s=fg4 -pos=bc
+fg -sel=2 -s=fg3 -pos=br
 fg -sel=0 -s=fg2
 
 dialog -d\
     --name=ユルシュール --text="モトカレ、何をしていますの！？　冗談では済まされませんわよ！"\
     -v=/asset/test/vo1.ogg
-
-particle -d=false
 
 dialog -t="大丈夫ですの？　私のペットが迷惑を掛けてしまって、申し訳ありませんわ"\
     -v=/asset/test/vo2.ogg

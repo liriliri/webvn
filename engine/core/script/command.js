@@ -111,6 +111,14 @@ webvn.extend('script', ['class', 'util'], function (exports, kclass, util) {
          * @returns {string|boolean|number|object}
          */
         parseValue: function (type, value) {
+            // Support undefined and null assignment
+            switch (value) {
+                case 'undefined':
+                    return;
+                case 'null':
+                    return null;
+            }
+
             switch (type) {
                 case 'String':
                     return String(value);

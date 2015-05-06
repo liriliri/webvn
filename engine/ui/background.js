@@ -9,7 +9,7 @@ webvn.use(['ui', 'canvas', 'storage', 'config'], function (ui, canvas, storage, 
     var $el = exports.$el;
     $el.addClass('fill');
 
-    var image = new canvas.ImageEntity(),
+    var image = canvas.createImage(),
         scene = new canvas.Scene(exports.getCanvas());
 
     scene.add(image);
@@ -23,6 +23,30 @@ webvn.use(['ui', 'canvas', 'storage', 'config'], function (ui, canvas, storage, 
     exports.load = function (src) {
         image.transition = exports.transition;
         image.load(asset.get(src), exports.duration);
+    };
+
+    exports.filter = function (value) {
+        image.filter = value;
+    };
+
+    exports.scaleX = function (value) {
+        image.scaleX = value;
+    };
+
+    exports.scaleY = function (value) {
+        image.scaleY = value;
+    };
+
+    exports.scale = function (value) {
+        image.scaleX = image.scaleY = value;
+    };
+
+    exports.position = function (x, y) {
+        image.setPosition(x, y);
+    };
+
+    exports.animate = function (to) {
+        image.animate(to, exports.duration);
     };
 
     exports.show = function () {
