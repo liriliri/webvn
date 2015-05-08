@@ -13,7 +13,6 @@ webvn.use(['ui', 'canvas', 'storage', 'config'], function (ui, canvas, storage, 
         scene = new canvas.Scene(exports.getCanvas());
 
     scene.add(image);
-    canvas.renderer.add(scene);
 
     exports.duration = conf.get('duration');
     exports.fadeIn = conf.get('fadeIn');
@@ -50,6 +49,8 @@ webvn.use(['ui', 'canvas', 'storage', 'config'], function (ui, canvas, storage, 
     };
 
     exports.show = function () {
+        canvas.renderer.add(scene);
+
         if (exports.fadeIn) {
             $el.fadeIn(exports.duration);
         } else {
@@ -58,6 +59,8 @@ webvn.use(['ui', 'canvas', 'storage', 'config'], function (ui, canvas, storage, 
     };
 
     exports.hide = function () {
+        canvas.renderer.remove(scene);
+
         if (exports.fadeOut) {
             $el.fadeOut(exports.duration);
         } else {

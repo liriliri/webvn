@@ -32,8 +32,8 @@
 
         }
         .text {
-            font-family: STSong;
-            text-shadow: 0px 0px 3px $primary-color;
+            text-shadow: 0 0 3px $primary-color;
+            line-height: 1.5em;
             color: #fff;
             font-size: 30px;
         }

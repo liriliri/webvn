@@ -198,7 +198,7 @@ webvn.extend('webgl', ['class', 'log', 'util'], function (exports, kclass, log, 
 
             this.value = gl.createProgram();
             var fragShader = createShader(gl, 'frag');
-            fragShader.source(type);
+            fragShader.source('trans_' + type);
             var vertexShader = createShader(gl, 'vertex');
             vertexShader.source('transition');
 

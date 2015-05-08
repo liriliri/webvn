@@ -1,36 +1,34 @@
-// Particle ui component
-
 webvn.use(['ui', 'canvas'], function (ui, canvas) {
 
-var particle = ui.create('particle', 'canvas'),
-    $el = particle.$el;
+    var particle = ui.create('particle', 'canvas'),
+        $el = particle.$el;
 
-$el.addClass('fill');
+    $el.addClass('fill');
 
-var emitter = new canvas.Emitter(particle.getCanvas());
+    var emitter = new canvas.Emitter(particle.getCanvas());
 
-particle.show = function () {
+    particle.show = function () {
 
-    canvas.renderer.add(emitter);
-    $el.fadeIn();
+        canvas.renderer.add(emitter);
+        $el.fadeIn();
 
-};
+    };
 
-particle.hide = function () {
+    particle.hide = function () {
 
-    $el.fadeOut(function () {
+        $el.fadeOut(function () {
 
-        canvas.renderer.remove(emitter);
+            canvas.renderer.remove(emitter);
 
-    });
+        });
 
-};
+    };
 
-// Set the predefined type
-particle.type = function (name) {
+    // Set the predefined type
+    particle.type = function (name) {
 
-    emitter.reConfigure(name);
+        emitter.reConfigure(name);
 
-};
+    };
 
 });

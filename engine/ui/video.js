@@ -11,7 +11,6 @@ webvn.use(['ui', 'media', 'script', 'config', 'storage'], function (ui, media, s
 
     vid.body(tpl);
 
-
     var video = media.createVideo($el.find('.video').get(0));
 
     /* Set action when video is clicked

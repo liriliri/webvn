@@ -12,6 +12,10 @@ webvn.use(['script', 'ui'], function (script, ui) {
                 type: 'Json',
                 shortHand: 'f'
             },
+            hide: {
+                type: 'Boolean',
+                shortHand: 'h'
+            },
             scaleX: {
                 type: 'Number',
                 shortHand: 'sx'
@@ -83,6 +87,7 @@ webvn.use(['script', 'ui'], function (script, ui) {
             'scaleY',
             'scale',
             'alpha',
+            'hide',
             'display',
             'select',
             'transition',
@@ -92,6 +97,12 @@ webvn.use(['script', 'ui'], function (script, ui) {
             'position',
             'animate'
         ],
+
+        hide: function (value) {
+            if (value) {
+                figure.hideFigure();
+            }
+        },
 
         filter: function (value) {
             figure.filter(value);

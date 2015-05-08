@@ -44,6 +44,14 @@ webvn.module('canvas', ['class', 'util'], function (kclass, util) {
             scenes.push(scene);
         };
 
+        exports.remove = function (scene) {
+            var index = scene.index;
+            if (index === undefined) {
+                return;
+            }
+            scenes.splice(index, 1);
+        };
+
         return exports;
     });
 

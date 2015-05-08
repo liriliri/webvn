@@ -10,7 +10,6 @@ webvn.use(['ui', 'canvas', 'util', 'config', 'storage'], function (ui, canvas, u
     $el.addClass('fill');
 
     var scene = canvas.createScene(exports.getCanvas());
-    canvas.renderer.add(scene);
 
     var figures = [],
         curFigure;
@@ -57,6 +56,10 @@ webvn.use(['ui', 'canvas', 'util', 'config', 'storage'], function (ui, canvas, u
         curFigure.filter = value;
     };
 
+    exports.hideFigure = function () {
+        curFigure.fadeOut(exports.duration);
+    };
+
     exports.load = function (src) {
         curFigure.transition = exports.transition;
         curFigure.load(asset.get(src), exports.duration);
@@ -67,6 +70,8 @@ webvn.use(['ui', 'canvas', 'util', 'config', 'storage'], function (ui, canvas, u
     };
 
     exports.show = function () {
+        canvas.renderer.add(scene);
+
         if (exports.fadeIn) {
             $el.fadeIn(exports.duration);
         } else {
@@ -75,6 +80,8 @@ webvn.use(['ui', 'canvas', 'util', 'config', 'storage'], function (ui, canvas, u
     };
 
     exports.hide = function () {
+        canvas.renderer.remove(scene);
+
         if (exports.fadeOut) {
             $el.fadeOut(exports.duration);
         } else {

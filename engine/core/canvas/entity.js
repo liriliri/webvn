@@ -134,6 +134,16 @@ webvn.extend('canvas', ['class', 'loader', 'anim', 'util'], function (exports, k
             }, duration);
         },
 
+        fadeOut: function (duration) {
+            var self = this;
+
+            anim.create(this).to({
+                alpha: 0
+            }, duration).call(function () {
+                self.visible = false;
+            });
+        },
+
         load: function (src, duration) {
             "use strict";
             var self = this;
