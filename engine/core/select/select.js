@@ -367,15 +367,6 @@ webvn.extend('select', ['class', 'util'], function (exports, kclass, util) {
          */
         contains: function (parent, node) {
             return parent !== node && parent.contains(node);
-        },
-        /**
-         * Extend Select prototype
-         * @function webvn.select.Select.extendFn
-         * @param {object} obj
-         */
-        extendFn: function (obj) {
-            var proto = Select.prototype;
-            util.mix(proto, obj);
         }
     });
 

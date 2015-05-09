@@ -1,57 +1,55 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Class Test</title>
-<script src="../core/webvn.js"></script>
-<script src="../core/loader.js"></script>
-<script src="../core/init.js"></script>
+    <meta charset="utf-8">
+    <title>Class</title>
+    <script src="../engine/core/webvn.js" data-build="test"></script>
 </head>
 <body>
 <script>
-webvn.loader.ready(function () {
+    webvn.call(['class'], function (kclass) {
 
-webvn.use(['class'], function (s, kclass) {
+        var Person = kclass.create({
+            constructor: function Person() {
+                this.name = 'unknown';
+            },
+            setName: function (str) {
+                this.name = str;
+            },
+            getClass: function () {
+                console.log('Person');
+            }
+        }, {
+            Test: function () {
+                s.log('Static function');
+            }
+        });
 
-    var Person = kclass.create({
-        constructor: function Person () {
-            this.name = 'unknown';
-        },
-        setName: function (str) {
-            this.name = str;
-        },
-        getClass: function () {
-            console.log('Person');
-        }
-    }, {
-        Test: function () {
-            s.log('Static function');
-        }
+        var Student = Person.extend({
+            constructor: function Student() {
+                this.stuid = 5;
+            },
+            getStuId: function () {
+
+            },
+            getClass: function () {
+                this.callSuper();
+                console.log('Student');
+            }
+        }, {});
+
+        Student.extendFn({
+            shoutOut: function () {
+                console.log('I am shouting out loud');
+            }
+        });
+
+        var a = new Student;
+
+        a.getClass();
+        a.shoutOut();
+
     });
-
-    var Student = Person.extend({
-        constructor: function Student () {
-            this.stuid = 5;
-        },
-        getStuId: function () {
-
-        },
-        getClass: function () {
-            this.callSuper();
-            console.log('Student');
-        }
-    }, {
-
-    });
-
-    a = new Student;
-    console.dir(Student);
-
-    a.getClass();
-
-});
-
-});
 </script>
 </body>
 </html>

@@ -53,15 +53,18 @@ webvn.module('class', ['util'], function (util) {
                 obj.__owner__ = _class;
             }
         });
+
         // Set statics
         util.each(sx, function (value, p) {
             _class[p] = value;
         });
-        // Extend function
+
         _class.extend = function (px, sx) {
             return extend.apply(null, [_class, px, sx]);
         };
+
         _class.prototype = px;
+
         return _class;
     }
 
@@ -92,8 +95,16 @@ webvn.module('class', ['util'], function (util) {
             key = keys[i];
             newPx[key] = px[key];
         }
-        _class.prototype = newPx;
         _class.superclass = superClass.prototype;
+
+        _class.extendFn = function (obj) {
+            util.mix(newPx, obj);
+        };
+
+        // fn: Short name for prototype
+        _class.fn = newPx;
+        _class.prototype = newPx;
+
         return _class;
     }
 
@@ -102,7 +113,9 @@ webvn.module('class', ['util'], function (util) {
      * @class webvn.class.Base
      */
     var Base = exports.Base = create({
+
         constructor: function Base () {},
+
         /**
          * Call Parent Function <br>
          * It will get the current method which is calling it,
@@ -124,8 +137,10 @@ webvn.module('class', ['util'], function (util) {
             if (!member) {
                 return undefined;
             }
+
             return member.apply(obj, args || []);
         }
+
     });
 
     return exports;

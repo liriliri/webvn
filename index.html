@@ -7,24 +7,25 @@
     <link rel="stylesheet" href="/engine/ui/css/index.css">
     <script>
         var testCore = [
-                'util',
-                'canvas',
-                'webgl',
-                'script',
-                'log',
-                'select',
-                'ui',
-                'anim'
-            ];
+            'util',
+            'class',
+            'canvas',
+            'webgl',
+            'script',
+            'log',
+            'select',
+            'ui',
+            'anim'
+        ];
         var testUi = [
-                'dialog',
-                'background',
-                'video',
-                'figure',
-                'cg',
-                'music',
-                'setting'
-            ];
+            'dialog',
+            'background',
+            'video',
+            'figure',
+            'cg',
+            'music',
+            'setting'
+        ];
     </script>
 </head>
 <body>
@@ -63,8 +64,8 @@
 <script>
     var i, len;
     var $testUi = $('#test-ui'),
-        $testCore = $('#test-core'),
-        body = '';
+            $testCore = $('#test-core'),
+            body = '';
     for (i = 0, len = testCore.length; i < len; i++) {
         body += '<li><a href="/test/' + testCore[i] + '.html">' + testCore[i] + '</a></li>'
     }
