@@ -1,5 +1,4 @@
-webvn.use(['script', 'ui'],
-    function (script, ui) {
+webvn.use(['script', 'ui'], function (script, ui) {
         var video = ui.get('video');
         /**
          * Video Command

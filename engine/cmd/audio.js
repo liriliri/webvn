@@ -6,10 +6,12 @@ webvn.use(['script', 'media'], function (script, media) {
      * @class webvn.cmd.BgmCommand
      * @extends webvn.script.Command
      */
-    var BgmCommand = script.Command.extend({
+    script.createCommand({
+
         constructor: function BgmCommand() {
             this.callSuper('bgm');
         },
+
         /**
          * @memberof webvn.cmd.BgmCommand
          * @property {number} duration(du) duration of fadein and fadeout
@@ -53,8 +55,14 @@ webvn.use(['script', 'media'], function (script, media) {
             volume: {
                 type: 'Number',
                 shortHand: 'v'
+            },
+            playNext: {
+                type: 'Boolean',
+                shortHand: 'pn',
+                default: true
             }
         },
+
         orders: [
             'fadeIn',
             'fadeOut',
@@ -62,20 +70,25 @@ webvn.use(['script', 'media'], function (script, media) {
             'play',
             'loop',
             'stop',
-            'src'
+            'src',
+            'playNext'
         ],
+
         fadeIn: function (value) {
             "use strict";
             bgm.fadeIn = value;
         },
+
         fadeOut: function (value) {
             "use strict";
             bgm.fadeOut = value;
         },
+
         duration: function (value) {
             "use strict";
             bgm.duration = value;
         },
+
         play: function (value) {
             "use strict";
             if (value) {
@@ -84,22 +97,25 @@ webvn.use(['script', 'media'], function (script, media) {
                 bgm.pause();
             }
         },
+
         loop: function (value) {
             "use strict";
             bgm.loop(value);
         },
+
         stop: function (value) {
             "use strict";
             if (value) {
                 bgm.stop();
             }
         },
+
         src: function (value) {
             "use strict";
             bgm.load(value);
         }
+
     });
-    new BgmCommand;
 
     /**
      * Se Command
@@ -108,10 +124,12 @@ webvn.use(['script', 'media'], function (script, media) {
      */
     // Sound Effect
     var se = media.getAudio('se');
-    var SeCommand = script.Command.extend({
+    script.createCommand({
+
         constructor: function SeCommand() {
             this.callSuper('se');
         },
+
         /**
          * @memberof webvn.cmd.SeCommand
          * @property {Boolean} loop(l) loop bgm or not
@@ -127,20 +145,23 @@ webvn.use(['script', 'media'], function (script, media) {
                 shortHand: 's'
             }
         },
+
         orders: [
             'src',
             'loop'
         ],
+
         src: function (value) {
             "use strict";
             se.load(value);
         },
+
         loop: function (value) {
             "use strict";
             se.loop(value);
         }
+
     });
-    new SeCommand;
 
     // Voice
     var voice = media.getAudio('voice');
@@ -149,10 +170,12 @@ webvn.use(['script', 'media'], function (script, media) {
      * @class webvn.cmd.VoiceCommand
      * @extends webvn.script.Command
      */
-    var VoiceCommand = script.Command.extend({
+    script.createCommand({
+
         constructor: function VoiceCommand() {
             this.callSuper('voice');
         },
+
         /**
          * @memberof webvn.cmd.VoiceCommand
          * @property {Boolean} loop(l) loop bgm or not
@@ -168,19 +191,22 @@ webvn.use(['script', 'media'], function (script, media) {
                 shortHand: 's'
             }
         },
+
         orders: [
             'src',
             'loop'
         ],
+
         src: function (value) {
             "use strict";
             voice.load(value);
         },
+
         loop: function (value) {
             "use strict";
             voice.loop(value);
         }
+
     });
-    new VoiceCommand;
 
 });

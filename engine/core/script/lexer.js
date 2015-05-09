@@ -205,7 +205,9 @@ webvn.module('lexer', ['class', 'log', 'util'], function (kclass, log, util) {
             }
             var code = char.charCodeAt(0);
             return ((code >= 65) && (code <= 90)) ||
-                ((code >= 97) && (code <= 122));
+                ((code >= 97) && (code <= 122)) ||
+                // Chinese is regarded as legal letter too.
+                ((code >= 19968) && (code <= 40869));
         },
         // Line comment, starts with '//' until the line break
         commentLine: function () {

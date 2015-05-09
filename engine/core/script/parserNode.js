@@ -24,7 +24,7 @@ webvn.module('parserNode', ['class', 'util'],
 
         exports.command = function (command) {
 
-            command = formatParam(escapeDoubleQuote(command));
+            command = formatParam(escapeQuote(command));
 
             return '"command", "' + util.trim(command) + '"';
 
@@ -38,7 +38,7 @@ webvn.module('parserNode', ['class', 'util'],
                 lines[i] = util.trim(lines[i]);
             }
             code = lines.join(';').replace(/;;/g, ';');
-            code = escapeDoubleQuote(code);
+            code = escapeQuote(code);
 
             return '"code", "' + code + '"';
 
@@ -121,12 +121,12 @@ webvn.module('parserNode', ['class', 'util'],
         // Change {{param}} to " + param + "
         function formatParam(text) {
 
-            return text.replace(/\{\{/g, '" + ').replace(/}}/g, ' + "');
+            return text.replace(/\{\{/g, '\'" + ').replace(/}}/g, ' + "\'');
 
         }
 
         // https://github.com/joliss/js-string-escape/blob/master/index.js
-        function escapeDoubleQuote(text) {
+        var escapeQuote = exports.escapeQuote = function (text) {
 
             return ('' + text).replace(/["'\\\n\r\u2028\u2029]/g, function (character) {
                 switch (character) {
@@ -145,7 +145,7 @@ webvn.module('parserNode', ['class', 'util'],
                 }
             });
 
-        }
+        };
 
         return exports;
 

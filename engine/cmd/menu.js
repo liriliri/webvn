@@ -1,5 +1,4 @@
-webvn.use(['script', 'ui'],
-    function (script, ui) {
+webvn.use(['script', 'ui'], function (script, ui) {
 
         var menu = ui.get('menu');
         /**

@@ -28,4 +28,19 @@ webvn.extend('config', function (exports) {
         }
     };
 
+    exports.media = {
+        bgm: {
+            path: 'asset/bgm/',
+            extension: 'ogg'
+        },
+        se: {
+            path: 'asset/sound/',
+            extension: 'ogg'
+        },
+        vo: {
+            path: 'asset/voice/',
+            extension: 'ogg'
+        }
+    };
+
 });

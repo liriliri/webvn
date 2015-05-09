@@ -111,6 +111,16 @@ exports.copy = {
                 src: ["*.*", "**/*.*"],
                 dest: 'dist/engine/img'
             }]
+    },
+    demo: {
+        files: [
+            {
+                expand: true,
+                cwd: 'dist/engine',
+                src: ["*.*", "**/*.*"],
+                dest: '../WebVN-demo/engine'
+            }
+        ]
     }
 };
 

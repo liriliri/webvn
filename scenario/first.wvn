@@ -4,6 +4,27 @@
 
 // start | 主程序入口
 
+if (true) {
+    menu -d                           \
+        -bgm=/asset/test/bgm1.ogg     \
+        -fi=false                     \
+        -fo=false                     \
+        -bhs=/asset/test/onmouse.wav  \
+        -bcs=/asset/test/onclick.wav  \
+        -btn='{"start":"开始旅程"}'
+} else {
+    menu -d                           \
+        -bgm=/asset/test/bgm1.ogg     \
+        -fi=false                     \
+        -fo=false                     \
+        -bhs=/asset/test/onmouse.wav  \
+        -bcs=/asset/test/onclick.wav
+}
+
+function myDialog(name, text) {
+    dialog -n={{name}} -t={{text}}
+}
+
 /*
 `console.log('code trigger!')
 
@@ -13,9 +34,9 @@ console.log(x+5);
 ```
 */
 
-video -d -pl -c=stop -s=video
+bgm -s=bgm2 'Come on!'
 
-bgm -s=/asset/test/bgm2.ogg -fi=true -du=2000
+// video -d -pl -c=stop -s=video
 
 bg -d -s=living_room
 
@@ -24,8 +45,11 @@ fg -sel=1 -s=fg4 -pos=bc
 fg -sel=2 -s=fg3 -pos=br
 fg -sel=0 -s=fg2
 
-dialog -d\
-    --name=ユルシュール --text="モトカレ、何をしていますの！？　冗談では済まされませんわよ！"\
+dialog -d
+
+myDialog RedHood "Hello code world!"
+
+dialog --name=ユルシュール --text="モトカレ、何をしていますの！？　冗談では済まされませんわよ！"\
     -v=/asset/test/vo1.ogg
 
 dialog -t="大丈夫ですの？　私のペットが迷惑を掛けてしまって、申し訳ありませんわ"\

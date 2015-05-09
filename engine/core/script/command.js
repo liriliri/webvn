@@ -1,11 +1,13 @@
 webvn.extend('script', ['class', 'util'], function (exports, kclass, util) {
     "use strict";
-
-    // Container of commands
     var commands = {};
 
     exports.getCommand = function (name) {
         return commands[name];
+    };
+
+    exports.createCommand = function (px) {
+        new (Command.extend(px));
     };
 
     /**
@@ -15,34 +17,43 @@ webvn.extend('script', ['class', 'util'], function (exports, kclass, util) {
      * @class webvn.script.Command
      * @param {string} name command name
      */
-    exports.Command = kclass.create({
+    var Command = exports.Command = kclass.create({
         constructor: function Command(name) {
             // Add to commands first
             if (commands[name]) {
                 log.warn('The command ' + name + ' is overwritten');
             }
             commands[name] = this;
-            // Init shortHands
-            var shortHands = {};
+
+            // Init shortHands and defaults
+            var shortHands = {},
+                defaults = {};
             util.each(this.options, function (value, key) {
-                if (value.shortHand) {
-                    shortHands[value.shortHand] = key;
-                }
+                value.shortHand && (shortHands[value.shortHand] = key);
+                value.default && (defaults[key] = value.default);
             });
             this.shortHands = shortHands;
+            this.defaults = defaults;
         },
+
         shortHands: {},
         options: {},
         orders: [],
+
+        playNext: function (value) {
+            value && exports.play();
+        },
+
         /**
          * Execute command with given options.
          * @method webvn.script.Command#exec
          * @param {object} values
          */
-        exec: function (values) {
+        execute: function (values) {
             values = this.parseOptions(values);
             this.execution(values);
         },
+
         /**
          * Call functions according to option values.
          * If you like, you can re-implement it.
@@ -50,16 +61,35 @@ webvn.extend('script', ['class', 'util'], function (exports, kclass, util) {
          * @param {object} values values parsed from scripts
          */
         execution: function (values) {
-            "use strict";
-            var orders = this.orders, value, order;
+            var orders = this.orders,
+                defaults = this.defaults,
+                value, order, def;
+
+            this.beforeExec(values);
+
             for (var i = 0, len = orders.length; i < len; i++) {
                 order = orders[i];
                 value = values[order];
-                if (value !== undefined && this[order] && util.isFunction(this[order])) {
-                    this[order](value);
+                def = defaults[order];
+
+                if (!util.isFunction(this[order])) {
+                     continue;
+                }
+
+                if (value !== undefined) {
+                    this[order](value, values);
+                } else if (def !== undefined) {
+                    this[order](def, values);
                 }
             }
+
+            this.afterExec(values);
         },
+
+        beforeExec: function (values) {},
+
+        afterExec: function (values) {},
+
         /**
          * Parse options for final usage in execution function.
          * @param values
@@ -103,12 +133,13 @@ webvn.extend('script', ['class', 'util'], function (exports, kclass, util) {
             });
             return ret;
         },
+
         /**
          * Parse option value into specific type
          * @method webvn.script.Command#parseValue
          * @param {string} type String, Boolean...
          * @param {string} value value to be parsed
-         * @returns {string|boolean|number|object}
+         * @returns {*}
          */
         parseValue: function (type, value) {
             // Support undefined and null assignment
@@ -119,19 +150,22 @@ webvn.extend('script', ['class', 'util'], function (exports, kclass, util) {
                     return null;
             }
 
+            // LowerCase the type, so that you can write either 'String' or 'string'
+            type = type.toLowerCase();
             switch (type) {
-                case 'String':
+                case 'string':
                     return String(value);
-                case 'Boolean':
+                case 'boolean':
                     return !(value === 'false' || value === '0');
-                case 'Number':
+                case 'number':
                     return Number(value);
-                case 'Json':
+                case 'json':
                     return JSON.parse(value);
                 default:
                     return value;
             }
         }
+
     });
 
     exports.parseCommand = function (text) {
@@ -194,7 +228,7 @@ webvn.extend('script', ['class', 'util'], function (exports, kclass, util) {
 
         var options = {},
             ret = {},
-            value = [];
+            values = [];
         ret.name = parts.shift();
         for (i = 0, len = parts.length; i < len; i++) {
             var part = parts[i];
@@ -203,14 +237,14 @@ webvn.extend('script', ['class', 'util'], function (exports, kclass, util) {
                 options[opt.name] = opt.value;
                 continue;
             }
-            value.push(part);
+            values.push(part);
         }
         ret.options = options;
-        ret.value = value;
+        ret.values = values;
 
         return ret;
 
-    }
+    };
 
     /* Change --t=none
      * into {name:'--t', value:'none'}

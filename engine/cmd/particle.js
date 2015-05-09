@@ -1,5 +1,4 @@
-webvn.use(['script', 'ui'],
-    function (script, ui) {
+webvn.use(['script', 'ui'], function (script, ui) {
 
         var particle = ui.get('particle');
 

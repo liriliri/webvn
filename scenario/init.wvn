@@ -1,18 +1,5 @@
-// Initialization script
-
-if (true) {
-    menu -d                           \
-        -bgm=/asset/test/bgm1.ogg     \
-        -fi=false                     \
-        -fo=false                     \
-        -bhs=/asset/test/onmouse.wav  \
-        -bcs=/asset/test/onclick.wav  \
-        -btn='{"start":"开始旅程"}'
-} else {
-    menu -d                           \
-        -bgm=/asset/test/bgm1.ogg     \
-        -fi=false                     \
-        -fo=false                     \
-        -bhs=/asset/test/onmouse.wav  \
-        -bcs=/asset/test/onclick.wav
-}
+/* Initialization script
+ * Alias and macro function are defined here.
+ * Creating your own alias and macro here is not recommended.
+ * Please create another script file to define your own.
+ */

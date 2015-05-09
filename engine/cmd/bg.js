@@ -6,7 +6,7 @@ webvn.use(['script', 'ui'], function (script, ui) {
      * @class webvn.cmd.BgCommand
      * @extends webvn.script.Command
      */
-    var Command = script.Command.extend({
+    script.createCommand({
 
         constructor: function BgCommand() {
             this.callSuper('bg');
@@ -68,6 +68,11 @@ webvn.use(['script', 'ui'], function (script, ui) {
             src: {
                 type: 'String',
                 shortHand: 's'
+            },
+            playNext: {
+                type: 'Boolean',
+                shortHand: 'pn',
+                default: true
             }
         },
 
@@ -85,7 +90,8 @@ webvn.use(['script', 'ui'], function (script, ui) {
             'scaleY',
             'transition',
             'display',
-            'src'
+            'src',
+            'playNext'
         ],
 
         fadeIn: function (value) {
@@ -150,5 +156,4 @@ webvn.use(['script', 'ui'], function (script, ui) {
 
     });
 
-    new Command;
 });

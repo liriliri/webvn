@@ -1,34 +1,53 @@
-webvn.use(['script', 'log'],
-    function (script, log) {
+webvn.use(['script', 'log'], function (script, log) {
 
-script.createCommand('log', {
-    type: {
-        type: 'String',
-        shortHand: 't'
-    },
-    msg: {
-        type: 'String',
-        shortHand: 'm'
-    }
-}, function (options, value) {
+    var type = 'info';
 
-    var type = options.type,
-        msg = options.msg;
+    script.createCommand({
 
-    switch (type) {
-        case 'error':
-            log.error(msg);
-            break;
-        case 'info':
-            log.info(msg);
-            break;
-        case 'warn':
-            log.warn(msg);
-            break;
-        default:
-            log(msg);
-    }
+        constructor: function FigureCommand() {
+            this.callSuper('log');
+        },
 
-});
+        options: {
+            type: {
+                type: 'String',
+                shortHand: 't'
+            },
+            message: {
+                type: 'String',
+                shortHand: 'm'
+            },
+            playNext: {
+                type: 'Boolean',
+                shortHand: 'pn',
+                default: true
+            }
+        },
+
+        orders: [
+            'type',
+            'message',
+            'playNext'
+        ],
+
+        type: function (value) {
+            type = value;
+        },
+
+        message: function (value) {
+            switch (type) {
+                case 'info':
+                    log.info(value);
+                    break;
+                case 'warn':
+                    log.warn(value);
+                    break;
+                case 'error':
+                    log.error(value);
+                    break;
+            }
+        }
+
+    });
 
 });

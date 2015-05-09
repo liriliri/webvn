@@ -1,7 +1,7 @@
 webvn.use(['script', 'ui'], function (script, ui) {
     var figure = ui.get('figure');
 
-    var Command = script.Command.extend({
+    script.createCommand({
 
         constructor: function FigureCommand() {
             this.callSuper('fg');
@@ -75,6 +75,11 @@ webvn.use(['script', 'ui'], function (script, ui) {
             animate: {
                 type: 'Json',
                 shortHand: 'a'
+            },
+            playNext: {
+                type: 'Boolean',
+                shortHand: 'pn',
+                default: true
             }
         },
 
@@ -95,7 +100,8 @@ webvn.use(['script', 'ui'], function (script, ui) {
             'x',
             'y',
             'position',
-            'animate'
+            'animate',
+            'playNext'
         ],
 
         hide: function (value) {
@@ -172,7 +178,5 @@ webvn.use(['script', 'ui'], function (script, ui) {
             figure.position(value);
         }
     });
-
-    new Command;
 
 });

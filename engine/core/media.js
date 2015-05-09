@@ -2,7 +2,7 @@
  * Audio and video
  * @namespace webvn.media
  */
-webvn.module('media', ['class', 'log', 'util', 'anim'], function (kclass, log, util, anim) {
+webvn.module('media', ['class', 'log', 'util', 'anim', 'config', 'storage'], function (kclass, log, util, anim, config, storage) {
     var exports = {};
 
     // Const variables
@@ -157,25 +157,35 @@ webvn.module('media', ['class', 'log', 'util', 'anim'], function (kclass, log, u
             if (autoplay === undefined) {
                 autoplay = true;
             }
+
             var self = this;
+
             // Stop playing music
             this.stop();
             this.state = STATE.NOT_LOADED;
+
+            var el = this.el;
+
             // Autoplay init
             if (autoplay) {
-                this.el.onloadeddata = function () {
+                el.onloadeddata = function () {
                     self.duration = self.el.duration;
                     self.state = STATE.PAUSE;
                     self.play();
                 };
             } else {
-                this.el.onloadeddata = function () {
+                el.onloadeddata = function () {
                     self.duration = self.el.duration;
                     self.state = STATE.PAUSE;
                 }
             }
+
             // Start loading
-            this.el.src = src;
+            if (this.asset) {
+                el.src = this.asset.get(src);
+            } else {
+                el.src = src;
+            }
         },
         play: function () {
             this.callSuper();
@@ -270,15 +280,26 @@ webvn.module('media', ['class', 'log', 'util', 'anim'], function (kclass, log, u
         return new Video(video);
     };
 
+    var conf = config.create('media');
+
     // Init audios
     // Background music
+    var bgmConf = conf.get('bgm');
     var bgm = createAudio('bgm');
+    bgm.asset = storage.createAsset(bgmConf.path, bgmConf.extension);
     bgm.loop(true);
     bgm.duration = 2000;
+
     // Sound effect
-    createAudio('se');
+    var seConf = conf.get('se');
+    var se = createAudio('se');
+    se.asset = storage.createAsset(seConf.path, seConf.extension);
+
     // Voice
-    createAudio('vo');
+    var voConf = conf.get('vo');
+    var vo = createAudio('vo');
+    vo.asset = storage.createAsset(voConf.path, voConf.extension);
+
     // System sound, for example: button hover effect
     createAudio('sys');
 

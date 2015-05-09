@@ -3,10 +3,12 @@ webvn.use(['script', 'ui'],
 
         var dialog = ui.get('dialog');
 
-        var Command = script.Command.extend({
+        script.createCommand({
+
             constructor: function DialogCommand() {
                 this.callSuper('dialog');
             },
+
             options: {
                 display: {
                     type: 'Boolean',
@@ -45,9 +47,11 @@ webvn.use(['script', 'ui'],
                     shortHand: 'v'
                 }
             },
+
             orders: [
 
             ],
+
             execution: function (values) {
                 if (values.fadeIn === true) {
                     dialog.fadeIn = true;
@@ -84,5 +88,4 @@ webvn.use(['script', 'ui'],
                 }
             }
         });
-        new Command;
     });
