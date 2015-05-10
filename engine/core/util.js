@@ -155,15 +155,24 @@ webvn.module('util', function () {
      * @param {object} o
      * @returns {Array}
      */
-    exports.keys = function (o) {
-        var result = [], p;
-        for (p in o) {
-            if (o.hasOwnProperty(p)) {
-                result.push(p);
+    var objKeys = Object.keys;
+    if (objKeys) {
+        exports.keys = function (o) {
+            return objKeys(o);
+        };
+    } else {
+        exports.keys = function (o) {
+            var result = [], p;
+
+            for (p in o) {
+                if (o.hasOwnProperty(p)) {
+                    result.push(p);
+                }
             }
-        }
-        return result;
-    };
+
+            return result;
+        };
+    }
 
     /**
      * Transform a object into an array
@@ -304,14 +313,14 @@ webvn.module('util', function () {
          * And do different stuff according to the result
          */
         if (len === +len) {
-          for (i = 0; i < len; i++) {
-            fn(o[i], i, o);
-          }
+            for (i = 0; i < len; i++) {
+                fn(o[i], i, o);
+            }
         } else {
-          var keys = exports.keys(o);
-          for (i = 0, len = keys.length; i < len; i++) {
-            fn(o[keys[i]], keys[i], o);
-          }
+            var keys = exports.keys(o);
+            for (i = 0, len = keys.length; i < len; i++) {
+                fn(o[keys[i]], keys[i], o);
+            }
         }
         return o;
     };

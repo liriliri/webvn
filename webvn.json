@@ -78,7 +78,7 @@
             ]
         },
         "lib": {
-            "path": "engine/lib/",
+            "path": "lib/",
             "files": [
             ]
         },

@@ -269,6 +269,17 @@ webvn.extend('select', ['class', 'util'], function (exports, kclass, util) {
                 }
             });
         },
+
+        removeAttr: function (name) {
+            return this.each(function () {
+                if (this.nodeType === 1) {
+                    name.split(' ').forEach(function (name) {
+                        selectUtil.setAttribute(this, name);
+                    }, this);
+                }
+            });
+        },
+
         /**
          * Set HTML
          * @method webvn.select.Select#html

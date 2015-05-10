@@ -1,4 +1,4 @@
-webvn.extend('webgl', ['class', 'log', 'util'], function (exports, kclass, log, util) {
+webvn.extend('webgl', ['class', 'log', 'util', 'config'], function (exports, kclass, log, util, config) {
 
     var Shader = exports.Shader,
         createShader = exports.createShader,
@@ -66,6 +66,9 @@ webvn.extend('webgl', ['class', 'log', 'util'], function (exports, kclass, log, 
 
             gl.linkProgram(program);
 
+            if (config.build === 'release') {
+                return this;
+            }
             var linkStatus = gl.getProgramParameter(program, gl.LINK_STATUS);
             if (!linkStatus) {
                 var lastError = gl.getProgramInfoLog(program);
@@ -79,7 +82,11 @@ webvn.extend('webgl', ['class', 'log', 'util'], function (exports, kclass, log, 
         use: function () {
             var gl = this.gl;
 
+            if (gl.curProgram === this.value) {
+                return this;
+            }
             gl.useProgram(this.value);
+            gl.curProgram = this.value;
 
             return this;
         },
@@ -196,7 +203,7 @@ webvn.extend('webgl', ['class', 'log', 'util'], function (exports, kclass, log, 
                 return this;
             }
 
-            this.value = gl.createProgram();
+            programs[type] = this.value = gl.createProgram();
             var fragShader = createShader(gl, 'frag');
             fragShader.source('trans_' + type);
             var vertexShader = createShader(gl, 'vertex');

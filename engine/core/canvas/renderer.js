@@ -14,14 +14,16 @@ webvn.module('canvas', ['class', 'util'], function (kclass, util) {
 
         var scenes = [];
 
+        var len = 0, i;
+
         function render(timestamp) {
             if (isPaused) {
                 return;
             }
 
-            util.each(scenes, function (scene) {
-                scene.render(timestamp);
-            });
+            for (i = 0; i < len; i++) {
+                scenes[i].render(timestamp);
+            }
 
             requestAnim(render);
         }
@@ -40,11 +42,13 @@ webvn.module('canvas', ['class', 'util'], function (kclass, util) {
         };
 
         exports.add = function (scene) {
+            len++;
             scene.index = scenes.length;
             scenes.push(scene);
         };
 
         exports.remove = function (scene) {
+            len--;
             var index = scene.index;
             if (index === undefined) {
                 return;

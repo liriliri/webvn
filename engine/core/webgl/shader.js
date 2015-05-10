@@ -1,4 +1,4 @@
-webvn.module('webgl', ['class', 'util', 'log'], function (kclass, util, log) {
+webvn.module('webgl', ['class', 'util', 'log', 'config'], function (kclass, util, log, config) {
     "use strict";
     var exports = {};
 
@@ -68,6 +68,9 @@ webvn.module('webgl', ['class', 'util', 'log'], function (kclass, util, log) {
             gl.shaderSource(this.value, source);
             gl.compileShader(this.value);
 
+            if (config.build === 'release') {
+                return;
+            }
             var compileStatus = gl.getShaderParameter(this.value, gl.COMPILE_STATUS);
             // If compileStatus not true, something is wrong.
             if (!compileStatus) {

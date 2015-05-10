@@ -36,4 +36,19 @@ webvn.extend('config', function (exports) {
         textDuration: 50
     };
 
+    exports.uiCg = {
+        path: 'asset/image/',
+        extension: 'jpg',
+        cg: [
+            'cg1',
+            'cg2',
+            'cg3',
+            'cg4',
+            'cg5',
+            'cg6',
+            'cg7',
+            'cg8'
+        ]
+    };
+
 });

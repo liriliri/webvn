@@ -23,14 +23,15 @@ webvn.extend('canvas', ['class', 'webgl', 'util'], function (exports, kclass, we
         },
 
         render: function () {
-            var self = this,
-                children = this.children;
+            var children = this.children;
 
             this.clear();
 
-            util.each(children, function (child) {
-                child.render(self);
-            });
+            var i, len = children.length;
+
+            for (i = 0; i < len; i++) {
+                children[i].render(this);
+            }
         }
 
     });

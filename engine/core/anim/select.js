@@ -4,6 +4,7 @@ webvn.extend('select', ['anim', 'util'], function (exports, anim, util) {
     var Anim = anim.Anim;
 
     exports.Select.extendFn({
+
         fadeIn: function (duration, cb) {
             var opacity = this.css('opacity');
             if (opacity > 0) {
@@ -14,6 +15,7 @@ webvn.extend('select', ['anim', 'util'], function (exports, anim, util) {
                 opacity: 1
             }, duration).call(cb);
         },
+
         fadeOut: function (duration, cb) {
             var self = this;
             new Anim(this).to({
