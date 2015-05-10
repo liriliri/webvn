@@ -1,32 +1,29 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Test - Dialog</title>
-		<script>
-		var config = {
-			debug: true,
-			test: true
-		};
-		</script>
-		<script src="/engine/core/webvn.js"></script>
-	</head>
-	<body>
-		<div class="center">
-			<div id="webvn"></div>
-		</div>
-		<div id="scenario" class="hidden">
-			dialog -d --name=RedHoodSu -t="Hello world!"
-			dialog -t="Hello world again!" -tt=bounceIn
-			dialog -n=Surunzi -t="Hello world plus!!!" -td=1000
-			dialog -d=false
-			dialog -d
-		</div>
-		<script>
-		webvn.call(['test'], function (s, test) {
-			var component = new test.Component('scenario');
-			component.start();
-		});
-		</script>
-	</body>
+<head>
+    <meta charset="utf-8">
+    <title>Dialog</title>
+    <script src="../engine/core/webvn.js" data-build="test"></script>
+</head>
+<body>
+<div class="center">
+    <div id="webvn"></div>
+</div>
+<div id="scenario" class="hidden">
+    dialog -d --name=RedHoodSu -t="Hello world!"
+    dialog -s=big
+    dialog -d=false
+    dialog -d
+    dialog -t="Hello world again!" -tt=bounceIn
+    dialog -n=Surunzi -t="Hello world plus!!!" -td=1000
+    dialog -d=false
+    dialog -d
+</div>
+<script>
+    webvn.call(['test'], function (test) {
+        var component = new test.Component('scenario');
+        component.start();
+    });
+</script>
+</body>
 </html>

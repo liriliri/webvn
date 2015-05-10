@@ -6,21 +6,22 @@ webvn.extend('anim', ['class', 'util', 'select'], function (exports, kclass, uti
         PLAY: 1
     };
 
+    var requestAnim = window.requestAnimationFrame;
+
     var Anim = exports.Anim = kclass.create({
+
         constructor: function Anim(target) {
             this.loop = false;
             this.target = target;
             this.clear();
         },
+
         clear: function () {
-            if (this._intervalId) {
-                clearInterval(this._intervalId);
-            }
-            this._intervalId = null;
             this.state = STATE.PAUSE;
             this._steps = [];
             this._curStep = 0;
         },
+
         to: function (props, duration, easeName) {
             if (!util.isNumber(duration) || duration < 0) {
                 duration = 0;
@@ -36,17 +37,19 @@ webvn.extend('anim', ['class', 'util', 'select'], function (exports, kclass, uti
             this.play();
             return this;
         },
+
         pause: function () {
             if (this.state === STATE.PAUSE) {
                 return;
             }
             this.state = STATE.PAUSE;
-            clearInterval(this._intervalId);
         },
+
         stop: function () {
             this._curStep = 0;
             this.pause();
         },
+
         play: function () {
             if (this._steps.length === 0 || this.state === STATE.PLAY) {
                 return;
@@ -76,12 +79,14 @@ webvn.extend('anim', ['class', 'util', 'select'], function (exports, kclass, uti
             this.state = STATE.PLAY;
             return this;
         },
+
         playTo: function (step) {
             var self = this,
                 start = +new Date,
                 finish = start + step.duration,
                 origin = {},
                 diff = {};
+
             /* If target is a Select instance,
              * Animate Css properties instead.
              */
@@ -97,11 +102,15 @@ webvn.extend('anim', ['class', 'util', 'select'], function (exports, kclass, uti
                 }
                 diff[key] = value - origin[key];
             });
-            this._intervalId = setInterval(function () {
+
+            this._render = function () {
+                if (self.state === STATE.PAUSE) {
+                    return;
+                }
+
                 var time = +new Date;
                 // One step of tween is finish
                 if (time > finish) {
-                    clearInterval(self._intervalId);
                     if (isSelect) {
                         self.target.css(step.props);
                     } else {
@@ -127,13 +136,18 @@ webvn.extend('anim', ['class', 'util', 'select'], function (exports, kclass, uti
                 if (isSelect) {
                     self.target.css(values);
                 }
-            }, 16);
+                requestAnim(self._render);
+            };
+
+            requestAnim(this._render);
         },
+
         playCall: function (step) {
             step.fn.call(this);
             this.state = STATE.PAUSE;
             this.play();
         },
+
         playWait: function (step) {
             var self = this;
             setTimeout(function () {
@@ -141,6 +155,7 @@ webvn.extend('anim', ['class', 'util', 'select'], function (exports, kclass, uti
                 self.play();
             }, step.duration);
         },
+
         wait: function (duration) {
             this._steps.push({
                 type: 'wait',
@@ -149,6 +164,7 @@ webvn.extend('anim', ['class', 'util', 'select'], function (exports, kclass, uti
             this.play();
             return this;
         },
+
         call: function (fn) {
             if (!util.isFunction(fn)) {
                 return;

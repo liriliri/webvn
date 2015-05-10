@@ -116,18 +116,25 @@ webvn.module('ui', ['class', 'select', 'config', 'util', 'script'], function (kc
         event: function (type, fn) {
             var self = this,
                 events = {};
+
             if (util.isObject(type)) {
                 events = type;
             } else {
                 events[type] = fn;
             }
+
             util.each(events, function (fn, type) {
                 var parts = type.split(/\s/),
                     eventType = parts[0];
                 parts.shift();
                 var selector = parts.join(' ');
-                self.$el.on(eventType, selector, fn);
+                // No propagation
+                self.$el.on(eventType, selector, function (e) {
+                    e.stopPropagation();
+                    fn.call(this, e);
+                });
             });
+
             return this;
         }
     });

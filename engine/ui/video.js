@@ -1,89 +1,78 @@
 webvn.use(['ui', 'media', 'script', 'config', 'storage'], function (ui, media, script, config, storage) {
+    "use strict";
+    var exports = ui.create('video', 'div');
 
     var conf = config.create('uiVideo');
+
     var asset = storage.createAsset(conf.get('path'), conf.get('extension'));
 
-    var vid = ui.create('video', 'div'),
-        clickAction = 'stop',
-        $el = vid.$el;
-    
-    var tpl = '<video class="video fill"></video>';
+    var $el = exports.$el;
+    $el.addClass('fill');
 
-    vid.body(tpl);
+    var tpl = ui.getTemplate('video');
+    exports.body(tpl);
 
-    var video = media.createVideo($el.find('.video').get(0));
-
-    /* Set action when video is clicked
-     * Type listed as below:
-     * stop: stop playing video and fade out the video
-     * pause: pause the video and play again when clicked again
-     */
-    vid.clickAction = function (action) {
-
-        clickAction = action;
-
-    };
-
-    vid.play = function () {
-
-        video.play();
-
-    };
-
-    vid.show = function () {
-
-        $el.show();
-        script.pause();
-
-    };
-
-    vid.src = function (src) {
-        video.load(asset.get(src));
-    };
-
-    vid.stop = function () {
-
-        video.stop();
-
-    };
-
-    video.event({
-        'ended': function () {
-            // When the video is ended, execute the next command
-            $el.fadeOut(300, function () {
-
-                script.resume();
-
-            });
-        }
-    });
-
-    vid.event({
-        'click .video': function () {
-
-            switch (clickAction) {
-                case 'stop': {
-                    $el.fadeOut(300, function () {
-
-                        video.stop();
-                        script.resume();
-
-                    });
+    exports.event({
+        'click video': function () {
+            switch (exports.clickAction) {
+                case 'skip':
+                    video.stop();
+                    hide();
                     break;
-                }
-                case 'pause': {
+                case 'pause':
                     if (video.isPlaying()) {
                         video.pause();
                     } else {
                         video.play();
                     }
                     break;
-                }
-                default:
-                    break;
             }
-
         }
     });
+
+    exports.clickAction = conf.get('clickAction');
+    exports.duration = conf.get('duration');
+    exports.fadeIn = conf.get('fadeIn');
+    exports.fadeOut = conf.get('fadeOut');
+
+    var video = media.createVideo($el.find('video').get(0));
+
+    video.event({
+        ended: function () {
+            hide();
+        }
+    });
+
+    exports.play = function () {
+        video.play();
+    };
+
+    exports.show = function () {
+        if (exports.fadeIn) {
+            $el.fadeIn(exports.duration);
+        } else {
+            $el.show();
+        }
+        script.pause();
+    };
+
+    function hide () {
+        if (exports.fadeOut) {
+            $el.fadeOut(exports.duration, function () {
+                script.resume();
+            });
+        } else {
+            $el.show();
+            script.resume();
+        }
+    }
+
+    exports.src = function (src) {
+        video.load(asset.get(src));
+    };
+
+    exports.stop = function () {
+        video.stop();
+    };
 
 });

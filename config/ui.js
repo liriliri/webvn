@@ -21,7 +21,19 @@ webvn.extend('config', function (exports) {
 
     exports.uiVideo = {
         path: 'asset/video/',
-        extension: 'webm'
+        extension: 'webm',
+        duration: 300,
+        fadeIn: false,
+        fadeOut: false,
+        clickAction: 'skip'
+    };
+
+    exports.uiDialog = {
+        fadeIn: true,
+        fadeOut: true,
+        duration: 300,
+        textType: 'fadeIn',
+        textDuration: 50
     };
 
 });

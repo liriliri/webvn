@@ -6,7 +6,6 @@
 
 if (true) {
     menu -d                           \
-        -bgm=/asset/test/bgm1.ogg     \
         -fi=false                     \
         -fo=false                     \
         -bhs=/asset/test/onmouse.wav  \
@@ -14,7 +13,6 @@ if (true) {
         -btn='{"start":"开始旅程"}'
 } else {
     menu -d                           \
-        -bgm=/asset/test/bgm1.ogg     \
         -fi=false                     \
         -fo=false                     \
         -bhs=/asset/test/onmouse.wav  \
@@ -34,26 +32,30 @@ console.log(x+5);
 ```
 */
 
-bgm -s=bgm2 'Come on!'
-
-// video -d -pl -c=stop -s=video
+// video -d -p -c=none -s=video
 
 bg -d -s=living_room
 
 fg -d -sel=0 -s=fg1 -pos=bl
 fg -sel=1 -s=fg4 -pos=bc
-fg -sel=2 -s=fg3 -pos=br
-fg -sel=0 -s=fg2
+fg -sel=2 -s=fg3 -pos=br -pn=false
 
-dialog -d
+// dialog -d --name=ユルシュール -t="大丈夫ですの？　私のペットが迷惑を掛けてしまって、申し訳ありませんわ" -v=vo2
 
-myDialog RedHood "Hello code world!"
+fg -sel=0 -s=fg2 -pn=false
 
-dialog --name=ユルシュール --text="モトカレ、何をしていますの！？　冗談では済まされませんわよ！"\
-    -v=/asset/test/vo1.ogg
+dialog -d --name=ユルシュール --text="モトカレ、何をしていますの！？　冗談では済まされませんわよ！" -v=vo1
 
-dialog -t="大丈夫ですの？　私のペットが迷惑を掛けてしまって、申し訳ありませんわ"\
-    -v=/asset/test/vo2.ogg
+dialog -d=false
+dialog -d -s=big
 
-dialog -t="大丈夫ですの？　私のペットが迷惑を掛けてしまって、申し訳ありませんわ"\
-    -v=/asset/test/vo2.ogg
+dialog -d=false
+dialog -d -s=big
+
+dialog -d=false
+dialog -t=''
+dialog -d -s=big
+
+dialog -t="大丈夫ですの？　私のペットが迷惑を掛けてしまって、申し訳ありませんわ" -v=vo2
+
+fg -sel=0 -s=fg1

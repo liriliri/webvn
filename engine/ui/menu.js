@@ -1,4 +1,4 @@
-webvn.use(['ui', 'script', 'media', 'util'], function (ui, script, media, util) {
+webvn.use(['ui', 'script', 'media', 'util', 'canvas'], function (ui, script, media, util, canvas) {
     "use strict";
     /**
      * @class webvn.ui.Menu
@@ -14,7 +14,8 @@ webvn.use(['ui', 'script', 'media', 'util'], function (ui, script, media, util) 
     exports.fadeOut = true;
 
     var bgm = media.createAudio('bgm'),
-        sysAudio = media.createAudio('sys');
+        sysAudio = media.createAudio('sys'),
+        renderer = canvas.renderer;
 
     var $el = exports.$el;
     $el.addClass('fill');
@@ -28,6 +29,7 @@ webvn.use(['ui', 'script', 'media', 'util'], function (ui, script, media, util) 
 
     exports.event({
         'click .start': function () {
+            renderer.start();
             if (exports.bgm) {
                 bgm.stop();
             }
@@ -73,6 +75,7 @@ webvn.use(['ui', 'script', 'media', 'util'], function (ui, script, media, util) 
      * @method webvn.ui.Menu#show
      */
     exports.show = function () {
+        renderer.stop();
         script.pause();
         if (exports.bgm) {
             bgm.load(exports.bgm);

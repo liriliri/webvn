@@ -1,69 +1,98 @@
 webvn.use(['script', 'ui'], function (script, ui) {
-        var video = ui.get('video');
+    var video = ui.get('video');
+
+    /**
+     * Video Command
+     * @class webvn.cmd.VideoCommand
+     * @extends webvn.script.Command
+     */
+    script.createCommand({
+
+        constructor: function VideoCommand() {
+            this.callSuper('video');
+        },
+
         /**
-         * Video Command
-         * @class webvn.cmd.VideoCommand
-         * @extends webvn.script.Command
+         * @memberof webvn.cmd.VideoCommand
+         * @property {boolean} display(d) display or not
+         * @property {string} click(c) stop or pause when clicked
+         * @property {boolean} play(pl) play or pause
+         * @property {string} src(s) load video and play
          */
-        var Command = script.Command.extend({
-            constructor: function VideoCommand() {
-                this.callSuper('video');
+        options: {
+            display: {
+                type: 'Boolean',
+                shortHand: 'd'
             },
-            /**
-             * @memberof webvn.cmd.VideoCommand
-             * @property {boolean} display(d) display or not
-             * @property {string} click(c) stop or pause when clicked
-             * @property {boolean} play(pl) play or pause
-             * @property {string} src(s) load video and play
-             */
-            options: {
-                display: {
-                    type: 'Boolean',
-                    shortHand: 'd'
-                },
-                click: {
-                    type: 'String',
-                    shortHand: 'c'
-                },
-                play: {
-                    type: 'Boolean',
-                    shortHand: 'pl'
-                },
-                src: {
-                    type: 'String',
-                    shortHand: 's'
-                }
+            fadeIn: {
+                type: 'String',
+                shortHand: 'fi'
             },
-            orders: [
-                'display',
-                'src',
-                'play',
-                'click'
-            ],
-            display: function (value) {
-                "use strict";
-                if (value) {
-                    video.show();
-                } else {
-                    video.hide();
-                }
+            fadeOut: {
+                type: 'String',
+                shortHand: 'fo'
             },
-            src: function (value) {
-                "use strict";
-                video.src(value);
+            duration: {
+                type: 'Number',
+                shortHand: 'du'
             },
-            play: function (value) {
-                "use strict";
-                if (value) {
-                    video.play();
-                } else {
-                    video.stop();
-                }
+            click: {
+                type: 'String',
+                shortHand: 'c'
             },
-            click: function (value) {
-                "use strict";
-                video.clickAction(value);
+            play: {
+                type: 'Boolean',
+                shortHand: 'p'
+            },
+            src: {
+                type: 'String',
+                shortHand: 's'
             }
-        });
-        new Command;
+        },
+
+        orders: [
+            'duration',
+            'fadeIn',
+            'fadeOut',
+            'display',
+            'src',
+            'play',
+            'click'
+        ],
+
+        fadeIn: function (value) {
+            video.fadeIn = value;
+        },
+
+        fadeOut: function (value) {
+            video.fadeOut = value;
+        },
+
+        display: function (value) {
+            if (value) {
+                video.show();
+            }
+        },
+
+        duration: function (value) {
+            video.duration = value;
+        },
+
+        src: function (value) {
+            video.src(value);
+        },
+
+        play: function (value) {
+            if (value) {
+                video.play();
+            } else {
+                video.stop();
+            }
+        },
+
+        click: function (value) {
+            video.clickAction = value;
+        }
+
     });
+});

@@ -9,15 +9,15 @@ webvn.use(['ui', 'canvas', 'storage', 'config'], function (ui, canvas, storage, 
     var $el = exports.$el;
     $el.addClass('fill');
 
-    var image = canvas.createImage(),
-        scene = new canvas.Scene(exports.getCanvas());
-
-    scene.add(image);
-
     exports.duration = conf.get('duration');
     exports.fadeIn = conf.get('fadeIn');
     exports.fadeOut = conf.get('fadeOut');
     exports.transition = conf.get('transition');
+
+    var image = canvas.createImage(),
+        scene = new canvas.Scene(exports.getCanvas());
+
+    scene.add(image);
 
     exports.load = function (src) {
         image.transition = exports.transition;
