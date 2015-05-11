@@ -1,4 +1,4 @@
-webvn.use(['ui', 'select', 'config', 'storage', 'util'], function (ui, select, config, storage, util) {
+webvn.use(['ui', 'select', 'config', 'storage'], function (ui, select, config, storage) {
     "use strict";
     var exports = ui.create('cg', 'div');
 
@@ -14,7 +14,7 @@ webvn.use(['ui', 'select', 'config', 'storage', 'util'], function (ui, select, c
 
     // Init cg
     var $container = $el.find('.container');
-    var cg = conf.get('cg');
+    var cg = conf.get('files');
     var pageSize = 6,
         pageCount = Math.ceil(cg.length / pageSize);
     function page(num) {
@@ -33,7 +33,6 @@ webvn.use(['ui', 'select', 'config', 'storage', 'util'], function (ui, select, c
     // Append Button
     var $pagination = $el.find('.pagination');
     if (pageCount > 1) {
-        console.log(pageCount);
         var html = '';
         for (var i = 0; i < pageCount; i++) {
             html += '<li class="button pa" data-num="' + (i+1) + '">' + (i+1) + '</li>';

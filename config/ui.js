@@ -39,7 +39,7 @@ webvn.extend('config', function (exports) {
     exports.uiCg = {
         path: 'asset/image/',
         extension: 'jpg',
-        cg: [
+        files: [
             'cg1',
             'cg2',
             'cg3',
@@ -48,6 +48,19 @@ webvn.extend('config', function (exports) {
             'cg6',
             'cg7',
             'cg8'
+        ]
+    };
+
+    exports.uiMusic = {
+        path: 'asset/bgm/',
+        extension: 'ogg',
+        files: [
+            'bgm1',
+            'bgm2',
+            'Face Of Fact',
+            'Kotoko - We Survive',
+            '片雾烈火 - 红空恋歌',
+            '霜月はるか - 恋狱'
         ]
     };
 

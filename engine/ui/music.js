@@ -1,15 +1,20 @@
-webvn.use(['ui', 'select', 'media'], function (ui, select, media) {
+webvn.use(['ui', 'select', 'media', 'config', 'storage', 'util'], function (ui, select, media, config, storage, util) {
     "use strict";
-    var exports = ui.create('music'),
-        $el = exports.$el;
+    var exports = ui.create('music');
+
+    var conf = config.create('uiMusic');
+
     var tpl = ui.getTemplate('music');
     exports.body(tpl);
+
+    var $el = exports.$el;
     $el.addClass('fill');
 
     var $progress = $el.find('.progress'),
         $progressFill = $progress.find('span');
 
     var music = media.createAudio('music');
+    music.asset = storage.createAsset(conf.get('path'), conf.get('extension'));
     music.loop(true);
     music.event({
         'timeupdate': function () {
@@ -17,6 +22,13 @@ webvn.use(['ui', 'select', 'media'], function (ui, select, media) {
             $progressFill.css('width', $progress.width() * percentage);
         }
     });
+
+    var files = conf.get('files');
+    var $container = $el.find('.container'), html = '';
+    util.each(files, function (file) {
+        html += '<li>' + file + '</li>';
+    });
+    $container.html(html);
 
     $progress.on('click', function (e) {
         if (!music.isPlaying()) {
@@ -39,7 +51,7 @@ webvn.use(['ui', 'select', 'media'], function (ui, select, media) {
         },
         'click li': function () {
             var $this = select.get(this),
-                src = $this.attr('data-src');
+                src = $this.text();
             $el.find('li').removeClass('playing');
             $this.addClass('playing');
             music.load(src);
