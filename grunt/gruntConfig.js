@@ -122,6 +122,15 @@ exports.copy = {
                 cwd: 'dist/engine',
                 src: ["*.*", "**/*.*"],
                 dest: '../WebVN-demo/engine'
+            },
+            {
+                expand: true,
+                cwd: 'dist/config',
+                src: ["*.js"],
+                dest: '../WebVN-demo/config'
+            },
+            {
+                '../WebVN-demo/scenario/init.wvn': 'dist/scenario/init.wvn'
             }
         ]
     }

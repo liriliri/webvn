@@ -97,7 +97,7 @@ webvn.use(['ui', 'canvas', 'util', 'config', 'storage'], function (ui, canvas, u
     };
 
     var save = storage.create('figure');
-    save.save(function (value) {
+    save.save(function () {
         // Save something here
     }).load(function (value) {
         // Restore something here

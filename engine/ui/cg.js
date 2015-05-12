@@ -46,6 +46,7 @@ webvn.use(['ui', 'select', 'config', 'storage'], function (ui, select, config, s
         $this.fadeOut(300);
     });
 
+    exports.stopPropagation();
     exports.event({
         'click .close': function () {
             hide();

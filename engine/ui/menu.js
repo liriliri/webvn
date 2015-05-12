@@ -1,17 +1,20 @@
-webvn.use(['ui', 'script', 'media', 'util', 'canvas'], function (ui, script, media, util, canvas) {
+webvn.use(['ui', 'script', 'media', 'util', 'canvas', 'config'], function (ui, script, media, util, canvas, config) {
     "use strict";
     /**
      * @class webvn.ui.Menu
      */
     var exports = ui.create('menu', 'div');
 
+    var conf = config.create('uiMenu');
+
     // Properties
     exports.bgm = null;
     exports.btnClickSound = null;
     exports.btnHoverSound = null;
-    exports.duration = 1000;
-    exports.fadeIn = true;
-    exports.fadeOut = true;
+    exports.duration = conf.get('duration');
+    exports.fadeIn = conf.get('fadeIn');
+    exports.fadeOut = conf.get('fadeOut');
+    exports.stopPropagation();
 
     var bgm = media.createAudio('bgm'),
         sysAudio = media.createAudio('sys'),
@@ -23,10 +26,6 @@ webvn.use(['ui', 'script', 'media', 'util', 'canvas'], function (ui, script, med
     var tpl = ui.getTemplate('menu');
     exports.body(tpl);
 
-    var cg = ui.get('cg'),
-        music = ui.get('music'),
-        setting = ui.get('setting');
-
     exports.event({
         'click .start': function () {
             renderer.start();
@@ -35,27 +34,27 @@ webvn.use(['ui', 'script', 'media', 'util', 'canvas'], function (ui, script, med
             }
             if (exports.fadeOut) {
                 $el.fadeOut(exports.duration, function () {
-                    script.resume();
+                    script.jump('start');
                 });
             } else {
                 $el.hide();
-                script.resume();
+                script.jump('start');
             }
         },
         'click .load': function () {
-            console.log('Load game!');
+            ui.get('save').show('load');
         },
         'click .setting': function () {
-            setting.show();
+            ui.get('setting').show();
         },
         'click .cg': function () {
-            cg.show();
+            ui.get('cg').show();
         },
         'click .music': function () {
             if (exports.bgm) {
                 bgm.stop();
             }
-            music.show();
+            ui.get('music').show();
         },
         // Btn sound
         'mouseover li': function () {
@@ -76,7 +75,6 @@ webvn.use(['ui', 'script', 'media', 'util', 'canvas'], function (ui, script, med
      */
     exports.show = function () {
         renderer.stop();
-        script.pause();
         if (exports.bgm) {
             bgm.load(exports.bgm);
         }

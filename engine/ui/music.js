@@ -97,6 +97,7 @@ webvn.use(['ui', 'select', 'media', 'config', 'storage', 'util', 'class'], funct
         return exports;
     });
 
+    exports.stopPropagation();
     exports.event({
         'click .close': function () {
             controller.pause();

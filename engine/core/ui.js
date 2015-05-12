@@ -112,6 +112,12 @@ webvn.module('ui', ['class', 'select', 'config', 'util', 'script'], function (kc
             this.$el.html(html);
             return this;
         },
+        stopPropagation: function () {
+            this.$el.on('click', function (e) {
+                e.stopPropagation();
+            });
+            return this;
+        },
         // Bind events
         event: function (type, fn) {
             var self = this,

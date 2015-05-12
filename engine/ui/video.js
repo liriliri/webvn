@@ -12,6 +12,11 @@ webvn.use(['ui', 'media', 'script', 'config', 'storage'], function (ui, media, s
     var tpl = ui.getTemplate('video');
     exports.body(tpl);
 
+    exports.clickAction = conf.get('clickAction');
+    exports.duration = conf.get('duration');
+    exports.fadeIn = conf.get('fadeIn');
+    exports.fadeOut = conf.get('fadeOut');
+    exports.stopPropagation();
     exports.event({
         'click video': function () {
             switch (exports.clickAction) {
@@ -30,11 +35,6 @@ webvn.use(['ui', 'media', 'script', 'config', 'storage'], function (ui, media, s
         }
     });
 
-    exports.clickAction = conf.get('clickAction');
-    exports.duration = conf.get('duration');
-    exports.fadeIn = conf.get('fadeIn');
-    exports.fadeOut = conf.get('fadeOut');
-
     var video = media.createVideo($el.find('video').get(0));
 
     video.event({
@@ -48,6 +48,10 @@ webvn.use(['ui', 'media', 'script', 'config', 'storage'], function (ui, media, s
     };
 
     exports.show = function () {
+        if ($el.visible()) {
+            return;
+        }
+
         if (exports.fadeIn) {
             $el.fadeIn(exports.duration);
         } else {
@@ -62,7 +66,7 @@ webvn.use(['ui', 'media', 'script', 'config', 'storage'], function (ui, media, s
                 script.resume();
             });
         } else {
-            $el.show();
+            $el.hide();
             script.resume();
         }
     }

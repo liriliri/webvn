@@ -52,55 +52,8 @@ webvn.module('script', ['config', 'parser', 'parserNode', 'util', 'loader', 'lex
 
     // Parse the source code and eval it
     var wvnEval = exports.eval = function (code) {
-        jsEval(parse(code));
+        exports.jsEval(parse(code));
     };
-
-    // JavaScript Eval.
-
-    // Eval javaScript code with not return value.
-    var jsEval = exports.jsEval = function (code) {
-
-        _jsEval(code);
-
-    };
-
-    /* Eval javaScript code with return value.
-     * Only simple expressions are allowed to pass in.
-     */
-    exports.jsEvalVal = function (code) {
-
-        return _jsEval(code, true);
-
-    };
-
-    var emptyStr = '';
-
-    function _jsEval(code, returnOrNot) {
-        "use strict";
-
-        if (util.trim(code) === '') {
-            return emptyStr;
-        }
-
-        var scope = {};
-
-        var functionName = util.guid('eval');
-
-        code = 'scope["' + functionName + '"]=function(){' +
-        (returnOrNot ? 'return (' : '') +
-        code +
-        (returnOrNot ? ');' : '') +'}';
-
-        try {
-            eval(code);
-        } catch (e) {
-            log.error(e.message);
-            return emptyStr;
-        }
-
-        return scope[functionName]();
-
-    }
 
     // Script controller
 
@@ -119,7 +72,7 @@ webvn.module('script', ['config', 'parser', 'parserNode', 'util', 'loader', 'lex
     var isSource = true;
 
     //noinspection JSUnusedLocalSymbols
-    var $$ = exports.$$ = function () {
+    exports.$$ = function () {
         var source = util.makeArray(arguments);
 
         preExec(source, sources.length);
@@ -151,6 +104,10 @@ webvn.module('script', ['config', 'parser', 'parserNode', 'util', 'loader', 'lex
 
         exports.create = function (name, lineNum) {
             labels[name] = lineNum;
+        };
+
+        exports.has = function (name) {
+            return labels[name] !== undefined;
         };
 
         exports.get = function (name) {
@@ -314,7 +271,7 @@ webvn.module('script', ['config', 'parser', 'parserNode', 'util', 'loader', 'lex
     function execCode(code) {
         var lineNum = code[2];
         log.info('Code: ' + code[1] + ' ' + lineNum);
-        jsEval(code[1]);
+        exports.jsEval(code[1]);
     }
 
     /* Indicate which line is being executed now,
@@ -329,8 +286,14 @@ webvn.module('script', ['config', 'parser', 'parserNode', 'util', 'loader', 'lex
     };
 
     var jump = exports.jump = function (labelName) {
+        // Clear executions
+        if (!label.has(labelName)) {
+            log.warn('Label ' + labelName + ' not found');
+            return;
+        }
+        executions = [];
         curNum = label.get(labelName);
-        play();
+        resume();
     };
 
     // Reset everything to initial state

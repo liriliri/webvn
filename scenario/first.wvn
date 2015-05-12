@@ -23,14 +23,13 @@ function myDialog(name, text) {
     dialog -n={{name}} -t={{text}}
 }
 
-/*
-`console.log('code trigger!')
+
+`g.cool = 5;
 
 ```
 var x = 5;
 console.log(x+5);
 ```
-*/
 
 title "First 'dd' chapter"
 
@@ -40,7 +39,7 @@ jump skipFg
 
 bg -d -s=living_room
 
-*fg
+*      fg
 fg -d -sel=0 -s=fg1 -pos=bl
 fg -sel=1 -s=fg4 -pos=bc
 fg -sel=2 -s=fg3 -pos=br -pn=false
@@ -49,7 +48,7 @@ fg -sel=2 -s=fg3 -pos=br -pn=false
 
 fg -sel=0 -s=fg2 -pn=false
 
-*skipFg
+* skipFg
 dialog -d -f=face1 --name='ユル シュール' --text='モトカレ、何をしていますの！？　冗談では済まされませんわよ！' -v=vo1
 
 dialog -f=face2 -t='大丈夫ですの？　私のペットが迷惑を掛けてしまって、申し訳ありませんわ' -v=vo2

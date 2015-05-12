@@ -13,6 +13,21 @@ webvn.use(['ui', 'text', 'media', 'config', 'storage'], function (ui, text, medi
     exports.fadeIn = conf.get('fadeIn');
     exports.fadeOut = conf.get('fadeOut');
 
+    exports.event({
+        'click .save': function () {
+            ui.get('save').show('save');
+        },
+        'click .load': function () {
+            ui.get('save').show('load');
+        },
+        'click .setting': function () {
+            ui.get('setting').show();
+        },
+        'click .exit': function () {
+            ui.get('menu').show();
+        }
+    });
+
     var tpl = ui.getTemplate('dialog');
     exports.body(tpl);
 

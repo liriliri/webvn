@@ -21,6 +21,35 @@
         background-color: rgba(0, 0, 0, 0.4);
         border-radius: 5px 5px 0 0;
     }
+    .controls {
+        position: absolute;
+        bottom: 245px;
+        right: 0;
+        opacity: 0.2;
+        transition: opacity .3s;
+        &:hover {
+            opacity: 1;
+        }
+        li {
+            color: #fff;
+            text-shadow: 0 0 3px $secondary-color;
+            font-size: 15px;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 8px 15px;
+            float: left;
+            transition: background .3s;
+            cursor: pointer;
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+            &.qsave {
+                border-top-left-radius: 5px;
+            }
+            &.exit {
+                border-top-right-radius: 5px;
+            }
+        }
+    }
     .content {
         padding: 25px;
         background-color: rgba(0, 0, 0, 0.4);
@@ -44,6 +73,9 @@
     }
     &.big {
         .name {
+            display: none;
+        }
+        .controls {
             display: none;
         }
         .content {

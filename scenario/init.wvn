@@ -11,3 +11,19 @@ function jump(label) {
 function title(name) {
     system -t={{name}}
 }
+
+function playVideo(src) {
+    video -d -p -s={{src}} -c=skip
+}
+
+function logInfo(msg) {
+    log -t=info -m={{msg}}
+}
+
+function playBgm(src) {
+    bgm -s={{src}}
+}
+
+function setAlias(name, value) {
+    alias -n={{name}} -v={{value}}
+}

@@ -1,0 +1,12 @@
+@import "variables";
+
+#save {
+    position: absolute;
+    z-index: $index-cg;
+    background: #fff;
+    padding: 10px 30px;
+    .close {
+        position: absolute;
+        bottom: 30px;
+    }
+}

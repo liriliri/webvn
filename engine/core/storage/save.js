@@ -17,7 +17,7 @@ webvn.extend('storage', ['class', 'util'], function (exports, kclass, util) {
                 return this;
             }
 
-            this.saveFn.call(null, fn);
+            return this.saveFn.call(null);
         },
 
         load: function (fn) {
@@ -48,9 +48,7 @@ webvn.extend('storage', ['class', 'util'], function (exports, kclass, util) {
         var values = {};
 
         util.each(saves, function (save, key) {
-            var value = {};
-            save.save(value);
-            values[key] = value;
+            values[key] = save.save();
         });
 
         localStore.set(values);

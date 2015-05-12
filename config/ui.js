@@ -10,6 +10,12 @@ webvn.extend('config', function (exports) {
         transition: 'linear'
     };
 
+    exports.uiMenu = {
+        duration: 300,
+        fadeIn: true,
+        fadeOut: true
+    };
+
     exports.uiFigure = {
         path: 'asset/fg/',
         extension: 'png',
@@ -64,6 +70,12 @@ webvn.extend('config', function (exports) {
             '片雾烈火 - 红空恋歌',
             '霜月はるか - 恋狱'
         ]
+    };
+
+    exports.uiSave = {
+        duration: 300,
+        fadeIn: true,
+        fadeOut: true
     };
 
 });
