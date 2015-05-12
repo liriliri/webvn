@@ -72,7 +72,7 @@ webvn.use(['script', 'ui'], function (script, ui) {
             playNext: {
                 type: 'Boolean',
                 shortHand: 'pn',
-                default: true
+                defaultValue: true
             }
         },
 

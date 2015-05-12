@@ -2,7 +2,7 @@ webvn.extend('config', function (exports) {
     "use strict";
 
     exports.uiBackground = {
-        path: 'asset/bgimage/',
+        path: 'asset/bg/',
         extension: 'jpg',
         duration: 300,
         fadeIn: true,
@@ -11,7 +11,7 @@ webvn.extend('config', function (exports) {
     };
 
     exports.uiFigure = {
-        path: 'asset/fgimage/',
+        path: 'asset/fg/',
         extension: 'png',
         duration: 300,
         fadeIn: true,
@@ -29,6 +29,8 @@ webvn.extend('config', function (exports) {
     };
 
     exports.uiDialog = {
+        path: 'asset/face/',
+        extension: 'png',
         fadeIn: true,
         fadeOut: true,
         duration: 300,

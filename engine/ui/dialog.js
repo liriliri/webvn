@@ -1,4 +1,4 @@
-webvn.use(['ui', 'text', 'media', 'config'], function (ui, text, media, config) {
+webvn.use(['ui', 'text', 'media', 'config', 'storage'], function (ui, text, media, config, storage) {
     "use strict";
     var exports = ui.create('dialog', 'div');
 
@@ -7,24 +7,40 @@ webvn.use(['ui', 'text', 'media', 'config'], function (ui, text, media, config) 
     var $el = exports.$el;
     $el.addClass('fill');
 
-    exports.textType = 'fadeIn';
-    exports.textDuration = 50;
-    exports.duration = 200;
-    exports.fadeIn = true;
-    exports.fadeOut = true;
+    exports.textType = conf.get('textType');
+    exports.textDuration = conf.get('textDuration');
+    exports.duration = conf.get('duration');
+    exports.fadeIn = conf.get('fadeIn');
+    exports.fadeOut = conf.get('fadeOut');
 
     var tpl = ui.getTemplate('dialog');
     exports.body(tpl);
 
     var $content = $el.find('.content'),
         $name = $el.find('.name'),
+        $face = $el.find('.face'),
         $text = $content.find('.text');
 
     exports.show = function () {
+        if ($el.visible()) {
+            return;
+        }
         if (exports.fadeIn) {
             $el.fadeIn(exports.duration);
         } else {
             $el.show();
+        }
+    };
+
+    $face.hide();
+
+    var asset = storage.createAsset(conf.get('path'), conf.get('extension'));
+
+    exports.face = function(src) {
+        if (!src) {
+            $face.hide();
+        } else {
+            $face.show().attr('src', asset.get(src));
         }
     };
 

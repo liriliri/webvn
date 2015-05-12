@@ -22,6 +22,10 @@ webvn.module('parserNode', ['class', 'util'],
 
         };
 
+        exports.label = function (label) {
+            return '"label", "' + util.trim(label) + '"';
+        };
+
         exports.command = function (command) {
 
             command = formatParam(escapeQuote(command));
@@ -120,9 +124,7 @@ webvn.module('parserNode', ['class', 'util'],
 
         // Change {{param}} to " + param + "
         function formatParam(text) {
-
-            return text.replace(/\{\{/g, '\'" + ').replace(/}}/g, ' + "\'');
-
+            return text.replace(/\{\{/g, '" + ').replace(/}}/g, ' + "');
         }
 
         // https://github.com/joliss/js-string-escape/blob/master/index.js

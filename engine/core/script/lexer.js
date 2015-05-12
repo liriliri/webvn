@@ -133,7 +133,10 @@ webvn.module('lexer', ['class', 'log', 'util'], function (kclass, log, util) {
                         } else if (this.c === 'f' && this.lookAhead(7, 'unction')) {
                             this.consumes(8);
                             return this.createToken('FUNCTION');
-                        } else if (this.isLetter(this.c)) {
+                        } else if (this.c === '*') {
+                            this.consume(1);
+                            return this.label();
+                        }else if (this.isLetter(this.c)) {
                             /* If nothing above matches and it is a letter currently,
                              * it is a command(function call, alias command).
                              */
@@ -378,9 +381,33 @@ webvn.module('lexer', ['class', 'log', 'util'], function (kclass, log, util) {
             });
 
         },
+        label: function () {
+            var value = '',
+                firstLine, firstColumn, lastLine, lastColumn;
+
+            firstLine = this.currentLine;
+            firstColumn = this.currentColumn;
+
+            while (!(this.c === '\n') && this.isLetter(this.c)) {
+                value += this.c;
+                if (this.c === EOF) {
+                    break;
+                }
+                this.advance();
+            }
+
+            lastLine = this.currentLine;
+            lastColumn = this.currentColumn - 1;
+
+            return this.createToken('LABEL', value, {
+                first_line: firstLine,
+                first_column: firstColumn,
+                last_line: lastLine,
+                last_column: lastColumn
+            });
+        },
         // Command, ends with line break;
         command: function () {
-
             var value = '',
                 firstLine, firstColumn, lastLine, lastColumn;
 
@@ -416,7 +443,6 @@ webvn.module('lexer', ['class', 'log', 'util'], function (kclass, log, util) {
                 last_line: lastLine,
                 last_column: lastColumn
             });
-
         }
     });
 

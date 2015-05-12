@@ -31,7 +31,9 @@
         width: 100%;
         bottom: 0;
         .face {
-
+            height: 100%;
+            margin-right: 20px;
+            float: left;
         }
         .text {
             text-shadow: 0 0 3px $primary-color;
@@ -46,7 +48,7 @@
         }
         .content {
             .face {
-                display: none;
+                display: none !important;
             }
             height: 100%;
             width: 100%;

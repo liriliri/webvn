@@ -164,6 +164,18 @@ webvn.extend('select', ['class', 'util'], function (exports, kclass, util) {
                 this.textContent = text;
             });
         },
+
+        visible: function (visiblity) {
+            if (visiblity === undefined) {
+                return this.css('display') !== 'none';
+            }
+            if (visiblity) {
+                return this.show();
+            } else {
+                return this.hide();
+            }
+        },
+
         /**
          * Display Element
          * @method webvn.select.Select#show

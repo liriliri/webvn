@@ -20,7 +20,7 @@ webvn.use(['script', 'log'], function (script, log) {
             playNext: {
                 type: 'Boolean',
                 shortHand: 'pn',
-                default: true
+                defaultValue: true
             }
         },
 

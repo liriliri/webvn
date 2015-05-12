@@ -20,6 +20,11 @@ webvn.module('media', ['class', 'log', 'util', 'anim', 'config', 'storage'], fun
             this.state = STATE.NOT_LOADED;
             this.el = null;
         },
+
+        isLoaded: function () {
+            return this.state !== STATE.NOT_LOADED;
+        },
+
         /**
          * Load media and play(optional)
          * @method webvn.media.Base#load

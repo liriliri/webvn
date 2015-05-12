@@ -74,12 +74,12 @@ var exports = {}, require = function(){};
   }
 */
 var parser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,13],$V1=[1,11],$V2=[1,12],$V3=[1,10],$V4=[1,14],$V5=[1,12,13,14,15,20,21],$V6=[1,16],$V7=[1,21],$V8=[1,12,13,14,15,18,20,21],$V9=[19,24];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,15],$V1=[1,14],$V2=[1,12],$V3=[1,13],$V4=[1,11],$V5=[1,16],$V6=[1,13,14,15,16,17,22,23],$V7=[1,18],$V8=[1,23],$V9=[1,13,14,15,16,17,20,22,23],$Va=[21,26];
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"Root":3,"Body":4,"Line":5,"Expression":6,"If":7,"CodeLine":8,"CodeBlock":9,"Command":10,"Function":11,"COMMAND":12,"CODE_LINE":13,"CODE_BLOCK":14,"IF":15,"CONDITION":16,"Block":17,"ELSE":18,"{":19,"}":20,"FUNCTION":21,"FUNCTION_NAME":22,"ParamList":23,"PARAM":24,"$accept":0,"$end":1},
-terminals_: {2:"error",12:"COMMAND",13:"CODE_LINE",14:"CODE_BLOCK",15:"IF",16:"CONDITION",18:"ELSE",19:"{",20:"}",21:"FUNCTION",22:"FUNCTION_NAME",24:"PARAM"},
-productions_: [0,[3,0],[3,1],[4,1],[4,2],[5,1],[6,1],[6,1],[6,1],[6,1],[6,1],[10,1],[8,1],[9,1],[7,3],[7,3],[7,3],[17,2],[17,3],[11,4],[11,3],[23,1],[23,2]],
+symbols_: {"error":2,"Root":3,"Body":4,"Line":5,"Expression":6,"If":7,"CodeLine":8,"CodeBlock":9,"Command":10,"Label":11,"Function":12,"LABEL":13,"COMMAND":14,"CODE_LINE":15,"CODE_BLOCK":16,"IF":17,"CONDITION":18,"Block":19,"ELSE":20,"{":21,"}":22,"FUNCTION":23,"FUNCTION_NAME":24,"ParamList":25,"PARAM":26,"$accept":0,"$end":1},
+terminals_: {2:"error",13:"LABEL",14:"COMMAND",15:"CODE_LINE",16:"CODE_BLOCK",17:"IF",18:"CONDITION",20:"ELSE",21:"{",22:"}",23:"FUNCTION",24:"FUNCTION_NAME",26:"PARAM"},
+productions_: [0,[3,0],[3,1],[4,1],[4,2],[5,1],[6,1],[6,1],[6,1],[6,1],[6,1],[6,1],[11,1],[10,1],[8,1],[9,1],[7,3],[7,3],[7,3],[19,2],[19,3],[12,4],[12,3],[25,1],[25,2]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -91,7 +91,7 @@ break;
 case 2:
 return this.$ = $$[$0]
 break;
-case 3: case 10: case 21:
+case 3: case 11: case 12: case 23:
 this.$ = $$[$0]
 break;
 case 4:
@@ -109,36 +109,36 @@ break;
 case 9:
 this.$ = yy.command($$[$0])
 break;
-case 11:
-yy.lineNum(yylineno); this.$ = $$[$0];
+case 10:
+this.$ = yy.label($$[$0])
 break;
-case 12: case 13:
+case 13: case 14: case 15:
 yy.lineNum(yylineno); this.$ = $$[$0]
 break;
-case 14:
+case 16:
 yy.lineNum(yylineno); this.$ = yy["if"]($$[$0-1], $$[$0])
 break;
-case 15: case 16:
+case 17: case 18:
 this.$ = yy.ifElse($$[$0-2], $$[$0])
 break;
-case 17:
+case 19:
 this.$ = yy.block("")
 break;
-case 18:
+case 20:
 this.$ = yy.block($$[$0-1])
 break;
-case 19:
+case 21:
 this.$ = yy["function"]($$[$0-2], $$[$0-1], $$[$0])
 break;
-case 20:
+case 22:
 this.$ = yy["function"]($$[$0-1], $$[$0])
 break;
-case 22:
+case 24:
 this.$ = yy.paramList($$[$0-1], $$[$0])
 break;
 }
 },
-table: [{1:[2,1],3:1,4:2,5:3,6:4,7:5,8:6,9:7,10:8,11:9,12:$V0,13:$V1,14:$V2,15:$V3,21:$V4},{1:[3]},{1:[2,2],5:15,6:4,7:5,8:6,9:7,10:8,11:9,12:$V0,13:$V1,14:$V2,15:$V3,21:$V4},o($V5,[2,3]),o($V5,[2,5]),o($V5,[2,6],{18:$V6}),o($V5,[2,7]),o($V5,[2,8]),o($V5,[2,9]),o($V5,[2,10]),{16:[1,17]},o($V5,[2,12]),o($V5,[2,13]),o($V5,[2,11]),{22:[1,18]},o($V5,[2,4]),{7:19,15:$V3,17:20,19:$V7},{17:22,19:$V7},{17:24,19:$V7,23:23,24:[1,25]},o($V5,[2,15],{18:$V6}),o($V8,[2,16]),{4:27,5:3,6:4,7:5,8:6,9:7,10:8,11:9,12:$V0,13:$V1,14:$V2,15:$V3,20:[1,26],21:$V4},o($V8,[2,14]),{17:28,19:$V7,24:[1,29]},o($V5,[2,20]),o($V9,[2,21]),o($V8,[2,17]),{5:15,6:4,7:5,8:6,9:7,10:8,11:9,12:$V0,13:$V1,14:$V2,15:$V3,20:[1,30],21:$V4},o($V5,[2,19]),o($V9,[2,22]),o($V8,[2,18])],
+table: [{1:[2,1],3:1,4:2,5:3,6:4,7:5,8:6,9:7,10:8,11:9,12:10,13:$V0,14:$V1,15:$V2,16:$V3,17:$V4,23:$V5},{1:[3]},{1:[2,2],5:17,6:4,7:5,8:6,9:7,10:8,11:9,12:10,13:$V0,14:$V1,15:$V2,16:$V3,17:$V4,23:$V5},o($V6,[2,3]),o($V6,[2,5]),o($V6,[2,6],{20:$V7}),o($V6,[2,7]),o($V6,[2,8]),o($V6,[2,9]),o($V6,[2,10]),o($V6,[2,11]),{18:[1,19]},o($V6,[2,14]),o($V6,[2,15]),o($V6,[2,13]),o($V6,[2,12]),{24:[1,20]},o($V6,[2,4]),{7:21,17:$V4,19:22,21:$V8},{19:24,21:$V8},{19:26,21:$V8,25:25,26:[1,27]},o($V6,[2,17],{20:$V7}),o($V9,[2,18]),{4:29,5:3,6:4,7:5,8:6,9:7,10:8,11:9,12:10,13:$V0,14:$V1,15:$V2,16:$V3,17:$V4,22:[1,28],23:$V5},o($V9,[2,16]),{19:30,21:$V8,26:[1,31]},o($V6,[2,22]),o($Va,[2,23]),o($V9,[2,19]),{5:17,6:4,7:5,8:6,9:7,10:8,11:9,12:10,13:$V0,14:$V1,15:$V2,16:$V3,17:$V4,22:[1,32],23:$V5},o($V6,[2,21]),o($Va,[2,24]),o($V9,[2,20])],
 defaultActions: {},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {

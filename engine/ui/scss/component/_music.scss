@@ -27,6 +27,15 @@
             display: inline-block;
         }
     }
+    .controls {
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
+        li {
+            width: 100px;
+            text-align: center;
+        }
+    }
     .close {
         position: absolute;
         bottom: 30px;

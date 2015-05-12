@@ -35,7 +35,7 @@ webvn.use(['ui', 'select', 'config', 'storage'], function (ui, select, config, s
     if (pageCount > 1) {
         var html = '';
         for (var i = 0; i < pageCount; i++) {
-            html += '<li class="button pa" data-num="' + (i+1) + '">' + (i+1) + '</li>';
+            html += '<li class="button" data-num="' + (i+1) + '">' + (i+1) + '</li>';
         }
         $pagination.html(html);
     }

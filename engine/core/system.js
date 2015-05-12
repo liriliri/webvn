@@ -16,12 +16,12 @@ webvn.module('system', ['select', 'config'], function (select, config) {
     var $title = select.get('title');
 
     // Set window title
-    var setTitle = exports.setTitle = function (text) {
+    var title = exports.title = function (text) {
         $title.text(text);
     };
 
     // Set default title
-    setTitle(conf.get('title'));
+    title(conf.get('title'));
 
     return exports;
 });

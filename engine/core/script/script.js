@@ -46,17 +46,13 @@ webvn.module('script', ['config', 'parser', 'parserNode', 'util', 'loader', 'lex
     parser.yy = parserYy;
 
     var parse = exports.parse = function (scenario) {
-
         var tokens = lexer(scenario);
         return parser.parse(tokens);
-
     };
 
     // Parse the source code and eval it
     var wvnEval = exports.eval = function (code) {
-
         jsEval(parse(code));
-
     };
 
     // JavaScript Eval.
@@ -123,8 +119,10 @@ webvn.module('script', ['config', 'parser', 'parserNode', 'util', 'loader', 'lex
     var isSource = true;
 
     //noinspection JSUnusedLocalSymbols
-    var $$ = exports.$$ = function (type, value) {
+    var $$ = exports.$$ = function () {
         var source = util.makeArray(arguments);
+
+        preExec(source, sources.length);
 
         /* When executing,
          * command defined inside a if statement
@@ -136,6 +134,31 @@ webvn.module('script', ['config', 'parser', 'parserNode', 'util', 'loader', 'lex
             middles.push(source);
         }
     };
+
+    // Execute command when first load, handle things like label
+    function preExec(source, line) {
+        switch (source[0]) {
+            case 'label':
+                label.create(source[1], line);
+                break;
+        }
+    }
+
+    var label = kclass.module(function () {
+        var exports = {};
+
+        var labels = {};
+
+        exports.create = function (name, lineNum) {
+            labels[name] = lineNum;
+        };
+
+        exports.get = function (name) {
+            return labels[name];
+        };
+
+        return exports;
+    });
 
     var asset = storage.createAsset(conf.get('path'), conf.get('extension'));
 
@@ -153,9 +176,7 @@ webvn.module('script', ['config', 'parser', 'parserNode', 'util', 'loader', 'lex
         });
 
         loader.scenario(scenarios, function (data, isLast) {
-
             loadText(data, isLast);
-
         });
 
     };
@@ -181,6 +202,10 @@ webvn.module('script', ['config', 'parser', 'parserNode', 'util', 'loader', 'lex
                 break;
             case 'code':
                 execCode(unit);
+                break;
+            case 'label':
+                // Just pass it
+                play();
                 break;
             default:
                 log.warn("Unknown command type");
@@ -225,8 +250,18 @@ webvn.module('script', ['config', 'parser', 'parserNode', 'util', 'loader', 'lex
             return container[name] !== undefined;
         };
 
+        var spaceRegex = /\s/;
+
         exports.execute = function (name, params) {
             var fn = container[name];
+
+            // Wrap params with spaces
+            params = params.map(function (value) {
+                if (spaceRegex.test(value)) {
+                    value = "'" + value + "'";
+                }
+                return value;
+            });
 
             isSource = false;
             fn.apply(null, params);
@@ -289,20 +324,21 @@ webvn.module('script', ['config', 'parser', 'parserNode', 'util', 'loader', 'lex
 
     // Start executing the scripts from beginning.
     var start = exports.start = function () {
-
         reset();
         play();
+    };
 
+    var jump = exports.jump = function (labelName) {
+        curNum = label.get(labelName);
+        play();
     };
 
     // Reset everything to initial state
     var reset = exports.reset = function () {
-
         isPaused = false;
         curNum = 0;
         middles = [];
         executions = [];
-
     };
 
     // Whether

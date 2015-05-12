@@ -16,6 +16,10 @@ webvn.use(['script', 'ui'], function (script, ui) {
                 type: 'String',
                 shortHand: 's'
             },
+            face: {
+                type: 'String',
+                shortHand: 'f'
+            },
             duration: {
                 type: 'Number',
                 shortHand: 'du'
@@ -61,12 +65,17 @@ webvn.use(['script', 'ui'], function (script, ui) {
             'duration',
             'textType',
             'textDuration',
+            'face',
             'display',
             'name',
             'text',
             'voice',
             'playNext'
         ],
+
+        face: function (value) {
+            dialog.face(value);
+        },
 
         style: function (value) {
             dialog.style(value);

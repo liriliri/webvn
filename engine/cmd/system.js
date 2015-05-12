@@ -1,4 +1,4 @@
-webvn.use(['script', 'log'], function (script, log) {
+webvn.use(['script', 'log', 'system'], function (script, log, system) {
 
     var alias = script.alias;
 
@@ -35,6 +35,58 @@ webvn.use(['script', 'log'], function (script, log) {
             } else {
                 log.warn('Alias value must be set');
             }
+        }
+
+    });
+
+    script.createCommand({
+
+        constructor: function ScriptCommand() {
+            this.callSuper('script');
+        },
+
+        options: {
+            jump: {
+                type: 'String',
+                shortHand: 'j'
+            }
+        },
+
+        orders: [
+            'jump'
+        ],
+
+        jump: function (value) {
+            script.jump(value);
+        }
+
+    });
+
+    script.createCommand({
+
+        constructor: function SystemCommand() {
+            this.callSuper('system');
+        },
+
+        options: {
+            title: {
+                type: 'String',
+                shortHand: 't'
+            },
+            playNext: {
+                type: 'Boolean',
+                shortHand: 'pn',
+                defaultValue: true
+            }
+        },
+
+        orders: [
+            'title',
+            'playNext'
+        ],
+
+        title: function (value) {
+            system.title(value);
         }
 
     });

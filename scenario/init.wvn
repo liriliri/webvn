@@ -3,3 +3,11 @@
  * Creating your own alias and macro here is not recommended.
  * Please create another script file to define your own.
  */
+
+function jump(label) {
+    script -j={{label}}
+}
+
+function title(name) {
+    system -t={{name}}
+}

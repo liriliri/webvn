@@ -30,7 +30,7 @@ webvn.extend('script', ['class', 'util'], function (exports, kclass, util) {
                 defaults = {};
             util.each(this.options, function (value, key) {
                 value.shortHand && (shortHands[value.shortHand] = key);
-                value.default && (defaults[key] = value.default);
+                value.defaultValue && (defaults[key] = value.defaultValue);
             });
             this.shortHands = shortHands;
             this.defaults = defaults;

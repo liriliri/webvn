@@ -106,6 +106,9 @@ exports.copy = {
                 'dist/engine/webvn.css': tempDir + '/webvn.css'
             },
             {
+                'dist/scenario/init.wvn': 'scenario/init.wvn'
+            },
+            {
                 expand: true,
                 cwd: 'engine/img',
                 src: ["*.*", "**/*.*"],

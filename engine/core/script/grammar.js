@@ -21,10 +21,14 @@ var grammar = {
         ['CodeLine', '$$ = yy.code($1)'],
         ['CodeBlock', '$$ = yy.code($1)'],
         ['Command', '$$ = yy.command($1)'],
+        ['Label', '$$ = yy.label($1)'],
         ['Function', '$$ = $1']
     ],
+    Label: [
+        ['LABEL', '$$ = $1']
+    ],
     Command: [
-        ['COMMAND', 'yy.lineNum(yylineno); $$ = $1;']
+        ['COMMAND', 'yy.lineNum(yylineno); $$ = $1']
     ],
     CodeLine: [
         ['CODE_LINE', 'yy.lineNum(yylineno); $$ = $1']
