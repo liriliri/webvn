@@ -23,28 +23,30 @@ function myDialog(name, text) {
     dialog -n={{name}} -t={{text}}
 }
 
+*start
 
-`g.cool = 5;
+logTrigger
+
+`g.cool = 5; playNext();
+`s.myName = 'RedHood'; playNext();
 
 ```
 var x = 5;
 console.log(x+5);
 ```
+title "`5+2"
 
-title "First 'dd' chapter"
-
-jump skipFg
+// jump skipFg
 
 // video -d -p -c=none -s=video
 
 bg -d -s=living_room
 
-*      fg
 fg -d -sel=0 -s=fg1 -pos=bl
 fg -sel=1 -s=fg4 -pos=bc
 fg -sel=2 -s=fg3 -pos=br -pn=false
 
-// dialog -d --name='ユルシュール' -t='大丈夫ですの？　私のペットが迷惑を掛けてしまって、申し訳ありませんわ' -v=vo2
+dialog -d --name=`s.myName -t='大丈夫ですの？　私のペットが迷惑を掛けてしまって、申し訳ありませんわ' -v=vo2
 
 fg -sel=0 -s=fg2 -pn=false
 
@@ -58,3 +60,7 @@ dialog -f=face2 -t='大丈夫ですの？　私のペットが迷惑を掛けて
 jump fg
 
 fg -sel=0 -s=fg1
+
+function logTrigger() {
+    log -t=info -m="Trigger!"
+}

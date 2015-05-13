@@ -298,7 +298,7 @@ webvn.extend('webgl', ['class', 'log', 'util', 'config'], function (exports, kcl
                 return this;
             }
 
-            this.value = gl.createProgram();
+            programs[type] = this.value = gl.createProgram();
             var fragShader = createShader(gl, 'frag');
             fragShader.source(type);
             var vertexShader = createShader(gl, 'vertex');

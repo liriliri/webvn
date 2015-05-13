@@ -3,4 +3,5 @@
 #figure {
     position: absolute;
     z-index: $index-figure;
+    transform: translateZ(0);
 }

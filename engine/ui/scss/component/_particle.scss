@@ -3,4 +3,5 @@
 #particle {
     position: absolute;
     z-index: $index-particle;
+    transform: translateZ(0);
 }

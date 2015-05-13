@@ -5,6 +5,7 @@
     z-index: $index-cg;
     background: #fff;
     padding: 10px 30px;
+    transform: translateZ(0);
     .close {
         position: absolute;
         bottom: 30px;

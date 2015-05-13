@@ -1,4 +1,4 @@
-webvn.use(['ui', 'config'], function (ui, config) {
+webvn.use(['ui', 'config', 'canvas'], function (ui, config, canvas) {
     "use strict";
     var exports = ui.create('save');
 
@@ -21,10 +21,12 @@ webvn.use(['ui', 'config'], function (ui, config) {
     var $el = exports.$el;
     $el.addClass('fill');
 
-    var $title = $el.find('.title');
+    var $title = $el.find('.ui-title');
+
+    var renderer = canvas.renderer;
 
     function initSave() {
-
+        $title.text('Save');
     }
 
     function initLoad() {
@@ -32,6 +34,7 @@ webvn.use(['ui', 'config'], function (ui, config) {
     }
 
     exports.show = function (type) {
+        renderer.stop();
         if (type === 'save') {
             initSave();
         } else {
@@ -46,6 +49,7 @@ webvn.use(['ui', 'config'], function (ui, config) {
     };
 
     var hide = exports.hide = function () {
+        renderer.start();
         if (exports.fadeOut) {
             $el.fadeOut(exports.duration);
         } else {

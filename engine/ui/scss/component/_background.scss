@@ -1,6 +1,7 @@
 @import "variables";
 
 #background {
+    transform: translateZ(0);
     position: absolute;
     z-index: $index-background;
 }

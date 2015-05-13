@@ -1,7 +1,7 @@
 webvn.extend('script', ['util', 'storage'], function (exports, util, storage) {
     "use strict";
     var globalStore = storage.createLocalStore('global'),
-        g = globalStore.get(), s;
+        g = globalStore.get(), s = {};
 
     // Quick reference
     var playNext = exports.play;
@@ -57,6 +57,6 @@ webvn.extend('script', ['util', 'storage'], function (exports, util, storage) {
     save.save(function () {
         return s;
     }).load(function (value) {
-
+        s = value;
     });
 });

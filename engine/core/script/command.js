@@ -51,6 +51,7 @@ webvn.extend('script', ['class', 'util'], function (exports, kclass, util) {
          */
         execute: function (values) {
             values = this.parseOptions(values);
+            values = this.evalValue(values);
             this.execution(values);
         },
 
@@ -89,6 +90,20 @@ webvn.extend('script', ['class', 'util'], function (exports, kclass, util) {
         beforeExec: function (values) {},
 
         afterExec: function (values) {},
+
+        evalValue: function (values) {
+            var ret = {};
+
+            util.each(values, function (value, key) {
+                if (util.isString(value) && util.startsWith(value, '`')) {
+                    ret[key] = exports.jsEvalVal(value.substr(1));
+                } else {
+                    ret[key] = value;
+                }
+            });
+
+            return ret;
+        },
 
         /**
          * Parse options for final usage in execution function.
@@ -142,10 +157,8 @@ webvn.extend('script', ['class', 'util'], function (exports, kclass, util) {
          * @returns {*}
          */
         parseValue: function (type, value) {
-            // Support undefined and null assignment
+            // Support null assignment
             switch (value) {
-                case 'undefined':
-                    return;
                 case 'null':
                     return null;
             }

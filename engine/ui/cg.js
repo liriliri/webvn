@@ -1,4 +1,4 @@
-webvn.use(['ui', 'select', 'config', 'storage'], function (ui, select, config, storage) {
+webvn.use(['ui', 'select', 'config', 'storage', 'canvas'], function (ui, select, config, storage, canvas) {
     "use strict";
     var exports = ui.create('cg', 'div');
 
@@ -11,6 +11,8 @@ webvn.use(['ui', 'select', 'config', 'storage'], function (ui, select, config, s
 
     var tpl = ui.getTemplate('cg');
     exports.body(tpl);
+
+    var renderer = canvas.renderer;
 
     // Init cg
     var $container = $el.find('.container');
@@ -64,10 +66,12 @@ webvn.use(['ui', 'select', 'config', 'storage'], function (ui, select, config, s
     });
 
     exports.show = function () {
+        renderer.stop();
         $el.fadeIn(300);
     };
 
     var hide = exports.hide = function () {
+        renderer.start();
         $el.fadeOut(300);
     };
 });

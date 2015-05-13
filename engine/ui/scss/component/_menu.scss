@@ -3,6 +3,7 @@
 #menu {
     position: absolute;
     z-index: $index-menu;
+    transform: translateZ(0);
     ul {
         position: absolute;
         height: 50%;

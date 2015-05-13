@@ -94,6 +94,10 @@ webvn.module('script', ['config', 'parser', 'parserNode', 'util', 'loader', 'lex
             case 'label':
                 label.create(source[1], line);
                 break;
+            case 'function':
+                // Since functions can't be stored, we have to create them at start
+                functions.create(source[1], source[2]);
+                break;
         }
     }
 

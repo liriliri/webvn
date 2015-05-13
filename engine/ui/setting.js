@@ -1,4 +1,4 @@
-webvn.use(['ui'], function (ui) {
+webvn.use(['ui', 'canvas'], function (ui, canvas) {
     "use strict";
     var exports = ui.create('setting');
 
@@ -15,11 +15,15 @@ webvn.use(['ui'], function (ui) {
         }
     });
 
+    var renderer = canvas.renderer;
+
     exports.show = function () {
+        renderer.stop();
         $el.fadeIn(300);
     };
 
     var hide = exports.hide = function () {
+        renderer.start();
         $el.fadeOut(300);
     };
 
