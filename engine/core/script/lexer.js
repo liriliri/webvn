@@ -154,12 +154,15 @@ webvn.module('lexer', ['class', 'log', 'util'], function (kclass, log, util) {
          * since it is used to indicate the end of line comment and other stuff
          */
         WS: function () {
-            while (this.c === ' ' ||
-            this.c === '\t' ||
-            this.c === '\r') {
+            while (this.empty(this.c)) {
                 this.advance();
             }
         },
+
+        empty: function (c) {
+            return c === ' ' || c === '\t' || c === '\r';
+        },
+
         // Move one character and detect end of file
         advance: function () {
 
@@ -177,13 +180,13 @@ webvn.module('lexer', ['class', 'log', 'util'], function (kclass, log, util) {
             }
 
         },
+
         // Move to next non-whitespace character
         consume: function () {
-
             this.advance();
             this.WS();
-
         },
+
         // Consume several times
         consumes: function (num) {
 

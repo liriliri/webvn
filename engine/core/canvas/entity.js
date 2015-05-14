@@ -1,4 +1,5 @@
-webvn.extend('canvas', ['class', 'loader', 'anim', 'util'], function (exports, kclass, loader, anim, util) {
+webvn.extend('canvas', ['class', 'loader', 'anim', 'util', 'config', 'storage'], function (exports, kclass, loader, anim, util, config, storage) {
+    var conf = config.create('canvas');
 
     var Entiy = kclass.create({
 
@@ -9,9 +10,15 @@ webvn.extend('canvas', ['class', 'loader', 'anim', 'util'], function (exports, k
             this.visible = false;
         },
 
+        change: function () {
+            return true;
+        },
+
         render: function () {}
 
     });
+
+    var lumaAsset = storage.createAsset(conf.get('lumaPath'), conf.get('lumaExtension'));
 
     var ImageEntity = exports.ImageEntity = Entiy.extend({
 
@@ -32,6 +39,37 @@ webvn.extend('canvas', ['class', 'loader', 'anim', 'util'], function (exports, k
 
             this.x2 = null;
             this.y2 = null;
+
+            this.attributes = [
+                'x',
+                'y',
+                'alpha',
+                'width',
+                'height',
+                'position',
+                'progress',
+                'scaleX',
+                'scaleY',
+                'transition',
+                'filter',
+                'x2',
+                'y2'
+            ];
+        },
+
+        change: function () {
+            var attributes = this.attributes,
+                len = attributes.length, key;
+
+            for (var i = 0; i < len; i++) {
+                key = attributes[i];
+                if (this['_' + key] !== this[key]) {
+                    this['_' + key] = this[key];
+                    return true;
+                }
+            }
+
+            return false;
         },
 
         setPosition: function (x, y) {
@@ -148,7 +186,26 @@ webvn.extend('canvas', ['class', 'loader', 'anim', 'util'], function (exports, k
             "use strict";
             var self = this;
 
-            loader.image(src).then(function (image) {
+            src = [src];
+
+            // Handle situation
+            if (util.startsWith(this.transition, 'luma')) {
+                var lumaType = this.transition.substr(4);
+                // Lowercase first character
+                lumaType = lumaType.charAt(0).toLowerCase() + lumaType.substr(1);
+                this.transition = 'luma';
+                src.push(lumaAsset.get(lumaType));
+            }
+
+            loader.image(src).then(function (images) {
+                var image;
+                if (util.isArray(images)) {
+                    self.lumaImage = images[1];
+                    image = images[0];
+                } else {
+                    image = images;
+                }
+
                 if (self.image) {
                     self.image2 = self.image;
                     self._load(image);
@@ -174,10 +231,6 @@ webvn.extend('canvas', ['class', 'loader', 'anim', 'util'], function (exports, k
         },
 
         render: function (scene) {
-            "use strict";
-            if (!this.visible) {
-                return;
-            }
 
             var ctx = scene.ctx;
 
@@ -196,10 +249,11 @@ webvn.extend('canvas', ['class', 'loader', 'anim', 'util'], function (exports, k
                 scaleX = this.scaleX,
                 scaleY = this.scaleY,
                 transition = this.transition,
-                progress = this.progress;
+                progress = this.progress,
+                lumaImage = this.lumaImage;
 
             if (progress !== 1) {
-                ctx.drawTransition(this.image2, image, progress, transition, this.x2, this.y2, x, y, alpha, scaleX, scaleY, this.filter);
+                ctx.drawTransition(this.image2, image, progress, transition, this.x2, this.y2, x, y, alpha, scaleX, scaleY, this.filter, lumaImage);
             } else {
                 this.x2 = null;
                 var filter = this.filter;

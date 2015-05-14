@@ -11,6 +11,19 @@ webvn.extend('canvas', ['class', 'webgl', 'util'], function (exports, kclass, we
             this.children = [];
         },
 
+        change: function () {
+            var children = this.children,
+                len = children.length;
+
+            for (var i = 0; i < len; i++) {
+                if (children[i].change()) {
+                    return true;
+                }
+            }
+
+            return false;
+        },
+
         clear: function () {
             this.ctx.clear();
         },
@@ -30,7 +43,9 @@ webvn.extend('canvas', ['class', 'webgl', 'util'], function (exports, kclass, we
             var i, len = children.length;
 
             for (i = 0; i < len; i++) {
-                children[i].render(this);
+                if (children[i].visible) {
+                    children[i].render(this);
+                }
             }
         }
 

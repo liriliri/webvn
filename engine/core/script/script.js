@@ -259,6 +259,11 @@ webvn.module('script', ['config', 'parser', 'parserNode', 'util', 'loader', 'lex
         // Execute command
         var cmd = exports.getCommand(name);
         if (!cmd) {
+            if (functions.has('default')) {
+                functions.execute('default', [commandText]);
+                play();
+                return;
+            }
             log.warn('Command ' + name + ' doesn\'t exist');
             return;
         }

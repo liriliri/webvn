@@ -41,7 +41,7 @@ webvn.module('parserNode', ['class', 'util'],
             for (var i = 0, len = lines.length; i < len; i++) {
                 lines[i] = util.trim(lines[i]);
             }
-            code = lines.join(';').replace(/;;/g, ';');
+            code = lines.join('\n');
             code = escapeQuote(code);
 
             return '"code", "' + code + '"';

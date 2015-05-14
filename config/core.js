@@ -43,4 +43,9 @@ webvn.extend('config', function (exports) {
         }
     };
 
+    exports.canvas = {
+        lumaPath: 'engine/img/luma/',
+        lumaExtension: 'png'
+    };
+
 });

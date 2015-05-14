@@ -213,12 +213,16 @@ webvn.extend('webgl', ['class', 'log', 'util', 'config'], function (exports, kcl
             this.attribute('a_Position').uniform('resolution').uniform('progress').
                 uniform('from').uniform('to');
 
+            if (type === 'luma') {
+                this.uniform('lumaTex');
+            }
+
             this.positionBuffer = gl.createBuffer();
 
             return this;
         },
 
-        render: function (texture1, texture2, progress, type) {
+        render: function (texture1, texture2, progress, type, lumaImage) {
             var gl = this.gl;
 
             this.getProgram(type).use();
@@ -232,19 +236,21 @@ webvn.extend('webgl', ['class', 'log', 'util', 'config'], function (exports, kcl
             gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 8, 0);
             gl.enableVertexAttribArray(a_Position);
 
-            var resolution = program.resolution;
-            gl.uniform2f(resolution, this.width, this.height);
+            gl.uniform2f(program.resolution, this.width, this.height);
 
-            var progressLocation = program.progress;
-            gl.uniform1f(progressLocation, progress);
+            gl.uniform1f(program.progress, progress);
 
             texture1.active(0);
-            var from = program.from;
-            gl.uniform1i(from, 0);
+            gl.uniform1i(program.from, 0);
 
             texture2.active(1);
-            var to = program.to;
-            gl.uniform1i(to, 1);
+            gl.uniform1i(program.to, 1);
+
+            if (type === 'luma') {
+                var lumaTexture = createTexture(gl, lumaImage);
+                lumaTexture.active(2);
+                gl.uniform1i(program.lumaTex, 2);
+            }
 
             gl.drawArrays(gl.TRIANGLES, 0, 6);
         }

@@ -41,7 +41,7 @@ webvn.extend('config', function (exports) {
         fadeOut: true,
         duration: 300,
         textType: 'fadeIn',
-        textDuration: 50
+        textDuration: 500
     };
 
     exports.uiCg = {

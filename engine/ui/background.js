@@ -51,6 +51,9 @@ webvn.use(['ui', 'canvas', 'storage', 'config'], function (ui, canvas, storage, 
     exports.show = function () {
         canvas.renderer.add(scene);
 
+        if ($el.visible()) {
+            return;
+        }
         if (exports.fadeIn) {
             $el.fadeIn(exports.duration);
         } else {

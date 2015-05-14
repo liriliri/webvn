@@ -40,13 +40,16 @@ title "`5+2"
 
 // video -d -p -c=none -s=video
 
-bg -d -s=living_room
+bg -d -t=lumaWipe -s=living_room
 
 fg -d -sel=0 -s=fg1 -pos=bl
 fg -sel=1 -s=fg4 -pos=bc
 fg -sel=2 -s=fg3 -pos=br -pn=false
+bg -d -s=corridor -du=2000
 
-dialog -d --name=`s.myName -t='大丈夫ですの？　私のペットが迷惑を掛けてしまって、申し訳ありませんわ' -v=vo2
+dialog -d -tt=zoomIn -td=200 --name=`s.myName -t='大丈夫ですの？　私のペットが迷惑を掛けてしまって、申し訳ありませんわ' -v=vo2
+
+Something here.
 
 fg -sel=0 -s=fg2 -pn=false
 

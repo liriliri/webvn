@@ -33,7 +33,7 @@ webvn.extend('webgl', ['class'], function (exports, kclass) {
             this.drawImageProgram.use().render(image, x, y, alpha, scaleX, scaleY);
         },
 
-        drawTransition: function (image1, image2, progress, type, x1, y1, x2, y2, alpha, scaleX, scaleY, filter) {
+        drawTransition: function (image1, image2, progress, type, x1, y1, x2, y2, alpha, scaleX, scaleY, filter, lumaImage) {
             var gl = this.gl,
                 view = this.view;
 
@@ -48,7 +48,7 @@ webvn.extend('webgl', ['class'], function (exports, kclass) {
 
             if (filter) this.bufferFilter();
             this.transitionProgram.render(frameBuffer1.get(),
-                frameBuffer2.get(), progress, type, filter);
+                frameBuffer2.get(), progress, type, lumaImage);
             if (filter) this.drawFilter(filter.name, filter.value);
         },
 

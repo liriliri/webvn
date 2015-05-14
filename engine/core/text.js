@@ -49,24 +49,24 @@ webvn.module('text', ['util', 'class', 'select'], function (util, kclass, select
 
             // Remove everything when done
             setTimeout(function () {
-                $span.removeAttr('class style');
-            }, this.duration * len);
+                $span.removeAttr('class');
+            }, (this.duration / 10) * i + this.duration);
 
         },
         showChar: function (i) {
 
             var self = this,
-                animDuration = this.duration / 100 + 's';
+                animDuration = this.duration / 1000 + 's';
 
             this.timers[i] = setTimeout(function () {
 
-                self.$el.find('.char' + i).show().css({
+                self.$el.find('.char' + i).css('display', 'inline-block').css({
                     '-webkit-animation-duration': animDuration
                 }).addClass(self.type);
 
                 self.timers[i] = null;
 
-            }, i * this.duration);
+            }, i * (this.duration / 10));
 
         },
         // Split text into different span

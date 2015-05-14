@@ -1,5 +1,5 @@
 webvn.extend('loader', ['util'], function (exports, util) {
-        "use strict";
+    "use strict";
 
     var ajaxSettings = {
         // Default type of request

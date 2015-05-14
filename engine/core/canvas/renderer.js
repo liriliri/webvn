@@ -22,7 +22,9 @@ webvn.module('canvas', ['class', 'util'], function (kclass, util) {
             }
 
             for (i = 0; i < len; i++) {
-                scenes[i].render(timestamp);
+                if (scenes[i].change()) {
+                    scenes[i].render(timestamp);
+                }
             }
 
             requestAnim(render);

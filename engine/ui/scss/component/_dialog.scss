@@ -3,8 +3,6 @@
 #dialog {
     z-index: $index-dialog;
     position: absolute;
-    width: 100%;
-    height: 100%;
     padding: 25px;
     transform: translateZ(0);
     .wrapper {
