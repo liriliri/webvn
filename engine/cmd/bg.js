@@ -73,6 +73,10 @@ webvn.use(['script', 'ui'], function (script, ui) {
                 type: 'Boolean',
                 shortHand: 'pn',
                 defaultValue: true
+            },
+            waitTransition: {
+                type: 'Boolean',
+                shortHand: 'wt'
             }
         },
 
@@ -91,8 +95,19 @@ webvn.use(['script', 'ui'], function (script, ui) {
             'transition',
             'display',
             'src',
+            'waitTransition',
             'playNext'
         ],
+
+        waitTransition: function (value, values) {
+            if (values.src) {
+                if (values.playNext) {
+                    value && script.wait(background.duration);
+                } else {
+                    value && script.pause(background.duration);
+                }
+            }
+        },
 
         fadeIn: function (value) {
             background.fadeIn = value;

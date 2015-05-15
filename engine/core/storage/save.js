@@ -42,6 +42,7 @@ webvn.extend('storage', ['class', 'util'], function (exports, kclass, util) {
     };
 
     exports.save = function (name) {
+
         var localStore = createLocalStore(name);
         localStore.clear();
 

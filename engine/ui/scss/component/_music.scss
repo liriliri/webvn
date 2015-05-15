@@ -25,6 +25,7 @@
         span {
             background-color: $secondary-color;
             height: 100%;
+            transition: width .25s;
             display: inline-block;
         }
     }

@@ -75,7 +75,8 @@ webvn.extend('config', function (exports) {
     exports.uiSave = {
         duration: 300,
         fadeIn: true,
-        fadeOut: true
+        fadeOut: true,
+        saveNum: 4
     };
 
 });

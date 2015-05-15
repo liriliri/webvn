@@ -13,15 +13,13 @@ webvn.module('system', ['select', 'config'], function (select, config) {
     exports.screenWidth = screen.width;
     exports.screenHeight = screen.height;
 
-    var $title = select.get('title'),
-        _title = '';
+    var $title = select.get('title');
 
     // Set window title
     var title = exports.title = function (text) {
         if (text === undefined) {
-            return title;
+            return $title.text();
         }
-        _title = text;
         $title.text(text);
     };
 

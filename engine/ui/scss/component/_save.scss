@@ -6,6 +6,35 @@
     background: #fff;
     padding: 10px 30px;
     transform: translateZ(0);
+    .container {
+        padding: 25px 0;
+        margin-right: -30px;
+        li {
+            width: percentage(1 / 3);
+            cursor: pointer;
+            margin-bottom: 30px;
+            float: left;
+            padding-right: 30px;
+            text-align: center;
+            height: 220px;
+            span {
+                display: block;
+                height: 100%;
+                box-shadow: 0 0 1px #e1e1e1;
+                border: solid 4px #fff;
+                padding-top: 80px;
+                transition: box-shadow .3s;
+                &:hover {
+                    box-shadow: 0 0 6px 1px #07a;
+                }
+            }
+        }
+        &:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+    }
     .close {
         position: absolute;
         bottom: 30px;

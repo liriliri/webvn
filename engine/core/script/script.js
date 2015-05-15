@@ -389,7 +389,7 @@ webvn.module('script', ['config', 'parser', 'parserNode', 'util', 'loader', 'lex
     }
 
     //noinspection JSUnusedLocalSymbols
-    var pause = exports.pause = function (duration) {
+    var pause = exports.pause = function (duration, cb) {
 
         isPaused = true;
 
@@ -397,10 +397,17 @@ webvn.module('script', ['config', 'parser', 'parserNode', 'util', 'loader', 'lex
             setTimeout(function () {
 
                 isPaused = false;
+                cb && cb();
 
             }, duration);
         }
 
+    };
+
+    exports.wait = function (duration) {
+        pause(duration, function () {
+            play();
+        });
     };
 
     return exports;
