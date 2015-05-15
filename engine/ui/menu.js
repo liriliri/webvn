@@ -1,34 +1,41 @@
-webvn.use(['ui', 'script', 'media', 'util', 'canvas', 'config'], function (ui, script, media, util, canvas, config) {
+/* This ui component is also served as a template.
+ * Every other components should be written in the same style.
+ */
+webvn.use(['ui', 'script', 'media', 'util', 'canvas', 'config', 'storage'], function (ui, script, media, util, canvas, config, storage) {
     "use strict";
-    /**
-     * @class webvn.ui.Menu
-     */
-    var exports = ui.create('menu', 'div');
+    var uiName = 'menu',
+        exports = ui.create(uiName, 'div'),
+        $el = exports.$el,
+        tpl = ui.template.get(uiName),
+        save = storage.create(uiName);
 
-    var conf = config.create('uiMenu');
+    var cfg = config.create('uiMenu');
+    exports.bgm = cfg.get('bgm');
+    exports.btnClickSound = cfg.get('btnClkSound');
+    exports.btnHoverSound = cfg.get('btnHoverSound');
+    exports.duration = cfg.get('Duration');
+    exports.fadeIn = cfg.get('fadeIn');
+    exports.fadeOut = cfg.get('FadeOut');
 
-    // Properties
-    exports.bgm = null;
-    exports.btnClickSound = null;
-    exports.btnHoverSound = null;
-    exports.duration = conf.get('duration');
-    exports.fadeIn = conf.get('fadeIn');
-    exports.fadeOut = conf.get('fadeOut');
-
-    var bgm = media.createAudio('bgm'),
-        sysAudio = media.createAudio('sys'),
+    var bgm = media.audio.get('bgm'),
+        sysAudio = media.audio.get('sys'),
         renderer = canvas.renderer;
 
-    var tpl = ui.template.get('menu');
-    var $el = exports.$el;
     $el.addClass('fill').html(tpl);
 
+    save.save(function () {
+
+    }).load(function (value) {
+
+    });
+
     exports.stopPropagation().events({
+
         'click .start': function () {
             renderer.start();
-            if (exports.bgm) {
-                bgm.stop();
-            }
+
+            if (exports.bgm) bgm.stop();
+
             if (exports.fadeOut) {
                 $el.fadeOut(exports.duration, function () {
                     script.jump('start');
@@ -38,72 +45,58 @@ webvn.use(['ui', 'script', 'media', 'util', 'canvas', 'config'], function (ui, s
                 script.jump('start');
             }
         },
+
         'click .load': function () {
             ui.get('save').show('load');
         },
+
         'click .setting': function () {
             ui.get('setting').show();
         },
+
         'click .cg': function () {
             ui.get('cg').show();
         },
+
         'click .music': function () {
-            if (exports.bgm) {
-                bgm.stop();
-            }
+            if (exports.bgm) bgm.stop();
+
             ui.get('music').show();
         },
-        // Btn sound
+
         'mouseover li': function () {
-            if (exports.btnHoverSound) {
-                sysAudio.load(exports.btnHoverSound);
-            }
+            if (exports.btnHoverSound) sysAudio.load(exports.btnHoverSound);
         },
+
         'click li': function () {
-            if (exports.btnClickSound) {
-                sysAudio.load(exports.btnClickSound);
-            }
+            if (exports.btnClickSound) sysAudio.load(exports.btnClickSound);
         }
+
     });
 
-    /**
-     * Show Menu
-     * @method webvn.ui.Menu#show
-     */
     exports.show = function () {
         renderer.stop();
-        if (exports.bgm) {
-            bgm.load(exports.bgm);
-        }
-        if (exports.fadeIn) {
-            $el.fadeIn(exports.duration);
-        } else {
-            $el.show();
-        }
+
+        if (exports.bgm) bgm.load(exports.bgm);
+
+        exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();
     };
 
-    /**
-     * Decide which button should be displayed.
-     * @method webvn.ui.Menu#btn
-     * @param {object} buttons
-     */
-    exports.btn = function (buttons) {
+    exports.buttons = function (buttons) {
         util.each(buttons, function (value, key) {
             var $e = $el.find('ul li.' + key);
-            if (value === true) {
-                $e.css('display', 'block');
-            } else if (value === false) {
-                $e.css('display', 'none');
-            } else if (util.isString(value)) {
+
+            if (util.isString(value)) {
                 $e.text(value);
+                return;
             }
+
+            value ? $e.css('display', 'block') : $e.css('display', 'none');
         });
     };
 
     exports.playBgm = function () {
-        if (exports.bgm) {
-            bgm.load(exports.bgm);
-        }
+        if (exports.bgm) bgm.load(exports.bgm);
     };
 
 });

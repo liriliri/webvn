@@ -249,31 +249,21 @@ webvn.module('media', ['class', 'log', 'util', 'anim', 'config', 'storage'], fun
         }
     });
 
-    var audioCache = {};
+    var audio = exports.audio = kclass.module(function (exports) {
+        var audios = {};
 
-    /**
-     * Create an AudioClass instance
-     * @function webvn.media.createAudio
-     * @param {string} name name of audio
-     * @returns {AudioClass}
-     */
-    var createAudio = exports.createAudio = function (name) {
-        if (audioCache[name]) {
-            return audioCache[name];
-        }
-        audioCache[name] = new AudioClass();
-        return audioCache[name];
-    };
+        exports.create = function (name) {
+            if (audios[name]) {
+                return audios[name];
+            }
+            audios[name] = new AudioClass();
+            return audios[name];
+        };
 
-    /**
-     * Get audio instance if exists
-     * @function webvn.media.getAudio
-     * @param {string} name name of audio
-     * @returns {AudioClass|undefined}
-     */
-    exports.getAudio = function (name) {
-        return audioCache[name];
-    };
+        exports.get = function (name) {
+            return audios[name];
+        };
+    });
 
     /**
      * Create a Video instance
@@ -287,26 +277,22 @@ webvn.module('media', ['class', 'log', 'util', 'anim', 'config', 'storage'], fun
 
     var conf = config.create('media');
 
-    // Init audios
-    // Background music
     var bgmConf = conf.get('bgm');
-    var bgm = createAudio('bgm');
+    var bgm = audio.create('bgm');
     bgm.asset = storage.createAsset(bgmConf.path, bgmConf.extension);
     bgm.loop(true);
     bgm.duration = 2000;
 
-    // Sound effect
     var seConf = conf.get('se');
-    var se = createAudio('se');
+    var se = audio.create('se');
     se.asset = storage.createAsset(seConf.path, seConf.extension);
 
-    // Voice
     var voConf = conf.get('vo');
-    var vo = createAudio('vo');
+    var vo = audio.create('vo');
     vo.asset = storage.createAsset(voConf.path, voConf.extension);
 
     // System sound, for example: button hover effect
-    createAudio('sys');
+    audio.create('sys');
 
     return exports;
 });
