@@ -2,7 +2,7 @@
 var util = require('../util'),
     path = require('path');
 
-var intro = 'webvn.use(["ui"], function (ui) { ui.createTemplate(',
+var intro = 'webvn.use(["ui"], function (ui) { ui.template.create(',
     outro = ');});';
 
 function exportsFunc(grunt) {

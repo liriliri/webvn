@@ -4,11 +4,10 @@ webvn.use(['ui', 'select', 'media', 'config', 'storage', 'util', 'class'], funct
 
     var conf = config.create('uiMusic');
 
-    var tpl = ui.getTemplate('music');
-    exports.body(tpl);
-
     var $el = exports.$el;
     $el.addClass('fill');
+    var tpl = ui.template.get('music');
+    $el.html(tpl);
 
     var controller = kclass.module(function () {
         var exports = {};
@@ -97,27 +96,32 @@ webvn.use(['ui', 'select', 'media', 'config', 'storage', 'util', 'class'], funct
         return exports;
     });
 
-    exports.stopPropagation();
-    exports.event({
+    exports.stopPropagation().events({
+
         'click .close': function () {
             controller.pause();
             var menu = ui.get('menu');
             menu.playBgm();
             hide();
         },
+
         'click .container li': function () {
             var $this = select.get(this);
             controller.play($this.attr('data-num'));
         },
+
         'click .play': function () {
             controller.play();
         },
+
         'click .next': function () {
             controller.next();
         },
+
         'click .previous': function () {
             controller.previous();
         }
+
     });
 
     exports.show = function () {

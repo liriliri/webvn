@@ -20,15 +20,20 @@ webvn.module('class', ['util'], function (util) {
      * @function webvn.class.module
      */
     exports.module = function (requires, fn) {
-        "use strict";
         var exports = {};
+
         if (util.isFunction(requires) && fn === undefined) {
             fn = requires;
             requires = [];
         }
+
         webvn.use(requires, function() {
-            exports = fn.call(null, arguments);
+            var args = util.makeArray(args);
+            args.splice(args.length - 1, 0, exports);
+            var ret = fn.apply(null, args);
+            if (ret) exports = ret;
         });
+
         return exports;
     };
 

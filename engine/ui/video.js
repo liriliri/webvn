@@ -2,22 +2,26 @@ webvn.use(['ui', 'media', 'script', 'config', 'storage'], function (ui, media, s
     "use strict";
     var exports = ui.create('video', 'div');
 
-    var conf = config.create('uiVideo');
+    var conf = config.create('uiVideo'),
+        clickAction = conf.get('clickAction'),
+        duration = conf.get('duration'),
+        fadeIn = conf.get('fadeIn'),
+        fadeOut = conf.get('fadeOut'),
+        path = conf.get('path'),
+        extension = conf.get('extension');
 
-    var asset = storage.createAsset(conf.get('path'), conf.get('extension'));
+    var asset = storage.createAsset(path, extension);
 
+    var tpl = ui.template.get('video');
     var $el = exports.$el;
-    $el.addClass('fill');
+    $el.addClass('fill').html(tpl);
 
-    var tpl = ui.getTemplate('video');
-    exports.body(tpl);
+    exports.clickAction = clickAction;
+    exports.duration = duration;
+    exports.fadeIn = fadeIn;
+    exports.fadeOut = fadeOut;
 
-    exports.clickAction = conf.get('clickAction');
-    exports.duration = conf.get('duration');
-    exports.fadeIn = conf.get('fadeIn');
-    exports.fadeOut = conf.get('fadeOut');
-    exports.stopPropagation();
-    exports.event({
+    exports.stopPropagation().events({
         'click video': function () {
             switch (exports.clickAction) {
                 case 'skip':
@@ -37,7 +41,7 @@ webvn.use(['ui', 'media', 'script', 'config', 'storage'], function (ui, media, s
 
     var video = media.createVideo($el.find('video').get(0));
 
-    video.event({
+    video.events({
         ended: function () {
             hide();
         }

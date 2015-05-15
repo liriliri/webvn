@@ -2,14 +2,11 @@ webvn.use(['ui', 'canvas'], function (ui, canvas) {
     "use strict";
     var exports = ui.create('setting');
 
-    var tpl = ui.getTemplate('setting');
-    exports.body(tpl);
-
+    var tpl = ui.template.get('setting');
     var $el = exports.$el;
-    $el.addClass('fill');
+    $el.addClass('fill').html(tpl);
 
-    exports.stopPropagation();
-    exports.event({
+    exports.stopPropagation().events({
         'click .close': function () {
             hide();
         }

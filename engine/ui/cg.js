@@ -7,10 +7,8 @@ webvn.use(['ui', 'select', 'config', 'storage', 'canvas'], function (ui, select,
     var asset = storage.createAsset(conf.get('path'), conf.get('extension'));
 
     var $el = exports.$el;
-    $el.addClass('fill');
-
-    var tpl = ui.getTemplate('cg');
-    exports.body(tpl);
+    var tpl = ui.template.get('cg');
+    $el.addClass('fill').html(tpl);
 
     var renderer = canvas.renderer;
 
@@ -48,21 +46,24 @@ webvn.use(['ui', 'select', 'config', 'storage', 'canvas'], function (ui, select,
         $this.fadeOut(300);
     });
 
-    exports.stopPropagation();
-    exports.event({
+    exports.stopPropagation().events({
+
         'click .close': function () {
             hide();
         },
+
         'click li img': function () {
             var $this = select.get(this),
                 src = $this.attr('src');
             $viewer.find('img').attr('src', src);
             $viewer.removeClass('hidden').fadeIn(300);
         },
+
         'click .pagination li': function () {
             var $this = select.get(this);
             page(Number($this.attr('data-num')));
         }
+
     });
 
     exports.show = function () {

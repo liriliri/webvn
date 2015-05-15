@@ -9,7 +9,7 @@ webvn.use(['ui', 'config', 'canvas', 'storage', 'select', 'system'], function (u
     exports.fadeOut = conf.get('fadeOut');
 
     exports.stopPropagation();
-    exports.event({
+    exports.events({
         'click .close': function () {
             hide();
         },
@@ -29,11 +29,10 @@ webvn.use(['ui', 'config', 'canvas', 'storage', 'select', 'system'], function (u
         }
     });
 
-    var tpl = ui.getTemplate('save');
-    exports.body(tpl);
-
     var $el = exports.$el;
     $el.addClass('fill');
+    var tpl = ui.template.get('save');
+    $el.html(tpl);
 
     var $title = $el.find('.ui-title');
 

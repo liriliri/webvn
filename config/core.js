@@ -14,7 +14,8 @@ webvn.extend('config', function (exports) {
     };
 
     exports.ui = {
-        container: 'webvn',
+        container: '#webvn',
+        defaultTpl: '<div class="center"><div id="webvn"></div></div>',
         width: 1280,
         height: 720,
         autoResize: true

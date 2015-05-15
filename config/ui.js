@@ -49,13 +49,7 @@ webvn.extend('config', function (exports) {
         extension: 'jpg',
         files: [
             'cg1',
-            'cg2',
-            'cg3',
-            'cg4',
-            'cg5',
-            'cg6',
-            'cg7',
-            'cg8'
+            'cg2'
         ]
     };
 
@@ -66,9 +60,7 @@ webvn.extend('config', function (exports) {
             'bgm1',
             'bgm2',
             'Face Of Fact',
-            'Kotoko - We Survive',
-            '片雾烈火 - 红空恋歌',
-            '霜月はるか - 恋狱'
+            'Kotoko - We Survive'
         ]
     };
 

@@ -14,19 +14,16 @@ webvn.use(['ui', 'script', 'media', 'util', 'canvas', 'config'], function (ui, s
     exports.duration = conf.get('duration');
     exports.fadeIn = conf.get('fadeIn');
     exports.fadeOut = conf.get('fadeOut');
-    exports.stopPropagation();
 
     var bgm = media.createAudio('bgm'),
         sysAudio = media.createAudio('sys'),
         renderer = canvas.renderer;
 
+    var tpl = ui.template.get('menu');
     var $el = exports.$el;
-    $el.addClass('fill');
+    $el.addClass('fill').html(tpl);
 
-    var tpl = ui.getTemplate('menu');
-    exports.body(tpl);
-
-    exports.event({
+    exports.stopPropagation().events({
         'click .start': function () {
             renderer.start();
             if (exports.bgm) {

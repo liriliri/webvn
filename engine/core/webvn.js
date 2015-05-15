@@ -141,8 +141,13 @@ window.webvn = (function(){
             module = requires;
             requires = [];
         }
+
         requires = getModules(requires);
-        s[name] = module.apply(null, requires);
+        s[name] = {};
+        requires.splice(requires.length - 1, 0, s[name]);
+
+        var ret = module.apply(null, requires);
+        if (ret) s[name] = ret;
     };
 
     s.extend = function (name, requires, module) {

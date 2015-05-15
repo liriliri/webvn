@@ -4,8 +4,9 @@ webvn.use(['ui', 'text', 'media', 'config', 'storage'], function (ui, text, medi
 
     var conf = config.create('uiDialog');
 
+    var tpl = ui.template.get('dialog');
     var $el = exports.$el;
-    $el.addClass('fill');
+    $el.addClass('fill').html(tpl);
 
     exports.textType = conf.get('textType');
     exports.textDuration = conf.get('textDuration');
@@ -13,23 +14,25 @@ webvn.use(['ui', 'text', 'media', 'config', 'storage'], function (ui, text, medi
     exports.fadeIn = conf.get('fadeIn');
     exports.fadeOut = conf.get('fadeOut');
 
-    exports.event({
+    exports.events({
+
         'click .save': function () {
             ui.get('save').show('save');
         },
+
         'click .load': function () {
             ui.get('save').show('load');
         },
+
         'click .setting': function () {
             ui.get('setting').show();
         },
+
         'click .exit': function () {
             ui.get('menu').show();
         }
-    });
 
-    var tpl = ui.getTemplate('dialog');
-    exports.body(tpl);
+    });
 
     var $content = $el.find('.content'),
         $name = $el.find('.name'),
