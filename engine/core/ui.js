@@ -2,7 +2,7 @@
  * Manager of ui component
  * @namespace webvn.ui
  */
-webvn.module('ui', ['class', 'select', 'config', 'util', 'script'], function (kclass, select, config, util, script, exports) {
+webvn.module('ui', function (Class, select, config, util, script, exports) {
     var conf = config.create('ui');
     var container = conf.get('container'),
         defaultTpl = conf.get('defaultTpl'),
@@ -33,7 +33,7 @@ webvn.module('ui', ['class', 'select', 'config', 'util', 'script'], function (kc
         return uis[name];
     };
 
-    exports.template = kclass.module(function (exports) {
+    exports.template = Class.module(function (exports) {
         var templates = {};
 
         exports.create = function (name, content) {
@@ -92,7 +92,7 @@ webvn.module('ui', ['class', 'select', 'config', 'util', 'script'], function (kc
     }
 
     // Base class for all ui class
-    var BaseUi = kclass.create({
+    var BaseUi = Class.create({
 
         constructor: function BaseUi(name) {
             this.init();

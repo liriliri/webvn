@@ -1,6 +1,6 @@
-webvn.use(['script', 'media'], function (script, media) {
+webvn.use(function (script, media) {
     // Background music
-    var bgm = media.getAudio('bgm');
+    var bgm = media.audio.get('bgm');
     /**
      * Bgm Command
      * @class webvn.cmd.BgmCommand
@@ -123,7 +123,7 @@ webvn.use(['script', 'media'], function (script, media) {
      * @extends webvn.script.Command
      */
     // Sound Effect
-    var se = media.getAudio('se');
+    var se = media.audio.get('se');
     script.createCommand({
 
         constructor: function SeCommand() {
@@ -164,7 +164,7 @@ webvn.use(['script', 'media'], function (script, media) {
     });
 
     // Voice
-    var voice = media.getAudio('voice');
+    var voice = media.audio.get('voice');
     /**
      * Voice Command
      * @class webvn.cmd.VoiceCommand

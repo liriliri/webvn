@@ -1,4 +1,4 @@
-webvn.extend('loader', ['util'], function (exports, util) {
+webvn.extend('loader', function (exports, util) {
     "use strict";
 
     var ajaxSettings = {

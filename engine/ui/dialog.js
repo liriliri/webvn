@@ -81,7 +81,7 @@ webvn.use(['ui', 'text', 'media', 'config', 'storage'], function (ui, text, medi
         textAnim.load(text);
     };
 
-    var voice = media.createAudio('vo');
+    var voice = media.audio.get('vo');
     exports.voice = function (src) {
         voice.load(src);
     };

@@ -3,9 +3,7 @@
  * Most code is modified from kissy and underscore.
  * @namespace webvn.util
  */
-webvn.module('util', function () {
-    var exports = {};
-
+webvn.module('util', function (exports) {
     // Quick references
     var ObjProto = Object.prototype,
         ArrProto = Array.prototype,
@@ -397,6 +395,4 @@ webvn.module('util', function () {
     function hasOwnProperty(o, p) {
         return ObjProto.hasOwnProperty.call(o, p);
     }
-
-    return exports;
 });

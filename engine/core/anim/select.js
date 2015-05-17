@@ -1,4 +1,4 @@
-webvn.extend('select', ['anim', 'util'], function (exports, anim, util) {
+webvn.extend('select', function (exports, anim, util) {
     "use strict";
 
     var Anim = anim.Anim;

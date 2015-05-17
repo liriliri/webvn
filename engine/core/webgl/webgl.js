@@ -1,12 +1,11 @@
-webvn.extend('webgl', ['class'], function (exports, kclass) {
+webvn.extend('webgl', function (exports, Class) {
     "use strict";
-
     var DrawImageProgram = exports.DrawImageProgram,
         createFrameBuffer = exports.createFrameBuffer,
         TransitionProgram = exports.TransitionProgram,
         FilterProgram = exports.FilterProgram;
 
-    var WebGL2D = exports.WebGL2D = kclass.create({
+    var WebGL2D = exports.WebGL2D = Class.create({
 
         constructor: function WebGL2D(view) {
             this.view = view;

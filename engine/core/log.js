@@ -4,10 +4,8 @@
  * and notice that only under debug mode, the info is displayed
  * @namespace webvn.log
  */
-webvn.module('log', ['config', 'util'], function (config, util) {
+webvn.module('log', function (config, util, exports) {
     "use strict";
-    var exports = {};
-
     var conf = config.log;
     var colors = conf.colors;
 
@@ -92,6 +90,4 @@ webvn.module('log', ['config', 'util'], function (config, util) {
 
         return stacks.join('\n');
     }
-
-    return exports;
 });

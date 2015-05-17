@@ -1,4 +1,4 @@
-webvn.extend('storage', ['class', 'config'], function (exports, kclass, config) {
+webvn.extend('storage', function (exports, Class, config) {
     "use strict";
 
     var basePath = '';
@@ -8,7 +8,7 @@ webvn.extend('storage', ['class', 'config'], function (exports, kclass, config) 
 
     var fileExt = /(jpg|png|bmp|ogg|webm)$/;
 
-    var Asset = exports.Asset = kclass.create({
+    var Asset = exports.Asset = Class.create({
 
         constructor: function Asset(path, extension) {
             this.path = path || '';

@@ -1,10 +1,10 @@
-webvn.extend('storage', ['class', 'util'], function (exports, kclass, util) {
+webvn.extend('storage', function (exports, Class, util) {
     "use strict";
     var createLocalStore = exports.createLocalStore;
 
     function emptyFunc() {}
 
-    var Save = exports.Save = kclass.create({
+    var Save = exports.Save = Class.create({
 
         constructor: function Save(saveFn, loadFn) {
             this.saveFn = saveFn || emptyFunc;

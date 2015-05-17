@@ -41,7 +41,7 @@
             "path": "engine/core/",
             "files": [
                 "log",
-                "class",
+                "Class",
                 "storage/storage",
                 "storage/save",
                 "storage/config",

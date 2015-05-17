@@ -1,4 +1,4 @@
-webvn.use(['script', 'log'], function (script, log) {
+webvn.use(function (script, log) {
 
     var type = 'info';
 

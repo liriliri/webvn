@@ -1,4 +1,4 @@
-webvn.use(['ui', 'select', 'config', 'storage', 'canvas'], function (ui, select, config, storage, canvas) {
+webvn.use(function (ui, select, config, storage, canvas) {
     "use strict";
     var exports = ui.create('cg', 'div');
 

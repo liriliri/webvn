@@ -1,4 +1,4 @@
-webvn.extend('script', ['class', 'util'], function (exports, kclass, util) {
+webvn.extend('script', function (exports, Class, util) {
     "use strict";
     var commands = {};
 
@@ -17,7 +17,7 @@ webvn.extend('script', ['class', 'util'], function (exports, kclass, util) {
      * @class webvn.script.Command
      * @param {string} name command name
      */
-    var Command = exports.Command = kclass.create({
+    var Command = exports.Command = Class.create({
         constructor: function Command(name) {
             // Add to commands first
             if (commands[name]) {

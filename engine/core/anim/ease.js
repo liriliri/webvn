@@ -1,11 +1,8 @@
 /**
  * @namespace webvn.anim
  */
-webvn.module('anim', function () {
+webvn.module('anim', function (exports) {
     "use strict";
-
-    var exports = {};
-
     var ease = {};
 
     ease.linear = function(x, t, b, c, d) {
@@ -171,6 +168,4 @@ webvn.module('anim', function () {
     };
 
     exports.ease = ease;
-
-    return exports;
 });

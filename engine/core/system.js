@@ -3,10 +3,8 @@
  * such as the screen width and height.
  * @namespace webvn.system
  */
-webvn.module('system', ['select', 'config'], function (select, config) {
+webvn.module('system', function (select, config, exports) {
     "use strict";
-    var exports = {};
-
     var conf = config.create('system');
 
     // Screen width and height
@@ -25,6 +23,4 @@ webvn.module('system', ['select', 'config'], function (select, config) {
 
     // Set default title
     title(conf.get('title'));
-
-    return exports;
 });

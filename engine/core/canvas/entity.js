@@ -1,7 +1,7 @@
-webvn.extend('canvas', ['class', 'loader', 'anim', 'util', 'config', 'storage'], function (exports, kclass, loader, anim, util, config, storage) {
+webvn.extend('canvas', function (exports, Class, loader, anim, util, config, storage) {
     var conf = config.create('canvas');
 
-    var Entiy = kclass.create({
+    var Entiy = Class.create({
 
         constructor: function Entity() {
             "use strict";

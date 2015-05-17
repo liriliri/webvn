@@ -8,7 +8,7 @@ function exportsFunc(grunt) {
             type = options.type,
             files = this.files;
 
-        var intro = 'webvn.use(["webgl"], function (webgl) { webgl.' + type + '.create(',
+        var intro = 'webvn.use(function (webgl) { webgl.' + type + '.create(',
             outro = ');});';
 
         util.each(files, function (value) {

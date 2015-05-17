@@ -1,4 +1,4 @@
-webvn.use(['ui', 'canvas', 'storage', 'config'], function (ui, canvas, storage, config) {
+webvn.use(function (ui, canvas, storage, config) {
     "use strict";
     var exports = ui.create('background', 'canvas');
 

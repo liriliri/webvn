@@ -1,4 +1,4 @@
-webvn.extend('select', ['class', 'util'], function (exports, kclass, util) {
+webvn.extend('select', function (exports, Class, util) {
     "use strict";
 
     var selectUtil = exports.util;
@@ -31,7 +31,7 @@ webvn.extend('select', ['class', 'util'], function (exports, kclass, util) {
      * @class webvn.select.Select
      * @param {string|object} selector
      */
-    var Select = exports.Select = kclass.create({
+    var Select = exports.Select = Class.create({
         /**
          * @memberof webvn.select.Select
          */
@@ -137,8 +137,8 @@ webvn.extend('select', ['class', 'util'], function (exports, kclass, util) {
         removeClass: function (name) {
             return this.each(function () {
                 var classList = this.className;
-                name.split(/\s+/g).forEach(function (kclass) {
-                    classList = classList.replace(new RegExp('(^|\\s)' + kclass + '(\\s|$)'), " ");
+                name.split(/\s+/g).forEach(function (Class) {
+                    classList = classList.replace(new RegExp('(^|\\s)' + Class + '(\\s|$)'), " ");
                 });
                 this.className = classList;
             });

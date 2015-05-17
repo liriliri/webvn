@@ -2,9 +2,7 @@
  * Audio and video
  * @namespace webvn.media
  */
-webvn.module('media', ['class', 'log', 'util', 'anim', 'config', 'storage'], function (kclass, log, util, anim, config, storage) {
-    var exports = {};
-
+webvn.module('media', function (Class, log, util, anim, config, storage, exports) {
     // Const variables
     var STATE = {
             NOT_LOADED: 0,
@@ -15,7 +13,7 @@ webvn.module('media', ['class', 'log', 'util', 'anim', 'config', 'storage'], fun
     /**
      * @class webvn.media.Base
      */
-    var Base = exports.Base = kclass.create({
+    var Base = exports.Base = Class.create({
         constructor: function Base() {
             this.state = STATE.NOT_LOADED;
             this.el = null;
@@ -137,7 +135,7 @@ webvn.module('media', ['class', 'log', 'util', 'anim', 'config', 'storage'], fun
          * @method webvn.media.Base#event
          * @param {object} events events such as onload, onended
          */
-        event: function (events) {
+        events: function (events) {
             var self = this;
             util.each(events, function (fn, type) {
                 self.el['on' + type] = fn;
@@ -249,7 +247,7 @@ webvn.module('media', ['class', 'log', 'util', 'anim', 'config', 'storage'], fun
         }
     });
 
-    var audio = exports.audio = kclass.module(function (exports) {
+    var audio = exports.audio = Class.module(function (exports) {
         var audios = {};
 
         exports.create = function (name) {
@@ -293,6 +291,4 @@ webvn.module('media', ['class', 'log', 'util', 'anim', 'config', 'storage'], fun
 
     // System sound, for example: button hover effect
     audio.create('sys');
-
-    return exports;
 });

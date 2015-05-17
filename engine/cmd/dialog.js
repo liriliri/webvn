@@ -1,4 +1,4 @@
-webvn.use(['script', 'ui'], function (script, ui) {
+webvn.use(function (script, ui) {
     var dialog = ui.get('dialog');
 
     script.createCommand({

@@ -1,4 +1,4 @@
-webvn.use(['script', 'log', 'system'], function (script, log, system) {
+webvn.use(function (script, log, system) {
 
     var alias = script.alias;
 

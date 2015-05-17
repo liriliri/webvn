@@ -1,7 +1,7 @@
-webvn.extend('canvas', ['class', 'webgl', 'util'], function (exports, kclass, webgl, util) {
+webvn.extend('canvas', function (exports, Class, webgl) {
     "use strict";
 
-    var Scene = exports.Scene = kclass.create({
+    var Scene = exports.Scene = Class.create({
 
         constructor: function Scene(view) {
             this.view = view;

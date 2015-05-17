@@ -139,12 +139,12 @@ window.webvn = (function(){
     s.module = function (name, requires, module) {
         if (isFunction(requires)) {
             module = requires;
-            requires = [];
+            requires = getFnParams(module);
         }
 
         requires = getModules(requires);
         s[name] = {};
-        requires.splice(requires.length - 1, 0, s[name]);
+        requires.push(s[name]);
 
         var ret = module.apply(null, requires);
         if (ret) s[name] = ret;
@@ -153,10 +153,12 @@ window.webvn = (function(){
     s.extend = function (name, requires, module) {
         if (isFunction(requires)) {
             module = requires;
-            requires = [];
+            requires = getFnParams(module);
         }
+
         requires = getModules(requires);
         requires.unshift(s[name]);
+
         module.apply(null, requires);
     };
 
@@ -169,8 +171,9 @@ window.webvn = (function(){
     s.use = function (requires, module) {
         if (isFunction(requires)) {
             module = requires;
-            requires = [];
+            requires = getFnParams(module);
         }
+
         requires = getModules(requires);
         module.apply(null, requires);
     };
@@ -213,10 +216,31 @@ window.webvn = (function(){
         if (!isArray(requires)) {
             requires = [requires];
         }
-        var ret = requires.map(function (value) {
+
+        return requires.map(function (value) {
             return s[value];
         });
-        ret.push(s);
+    }
+
+    var regStripComments = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg,
+        regArgNames = /[^\s,]+/g;
+
+    function getFnParams(fn) {
+        var fnStr = fn.toString().
+                replace(regStripComments, ''),
+            ret = fnStr.slice(fnStr.indexOf('(') + 1, fnStr.indexOf(')')).
+                match(regArgNames);
+
+        if (ret === null) {
+            return [];
+        }
+
+        if (ret[0] === 'exports') {
+            ret.shift();
+        } else if (ret[ret.length - 1] === 'exports') {
+            ret.pop();
+        }
+
         return ret;
     }
 

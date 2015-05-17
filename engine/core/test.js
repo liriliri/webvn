@@ -4,11 +4,9 @@
  * It should be removed when the game is realeased.
  * @namespace webvn.test
  */
-webvn.module('test', ['class', 'select', 'script', 'util'], function (kclass, select, script, util) {
-    var exports = {};
-
+webvn.module('test', function (Class, select, script, util, exports) {
     // Component testing
-    exports.Component = kclass.create({
+    exports.Component = Class.create({
         constructor: function Component(scenarioId) {
             this.scenario = util.trim(select.get('#' + scenarioId).text());
         },
@@ -16,6 +14,4 @@ webvn.module('test', ['class', 'select', 'script', 'util'], function (kclass, se
             script.loadText(this.scenario, true);
         }
     });
-
-    return exports;
 });

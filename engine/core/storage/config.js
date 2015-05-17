@@ -1,4 +1,4 @@
-webvn.extend('config', ['class', 'storage'], function (exports, kclass, storage) {
+webvn.extend('config', function (exports, kclass, storage) {
     var configStore = storage.createLocalStore('config');
 
     var Config = exports.Config = storage.LocalStore.extend({

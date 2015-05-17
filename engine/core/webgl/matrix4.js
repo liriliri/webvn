@@ -1,7 +1,6 @@
-webvn.extend('webgl', ['class'], function (exports, kclass) {
+webvn.extend('webgl', function (exports, Class) {
     "use strict";
-
-    var Matrix4 = exports.Matrix4 = kclass.create({
+    var Matrix4 = exports.Matrix4 = Class.create({
 
         constructor: function (opt_src) {
             var i, s, d;
@@ -515,7 +514,7 @@ webvn.extend('webgl', ['class'], function (exports, kclass) {
 
     });
 
-    var Vector3 = exports.Vector3 = kclass.create({
+    var Vector3 = exports.Vector3 = Class.create({
 
         constructor: function (opt_src) {
             var v = new Float32Array(3);
@@ -542,7 +541,7 @@ webvn.extend('webgl', ['class'], function (exports, kclass) {
 
     });
 
-    var Vector4 = exports.Vector4 = kclass.create({
+    var Vector4 = exports.Vector4 = Class.create({
 
         constructor: function (opt_src) {
             var v = new Float32Array(4);

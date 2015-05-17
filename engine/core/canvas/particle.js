@@ -1,11 +1,11 @@
-webvn.extend('canvas', ['class', 'util'], function (exports, kclass, util) {
+webvn.extend('canvas', function (exports, Class, util) {
     "use strict";
 
     /* Particle system
      * Use canvas 2d api since it is easier to implement
      * Same logic level as Scene class
      */
-    var Emitter = exports.Emitter = kclass.create({
+    var Emitter = exports.Emitter = Class.create({
         constructor: function (v, config) {
 
             this.view = v;
@@ -422,7 +422,7 @@ webvn.extend('canvas', ['class', 'util'], function (exports, kclass, util) {
 
         }
     }, {
-        Particle: kclass.create({
+        Particle: Class.create({
             constructor: function Particle() {
 
                 this.pos = {

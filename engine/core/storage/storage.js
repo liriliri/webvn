@@ -1,8 +1,8 @@
-webvn.module('storage', ['class', 'util'], function (kclass, util) {
+webvn.module('storage', function (Class, util) {
     "use strict";
     var exports = {};
 
-    var localStore = kclass.module(function () {
+    var localStore = Class.module(function () {
         var exports = {};
 
         var localStore = window.localStorage;
@@ -32,7 +32,7 @@ webvn.module('storage', ['class', 'util'], function (kclass, util) {
 
     var prefix = 'wvn-';
 
-    var LocalStore = exports.LocalStore = kclass.create({
+    var LocalStore = exports.LocalStore = Class.create({
 
         constructor: function LocalStore(name) {
             var key = this.key = prefix + name;

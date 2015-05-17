@@ -1,4 +1,4 @@
-webvn.use(['ui', 'select', 'media', 'config', 'storage', 'util', 'class'], function (ui, select, media, config, storage, util, kclass) {
+webvn.use(function (ui, select, media, config, storage, util, Class) {
     "use strict";
     var exports = ui.create('music');
 
@@ -9,13 +9,13 @@ webvn.use(['ui', 'select', 'media', 'config', 'storage', 'util', 'class'], funct
     var tpl = ui.template.get('music');
     $el.html(tpl);
 
-    var controller = kclass.module(function () {
+    var controller = Class.module(function () {
         var exports = {};
 
-        var music = media.createAudio('music');
+        var music = media.audio.create('music');
         music.asset = storage.createAsset(conf.get('path'), conf.get('extension'));
         music.loop(true);
-        music.event({
+        music.events({
             'timeupdate': function () {
                 var percentage = music.currentTime() / music.duration;
                 $progressFill.css('width', $progress.width() * percentage);

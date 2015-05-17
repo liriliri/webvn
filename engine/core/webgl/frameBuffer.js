@@ -1,9 +1,9 @@
-webvn.extend('webgl', ['class', 'util'], function (exports, kclass, util) {
+webvn.extend('webgl', function (exports, Class, util) {
     "use strict";
 
     var createTexture = exports.createTexture;
 
-    var FrameBuffer = exports.FrameBuffer = kclass.create({
+    var FrameBuffer = exports.FrameBuffer = Class.create({
 
         constructor: function FrameBuffer(gl, view) {
             this.gl = gl;

@@ -9,7 +9,8 @@ webvn.use(['ui', 'script', 'media', 'util', 'canvas', 'config', 'storage'], func
         tpl = ui.template.get(uiName),
         save = storage.create(uiName);
 
-    var cfg = config.create('uiMenu');
+    var cfg = config.create('uiMenu'),
+        cfgStartLabel = cfg.get('startLabel');
     exports.bgm = cfg.get('bgm');
     exports.btnClickSound = cfg.get('btnClkSound');
     exports.btnHoverSound = cfg.get('btnHoverSound');
@@ -38,11 +39,11 @@ webvn.use(['ui', 'script', 'media', 'util', 'canvas', 'config', 'storage'], func
 
             if (exports.fadeOut) {
                 $el.fadeOut(exports.duration, function () {
-                    script.jump('start');
+                    script.jump(cfgStartLabel);
                 });
             } else {
                 $el.hide();
-                script.jump('start');
+                script.jump(cfgStartLabel);
             }
         },
 

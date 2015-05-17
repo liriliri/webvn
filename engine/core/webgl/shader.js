@@ -1,8 +1,6 @@
-webvn.module('webgl', ['class', 'util', 'log', 'config'], function (kclass, util, log, config) {
+webvn.module('webgl', function (Class, util, log, config, exports) {
     "use strict";
-    var exports = {};
-
-    exports.fragShader = kclass.module(function () {
+    exports.fragShader = Class.module(function () {
         var exports = {};
 
         var shaders = {};
@@ -24,7 +22,7 @@ webvn.module('webgl', ['class', 'util', 'log', 'config'], function (kclass, util
         return exports;
     });
 
-    exports.vertexShader = kclass.module(function () {
+    exports.vertexShader = Class.module(function () {
         var exports = {};
 
         var shaders = {};
@@ -46,7 +44,7 @@ webvn.module('webgl', ['class', 'util', 'log', 'config'], function (kclass, util
         return exports;
     });
 
-    var Shader = exports.Shader = kclass.create({
+    var Shader = exports.Shader = Class.create({
 
         constructor: function Shader(gl, type) {
             this.gl = gl;
@@ -85,6 +83,4 @@ webvn.module('webgl', ['class', 'util', 'log', 'config'], function (kclass, util
     exports.createShader = function (gl, type) {
         return new Shader(gl, type);
     };
-
-    return exports;
 });

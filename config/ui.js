@@ -13,7 +13,8 @@ webvn.extend('config', function (exports) {
     exports.uiMenu = {
         duration: 300,
         fadeIn: true,
-        fadeOut: true
+        fadeOut: true,
+        startLabel: 'start'
     };
 
     exports.uiFigure = {

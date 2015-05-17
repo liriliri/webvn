@@ -1,4 +1,4 @@
-webvn.extend('anim', ['class', 'util', 'select'], function (exports, kclass, util, select) {
+webvn.extend('anim', function (exports, Class, util, select) {
     "use strict";
 
     var STATE = {
@@ -8,7 +8,7 @@ webvn.extend('anim', ['class', 'util', 'select'], function (exports, kclass, uti
 
     var requestAnim = window.requestAnimationFrame;
 
-    var Anim = exports.Anim = kclass.create({
+    var Anim = exports.Anim = Class.create({
 
         constructor: function Anim(target) {
             this.loop = false;

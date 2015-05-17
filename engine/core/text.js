@@ -1,8 +1,5 @@
-webvn.module('text', ['util', 'class', 'select'], function (util, kclass, select) {
-
-    var exports = {};
-
-    var TextAnim = exports.TextAnim = kclass.create({
+webvn.module('text', function (util, Class, select, exports) {
+    var TextAnim = exports.TextAnim = Class.create({
         constructor: function TextAnim(el) {
 
             // If the element is a dom node, pass it into a select element
@@ -100,6 +97,4 @@ webvn.module('text', ['util', 'class', 'select'], function (util, kclass, select
     exports.createAnim = function (el) {
         return new TextAnim(el);
     };
-
-    return exports;
 });

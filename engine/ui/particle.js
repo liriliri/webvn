@@ -1,4 +1,4 @@
-webvn.use(['ui', 'canvas'], function (ui, canvas) {
+webvn.use(function (ui, canvas) {
 
     var particle = ui.create('particle', 'canvas'),
         $el = particle.$el;

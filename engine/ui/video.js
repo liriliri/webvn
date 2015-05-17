@@ -1,4 +1,4 @@
-webvn.use(['ui', 'media', 'script', 'config', 'storage'], function (ui, media, script, config, storage) {
+webvn.use(function (ui, media, script, config, storage) {
     "use strict";
     var exports = ui.create('video', 'div');
 

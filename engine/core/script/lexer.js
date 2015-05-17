@@ -1,7 +1,5 @@
-webvn.module('lexer', ['class', 'log', 'util'], function (kclass, log, util) {
+webvn.module('lexer', function (Class, log, util, exports) {
     "use strict";
-    var exports = {};
-
     /**
      * @class webvn.script.Token
      * @param {string} tag tag name
@@ -9,7 +7,7 @@ webvn.module('lexer', ['class', 'log', 'util'], function (kclass, log, util) {
      * @param {object} locationData {first_line, first_column, last_line, last_column}
      * @returns {Array} result [tag, value, locationData]
      */
-    var Token = exports.Token = kclass.create({
+    var Token = exports.Token = Class.create({
         constructor: function (tag, value, locationData) {
             var token = [];
             token[0] = tag;
@@ -21,7 +19,7 @@ webvn.module('lexer', ['class', 'log', 'util'], function (kclass, log, util) {
 
     var EOF = 'END_OF_FILE';
 
-    var Lexer = exports.Lexer = kclass.create({
+    var Lexer = exports.Lexer = Class.create({
         constructor: function Lexer() { },
         reConfigure: function (code) {
 
@@ -463,6 +461,4 @@ webvn.module('lexer', ['class', 'log', 'util'], function (kclass, log, util) {
         }
 
     };
-
-    return exports;
 });

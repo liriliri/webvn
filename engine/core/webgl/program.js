@@ -1,11 +1,11 @@
-webvn.extend('webgl', ['class', 'log', 'util', 'config'], function (exports, kclass, log, util, config) {
+webvn.extend('webgl', function (exports, Class, log, util, config) {
 
     var Shader = exports.Shader,
         createShader = exports.createShader,
         createTexture = exports.createTexture,
         Matrix4 = exports.Matrix4;
 
-    var Program = exports.Program = kclass.create({
+    var Program = exports.Program = Class.create({
 
         constructor: function (gl) {
             this.gl = gl;
