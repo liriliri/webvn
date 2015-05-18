@@ -78,7 +78,9 @@
                 "canvas/entity",
                 "media",
                 "text",
-                "ui",
+                "ui/ui",
+                "ui/lang",
+                "ui/template",
                 "test"
             ]
         },
@@ -91,9 +93,10 @@
             "path": "engine/ui/",
             "files": [
                 "template",
+                "lang",
                 "cg",
                 "music",
-                "setting",
+                "config",
                 "save",
                 "menu",
                 "background",

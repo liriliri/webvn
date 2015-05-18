@@ -5,7 +5,6 @@ webvn.extend('webgl', function (exports, Class, util) {
 
         constructor: function Texture(gl) {
             this.gl = gl;
-            this.id = util.guid('texture');
             this.value = gl.createTexture();
             gl.bindTexture(gl.TEXTURE_2D, this.value);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
@@ -49,7 +48,7 @@ webvn.extend('webgl', function (exports, Class, util) {
         var texture;
         // Cache textures to improve performance.
         if (!gl.ttId) {
-            gl.ttId = util.guid('tt');
+            gl.ttId = util.uid('tt');
             textures[gl.ttId] = {};
         } else {
             texture = textures[gl.ttId][image.src];

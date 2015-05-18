@@ -8,7 +8,7 @@ webvn.use(function (ui, select, config, storage, canvas) {
 
     var $el = exports.$el;
     var tpl = ui.template.get('cg');
-    $el.addClass('fill').html(tpl);
+    $el.addClass('fill').html(tpl());
 
     var renderer = canvas.renderer;
 

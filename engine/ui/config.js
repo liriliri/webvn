@@ -1,10 +1,10 @@
 webvn.use(function (ui, canvas) {
     "use strict";
-    var exports = ui.create('setting');
+    var exports = ui.create('config');
 
-    var tpl = ui.template.get('setting');
+    var tpl = ui.template.get('config');
     var $el = exports.$el;
-    $el.addClass('fill').html(tpl);
+    $el.addClass('fill').html(tpl());
 
     exports.stopPropagation().events({
         'click .close': function () {

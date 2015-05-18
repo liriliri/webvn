@@ -18,7 +18,8 @@ webvn.extend('config', function (exports) {
         defaultTpl: '<div class="center"><div id="webvn"></div></div>',
         width: 1280,
         height: 720,
-        autoResize: true
+        autoResize: true,
+        lang: 'zh'
     };
 
     exports.log = {

@@ -50,7 +50,7 @@ webvn.extend('webgl', function (exports, Class, util) {
     exports.createFrameBuffer = function (gl, view, num) {
         var frameBuffer;
         if (!gl.fbId) {
-            gl.fbId = util.guid('fb');
+            gl.fbId = util.uid('fb');
             frameBuffers[gl.fbId] = [];
         } else {
             frameBuffer = frameBuffers[gl.fbId][num];

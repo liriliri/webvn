@@ -7,7 +7,7 @@ webvn.use(function (ui, select, media, config, storage, util, Class) {
     var $el = exports.$el;
     $el.addClass('fill');
     var tpl = ui.template.get('music');
-    $el.html(tpl);
+    $el.html(tpl());
 
     var controller = Class.module(function () {
         var exports = {};

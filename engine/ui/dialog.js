@@ -6,7 +6,7 @@ webvn.use(['ui', 'text', 'media', 'config', 'storage'], function (ui, text, medi
 
     var tpl = ui.template.get('dialog');
     var $el = exports.$el;
-    $el.addClass('fill').html(tpl);
+    $el.addClass('fill').html(tpl());
 
     exports.textType = conf.get('textType');
     exports.textDuration = conf.get('textDuration');

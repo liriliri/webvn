@@ -32,7 +32,7 @@ webvn.use(function (ui, config, canvas, storage, select, system) {
     var $el = exports.$el;
     $el.addClass('fill');
     var tpl = ui.template.get('save');
-    $el.html(tpl);
+    $el.html(tpl());
 
     var $title = $el.find('.ui-title');
 

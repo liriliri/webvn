@@ -14,7 +14,7 @@ webvn.use(function (ui, media, script, config, storage) {
 
     var tpl = ui.template.get('video');
     var $el = exports.$el;
-    $el.addClass('fill').html(tpl);
+    $el.addClass('fill').html(tpl());
 
     exports.clickAction = clickAction;
     exports.duration = duration;

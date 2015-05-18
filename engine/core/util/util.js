@@ -24,8 +24,7 @@ webvn.module('util', function (exports) {
 
     // Undone
     // Quick references
-    var ObjProto = Object.prototype,
-        ArrProto = Array.prototype;
+    var ArrProto = Array.prototype;
 
     // Const
     var CLONE_MARKER = 'webvn_clone',

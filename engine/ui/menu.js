@@ -6,6 +6,7 @@ webvn.use(['ui', 'script', 'media', 'util', 'canvas', 'config', 'storage'], func
     var uiName = 'menu',
         exports = ui.create(uiName, 'div'),
         $el = exports.$el,
+        lang = ui.lang.get(uiName),
         tpl = ui.template.get(uiName),
         save = storage.create(uiName);
 
@@ -22,7 +23,13 @@ webvn.use(['ui', 'script', 'media', 'util', 'canvas', 'config', 'storage'], func
         sysAudio = media.audio.get('sys'),
         renderer = canvas.renderer;
 
-    $el.addClass('fill').html(tpl);
+    $el.addClass('fill').html(tpl({
+        'Start': lang.get('Start'),
+        'Load': lang.get('Load'),
+        'Gallery': lang.get('Gallery'),
+        'Music': lang.get('Music'),
+        'Config': lang.get('Config')
+    }));
 
     save.save(function () {
 
@@ -52,7 +59,7 @@ webvn.use(['ui', 'script', 'media', 'util', 'canvas', 'config', 'storage'], func
         },
 
         'click .setting': function () {
-            ui.get('setting').show();
+            ui.get('config').show();
         },
 
         'click .cg': function () {

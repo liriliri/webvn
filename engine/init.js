@@ -1,5 +1,6 @@
 // Do some initialization work here
-webvn.use(['script', 'config'], function (script, config) {
+webvn.use(function (script, config) {
+    'use strict';
     var s = webvn;
 
     // Trigger functions when files are all loaded.

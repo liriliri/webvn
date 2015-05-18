@@ -3,7 +3,7 @@ webvn.use(function (ui) {
     var exports = ui.create('selection');
 
     var tpl = ui.template.get('selection');
-    exports.body(tpl);
+    exports.body(tpl());
 
     var $el = exports.$el;
     $el.addClass('fill');

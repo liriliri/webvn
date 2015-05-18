@@ -58,6 +58,14 @@ exports.generateTpl = {
     }
 };
 
+exports.generateLang = {
+    ui: {
+        files: {
+            'engine/ui/lang.js': ['engine/ui/lang/*.json']
+        }
+    }
+};
+
 exports.generateShader = {
     fragment: {
         options: {

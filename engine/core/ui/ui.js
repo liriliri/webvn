@@ -33,24 +33,6 @@ webvn.module('ui', function (Class, select, config, util, script, exports) {
         return uis[name];
     };
 
-    exports.template = Class.module(function (exports) {
-        var templates = {};
-
-        exports.create = function (name, content) {
-            if (util.isObject(name)) {
-                util.each(name, function (value, key) {
-                    templates[key] = value;
-                });
-            } else {
-                templates[name] = content;
-            }
-        };
-
-        exports.get = function (name) {
-            return templates[name];
-        };
-    });
-
     var $container = select.get(container);
     if ($container.length === 0) {
         select.get('body').append(defaultTpl);
