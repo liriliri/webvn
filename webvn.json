@@ -26,7 +26,11 @@
         "basic": {
             "path": "engine/core/",
             "files": [
-                "util"
+                "util/util",
+                "util/string",
+                "util/array",
+                "util/lang",
+                "util/object"
             ]
         },
         "config": {

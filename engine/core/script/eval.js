@@ -28,7 +28,7 @@ webvn.extend('script', function (exports, util, storage) {
 
         var scope = {};
 
-        var functionName = util.guid('eval');
+        var functionName = util.uid('eval');
 
         code = 'scope["' + functionName + '"]=function(){' +
         (returnOrNot ? 'return (' : '') +

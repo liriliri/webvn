@@ -71,7 +71,7 @@ webvn.module('script', function (config, parser, parserNode, util, loader, lexer
 
     //noinspection JSUnusedLocalSymbols
     exports.$$ = function () {
-        var source = util.makeArray(arguments);
+        var source = util.toArray(arguments);
 
         preExec(source, sources.length);
 

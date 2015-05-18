@@ -27,7 +27,7 @@ webvn.module('Class', function (util, exports) {
         }
 
         webvn.use(requires, function() {
-            var args = util.makeArray(args);
+            var args = util.toArray(arguments);
             args.splice(args.length - 1, 0, exports);
             var ret = fn.apply(null, args);
             if (ret) exports = ret;
