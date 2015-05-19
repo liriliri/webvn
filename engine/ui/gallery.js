@@ -1,8 +1,8 @@
 webvn.use(function (ui, select, config, storage, canvas) {
     "use strict";
-    var exports = ui.create('cg', 'div');
+    var exports = ui.create('gallery', 'div');
 
-    var conf = config.create('uiCg');
+    var conf = config.create('uiGallery');
 
     var asset = storage.createAsset(conf.get('path'), conf.get('extension'));
 

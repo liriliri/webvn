@@ -45,7 +45,7 @@ webvn.extend('config', function (exports) {
         textDuration: 500
     };
 
-    exports.uiCg = {
+    exports.uiGallery = {
         path: 'asset/image/',
         extension: 'jpg',
         files: [

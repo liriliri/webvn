@@ -262,7 +262,6 @@ webvn.extend('select', function (exports, Class, util) {
          * Get Element Attribute
          * @method webvn.select.Select#attr
          * @param {string} name
-         * @returns {string}
          */
         attr: function (name, value) {
             // Get attributes
@@ -271,7 +270,7 @@ webvn.extend('select', function (exports, Class, util) {
             }
             // Set attributes
             var self = this;
-            return this.each(function (index) {
+            return this.each(function () {
                 if (util.isObject(name)) {
                     util.each(name, function (value, key) {
                         selectUtil.setAttribute(self, key, value);
@@ -280,6 +279,18 @@ webvn.extend('select', function (exports, Class, util) {
                     selectUtil.setAttribute(this, name, value);
                 }
             });
+        },
+
+        data: function (name, value) {
+            if (util.isString(name)) {
+                name = 'data-' + name;
+            } else if (util.isObject(name)) {
+                util.each(name, function (value, key) {
+                    name[key] = 'data-' + value;
+                });
+            }
+
+            return this.attr(name, value);
         },
 
         removeAttr: function (name) {

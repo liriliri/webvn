@@ -1,18 +1,48 @@
 webvn.use(['ui', 'text', 'media', 'config', 'storage'], function (ui, text, media, config, storage) {
     "use strict";
-    var exports = ui.create('dialog', 'div');
+    var uiName = 'dialog',
+        exports = ui.create(uiName, 'div'),
+        $el = exports.$el,
+        lang = ui.lang.get(uiName),
+        tpl = ui.template.get(uiName),
+        save = storage.create(uiName);
 
-    var conf = config.create('uiDialog');
+    var cfg = config.create('uiDialog'),
+        cfgPath = cfg.get('path'),
+        cfgExtension = cfg.get('extension');
 
-    var tpl = ui.template.get('dialog');
-    var $el = exports.$el;
-    $el.addClass('fill').html(tpl());
+    exports.textType = cfg.get('textType');
+    exports.textDuration = cfg.get('textDuration');
+    exports.duration = cfg.get('duration');
+    exports.fadeIn = cfg.get('fadeIn');
+    exports.fadeOut = cfg.get('fadeOut');
 
-    exports.textType = conf.get('textType');
-    exports.textDuration = conf.get('textDuration');
-    exports.duration = conf.get('duration');
-    exports.fadeIn = conf.get('fadeIn');
-    exports.fadeOut = conf.get('fadeOut');
+    $el.addClass('fill').html(tpl({
+        Load: lang.get('Load'),
+        Save: lang.get('Save'),
+        Config: lang.get('Config')
+    }));
+
+    var $content = $el.find('.content'),
+        $name = $el.find('.name'),
+        $face = $el.find('.face'),
+        $text = $content.find('.text');
+
+    var asset = storage.createAsset(cfgPath, cfgExtension),
+        textAnim = text.createAnim($text),
+        voice = media.audio.get('vo');
+
+    save.save(function () {
+        return {
+            visible: $el.visible(),
+            name: $name.html(),
+            text: $text.html()
+        };
+    }).load(function (val) {
+        if (val.visible) $el.show();
+        $name.html(val.name);
+        $text.html(val.text);
+    });
 
     exports.events({
 
@@ -24,8 +54,8 @@ webvn.use(['ui', 'text', 'media', 'config', 'storage'], function (ui, text, medi
             ui.get('save').show('load');
         },
 
-        'click .setting': function () {
-            ui.get('setting').show();
+        'click .config': function () {
+            ui.get('config').show();
         },
 
         'click .exit': function () {
@@ -34,64 +64,36 @@ webvn.use(['ui', 'text', 'media', 'config', 'storage'], function (ui, text, medi
 
     });
 
-    var $content = $el.find('.content'),
-        $name = $el.find('.name'),
-        $face = $el.find('.face'),
-        $text = $content.find('.text');
-
     exports.show = function () {
-        if ($el.visible()) {
-            return;
-        }
-        if (exports.fadeIn) {
-            $el.fadeIn(exports.duration);
-        } else {
-            $el.show();
-        }
+        if ($el.visible()) return;
+
+        exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();
     };
 
-    $face.hide();
-
-    var asset = storage.createAsset(conf.get('path'), conf.get('extension'));
-
     exports.face = function(src) {
-        if (!src) {
-            $face.hide();
-        } else {
-            $face.show().attr('src', asset.get(src));
-        }
+        !src ? $face.hide() : $face.show().attr('src', asset.get(src));
     };
 
     exports.hide = function () {
-        if (exports.fadeOut) {
-            $el.fadeOut(exports.duration);
-        } else {
-            $el.hide();
-        }
+        exports.fadeOut ? $el.fadeOut(exports.duration) : $el.hide();
     };
 
     exports.name = function (name) {
         $name.html('【' + name + '】');
     };
 
-    var textAnim = text.createAnim($text);
     exports.text = function (text) {
         textAnim.type = exports.textType;
         textAnim.duration = exports.textDuration;
         textAnim.load(text);
     };
 
-    var voice = media.audio.get('vo');
     exports.voice = function (src) {
         voice.load(src);
     };
 
     exports.style = function (name) {
-        if (name === 'big') {
-            $el.addClass('big');
-        } else {
-            $el.removeClass('big');
-        }
+        name === 'big' ? $el.addClass('big') : $el.removeClass('big');
     };
 
 });

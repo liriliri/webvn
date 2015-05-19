@@ -1,93 +1,116 @@
-webvn.use(function (ui, config, canvas, storage, select, system) {
+webvn.use(function (ui, config, util, canvas, storage, select, system) {
     "use strict";
-    var exports = ui.create('save');
+    var uiName = 'save',
+        exports = ui.create(uiName),
+        $el = exports.$el,
+        lang = ui.lang.get(uiName),
+        tpl = ui.template.get(uiName);
 
-    var conf = config.create('uiSave');
+    var cfg = config.create('uiSave'),
+        cfgSaveNum = cfg.get('saveNum');
 
-    exports.duration = conf.get('duration');
-    exports.fadeIn = conf.get('fadeIn');
-    exports.fadeOut = conf.get('fadeOut');
+    exports.duration = cfg.get('duration');
+    exports.fadeIn = cfg.get('fadeIn');
+    exports.fadeOut = cfg.get('fadeOut');
 
-    exports.stopPropagation();
-    exports.events({
+    var global = storage.createLocalStore('global'),
+        saves = global.get('saves') || [],
+        renderer = canvas.renderer;
+
+    $el.addClass('fill');
+
+    exports.stopPropagation().events({
+
         'click .close': function () {
             hide();
         },
+
         'click .save': function () {
             var $this = select.get(this),
-                saveName = $this.attr('data-name'),
-                saveId = Number($this.attr('data-num'));
-            saves[saveId] = system.title();
-            $this.find('span').text(saves[saveId]);
+                num = Number($this.data('num')),
+                saveName = 'save' + num;
+
+            saves[num] = {
+                title: system.title(),
+                date: getDateTime()
+            };
+
             global.set('saves', saves);
             storage.save(saveName);
+            renderSave();
         },
+
         'click .load': function () {
             var $this = select.get(this),
-                saveName = $this.attr('data-name');
+                saveName = 'save' + $this.data('num');
+
             storage.load(saveName);
+
+            exports.hide();
         }
+
     });
 
-    var $el = exports.$el;
-    $el.addClass('fill');
-    var tpl = ui.template.get('save');
-    $el.html(tpl());
+    function getDateTime() {
+        var date = new Date;
 
-    var $title = $el.find('.ui-title');
-
-    var renderer = canvas.renderer;
-
-    var saveNum = conf.get('saveNum');
-
-    var global = storage.createLocalStore('global');
-
-    var saves = global.get('saves') || [];
-
-    function initSave() {
-        $title.text('Save');
-        var html = '', saveName;
-        for (var i = 0; i < saveNum; i++) {
-            if (saves[i]) {
-                saveName = saves[i];
-            } else {
-                saveName = '这里是存档的标题';
-            }
-            html += '<li class="save" data-name="save' + i + '" data-num="' + i + '"><span>' +
-                saveName + '</span></li>';
-        }
-        $el.find('.container').html(html);
+        return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() +
+            ' ' + prependZero(date.getHours()) + ':' +
+            prependZero(date.getMinutes()) + ':' +
+            prependZero(date.getSeconds());
     }
 
-    function initLoad() {
-        $title.text('Load');
-        var html = '', saveName;
-        for (var i = 0; i < saveNum; i++) {
-            if (saves[i]) {
-                saveName = saves[i];
-            } else {
-                saveName = '这里是存档的标题';
-            }
-            html += '<li class="load" data-name="save + ' + i + '" data-num="' + i + '"><span>' +
-                saveName + '</span></li>';
+    function prependZero(num) {
+        if (num < 10) {
+            return '0' + num;
         }
-        $el.find('.container').html(html);
+
+        return num;
     }
 
     exports.show = function (type) {
         renderer.stop();
-        if (type === 'save') {
-            initSave();
-        } else {
-            initLoad();
+
+        type === 'save' ? renderSave() : renderLoad();
+
+        exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();
+    };
+
+    function renderSave() {
+        var i, records = [];
+
+        for (i = 0; i < cfgSaveNum; i++) {
+            saves[i] ? records.push(saves[i]) : records.push({
+                title: 'Unknown',
+                date: '2015-10-10'
+            });
         }
 
-        if (exports.fadeIn) {
-            $el.fadeIn(exports.duration);
-        } else {
-            $el.show();
+        $el.html(tpl({
+            Title: lang.get('Save'),
+            Close: lang.get('Close'),
+            type: 'save',
+            records: records
+        }));
+    }
+
+    function renderLoad() {
+        var i, records = [];
+
+        for (i = 0; i < cfgSaveNum; i++) {
+            saves[i] ? records.push(saves[i]) : records.push({
+                name: 'Unknown',
+                date: ''
+            });
         }
-    };
+
+        $el.html(tpl({
+            Title: lang.get('Load'),
+            Close: lang.get('Close'),
+            type: 'load',
+            records: records
+        }));
+    }
 
     var hide = exports.hide = function () {
         renderer.start();

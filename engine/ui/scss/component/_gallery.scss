@@ -1,8 +1,8 @@
 @import "variables";
 
-#cg {
+#gallery {
     position: absolute;
-    z-index: $index-cg;
+    z-index: $index-gallery;
     background: #fff;
     padding: 10px 30px;
     transform: translateZ(0);

@@ -1,14 +1,10 @@
-/**
- * Manager of ui component
- * @namespace webvn.ui
- */
 webvn.module('ui', function (Class, select, config, util, script, exports) {
-    var conf = config.create('ui');
-    var container = conf.get('container'),
-        defaultTpl = conf.get('defaultTpl'),
-        width = conf.get('width'),
-        height = conf.get('height'),
-        autoResize = conf.get('autoResize');
+    var cfg = config.create('ui'),
+        cfgContainer = cfg.get('container'),
+        cfgDefaultTpl = cfg.get('defaultTpl'),
+        cfgWidth = cfg.get('width'),
+        cfgHeight = cfg.get('height'),
+        cfgAutoResize = cfg.get('autoResize');
 
     var uis = {};
 
@@ -33,14 +29,14 @@ webvn.module('ui', function (Class, select, config, util, script, exports) {
         return uis[name];
     };
 
-    var $container = select.get(container);
+    var $container = select.get(cfgContainer);
     if ($container.length === 0) {
-        select.get('body').append(defaultTpl);
+        select.get('body').append(cfgDefaultTpl);
     }
-    $container = select.get(container);
+    $container = select.get(cfgContainer);
     $container.css({
-        width: width,
-        height: height
+        width: cfgWidth,
+        height: cfgHeight
     }).on('click', function () {
         // When the ui is clicked, execute the script
         script.play();
@@ -49,24 +45,24 @@ webvn.module('ui', function (Class, select, config, util, script, exports) {
     // Auto fill windows
     exports.scale = 1;
 
-    var ratio = width / height;
+    var ratio = cfgWidth / cfgHeight;
 
     function resize() {
         var ww = window.innerWidth,
-            wh = window.innerHeight;
+            wh = window.innerHeight,
             windowRatio = ww / wh;
 
         if (ratio > windowRatio) {
-            exports.scale = ww / width;
+            exports.scale = ww / cfgWidth;
         } else {
-            exports.scale = wh / height;
+            exports.scale = wh / cfgHeight;
         }
 
         // Zoom is better than transform scale
         $container.css('zoom', exports.scale);
     }
 
-    if (autoResize) {
+    if (cfgAutoResize) {
         window.onresize = function () {
             resize();
         };
@@ -151,8 +147,8 @@ webvn.module('ui', function (Class, select, config, util, script, exports) {
             this.$el = select.create('canvas');
             this.$el.attr('id', name);
             this.canvas = this.$el.get(0);
-            this.canvas.width = conf.get('width');
-            this.canvas.height = conf.get('height');
+            this.canvas.width = cfgWidth;
+            this.canvas.height = cfgHeight;
 
             this.callSuper();
         },

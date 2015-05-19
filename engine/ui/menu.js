@@ -12,16 +12,13 @@ webvn.use(['ui', 'script', 'media', 'util', 'canvas', 'config', 'storage'], func
 
     var cfg = config.create('uiMenu'),
         cfgStartLabel = cfg.get('startLabel');
+
     exports.bgm = cfg.get('bgm');
     exports.btnClickSound = cfg.get('btnClkSound');
     exports.btnHoverSound = cfg.get('btnHoverSound');
     exports.duration = cfg.get('Duration');
     exports.fadeIn = cfg.get('fadeIn');
     exports.fadeOut = cfg.get('FadeOut');
-
-    var bgm = media.audio.get('bgm'),
-        sysAudio = media.audio.get('sys'),
-        renderer = canvas.renderer;
 
     $el.addClass('fill').html(tpl({
         'Start': lang.get('Start'),
@@ -31,10 +28,14 @@ webvn.use(['ui', 'script', 'media', 'util', 'canvas', 'config', 'storage'], func
         'Config': lang.get('Config')
     }));
 
+    var bgm = media.audio.get('bgm'),
+        sysAudio = media.audio.get('sys'),
+        renderer = canvas.renderer;
+
     save.save(function () {
-
-    }).load(function (value) {
-
+        return {};
+    }).load(function () {
+        $el.hide();
     });
 
     exports.stopPropagation().events({
@@ -63,7 +64,7 @@ webvn.use(['ui', 'script', 'media', 'util', 'canvas', 'config', 'storage'], func
         },
 
         'click .cg': function () {
-            ui.get('cg').show();
+            ui.get('gallery').show();
         },
 
         'click .music': function () {
@@ -81,6 +82,10 @@ webvn.use(['ui', 'script', 'media', 'util', 'canvas', 'config', 'storage'], func
         }
 
     });
+
+    exports.reset = function () {
+        $el.hide();
+    };
 
     exports.show = function () {
         renderer.stop();
