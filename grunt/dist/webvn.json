@@ -9,8 +9,7 @@
         "custom": {
             "path": "custom/",
             "files": [
-                "base",
-                "ui"
+                "style"
             ]
         }
     },

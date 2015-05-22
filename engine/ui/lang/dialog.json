@@ -1,7 +1,11 @@
 {
     "zh": {
+        "Q-Save": "快速存档",
+        "Q-Load": "快速读档",
         "Load": "读档",
         "Save": "存档",
-        "Config": "设置"
+        "History": "历史",
+        "Config": "设置",
+        "Title": "标题画面"
     }
 }

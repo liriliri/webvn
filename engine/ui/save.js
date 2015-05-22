@@ -81,8 +81,8 @@ webvn.use(function (ui, config, util, canvas, storage, select, system) {
 
         for (i = 0; i < cfgSaveNum; i++) {
             saves[i] ? records.push(saves[i]) : records.push({
-                title: 'Unknown',
-                date: '2015-10-10'
+                title: lang.get('Empty'),
+                date: ''
             });
         }
 
@@ -99,7 +99,7 @@ webvn.use(function (ui, config, util, canvas, storage, select, system) {
 
         for (i = 0; i < cfgSaveNum; i++) {
             saves[i] ? records.push(saves[i]) : records.push({
-                name: 'Unknown',
+                title: lang.get('Empty'),
                 date: ''
             });
         }
@@ -114,10 +114,7 @@ webvn.use(function (ui, config, util, canvas, storage, select, system) {
 
     var hide = exports.hide = function () {
         renderer.start();
-        if (exports.fadeOut) {
-            $el.fadeOut(exports.duration);
-        } else {
-            $el.hide();
-        }
+
+        exports.fadeOut ? $el.fadeOut(exports.duration) : $el.hide();
     };
 });

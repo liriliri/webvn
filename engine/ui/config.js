@@ -1,27 +1,47 @@
-webvn.use(function (ui, canvas) {
+webvn.use(function (ui, canvas, config) {
     "use strict";
-    var exports = ui.create('config');
+    var uiName = 'config',
+        exports = ui.create(uiName),
+        $el = exports.$el,
+        lang = ui.lang.get(uiName),
+        tpl = ui.template.get(uiName);
 
-    var tpl = ui.template.get('config');
-    var $el = exports.$el;
-    $el.addClass('fill').html(tpl());
+    var cfg = config.create('uiConfig');
 
-    exports.stopPropagation().events({
-        'click .close': function () {
-            hide();
-        }
-    });
+    exports.fadeIn = cfg.get('fadeIn');
+    exports.fadeOut = cfg.get('fadeOut');
+    exports.duration = cfg.get('duration');
+
+    $el.addClass('fill').html(tpl({
+        Config: lang.get('Config'),
+        Close: lang.get('Close'),
+        Text_Speed: lang.get('Text Speed'),
+        Text_Auto: lang.get('Text Auto'),
+        Music: lang.get('Music'),
+        Sound: lang.get('Sound'),
+        Voice: lang.get('Voice')
+    }));
 
     var renderer = canvas.renderer;
 
+    exports.stopPropagation().events({
+
+        'click .close': function () {
+            hide();
+        }
+
+    });
+
     exports.show = function () {
         renderer.stop();
-        $el.fadeIn(300);
+
+        exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();
     };
 
     var hide = exports.hide = function () {
         renderer.start();
-        $el.fadeOut(300);
+
+        exports.fadeOut ? $el.fadeOut(exports.duration) : $el.hide();
     };
 
     return exports;

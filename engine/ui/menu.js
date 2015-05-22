@@ -1,10 +1,10 @@
 /* This ui component is also served as a template.
  * Every other components should be written in the same style.
  */
-webvn.use(['ui', 'script', 'media', 'util', 'canvas', 'config', 'storage'], function (ui, script, media, util, canvas, config, storage) {
+webvn.use(function (ui, script, media, util, canvas, config, storage) {
     "use strict";
     var uiName = 'menu',
-        exports = ui.create(uiName, 'div'),
+        exports = ui.create(uiName),
         $el = exports.$el,
         lang = ui.lang.get(uiName),
         tpl = ui.template.get(uiName),

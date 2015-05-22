@@ -18,9 +18,13 @@ webvn.use(['ui', 'text', 'media', 'config', 'storage'], function (ui, text, medi
     exports.fadeOut = cfg.get('fadeOut');
 
     $el.addClass('fill').html(tpl({
+        Q_Save: lang.get('Q-Save'),
+        Q_Load: lang.get('Q-Load'),
         Load: lang.get('Load'),
         Save: lang.get('Save'),
-        Config: lang.get('Config')
+        Config: lang.get('Config'),
+        History: lang.get('History'),
+        Title: lang.get('Title')
     }));
 
     var $content = $el.find('.content'),

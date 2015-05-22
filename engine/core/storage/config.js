@@ -32,7 +32,8 @@ webvn.extend('config', function (exports, kclass, storage) {
         }
 
         if (exports[name]) {
-            configs[name].set(exports[name], false);
+            exports.build === 'release' ? configs[name].set(exports[name], false) :
+                configs[name].set(exports[name], true);
         }
 
         return configs[name];

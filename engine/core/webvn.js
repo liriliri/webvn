@@ -201,7 +201,7 @@ window.webvn = (function(){
         }
         if (isFunction(requires)) {
             module = requires;
-            requires = [];
+            requires = getFnParams(module);
         }
         var fn = [requires, module];
         if (isReady) {

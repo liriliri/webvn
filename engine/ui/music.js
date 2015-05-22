@@ -1,19 +1,23 @@
 webvn.use(function (ui, select, media, config, storage, util, Class) {
     "use strict";
-    var exports = ui.create('music');
+    var uiName = 'music',
+        exports = ui.create(uiName),
+        $el = exports.$el,
+        lang = ui.lang.get(uiName),
+        tpl = ui.template.get(uiName);
 
-    var conf = config.create('uiMusic');
+    var cfg = config.create('uiMusic');
 
-    var $el = exports.$el;
-    $el.addClass('fill');
-    var tpl = ui.template.get('music');
-    $el.html(tpl());
+    $el.addClass('fill').html(tpl({
+        Music: lang.get('Music'),
+        Close: lang.get('Close')
+    }));
 
     var controller = Class.module(function () {
         var exports = {};
 
         var music = media.audio.create('music');
-        music.asset = storage.createAsset(conf.get('path'), conf.get('extension'));
+        music.asset = storage.createAsset(cfg.get('path'), cfg.get('extension'));
         music.loop(true);
         music.events({
             'timeupdate': function () {
@@ -40,7 +44,7 @@ webvn.use(function (ui, select, media, config, storage, util, Class) {
             $nextBtn = $el.find('.next'),
             $preBtn = $el.find('.previous');
 
-        var files = conf.get('files'), html = '';
+        var files = cfg.get('files'), html = '';
         util.each(files, function (file, index) {
             html += '<li class="num' + index + '" data-num="' + index + '">' + file + '</li>';
         });

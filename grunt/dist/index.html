@@ -5,7 +5,8 @@
     <title></title>
     <script src="engine/webvn.js" data-type="debug"></script>
     <script>
-        webvn.call(function (s) {
+        webvn.call(function () {
+            var s = webvn;
             s.log.info('WebVN v' + s.version + ' | https://github.com/surunzi/WebVN');
         });
     </script>

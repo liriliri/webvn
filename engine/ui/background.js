@@ -1,23 +1,32 @@
 webvn.use(function (ui, canvas, storage, config) {
     "use strict";
-    var exports = ui.create('background', 'canvas');
+    var uiName = 'background',
+        exports = ui.create(uiName, 'canvas'),
+        $el = exports.$el,
+        cvs = exports.getCanvas(),
+        save = storage.create(uiName);
 
-    var conf = config.create('uiBackground');
+    var cfg = config.create('uiBackground'),
+        cfgPath = cfg.get('path'),
+        cfgExtension = cfg.get('extension');
 
-    var asset = storage.createAsset(conf.get('path'), conf.get('extension'));
+    exports.duration = cfg.get('duration');
+    exports.fadeIn = cfg.get('fadeIn');
+    exports.fadeOut = cfg.get('fadeOut');
+    exports.transition = cfg.get('transition');
 
-    var $el = exports.$el;
     $el.addClass('fill');
 
-    exports.duration = conf.get('duration');
-    exports.fadeIn = conf.get('fadeIn');
-    exports.fadeOut = conf.get('fadeOut');
-    exports.transition = conf.get('transition');
-
-    var image = canvas.createImage(),
-        scene = new canvas.Scene(exports.getCanvas());
+    var asset = storage.createAsset(cfgPath, cfgExtension),
+        image = canvas.createImage(),
+        scene = new canvas.Scene(cvs);
 
     scene.add(image);
+
+    save.save(function () {
+        return {};
+    }).load(function (value) {
+    });
 
     exports.load = function (src) {
         image.transition = exports.transition;
@@ -51,31 +60,14 @@ webvn.use(function (ui, canvas, storage, config) {
     exports.show = function () {
         canvas.renderer.add(scene);
 
-        if ($el.visible()) {
-            return;
-        }
-        if (exports.fadeIn) {
-            $el.fadeIn(exports.duration);
-        } else {
-            $el.show();
-        }
+        if ($el.visible()) return;
+
+        exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();
     };
 
     exports.hide = function () {
         canvas.renderer.remove(scene);
 
-        if (exports.fadeOut) {
-            $el.fadeOut(exports.duration);
-        } else {
-            $el.hide();
-        }
+        exports.fadeOut ? $el.fadeOut(exports.duration) : $el.hide();
     };
-
-    var save = storage.create('background');
-    save.save(function (value) {
-        // Save something here
-    }).load(function (value) {
-        // Restore something here
-    });
-
 });

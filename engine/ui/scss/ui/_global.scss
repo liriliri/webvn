@@ -2,6 +2,26 @@ html {
     box-sizing: border-box;
 }
 
+body {
+    background: #000;
+}
+
+.center {
+    width: 0;
+    height: 0;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+}
+
+#webvn {
+    position: absolute;
+    left: -640px;
+    top: -360px;
+    overflow: hidden;
+    background: #fff;
+}
+
 *,
 *:before,
 *:after {

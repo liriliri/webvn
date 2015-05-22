@@ -48,7 +48,18 @@ webvn.extend('config', function (exports) {
     exports.uiGallery = {
         path: 'asset/image/',
         extension: 'jpg',
+        fadeIn: true,
+        fadeOut: true,
+        duration: 300,
         files: [
+            'cg1',
+            'cg2',
+            'cg1',
+            'cg2',
+            'cg1',
+            'cg2',
+            'cg1',
+            'cg2',
             'cg1',
             'cg2'
         ]
@@ -57,12 +68,19 @@ webvn.extend('config', function (exports) {
     exports.uiMusic = {
         path: 'asset/bgm/',
         extension: 'ogg',
+        fadeIn: true,
+        fadeOut: true,
+        duration: 300,
         files: [
             'bgm1',
-            'bgm2',
-            'Face Of Fact',
-            'Kotoko - We Survive'
+            'bgm2'
         ]
+    };
+
+    exports.uiConfig = {
+        fadeIn: true,
+        fadeOut: true,
+        duration: 300
     };
 
     exports.uiSave = {

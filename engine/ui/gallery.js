@@ -1,37 +1,48 @@
 webvn.use(function (ui, select, config, storage, canvas) {
     "use strict";
-    var exports = ui.create('gallery', 'div');
+    var uiName = 'gallery',
+        exports = ui.create('gallery'),
+        $el = exports.$el,
+        lang = ui.lang.get(uiName),
+        tpl = ui.template.get(uiName);
 
-    var conf = config.create('uiGallery');
+    var cfg = config.create('uiGallery'),
+        cfgPath = cfg.get('path'),
+        cfgExtension = cfg.get('extension'),
+        cfgFiles = cfg.get('files');
 
-    var asset = storage.createAsset(conf.get('path'), conf.get('extension'));
+    exports.fadeIn = cfg.get('fadeIn');
+    exports.fadeOut = cfg.get('fadeOut');
+    exports.duration = cfg.get('duration');
 
-    var $el = exports.$el;
-    var tpl = ui.template.get('cg');
-    $el.addClass('fill').html(tpl());
+    $el.addClass('fill').html(tpl({
+        Gallery: lang.get('Gallery'),
+        Close: lang.get('Close')
+    }));
 
-    var renderer = canvas.renderer;
+    var $container = $el.find('.container'),
+        $viewer = $el.find('.viewer'),
+        $pagination = $el.find('.pagination');
 
-    // Init cg
-    var $container = $el.find('.container');
-    var cg = conf.get('files');
-    var pageSize = 6,
-        pageCount = Math.ceil(cg.length / pageSize);
+    var renderer = canvas.renderer,
+        asset = storage.createAsset(cfgPath, cfgExtension),
+        pageSize = 6,
+        pageCount = Math.ceil(cfgFiles.length / pageSize);
+
     function page(num) {
         var html = '',
             start = (num - 1) * pageSize,
             end = start + pageSize;
-        if (end > cg.length) {
-            end = cg.length;
+        if (end > cfgFiles.length) {
+            end = cfgFiles.length;
         }
         for (; start < end; start++) {
-            html += '<li><img class="th" src="' + asset.get(cg[start]) + '"></li>';
+            html += '<li><img class="th" src="' + asset.get(cfgFiles[start]) + '"></li>';
         }
         $container.html(html);
     }
     page(1);
-    // Append Button
-    var $pagination = $el.find('.pagination');
+
     if (pageCount > 1) {
         var html = '';
         for (var i = 0; i < pageCount; i++) {
@@ -39,12 +50,6 @@ webvn.use(function (ui, select, config, storage, canvas) {
         }
         $pagination.html(html);
     }
-
-    var $viewer = $el.find('.viewer');
-    $viewer.on('click', function () {
-        var $this = select.get(this);
-        $this.fadeOut(300);
-    });
 
     exports.stopPropagation().events({
 
@@ -56,23 +61,30 @@ webvn.use(function (ui, select, config, storage, canvas) {
             var $this = select.get(this),
                 src = $this.attr('src');
             $viewer.find('img').attr('src', src);
-            $viewer.removeClass('hidden').fadeIn(300);
+            $viewer.removeClass('hidden').fadeIn(exports.duration);
         },
 
         'click .pagination li': function () {
             var $this = select.get(this);
             page(Number($this.attr('data-num')));
+        },
+
+        'click .viewer': function () {
+            var $this = select.get(this);
+            $this.fadeOut(exports.duration);
         }
 
     });
 
     exports.show = function () {
         renderer.stop();
-        $el.fadeIn(300);
+
+        exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();
     };
 
     var hide = exports.hide = function () {
         renderer.start();
-        $el.fadeOut(300);
+
+        exports.fadeOut ? $el.fadeOut(exports.duration) : $el.hide();
     };
 });

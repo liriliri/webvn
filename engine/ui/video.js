@@ -1,27 +1,26 @@
 webvn.use(function (ui, media, script, config, storage) {
     "use strict";
-    var exports = ui.create('video', 'div');
+    var uiName = 'video',
+        exports = ui.create('video', 'div'),
+        $el = exports.$el,
+        tpl = ui.template.get(uiName);
 
-    var conf = config.create('uiVideo'),
-        clickAction = conf.get('clickAction'),
-        duration = conf.get('duration'),
-        fadeIn = conf.get('fadeIn'),
-        fadeOut = conf.get('fadeOut'),
-        path = conf.get('path'),
-        extension = conf.get('extension');
+    var cfg = config.create('uiVideo'),
+        cfgPath = cfg.get('path'),
+        cfgExtension = cfg.get('extension');
 
-    var asset = storage.createAsset(path, extension);
+    exports.clickAction = cfg.get('clickAction');
+    exports.duration = cfg.get('duration');
+    exports.fadeIn = cfg.get('fadeIn');
+    exports.fadeOut = cfg.get('fadeOut');
 
-    var tpl = ui.template.get('video');
-    var $el = exports.$el;
     $el.addClass('fill').html(tpl());
 
-    exports.clickAction = clickAction;
-    exports.duration = duration;
-    exports.fadeIn = fadeIn;
-    exports.fadeOut = fadeOut;
+    var asset = storage.createAsset(cfgPath, cfgExtension),
+        video = media.createVideo($el.find('video').get(0));
 
     exports.stopPropagation().events({
+
         'click video': function () {
             switch (exports.clickAction) {
                 case 'skip':
@@ -37,14 +36,16 @@ webvn.use(function (ui, media, script, config, storage) {
                     break;
             }
         }
+
     });
 
-    var video = media.createVideo($el.find('video').get(0));
 
     video.events({
+
         ended: function () {
             hide();
         }
+
     });
 
     exports.play = function () {
@@ -52,15 +53,10 @@ webvn.use(function (ui, media, script, config, storage) {
     };
 
     exports.show = function () {
-        if ($el.visible()) {
-            return;
-        }
+        if ($el.visible()) return;
 
-        if (exports.fadeIn) {
-            $el.fadeIn(exports.duration);
-        } else {
-            $el.show();
-        }
+        exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();
+
         script.pause();
     };
 

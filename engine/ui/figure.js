@@ -1,17 +1,25 @@
 webvn.use(function (ui, canvas, util, config, storage) {
     "use strict";
-    var exports = ui.create('figure', 'canvas');
+    var uiName = 'figure',
+        exports = ui.create(uiName, 'canvas'),
+        $el = exports.$el,
+        cvs = exports.getCanvas(),
+        save = storage.create(uiName);
 
-    var conf = config.create('uiFigure');
+    var cfg = config.create('uiFigure'),
+        cfgPath = cfg.get('path'),
+        cfgExtension = cfg.get('extension');
 
-    var asset = storage.createAsset(conf.get('path'), conf.get('extension'));
+    exports.duration = cfg.get('duration');
+    exports.fadeIn = cfg.get('fadeIn');
+    exports.fadeOut = cfg.get('fadeOut');
+    exports.transition = cfg.get('transition');
 
-    var $el = exports.$el;
     $el.addClass('fill');
 
-    var scene = canvas.createScene(exports.getCanvas());
-
-    var figures = [],
+    var asset = storage.createAsset(cfgPath, cfgExtension),
+        scene = canvas.createScene(cvs),
+        figures = [],
         curFigure;
 
     curFigure = createFigure(0);
@@ -27,10 +35,10 @@ webvn.use(function (ui, canvas, util, config, storage) {
         return figure;
     }
 
-    exports.duration = conf.get('duration');
-    exports.fadeIn = conf.get('fadeIn');
-    exports.fadeOut = conf.get('fadeOut');
-    exports.transition = conf.get('transition');
+    save.save(function () {
+        return {};
+    }).load(function (value) {
+    });
 
     exports.select = function (num) {
         curFigure = createFigure(num);
@@ -85,22 +93,13 @@ webvn.use(function (ui, canvas, util, config, storage) {
     exports.hide = function () {
         canvas.renderer.remove(scene);
 
-        if (exports.fadeOut) {
-            $el.fadeOut(exports.duration);
-        } else {
-            $el.hide();
-        }
+        exports.fadeOut ? $el.fadeOut(exports.duration) : $el.hide();
     };
 
     exports.animate = function (to) {
         curFigure.animate(to, exports.duration);
     };
 
-    var save = storage.create('figure');
-    save.save(function () {
-        // Save something here
-    }).load(function (value) {
-        // Restore something here
-    });
+
 
 });
