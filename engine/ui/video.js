@@ -17,7 +17,7 @@ webvn.use(function (ui, media, script, config, storage) {
     $el.addClass('fill').html(tpl());
 
     var asset = storage.createAsset(cfgPath, cfgExtension),
-        video = media.createVideo($el.find('video').get(0));
+        video = media.video.create($el.find('video').get(0));
 
     exports.stopPropagation().events({
 

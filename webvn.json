@@ -44,7 +44,8 @@
             "path": "engine/core/",
             "files": [
                 "log",
-                "Class",
+                "class/Class",
+                "class/module",
                 "storage/storage",
                 "storage/save",
                 "storage/config",
@@ -52,14 +53,14 @@
                 "select/util",
                 "select/select",
                 "system",
-                "loader",
+                "loader/loader",
                 "script/parserNode",
                 "script/parser",
                 "script/lexer",
                 "script/script",
                 "script/eval",
                 "script/command",
-                "event",
+                "event/event",
                 "anim/ease",
                 "anim/anim",
                 "anim/select",
@@ -75,8 +76,9 @@
                 "canvas/scene",
                 "canvas/particle",
                 "canvas/entity",
-                "media",
-                "text",
+                "media/base",
+                "media/audio",
+                "text/text",
                 "ui/ui",
                 "ui/lang",
                 "ui/template",
@@ -101,8 +103,7 @@
                 "background",
                 "dialog",
                 "figure",
-                "video",
-                "particle"
+                "video"
             ]
         },
         "cmd": {
@@ -112,22 +113,21 @@
                 "video",
                 "audio",
                 "bg",
-                "particle",
                 "fg",
                 "log",
                 "dialog",
                 "system"
             ]
         },
+        "custom": {
+            "path": "custom/",
+            "files": [
+            ]
+        },
         "init": {
             "path": "engine/",
             "files": [
                 "init"
-            ]
-        },
-        "custom": {
-            "path": "custom/",
-            "files": [
             ]
         }
     }

@@ -359,7 +359,8 @@ webvn.extend('select', function (exports, Class, util) {
         toArray: function () {
             return this.get();
         }
-    }, {
+    }, {}, {
+
         /**
          * Merge Second Array Into First Array
          * @function webvn.select.Select.merge
@@ -376,6 +377,7 @@ webvn.extend('select', function (exports, Class, util) {
             first.length = i;
             return first;
         },
+
         /**
          * Convert html string to actual dom element
          * @function webvn.select.Select.parseHTML
@@ -392,6 +394,7 @@ webvn.extend('select', function (exports, Class, util) {
             var elements = div.childNodes;
             return Select.merge([], elements);
         },
+
         /**
          * Whether a Node contains another node
          * @function webvn.select.Select.contains
@@ -402,6 +405,7 @@ webvn.extend('select', function (exports, Class, util) {
         contains: function (parent, node) {
             return parent !== node && parent.contains(node);
         }
+
     });
 
     var rootSelect = new Select(document);

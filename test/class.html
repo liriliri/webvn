@@ -7,9 +7,9 @@
 </head>
 <body>
 <script>
-    webvn.call(['class'], function (kclass) {
+    webvn.call(function (Class) {
 
-        var Person = kclass.create({
+        var Person = Class.create({
             constructor: function Person() {
                 this.name = 'unknown';
             },
@@ -20,12 +20,18 @@
                 console.log('Person');
             }
         }, {
-            Test: function () {
-                s.log('Static function');
+            name: {
+                get: function () {
+                    return 'Fuck';
+                }
             }
         });
 
-        var Student = Person.extend({
+        var p = new Person;
+
+        console.log(p.name);
+
+        /*var Student = Person.extend({
             constructor: function Student() {
                 this.stuid = 5;
             },
@@ -47,7 +53,7 @@
         var a = new Student;
 
         a.getClass();
-        a.shoutOut();
+        a.shoutOut();*/
 
     });
 </script>

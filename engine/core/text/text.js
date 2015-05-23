@@ -1,20 +1,23 @@
 webvn.module('text', function (util, Class, select, exports) {
     var TextAnim = exports.TextAnim = Class.create({
-        constructor: function TextAnim(el) {
+
+        constructor: function TextAnim($el) {
 
             // If the element is a dom node, pass it into a select element
-            if (!select.isSelect(el)) {
-                el = select(el);
+            if (!select.isSelect($el)) {
+                $el = select($el);
             }
 
-            this.$el = el;
+            this.$el = $el;
             this.data = '';
             this.length = 0;
             this.type = 'fadeIn';
             this.duration = 50;
             this.timers = [];
+            this.isPlaying = false;
 
         },
+
         load: function (data, autoshow) {
 
             if (autoshow === undefined) {
@@ -30,10 +33,13 @@ webvn.module('text', function (util, Class, select, exports) {
             }
 
         },
+
         show: function () {
             var len = this.length,
                 self = this,
                 $el = this.$el;
+
+            this.isPlaying = true;
 
             $el.html(this.splitText(this.data));
 
@@ -46,10 +52,11 @@ webvn.module('text', function (util, Class, select, exports) {
 
             // Remove everything when done
             setTimeout(function () {
-                $span.removeAttr('class');
+                self.stop();
             }, (this.duration / 10) * i + this.duration);
 
         },
+
         showChar: function (i) {
 
             var self = this,
@@ -66,6 +73,7 @@ webvn.module('text', function (util, Class, select, exports) {
             }, i * (this.duration / 10));
 
         },
+
         // Split text into different span
         splitText: function (data) {
 
@@ -82,6 +90,17 @@ webvn.module('text', function (util, Class, select, exports) {
             return ret;
 
         },
+
+        isStop: function () {
+            return !this.isPlaying;
+        },
+
+        stop: function () {
+            this.isPlaying = false;
+            this.stopTimer();
+            this.$el.find('span').show().removeAttr('class');
+        },
+
         stopTimer: function () {
 
             for (var i = 0; i < this.length; i++) {

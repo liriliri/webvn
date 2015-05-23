@@ -1,23 +1,17 @@
 /* Provide function used by parser,
- * Helper function related to wvnScript/javaScript translation
+ * and helper function related to wvnScript/javaScript translation
  */
-webvn.module('parserNode', function (Class, util) {
-
-    var exports = {};
-
-    var lineNum = 0;
-
+webvn.module('parserNode', function (Class, util, exports) {
+    'use strict';
     exports.lineNum = function (value) {
-        "use strict";
         lineNum = value;
     };
+    var lineNum = 0;
 
     exports.expression = function (content) {
-
         content = removeLastLineBreak(content);
 
         return '$$(' + content + ', ' + lineNum + ');\n';
-
     };
 
     exports.label = function (label) {
@@ -25,15 +19,12 @@ webvn.module('parserNode', function (Class, util) {
     };
 
     exports.command = function (command) {
-
         command = formatParam(escapeQuote(command));
 
         return '"command", "' + util.trim(command) + '"';
-
     };
 
     exports.code = function (code) {
-
         // Trim every line to make it look decent
         var lines = code.split('\n');
         for (var i = 0, len = lines.length; i < len; i++) {
@@ -43,58 +34,44 @@ webvn.module('parserNode', function (Class, util) {
         code = escapeQuote(code);
 
         return '"code", "' + code + '"';
-
     };
 
     exports.block = function (block) {
-
         block = indent(block);
 
         return ' {\n' + block + '}\n';
-
     };
 
     exports.paramList = function (paramList, param) {
-
         return paramList + ', ' + param;
-
     };
 
     exports.ifWrapper = function (body) {
-
         body = indent(body);
 
         return '"if", function () {\n' + body + '}\n';
-
     };
 
     exports['if'] = function (condition, block) {
-
         return 'if (' + condition + ')' + block;
-
     };
 
     exports.ifElse = function (former, latter) {
-
         former = removeLastLineBreak(former);
 
         return former + ' else ' + util.trim(latter) + '\n';
-
     };
 
     exports['function'] = function (name, param, block) {
-
         if (block === undefined) {
             block = param;
             param = '';
         }
 
         return '"function", "' + name + '", function (' + param + ')' + block;
-
     };
 
     function removeLastLineBreak(text) {
-
         var len = text.length;
 
         if (text[len - 1] === '\n') {
@@ -102,11 +79,9 @@ webvn.module('parserNode', function (Class, util) {
         }
 
         return text;
-
     }
 
     function indent(text) {
-
         var ret = '\t' + text;
 
         ret = ret.replace(/\n/g, '\n\t');
@@ -117,7 +92,6 @@ webvn.module('parserNode', function (Class, util) {
         }
 
         return ret;
-
     }
 
     // Change {{param}} to " + param + "
@@ -127,7 +101,6 @@ webvn.module('parserNode', function (Class, util) {
 
     // https://github.com/joliss/js-string-escape/blob/master/index.js
     var escapeQuote = exports.escapeQuote = function (text) {
-
         return ('' + text).replace(/["'\\\n\r\u2028\u2029]/g, function (character) {
             switch (character) {
                 case '"':
@@ -144,9 +117,6 @@ webvn.module('parserNode', function (Class, util) {
                     return '\\u2029';
             }
         });
-
     };
-
-    return exports;
 
 });

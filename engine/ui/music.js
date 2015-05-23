@@ -6,7 +6,13 @@ webvn.use(function (ui, select, media, config, storage, util, Class) {
         lang = ui.lang.get(uiName),
         tpl = ui.template.get(uiName);
 
-    var cfg = config.create('uiMusic');
+    var cfg = config.create('uiMusic'),
+        cfgPath = cfg.get('path'),
+        cfgExtension = cfg.get('extension');
+
+    exports.fadeIn = cfg.get('fadeIn');
+    exports.fadeOut = cfg.get('fadeOut');
+    exports.duration = cfg.get('duration');
 
     $el.addClass('fill').html(tpl({
         Music: lang.get('Music'),
@@ -17,13 +23,15 @@ webvn.use(function (ui, select, media, config, storage, util, Class) {
         var exports = {};
 
         var music = media.audio.create('music');
-        music.asset = storage.createAsset(cfg.get('path'), cfg.get('extension'));
-        music.loop(true);
+        music.asset = storage.createAsset(cfgPath, cfgExtension);
+        music.loop = true;
         music.events({
+
             'timeupdate': function () {
-                var percentage = music.currentTime() / music.duration;
+                var percentage = music.curTime / music.duration;
                 $progressFill.css('width', $progress.width() * percentage);
             }
+
         });
 
         var $progress = $el.find('.progress'),
@@ -129,10 +137,10 @@ webvn.use(function (ui, select, media, config, storage, util, Class) {
     });
 
     exports.show = function () {
-        $el.fadeIn(300);
+        exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();
     };
 
     var hide = exports.hide = function () {
-        $el.fadeOut(300);
+        exports.fadeOut ? $el.fadeOut(exports.duration) : $el.hide();
     };
 });

@@ -43,7 +43,7 @@ if (g.firstPlay !== false) {
 立绘 -d -src=wendy_normal -pos=bottomCenter
 
 // 播放背景乐
-背景乐 bgm2
+// 背景乐 bgm2
 
 // 简单介绍
 标题 简单介绍

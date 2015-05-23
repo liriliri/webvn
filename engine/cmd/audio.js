@@ -1,63 +1,47 @@
 webvn.use(function (script, media) {
-    // Background music
     var bgm = media.audio.get('bgm');
-    /**
-     * Bgm Command
-     * @class webvn.cmd.BgmCommand
-     * @extends webvn.script.Command
-     */
+
     script.createCommand({
 
         constructor: function BgmCommand() {
             this.callSuper('bgm');
         },
 
-        /**
-         * @memberof webvn.cmd.BgmCommand
-         * @property {number} duration(du) duration of fadein and fadeout
-         * @property {boolean} fadeIn(fi) fade in bgm or not
-         * @property {boolean} fadeOut(fo) fade out bgm or not
-         * @property {boolean} loop(l) loop bgm or not
-         * @property {boolean} play(p) play bgm or pause bgm
-         * @property {string} src(s) load bgm and play
-         * @property {boolean} stop(st) stop bgm
-         * @property {number} volume(v) set volume of bgm
-         */
         options: {
             duration: {
-                type: 'Number',
+                type: 'number',
                 shortHand: 'du'
             },
             fadeIn: {
-                type: 'Boolean',
+                type: 'boolean',
                 shortHand: 'fi'
             },
             fadeOut: {
-                type: 'Boolean',
+                type: 'boolean',
                 shortHand: 'fo'
             },
             loop: {
-                type: 'Boolean',
+                type: 'boolean',
                 shortHand: 'l'
             },
             play: {
-                type: 'Boolean',
+                type: 'boolean',
                 shortHand: 'p'
             },
             src: {
-                type: 'String',
+                type: 'string',
                 shortHand: 's'
             },
             stop: {
-                type: 'Boolean',
+                type: 'boolean',
                 shortHand: 'st'
             },
             volume: {
-                type: 'Number',
+                type: 'number',
                 shortHand: 'v'
             },
             playNext: {
-                type: 'Boolean',
+                type: 'boolean',
                 shortHand: 'pn',
                 defaultValue: true
             }
@@ -75,43 +59,30 @@ webvn.use(function (script, media) {
         ],
 
         fadeIn: function (value) {
-            "use strict";
             bgm.fadeIn = value;
         },
 
         fadeOut: function (value) {
-            "use strict";
             bgm.fadeOut = value;
         },
 
         duration: function (value) {
-            "use strict";
             bgm.duration = value;
         },
 
         play: function (value) {
-            "use strict";
-            if (value) {
-                bgm.play();
-            } else {
-                bgm.pause();
-            }
+            value ? bgm.play() : bgm.pause();
         },
 
         loop: function (value) {
-            "use strict";
             bgm.loop(value);
         },
 
         stop: function (value) {
-            "use strict";
-            if (value) {
-                bgm.stop();
-            }
+            value && bgm.stop();
         },
 
         src: function (value) {
-            "use strict";
             bgm.load(value);
         }
 
@@ -122,7 +93,6 @@ webvn.use(function (script, media) {
      * @class webvn.cmd.SeCommand
      * @extends webvn.script.Command
      */
-    // Sound Effect
     var se = media.audio.get('se');
     script.createCommand({
 
@@ -152,18 +122,15 @@ webvn.use(function (script, media) {
         ],
 
         src: function (value) {
-            "use strict";
             se.load(value);
         },
 
         loop: function (value) {
-            "use strict";
             se.loop(value);
         }
 
     });
 
-    // Voice
     var voice = media.audio.get('voice');
     /**
      * Voice Command
@@ -198,12 +165,10 @@ webvn.use(function (script, media) {
         ],
 
         src: function (value) {
-            "use strict";
             voice.load(value);
         },
 
         loop: function (value) {
-            "use strict";
             voice.loop(value);
         }
 

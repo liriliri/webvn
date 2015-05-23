@@ -52,6 +52,10 @@ webvn.use(function (script, ui) {
                 type: 'String',
                 shortHand: 'v'
             },
+            stopAnimation: {
+                type: 'boolean',
+                shortHand: 'sa'
+            },
             playNext: {
                 type: 'Boolean',
                 shortHand: 'pn'
@@ -70,8 +74,13 @@ webvn.use(function (script, ui) {
             'name',
             'text',
             'voice',
+            'stopAnimation',
             'playNext'
         ],
+
+        stopAnimation: function (value) {
+            value && dialog.stopAnim();
+        },
 
         face: function (value) {
             dialog.face(value);
@@ -102,11 +111,7 @@ webvn.use(function (script, ui) {
         },
 
         display: function (value) {
-            if (value) {
-                dialog.show();
-            } else {
-                dialog.hide();
-            }
+            value ? dialog.show() : dialog.hide();
         },
 
         name: function (value) {

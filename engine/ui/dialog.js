@@ -1,4 +1,4 @@
-webvn.use(['ui', 'text', 'media', 'config', 'storage'], function (ui, text, media, config, storage) {
+webvn.use(function (ui, text, media, config, storage, script) {
     "use strict";
     var uiName = 'dialog',
         exports = ui.create(uiName, 'div'),
@@ -87,9 +87,19 @@ webvn.use(['ui', 'text', 'media', 'config', 'storage'], function (ui, text, medi
     };
 
     exports.text = function (text) {
+        textAnim.stopTimer();
         textAnim.type = exports.textType;
         textAnim.duration = exports.textDuration;
         textAnim.load(text);
+        script.insertCmd('dialog -sa');
+    };
+
+    exports.stopAnim = function () {
+        if (textAnim.isStop()) {
+            script.play();
+        } else {
+            textAnim.stop();
+        }
     };
 
     exports.voice = function (src) {

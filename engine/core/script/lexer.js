@@ -8,6 +8,7 @@ webvn.module('lexer', function (Class, log, util, exports) {
      * @returns {Array} result [tag, value, locationData]
      */
     var Token = exports.Token = Class.create({
+
         constructor: function (tag, value, locationData) {
             var token = [];
             token[0] = tag;
@@ -15,12 +16,15 @@ webvn.module('lexer', function (Class, log, util, exports) {
             token[2] = locationData;
             return token;
         }
+
     });
 
     var EOF = 'END_OF_FILE';
 
     var Lexer = exports.Lexer = Class.create({
-        constructor: function Lexer() { },
+
+        constructor: function Lexer() {},
+
         reConfigure: function (code) {
 
             this.input = code;
@@ -32,6 +36,7 @@ webvn.module('lexer', function (Class, log, util, exports) {
             this.tokens = [];
 
         },
+
         tokenize: function (code) {
 
             this.reConfigure(code);
@@ -45,17 +50,19 @@ webvn.module('lexer', function (Class, log, util, exports) {
             return this.tokens;
 
         },
+
         lastTokenIs: function (target) {
             var token = this.tokens[this.tokens.length - 1];
             return token && token[0] === target;
         },
+
         pushToken: function (token) {
 
             this.tokens.push(token);
 
         },
-        createToken: function (tag, value, locationData) {
 
+        createToken: function (tag, value, locationData) {
             if (value === undefined) {
                 value = tag;
                 if (locationData === undefined) {
@@ -71,8 +78,8 @@ webvn.module('lexer', function (Class, log, util, exports) {
             return new Token(tag, value, locationData);
 
         },
-        nextToken: function () {
 
+        nextToken: function () {
             while (this.c !== EOF) {
                 switch (this.c) {
                     case ' ': case '\t': case '\r': this.WS(); continue;
@@ -145,8 +152,8 @@ webvn.module('lexer', function (Class, log, util, exports) {
                     }
                 }
             }
-
         },
+
         /* WS: (' ' | '\t' | '\r')*; Ignore any white space.
          * Line break is not part of the white space group
          * since it is used to indicate the end of line comment and other stuff
@@ -195,6 +202,7 @@ webvn.module('lexer', function (Class, log, util, exports) {
             }
 
         },
+
         // Look ahead n character, and see if it resembles target
         lookAhead: function (len, target) {
             var str = '', i;
@@ -203,6 +211,7 @@ webvn.module('lexer', function (Class, log, util, exports) {
             }
             return str === target;
         },
+
         isLetter: function (char) {
             if (!util.isString(char) || char.length !== 1) {
                 return false;
@@ -213,22 +222,23 @@ webvn.module('lexer', function (Class, log, util, exports) {
                 // Chinese is regarded as legal letter too.
                 ((code >= 19968) && (code <= 40869));
         },
+
         // Line comment, starts with '//' until the line break
         commentLine: function () {
-
             this.consumes(2);
+
             while (!(this.c === '\n')) {
                 this.consume();
                 if (this.c === EOF) {
                     break;
                 }
             }
-
         },
+
         // Block comment, starts with '/*', ends with '*/'
         commentBlock: function () {
-
             this.consumes(2);
+
             while (!(this.c === '*' && this.lookAhead(1, '/'))) {
                 this.consume();
                 if (this.c === EOF) {
@@ -238,9 +248,9 @@ webvn.module('lexer', function (Class, log, util, exports) {
             this.consume();
 
         },
+
         // Line code, starts with '`' until the line break
         codeLine: function () {
-
             var value = '',
                 firstLine, firstColumn, lastLine, lastColumn;
 
@@ -265,11 +275,10 @@ webvn.module('lexer', function (Class, log, util, exports) {
                 last_line: lastLine,
                 last_column: lastColumn
             });
-
         },
+
         // Block code, starts with '```', ends with '```'
         codeBlock: function () {
-
             var value = '',
                 firstLine, firstColumn, lastLine, lastColumn;
 
@@ -297,11 +306,10 @@ webvn.module('lexer', function (Class, log, util, exports) {
                 last_line: lastLine,
                 last_column: lastColumn
             });
-
         },
+
         // Condition
         condition: function () {
-
             var value = '', leftBracket = 0,
                 firstLine, firstColumn, lastLine, lastColumn;
 
@@ -332,10 +340,9 @@ webvn.module('lexer', function (Class, log, util, exports) {
                 last_line: lastLine,
                 last_column: lastColumn
             });
-
         },
-        functionName: function () {
 
+        functionName: function () {
             var value = '',
                 firstLine, firstColumn, lastLine, lastColumn;
 
@@ -356,10 +363,9 @@ webvn.module('lexer', function (Class, log, util, exports) {
                 last_line: lastLine,
                 last_column: lastColumn
             });
-
         },
-        functionParam: function () {
 
+        functionParam: function () {
             var value = '',
                 firstLine, firstColumn, lastLine, lastColumn;
 
@@ -380,8 +386,8 @@ webvn.module('lexer', function (Class, log, util, exports) {
                 last_line: lastLine,
                 last_column: lastColumn
             });
-
         },
+
         label: function () {
             var value = '',
                 firstLine, firstColumn, lastLine, lastColumn;
@@ -407,6 +413,7 @@ webvn.module('lexer', function (Class, log, util, exports) {
                 last_column: lastColumn
             });
         },
+
         // Command, ends with line break;
         command: function () {
             var value = '',
@@ -450,7 +457,6 @@ webvn.module('lexer', function (Class, log, util, exports) {
     var _lexer = new Lexer;
 
     exports.lexer = function (code) {
-
         var tokens;
 
         try {
@@ -459,6 +465,5 @@ webvn.module('lexer', function (Class, log, util, exports) {
         } catch (e) {
             log.error(e.message);
         }
-
     };
 });

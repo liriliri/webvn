@@ -292,7 +292,7 @@ webvn.module('script', function (config, parser, parserNode, util, loader, lexer
         play();
     };
 
-    var jump = exports.jump = function (labelName) {
+    exports.jump = function (labelName) {
         // Clear executions
         if (!label.has(labelName)) {
             log.warn('Label ' + labelName + ' not found');
@@ -301,6 +301,12 @@ webvn.module('script', function (config, parser, parserNode, util, loader, lexer
         executions = [];
         curNum = label.get(labelName);
         resume();
+    };
+
+    exports.insertCmd = function (script) {
+        isSource = false;
+        wvnEval(script);
+        isSource = true;
     };
 
     // Reset everything to initial state
