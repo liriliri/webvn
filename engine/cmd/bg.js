@@ -117,8 +117,8 @@ webvn.use(function (script, ui) {
             background.fadeOut = value;
         },
 
-        filter: function (value) {
-            background.filter(value);
+        filter: function (val) {
+            background.filter = val;
         },
 
         position: function (value) {
@@ -137,24 +137,20 @@ webvn.use(function (script, ui) {
             background.animate(value);
         },
 
-        scale: function (value) {
-            background.scale(value);
+        scale: function (val) {
+            background.scale = val;
         },
 
-        scaleX: function (value) {
-            background.scaleX(value);
+        scaleX: function (val) {
+            background.scaleX = val;
         },
 
-        scaleY: function (value) {
-            background.scaleY(value);
+        scaleY: function (val) {
+            background.scaleY = val;
         },
 
         display: function (value) {
-            if (value) {
-                background.show();
-            } else {
-                background.hide();
-            }
+            value ? background.show() : background.hide();
         },
 
         duration: function (value) {

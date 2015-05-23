@@ -13,13 +13,6 @@ webvn.use(function (ui, script, media, util, canvas, config, storage) {
     var cfg = config.create('uiMenu'),
         cfgStartLabel = cfg.get('startLabel');
 
-    exports.bgm = cfg.get('bgm');
-    exports.btnClickSound = cfg.get('btnClkSound');
-    exports.btnHoverSound = cfg.get('btnHoverSound');
-    exports.duration = cfg.get('Duration');
-    exports.fadeIn = cfg.get('fadeIn');
-    exports.fadeOut = cfg.get('FadeOut');
-
     $el.addClass('fill').html(tpl({
         'Start': lang.get('Start'),
         'Load': lang.get('Load'),
@@ -38,7 +31,14 @@ webvn.use(function (ui, script, media, util, canvas, config, storage) {
         $el.hide();
     });
 
-    exports.stopPropagation().events({
+    exports.stopPropagation().properties({
+        bgm: cfg.get('bgm'),
+        btnClickSound: cfg.get('btnClkSound'),
+        btnHoverSound: cfg.get('btnHoverSound'),
+        duration: cfg.get('Duration'),
+        fadeIn: cfg.get('fadeIn'),
+        fadeOut: cfg.get('FadeOut')
+    }).events({
 
         'click .start': function () {
             renderer.start();

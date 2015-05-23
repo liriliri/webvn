@@ -81,19 +81,20 @@ webvn.module('ui', function (Class, select, config, util, script, exports) {
             $container.append(this.$el);
         },
 
-        remove: function () {
-            this.$el.remove();
-        },
+        properties: function (attrs) {
+            var self = this;
 
-        show: function () {
-            this.$el.show();
-            return this;
-        },
+            util.each(attrs, function (attr, key) {
+                if (util.isObject(attr) && (attr['get'] || attr['set'])) {
+                    Object.defineProperty(self, key, attr);
+                } else {
+                    self[key] = attr;
+                }
+            });
 
-        hide: function () {
-            this.$el.hide();
             return this;
         }
+
     });
 
     var DivUi = BaseUi.extend({

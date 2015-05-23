@@ -10,11 +10,6 @@ webvn.use(function (ui, canvas, storage, config) {
         cfgPath = cfg.get('path'),
         cfgExtension = cfg.get('extension');
 
-    exports.duration = cfg.get('duration');
-    exports.fadeIn = cfg.get('fadeIn');
-    exports.fadeOut = cfg.get('fadeOut');
-    exports.transition = cfg.get('transition');
-
     $el.addClass('fill');
 
     var asset = storage.createAsset(cfgPath, cfgExtension),
@@ -28,25 +23,36 @@ webvn.use(function (ui, canvas, storage, config) {
     }).load(function (value) {
     });
 
+    exports.properties({
+        duration: cfg.get('duration'),
+        fadeIn: cfg.get('fadeIn'),
+        fadeOut: cfg.get('fadeOut'),
+        transition: cfg.get('transition'),
+        filter: {
+            set: function (val) {
+                image.filter = val;
+            }
+        },
+        scaleX: {
+            set: function (val) {
+                image.scaleX = val;
+            }
+        },
+        scaleY: {
+            set: function (val) {
+                image.scaleY = val;
+            }
+        },
+        scale: {
+            set: function (val) {
+                image.scaleX = image.scaleY = val;
+            }
+        }
+    });
+
     exports.load = function (src) {
         image.transition = exports.transition;
         image.load(asset.get(src), exports.duration);
-    };
-
-    exports.filter = function (value) {
-        image.filter = value;
-    };
-
-    exports.scaleX = function (value) {
-        image.scaleX = value;
-    };
-
-    exports.scaleY = function (value) {
-        image.scaleY = value;
-    };
-
-    exports.scale = function (value) {
-        image.scaleX = image.scaleY = value;
     };
 
     exports.position = function (x, y) {

@@ -11,12 +11,6 @@ webvn.use(function (ui, text, media, config, storage, script) {
         cfgPath = cfg.get('path'),
         cfgExtension = cfg.get('extension');
 
-    exports.textType = cfg.get('textType');
-    exports.textDuration = cfg.get('textDuration');
-    exports.duration = cfg.get('duration');
-    exports.fadeIn = cfg.get('fadeIn');
-    exports.fadeOut = cfg.get('fadeOut');
-
     $el.addClass('fill').html(tpl({
         Q_Save: lang.get('Q-Save'),
         Q_Load: lang.get('Q-Load'),
@@ -48,7 +42,13 @@ webvn.use(function (ui, text, media, config, storage, script) {
         $text.html(val.text);
     });
 
-    exports.events({
+    exports.properties({
+        textType: cfg.get('textType'),
+        textDuration: cfg.get('textDuration'),
+        duration: cfg.get('duration'),
+        fadeIn: cfg.get('fadeIn'),
+        fadeOut: cfg.get('fadeOut')
+    }).events({
 
         'click .save': function () {
             ui.get('save').show('save');

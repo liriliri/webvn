@@ -10,10 +10,6 @@ webvn.use(function (ui, select, media, config, storage, util, Class) {
         cfgPath = cfg.get('path'),
         cfgExtension = cfg.get('extension');
 
-    exports.fadeIn = cfg.get('fadeIn');
-    exports.fadeOut = cfg.get('fadeOut');
-    exports.duration = cfg.get('duration');
-
     $el.addClass('fill').html(tpl({
         Music: lang.get('Music'),
         Close: lang.get('Close')
@@ -108,7 +104,11 @@ webvn.use(function (ui, select, media, config, storage, util, Class) {
         return exports;
     });
 
-    exports.stopPropagation().events({
+    exports.stopPropagation().properties({
+        fadeIn: cfg.get('fadeIn'),
+        fadeOut: cfg.get('fadeOut'),
+        duration: cfg.get('duration')
+    }).events({
 
         'click .close': function () {
             controller.pause();

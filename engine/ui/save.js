@@ -9,17 +9,17 @@ webvn.use(function (ui, config, util, canvas, storage, select, system) {
     var cfg = config.create('uiSave'),
         cfgSaveNum = cfg.get('saveNum');
 
-    exports.duration = cfg.get('duration');
-    exports.fadeIn = cfg.get('fadeIn');
-    exports.fadeOut = cfg.get('fadeOut');
-
     var global = storage.createLocalStore('global'),
         saves = global.get('saves') || [],
         renderer = canvas.renderer;
 
     $el.addClass('fill');
 
-    exports.stopPropagation().events({
+    exports.stopPropagation().properties({
+        duration: cfg.get('duration'),
+        fadeIn: cfg.get('fadeIn'),
+        fadeOut: cfg.get('fadeOut')
+    }).events({
 
         'click .close': function () {
             hide();

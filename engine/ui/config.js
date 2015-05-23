@@ -8,10 +8,6 @@ webvn.use(function (ui, canvas, config) {
 
     var cfg = config.create('uiConfig');
 
-    exports.fadeIn = cfg.get('fadeIn');
-    exports.fadeOut = cfg.get('fadeOut');
-    exports.duration = cfg.get('duration');
-
     $el.addClass('fill').html(tpl({
         Config: lang.get('Config'),
         Close: lang.get('Close'),
@@ -24,7 +20,11 @@ webvn.use(function (ui, canvas, config) {
 
     var renderer = canvas.renderer;
 
-    exports.stopPropagation().events({
+    exports.stopPropagation().properties({
+        fadeIn: cfg.get('fadeIn'),
+        fadeOut: cfg.get('fadeOut'),
+        duration: cfg.get('duration')
+    }).events({
 
         'click .close': function () {
             hide();

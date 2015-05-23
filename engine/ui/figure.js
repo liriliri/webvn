@@ -10,11 +10,6 @@ webvn.use(function (ui, canvas, util, config, storage) {
         cfgPath = cfg.get('path'),
         cfgExtension = cfg.get('extension');
 
-    exports.duration = cfg.get('duration');
-    exports.fadeIn = cfg.get('fadeIn');
-    exports.fadeOut = cfg.get('fadeOut');
-    exports.transition = cfg.get('transition');
-
     $el.addClass('fill');
 
     var asset = storage.createAsset(cfgPath, cfgExtension),
@@ -38,6 +33,13 @@ webvn.use(function (ui, canvas, util, config, storage) {
     save.save(function () {
         return {};
     }).load(function (value) {
+    });
+
+    exports.properties({
+        duration: cfg.get('duration'),
+        fadeIn: cfg.get('fadeIn'),
+        fadeOut: cfg.get('fadeOut'),
+        transition: cfg.get('transition')
     });
 
     exports.select = function (num) {

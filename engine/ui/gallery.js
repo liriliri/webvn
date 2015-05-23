@@ -11,10 +11,6 @@ webvn.use(function (ui, select, config, storage, canvas) {
         cfgExtension = cfg.get('extension'),
         cfgFiles = cfg.get('files');
 
-    exports.fadeIn = cfg.get('fadeIn');
-    exports.fadeOut = cfg.get('fadeOut');
-    exports.duration = cfg.get('duration');
-
     $el.addClass('fill').html(tpl({
         Gallery: lang.get('Gallery'),
         Close: lang.get('Close')
@@ -51,7 +47,11 @@ webvn.use(function (ui, select, config, storage, canvas) {
         $pagination.html(html);
     }
 
-    exports.stopPropagation().events({
+    exports.stopPropagation().properties({
+        fadeIn: cfg.get('fadeIn'),
+        fadeOut: cfg.get('fadeOut'),
+        duration: cfg.get('duration')
+    }).events({
 
         'click .close': function () {
             hide();

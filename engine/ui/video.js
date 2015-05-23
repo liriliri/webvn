@@ -9,17 +9,17 @@ webvn.use(function (ui, media, script, config, storage) {
         cfgPath = cfg.get('path'),
         cfgExtension = cfg.get('extension');
 
-    exports.clickAction = cfg.get('clickAction');
-    exports.duration = cfg.get('duration');
-    exports.fadeIn = cfg.get('fadeIn');
-    exports.fadeOut = cfg.get('fadeOut');
-
     $el.addClass('fill').html(tpl());
 
     var asset = storage.createAsset(cfgPath, cfgExtension),
         video = media.video.create($el.find('video').get(0));
 
-    exports.stopPropagation().events({
+    exports.stopPropagation().properties({
+        clickAction: cfg.get('clickAction'),
+        duration: cfg.get('duration'),
+        fadeIn: cfg.get('fadeIn'),
+        fadeOut: cfg.get('fadeOut')
+    }).events({
 
         'click video': function () {
             switch (exports.clickAction) {

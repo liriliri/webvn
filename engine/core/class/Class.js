@@ -66,7 +66,6 @@ webvn.module('Class', function (util, exports) {
         var _class = create(px, sx),
             newPx = createObj(superClass.prototype, _class);
 
-        attrs = attrs || {};
 
         var keys = util.keys(px), key;
         for (var i = 0, len = keys.length; i < len; i++) {
@@ -81,6 +80,7 @@ webvn.module('Class', function (util, exports) {
         };
 
         // Define getter and setter
+        attrs = attrs || {};
         util.each(attrs, function (val, key) {
             if (!val.get) {
                 val.get = function () {
@@ -92,11 +92,8 @@ webvn.module('Class', function (util, exports) {
                     this['_' + key] = val;
                 }
             }
-            Object.defineProperty(newPx, key, {
-                get: val.get,
-                set: val.set
-            });
         });
+        Object.defineProperties(newPx, attrs);
 
         // fn: Short name for prototype
         _class.fn = newPx;
