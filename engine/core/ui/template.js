@@ -64,6 +64,8 @@ webvn.extend('ui', function (exports, util) {
             util.each(name, function (val, key) {
                 templates[key] = template(val);
             });
+        } else if (content === undefined) {
+            return template(name);
         } else {
             templates[name] = template(content);
         }

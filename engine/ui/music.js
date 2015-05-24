@@ -12,12 +12,19 @@ webvn.use(function (ui, select, media, config, storage, util, Class) {
 
     $el.addClass('fill').html(tpl({
         Music: lang.get('Music'),
-        Close: lang.get('Close')
+        Close: lang.get('Close'),
+        Play: lang.get('Play')
     }));
 
-    var controller = Class.module(function () {
-        var exports = {};
+    var $progress = $el.find('.progress'),
+        $progressFill = $progress.find('span'),
+        $container = $el.find('.container'),
+        $playBtn = $el.find('.play'),
+        $nextBtn = $el.find('.next'),
+        $preBtn = $el.find('.previous'),
+        $all = $el.find('.container li');
 
+    var controller = Class.module(function (exports) {
         var music = media.audio.create('music');
         music.asset = storage.createAsset(cfgPath, cfgExtension);
         music.loop = true;
@@ -30,8 +37,6 @@ webvn.use(function (ui, select, media, config, storage, util, Class) {
 
         });
 
-        var $progress = $el.find('.progress'),
-        $progressFill = $progress.find('span');
         $progress.on('click', function (e) {
             if (!music.isPlaying()) {
                 return;
@@ -40,13 +45,8 @@ webvn.use(function (ui, select, media, config, storage, util, Class) {
             e = e.originalEvent;
             var x = e.offsetX / ui.scale,
                 percentage = x / $progress.width();
-            music.currentTime(music.duration * percentage);
+            music.curTime = music.duration * percentage;
         });
-
-        var $container = $el.find('.container'),
-            $playBtn = $el.find('.play'),
-            $nextBtn = $el.find('.next'),
-            $preBtn = $el.find('.previous');
 
         var files = cfg.get('files'), html = '';
         util.each(files, function (file, index) {
@@ -57,22 +57,20 @@ webvn.use(function (ui, select, media, config, storage, util, Class) {
         var curNum = -1,
             total = files.length;
 
-        var $all = $el.find('.container li');
-
         var play = exports.play = function (num) {
             if (num === undefined) {
                 if (!music.isLoaded()) {
                     return;
                 }
                 if (music.isPlaying()) {
-                    $playBtn.text('Play');
+                    $playBtn.text(lang.get('Play'));
                     music.pause();
                 } else {
-                    $playBtn.text('Pause');
+                    $playBtn.text(lang.get('Pause'));
                     music.play();
                 }
             } else {
-                $playBtn.removeClass('disabled').text('Pause');
+                $playBtn.removeClass('disabled').text(lang.get('Pause'));
                 $nextBtn.removeClass('disabled');
                 $preBtn.removeClass('disabled');
                 $all.removeClass('playing');
@@ -97,11 +95,9 @@ webvn.use(function (ui, select, media, config, storage, util, Class) {
         };
 
         exports.pause = function () {
-            $playBtn.text('play');
+            $playBtn.text(lang.get('Play'));
             music.pause();
         };
-
-        return exports;
     });
 
     exports.stopPropagation().properties({
@@ -118,8 +114,7 @@ webvn.use(function (ui, select, media, config, storage, util, Class) {
         },
 
         'click .container li': function () {
-            var $this = select.get(this);
-            controller.play($this.attr('data-num'));
+            controller.play(this.data('num'));
         },
 
         'click .play': function () {

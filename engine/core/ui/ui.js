@@ -127,12 +127,14 @@ webvn.module('ui', function (Class, select, config, util, script, exports) {
             util.each(events, function (fn, type) {
                 var parts = type.split(/\s/),
                     eventType = parts[0];
+
                 parts.shift();
                 var selector = parts.join(' ');
+
                 // No propagation
                 self.$el.on(eventType, selector, function (e) {
                     e.stopPropagation();
-                    fn.call(this, e);
+                    fn.call(select.get(this), e);
                 });
             });
 

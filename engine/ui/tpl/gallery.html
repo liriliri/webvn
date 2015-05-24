@@ -2,8 +2,14 @@
 <ul class="container">
 </ul>
 <ul class="pagination">
+    <% if (pageCount > 1) {%>
+        <% for (var i = 0; i < pageCount; i++) { %>
+            <li class="button" data-num="<%= i + 1 %>"><%= i + 1 %></li>
+        <% } %>
+    <% } %>
 </ul>
 <div class="close button"><%= Close %></div>
 <div class="viewer fill hidden">
-    <img src="" />
+    <img class="fore" src="" />
+    <img class="back" src="" />
 </div>

@@ -1,0 +1,9 @@
+<% util.each(images, function (image, idx) { %>
+<li>
+    <% if (image.collected[0]) { %>
+    <img class="th" src="<%= image.src[0] %>" data-num="<%= idx %>">
+    <% } else { %>
+    <img class="th" src="engine/img/blank.gif">
+    <% } %>
+    </li>
+<% }); %>

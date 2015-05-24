@@ -349,7 +349,7 @@ webvn.extend('select', function (exports, Class, util) {
          * @method webvn.select.Select#hide
          */
         hide: function () {
-            this.css('display', 'none');
+            return this.css('display', 'none');
         },
         /**
          * Change Select Into Array

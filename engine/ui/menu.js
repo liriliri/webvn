@@ -1,7 +1,7 @@
 /* This ui component is also served as a template.
  * Every other components should be written in the same style.
  */
-webvn.use(function (ui, script, media, util, canvas, config, storage) {
+webvn.use(function (ui, script, media, util, config, storage) {
     "use strict";
     var uiName = 'menu',
         exports = ui.create(uiName),
@@ -22,8 +22,7 @@ webvn.use(function (ui, script, media, util, canvas, config, storage) {
     }));
 
     var bgm = media.audio.get('bgm'),
-        sysAudio = media.audio.get('sys'),
-        renderer = canvas.renderer;
+        sysAudio = media.audio.get('sys');
 
     save.save(function () {
         return {};
@@ -41,8 +40,6 @@ webvn.use(function (ui, script, media, util, canvas, config, storage) {
     }).events({
 
         'click .start': function () {
-            renderer.start();
-
             if (exports.bgm) bgm.stop();
 
             if (exports.fadeOut) {
@@ -88,8 +85,6 @@ webvn.use(function (ui, script, media, util, canvas, config, storage) {
     };
 
     exports.show = function () {
-        renderer.stop();
-
         if (exports.bgm) bgm.load(exports.bgm);
 
         exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();

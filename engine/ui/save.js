@@ -9,8 +9,8 @@ webvn.use(function (ui, config, util, canvas, storage, select, system) {
     var cfg = config.create('uiSave'),
         cfgSaveNum = cfg.get('saveNum');
 
-    var global = storage.createLocalStore('global'),
-        saves = global.get('saves') || [],
+    var globalStore = storage.createLocalStore('global'),
+        saves = globalStore.get('saves') || [],
         renderer = canvas.renderer;
 
     $el.addClass('fill');
@@ -26,8 +26,7 @@ webvn.use(function (ui, config, util, canvas, storage, select, system) {
         },
 
         'click .save': function () {
-            var $this = select.get(this),
-                num = Number($this.data('num')),
+            var num = Number(this.data('num')),
                 saveName = 'save' + num;
 
             saves[num] = {
@@ -35,7 +34,7 @@ webvn.use(function (ui, config, util, canvas, storage, select, system) {
                 date: getDateTime()
             };
 
-            global.set('saves', saves);
+            globalStore.set('saves', saves);
             storage.save(saveName);
             renderSave();
         },

@@ -1,4 +1,4 @@
-webvn.use(function (ui, select, config, storage, canvas) {
+webvn.use(function (ui, select, config, storage, util) {
     "use strict";
     var uiName = 'gallery',
         exports = ui.create('gallery'),
@@ -11,40 +11,59 @@ webvn.use(function (ui, select, config, storage, canvas) {
         cfgExtension = cfg.get('extension'),
         cfgFiles = cfg.get('files');
 
+    var pageSize = 6,
+        pageCount = Math.ceil(cfgFiles.length / pageSize);
+
     $el.addClass('fill').html(tpl({
         Gallery: lang.get('Gallery'),
-        Close: lang.get('Close')
+        Close: lang.get('Close'),
+        pageCount: pageCount
     }));
 
     var $container = $el.find('.container'),
         $viewer = $el.find('.viewer'),
-        $pagination = $el.find('.pagination');
+        $viewerImgFore = $viewer.find('img.fore'),
+        $viewerImgBack = $viewer.find('img.back');
 
-    var renderer = canvas.renderer,
-        asset = storage.createAsset(cfgPath, cfgExtension),
-        pageSize = 6,
-        pageCount = Math.ceil(cfgFiles.length / pageSize);
+    var asset = storage.createAsset(cfgPath, cfgExtension),
+        globalStore = storage.createLocalStore('global'),
+        imageTpl = ui.template.get('gallery_image'),
+        curImg, curImgNum, curImgs, viewerClick = true;
 
-    function page(num) {
-        var html = '',
+    var galleryStore = globalStore.get('gallery');
+    !galleryStore && globalStore.set('gallery', {});
+
+    function renderPage(num) {
+        var images = [],
             start = (num - 1) * pageSize,
-            end = start + pageSize;
-        if (end > cfgFiles.length) {
-            end = cfgFiles.length;
-        }
-        for (; start < end; start++) {
-            html += '<li><img class="th" src="' + asset.get(cfgFiles[start]) + '"></li>';
-        }
-        $container.html(html);
-    }
-    page(1);
+            end = start + pageSize,
+            image, collected, file;
 
-    if (pageCount > 1) {
-        var html = '';
-        for (var i = 0; i < pageCount; i++) {
-            html += '<li class="button" data-num="' + (i+1) + '">' + (i+1) + '</li>';
+        galleryStore = globalStore.get('gallery');
+
+        if (end > cfgFiles.length) end = cfgFiles.length;
+
+        for (; start < end; start++) {
+            file = cfgFiles[start];
+            collected = [];
+
+            image = util.isArray(file) ? file : [file];
+            util.each(image, function (val, idx) {
+                image[idx] = asset.get(val);
+                collected[idx] = (galleryStore[start + '-' + idx] === true);
+            });
+
+            images.push({
+                src: image,
+                collected: collected
+            });
         }
-        $pagination.html(html);
+
+        $container.html(imageTpl({
+            images: images
+        }));
+
+        curImgs = images;
     }
 
     exports.stopPropagation().properties({
@@ -58,33 +77,55 @@ webvn.use(function (ui, select, config, storage, canvas) {
         },
 
         'click li img': function () {
-            var $this = select.get(this),
-                src = $this.attr('src');
-            $viewer.find('img').attr('src', src);
-            $viewer.removeClass('hidden').fadeIn(exports.duration);
+            var num = this.data('num');
+
+            if (!num) return;
+
+            curImg = curImgs[num];
+            curImgNum = 0;
+
+            $viewerImgFore.attr('src', curImg.src[0]);
+            $viewerImgBack.attr('src', curImg.src[0]);
+            $viewer.fadeIn(exports.duration);
         },
 
         'click .pagination li': function () {
-            var $this = select.get(this);
-            page(Number($this.attr('data-num')));
+            renderPage(Number(this.attr('data-num')));
         },
 
         'click .viewer': function () {
-            var $this = select.get(this);
-            $this.fadeOut(exports.duration);
+            if (!viewerClick) return;
+
+            viewerClick = false;
+            curImgNum++;
+            while (curImgNum < curImg.src.length &&
+                !curImg.collected[curImgNum]) {
+                curImgNum++;
+            }
+
+            if (curImgNum < curImg.src.length ) {
+                $viewerImgFore.hide()
+                    .attr('src', curImg.src[curImgNum])
+                    .fadeIn(exports.duration, function () {
+                        $viewerImgBack.attr('src', curImg.src[curImgNum]);
+                        viewerClick = true;
+                    });
+            } else {
+                this.fadeOut(exports.duration, function () {
+                    viewerClick = true;
+                });
+            }
         }
 
     });
 
     exports.show = function () {
-        renderer.stop();
+        renderPage(1);
 
         exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();
     };
 
     var hide = exports.hide = function () {
-        renderer.start();
-
         exports.fadeOut ? $el.fadeOut(exports.duration) : $el.hide();
     };
 });

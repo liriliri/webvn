@@ -1,7 +1,7 @@
-webvn.extend('script', function (exports, util, storage) {
+webvn.extend('script', function (exports, util, storage, log) {
     "use strict";
     var globalStore = storage.createLocalStore('global'),
-        g = globalStore.get(), s = {};
+        s = {};
 
     // Quick reference
     var playNext = exports.play;
@@ -36,7 +36,8 @@ webvn.extend('script', function (exports, util, storage) {
         (returnOrNot ? ');' : '') +'}';
 
         try {
-            var $$ = exports.$$;
+            var g = globalStore.get(),
+                $$ = exports.$$;
             eval(code);
         } catch (e) {
             log.error(e.message);

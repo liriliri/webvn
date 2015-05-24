@@ -36,6 +36,8 @@ if (g.firstPlay !== false) {
 
 *start
 
+`g.gallery['0-0'] = true; g.gallery['5-0'] = true; g.gallery['5-1'] = true; playNext();
+
 日志 '开始执行 WebVN demo'
 
 // 显示背景和人物

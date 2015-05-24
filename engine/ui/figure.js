@@ -33,38 +33,45 @@ webvn.use(function (ui, canvas, util, config, storage) {
     save.save(function () {
         return {};
     }).load(function (value) {
+
     });
 
     exports.properties({
         duration: cfg.get('duration'),
         fadeIn: cfg.get('fadeIn'),
         fadeOut: cfg.get('fadeOut'),
-        transition: cfg.get('transition')
+        transition: cfg.get('transition'),
+        select: {
+            set: function (val) {
+                curFigure = createFigure(val);
+            }
+        },
+        scaleX: {
+            set: function (val) {
+                curFigure.scaleX = val;
+            }
+        },
+        scaleY: {
+            set: function (val) {
+                curFigure.scaleY = val;
+            }
+        },
+        scale: {
+            set: function (val) {
+                curFigure.scaleX = curFigure.scaleY = value;
+            }
+        },
+        alpha: {
+            set: function (val) {
+                curFigure.alpha = val;
+            }
+        },
+        filter: {
+            set: function (val) {
+                curFigure.filter = val;
+            }
+        }
     });
-
-    exports.select = function (num) {
-        curFigure = createFigure(num);
-    };
-
-    exports.scaleX = function (value) {
-        curFigure.scaleX = value;
-    };
-
-    exports.scaleY = function (value) {
-        curFigure.scaleY = value;
-    };
-
-    exports.scale = function (value) {
-        curFigure.scaleX = curFigure.scaleY = value;
-    };
-
-    exports.alpha = function (value) {
-        curFigure.alpha = value;
-    };
-
-    exports.filter = function (value) {
-        curFigure.filter = value;
-    };
 
     exports.hideFigure = function () {
         curFigure.fadeOut(exports.duration);
@@ -82,14 +89,9 @@ webvn.use(function (ui, canvas, util, config, storage) {
     exports.show = function () {
         canvas.renderer.add(scene);
 
-        if ($el.visible()) {
-            return;
-        }
-        if (exports.fadeIn) {
-            $el.fadeIn(exports.duration);
-        } else {
-            $el.show();
-        }
+        if ($el.visible()) return;
+
+        exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();
     };
 
     exports.hide = function () {
@@ -101,7 +103,5 @@ webvn.use(function (ui, canvas, util, config, storage) {
     exports.animate = function (to) {
         curFigure.animate(to, exports.duration);
     };
-
-
 
 });
