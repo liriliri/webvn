@@ -42,7 +42,7 @@ webvn.extend('config', function (exports) {
         fadeOut: true,
         duration: 300,
         textType: 'fadeIn',
-        textDuration: 500
+        textSpeed: 0.5
     };
 
     exports.uiGallery = {

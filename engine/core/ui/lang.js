@@ -16,7 +16,7 @@ webvn.extend('ui', function (exports, util, config, Class) {
         get: function (key) {
             var val = this.val;
 
-            if (val[key]) return val[key];
+            if (val && val[key]) return val[key];
 
             return key;
         }

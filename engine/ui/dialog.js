@@ -44,10 +44,17 @@ webvn.use(function (ui, text, media, config, storage, script) {
 
     exports.properties({
         textType: cfg.get('textType'),
-        textDuration: cfg.get('textDuration'),
         duration: cfg.get('duration'),
         fadeIn: cfg.get('fadeIn'),
-        fadeOut: cfg.get('fadeOut')
+        fadeOut: cfg.get('fadeOut'),
+        textSpeed: {
+            get: function () {
+                return cfg.get('textSpeed');
+            },
+            set: function (val) {
+                cfg.set('textSpeed', val);
+            }
+        }
     }).events({
 
         'click .save': function () {
@@ -89,7 +96,7 @@ webvn.use(function (ui, text, media, config, storage, script) {
     exports.text = function (text) {
         textAnim.stopTimer();
         textAnim.type = exports.textType;
-        textAnim.duration = exports.textDuration;
+        textAnim.duration = 1000 * (1 - exports.textSpeed);
         textAnim.load(text);
         script.insertCmd('dialog -sa');
     };

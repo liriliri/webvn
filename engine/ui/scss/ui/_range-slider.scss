@@ -10,8 +10,8 @@
     outline: none;
     &::-webkit-slider-thumb {
         -webkit-appearance: none !important;
-        height: 30px;
-        width: 30px;
+        height: 20px;
+        width: 20px;
         border-radius: 50%;
         background: $blue;
     }

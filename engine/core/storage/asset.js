@@ -6,7 +6,7 @@ webvn.extend('storage', function (exports, Class, config) {
         basePath = '../';
     }
 
-    var fileExt = /(jpg|png|bmp|ogg|webm)$/;
+    var fileExt = /(jpg|png|bmp|ogg|webm|wav)$/;
 
     var Asset = exports.Asset = Class.create({
 

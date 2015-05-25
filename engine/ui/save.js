@@ -1,4 +1,4 @@
-webvn.use(function (ui, config, util, canvas, storage, select, system) {
+webvn.use(function (ui, config, util, storage, select, system) {
     "use strict";
     var uiName = 'save',
         exports = ui.create(uiName),
@@ -10,8 +10,7 @@ webvn.use(function (ui, config, util, canvas, storage, select, system) {
         cfgSaveNum = cfg.get('saveNum');
 
     var globalStore = storage.createLocalStore('global'),
-        saves = globalStore.get('saves') || [],
-        renderer = canvas.renderer;
+        saves = globalStore.get('saves') || [];
 
     $el.addClass('fill');
 
@@ -40,12 +39,11 @@ webvn.use(function (ui, config, util, canvas, storage, select, system) {
         },
 
         'click .load': function () {
-            var $this = select.get(this),
-                saveName = 'save' + $this.data('num');
+            var saveName = 'save' + this.data('num');
 
             storage.load(saveName);
 
-            exports.hide();
+            hide();
         }
 
     });
@@ -66,14 +64,6 @@ webvn.use(function (ui, config, util, canvas, storage, select, system) {
 
         return num;
     }
-
-    exports.show = function (type) {
-        renderer.stop();
-
-        type === 'save' ? renderSave() : renderLoad();
-
-        exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();
-    };
 
     function renderSave() {
         var i, records = [];
@@ -111,9 +101,13 @@ webvn.use(function (ui, config, util, canvas, storage, select, system) {
         }));
     }
 
-    var hide = exports.hide = function () {
-        renderer.start();
+    exports.show = function (type) {
+        type === 'save' ? renderSave() : renderLoad();
 
+        exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();
+    };
+
+    var hide = exports.hide = function () {
         exports.fadeOut ? $el.fadeOut(exports.duration) : $el.hide();
     };
 });

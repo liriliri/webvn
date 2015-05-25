@@ -21,8 +21,7 @@ webvn.use(function (ui, select, media, config, storage, util, Class) {
         $container = $el.find('.container'),
         $playBtn = $el.find('.play'),
         $nextBtn = $el.find('.next'),
-        $preBtn = $el.find('.previous'),
-        $all = $el.find('.container li');
+        $preBtn = $el.find('.previous');
 
     var controller = Class.module(function (exports) {
         var music = media.audio.create('music');
@@ -53,6 +52,8 @@ webvn.use(function (ui, select, media, config, storage, util, Class) {
             html += '<li class="num' + index + '" data-num="' + index + '">' + file + '</li>';
         });
         $container.html(html);
+
+        var $all = $container.find('li');
 
         var curNum = -1,
             total = files.length;

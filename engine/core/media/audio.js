@@ -113,20 +113,20 @@ webvn.extend('media', function (exports, storage, config, Class) {
 
     var cfg = config.create('media');
 
-    var cfgBgm = cfg.get('bgm');
-    var bgm = audio.create('bgm');
+    var cfgBgm = cfg.get('bgm'),
+        bgm = audio.create('bgm');
     bgm.asset = storage.createAsset(cfgBgm.path, cfgBgm.extension);
     bgm.loop = true;
     bgm.duration = 2000;
+    bgm.volume = cfgBgm.volume;
 
-    var cfgSe = cfg.get('se');
-    var se = audio.create('se');
+    var cfgSe = cfg.get('se'),
+        se = audio.create('se');
     se.asset = storage.createAsset(cfgSe.path, cfgSe.extension);
+    se.volume = cfgSe.volume;
 
-    var cfgVo = cfg.get('vo');
-    var vo = audio.create('vo');
+    var cfgVo = cfg.get('vo'),
+        vo = audio.create('vo');
     vo.asset = storage.createAsset(cfgVo.path, cfgVo.extension);
-
-    // System sound, for example: button hover effect
-    audio.create('sys');
+    vo.volume = cfgVo.volume;
 });

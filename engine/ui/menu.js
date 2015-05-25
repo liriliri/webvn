@@ -22,7 +22,7 @@ webvn.use(function (ui, script, media, util, config, storage) {
     }));
 
     var bgm = media.audio.get('bgm'),
-        sysAudio = media.audio.get('sys');
+        se = media.audio.get('se');
 
     save.save(function () {
         return {};
@@ -71,11 +71,11 @@ webvn.use(function (ui, script, media, util, config, storage) {
         },
 
         'mouseover li': function () {
-            if (exports.btnHoverSound) sysAudio.load(exports.btnHoverSound);
+            if (exports.btnHoverSound) se.load(exports.btnHoverSound);
         },
 
         'click li': function () {
-            if (exports.btnClickSound) sysAudio.load(exports.btnClickSound);
+            if (exports.btnClickSound) se.load(exports.btnClickSound);
         }
 
     });

@@ -33,15 +33,18 @@ webvn.extend('config', function (exports) {
     exports.media = {
         bgm: {
             path: 'asset/bgm/',
-            extension: 'ogg'
+            extension: 'ogg',
+            volume: 0.5
         },
         se: {
             path: 'asset/sound/',
-            extension: 'ogg'
+            extension: 'ogg',
+            volume: 0.5
         },
         vo: {
             path: 'asset/voice/',
-            extension: 'ogg'
+            extension: 'ogg',
+            volume: 0.5
         }
     };
 

@@ -1,5 +1,5 @@
 webvn.extend('script', function (exports, util, storage, log) {
-    "use strict";
+    'use strict';
     var globalStore = storage.createLocalStore('global'),
         s = {};
 

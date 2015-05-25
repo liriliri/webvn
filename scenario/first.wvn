@@ -32,11 +32,13 @@ if (g.firstPlay !== false) {
 
 标题画面 -d \
     -bhs=asset/sound/onmouse.wav \
-    -bcs=asset/sound/onclick.wav
+    -bcs=asset/sound/onclick.wav \
+    -bgm=bgm1
 
 *start
 
 `g.gallery['0-0'] = true; g.gallery['5-0'] = true; g.gallery['5-1'] = true; playNext();
+`var hhh = 'cool'; playNext();
 
 日志 '开始执行 WebVN demo'
 

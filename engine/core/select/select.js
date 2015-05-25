@@ -293,6 +293,16 @@ webvn.extend('select', function (exports, Class, util) {
             return this.attr(name, value);
         },
 
+        val: function (val) {
+            if (val === undefined) {
+                return this[0] && this[0].value;
+            }
+
+            return this.each(function () {
+                this.value = val;
+            });
+        },
+
         removeAttr: function (name) {
             return this.each(function () {
                 if (this.nodeType === 1) {

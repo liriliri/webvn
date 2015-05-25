@@ -1,4 +1,4 @@
-webvn.use(function (ui, canvas, config) {
+webvn.use(function (ui, config, media) {
     "use strict";
     var uiName = 'config',
         exports = ui.create(uiName),
@@ -18,7 +18,14 @@ webvn.use(function (ui, canvas, config) {
         Voice: lang.get('Voice')
     }));
 
-    var renderer = canvas.renderer;
+    var audio = media.audio,
+        bgm = audio.get('bgm'),
+        se = audio.get('se'),
+        vo = audio.get('vo');
+
+    $el.find('.music').val(bgm.volume);
+    $el.find('.sound').val(se.volume);
+    $el.find('.voice').val(vo.volume);
 
     exports.stopPropagation().properties({
         fadeIn: cfg.get('fadeIn'),
@@ -28,19 +35,34 @@ webvn.use(function (ui, canvas, config) {
 
         'click .close': function () {
             hide();
+        },
+
+        'change .text-speed': function () {
+            ui.get('dialog').textSpeed = this.val();
+        },
+
+        'change .music': function () {
+            var val = this.val();
+            bgm.volume = val;
+        },
+
+        'change .sound': function () {
+            var val = this.val();
+            se.volume = val;
+        },
+
+        'change .voice': function () {
+            var val = this.val();
+            vo.volume = val;
         }
 
     });
 
     exports.show = function () {
-        renderer.stop();
-
         exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();
     };
 
     var hide = exports.hide = function () {
-        renderer.start();
-
         exports.fadeOut ? $el.fadeOut(exports.duration) : $el.hide();
     };
 
