@@ -10,55 +10,55 @@ webvn.use(function (script, ui) {
         options: {
             display: {
                 type: 'Boolean',
-                shortHand: 'd'
+                short: 'd'
             },
             style: {
                 type: 'String',
-                shortHand: 's'
+                short: 's'
             },
             face: {
                 type: 'String',
-                shortHand: 'f'
+                short: 'f'
             },
             duration: {
                 type: 'Number',
-                shortHand: 'du'
+                short: 'du'
             },
             fadeIn: {
                 type: 'Boolean',
-                shortHand: 'fi'
+                short: 'fi'
             },
             fadeOut: {
                 type: 'Boolean',
-                shortHand: 'fo'
+                short: 'fo'
             },
             name: {
                 type: 'String',
-                shortHand: 'n'
+                short: 'n'
             },
             text: {
                 type: 'String',
-                shortHand: 't'
+                short: 't'
             },
             textDuration: {
                 type: 'Number',
-                shortHand: 'td'
+                short: 'td'
             },
             textType: {
                 type: 'String',
-                shortHand: 'tt'
+                short: 'tt'
             },
             voice: {
                 type: 'String',
-                shortHand: 'v'
+                short: 'v'
             },
             stopAnimation: {
                 type: 'boolean',
-                shortHand: 'sa'
+                short: 'sa'
             },
             playNext: {
                 type: 'Boolean',
-                shortHand: 'pn'
+                short: 'pn'
             }
         },
 

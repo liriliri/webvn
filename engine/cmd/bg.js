@@ -15,68 +15,68 @@ webvn.use(function (script, ui) {
         options: {
             fadeIn: {
                 type: 'Boolean',
-                shortHand: 'fi'
+                short: 'fi'
             },
             fadeOut: {
                 type: 'Boolean',
-                shortHand: 'fo'
+                short: 'fo'
             },
             filter: {
                 type: 'Json',
-                shortHand: 'f'
+                short: 'f'
             },
             position: {
                 type: 'String',
-                shortHand: 'pos'
+                short: 'pos'
             },
             x: {
                 type: 'Number',
-                shortHand: 'x'
+                short: 'x'
             },
             y: {
                 type: 'Number',
-                shortHand: 'y'
+                short: 'y'
             },
             animate: {
                 type: 'Json',
-                shortHand: 'a'
+                short: 'a'
             },
             scaleX: {
                 type: 'Number',
-                shortHand: 'sx'
+                short: 'sx'
             },
             scaleY: {
                 type: 'Number',
-                shortHand: 'sy'
+                short: 'sy'
             },
             scale: {
                 type: 'Number',
-                shortHand: 'sc'
+                short: 'sc'
             },
             display: {
                 type: 'Boolean',
-                shortHand: 'd'
+                short: 'd'
             },
             duration: {
                 type: 'Number',
-                shortHand: 'du'
+                short: 'du'
             },
             transition: {
                 type: 'String',
-                shortHand: 't'
+                short: 't'
             },
             src: {
                 type: 'String',
-                shortHand: 's'
+                short: 's'
             },
             playNext: {
                 type: 'Boolean',
-                shortHand: 'pn',
+                short: 'pn',
                 defaultValue: true
             },
             waitTransition: {
                 type: 'Boolean',
-                shortHand: 'wt'
+                short: 'wt'
             }
         },
 

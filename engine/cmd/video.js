@@ -22,31 +22,31 @@ webvn.use(function (script, ui) {
         options: {
             display: {
                 type: 'Boolean',
-                shortHand: 'd'
+                short: 'd'
             },
             fadeIn: {
                 type: 'String',
-                shortHand: 'fi'
+                short: 'fi'
             },
             fadeOut: {
                 type: 'String',
-                shortHand: 'fo'
+                short: 'fo'
             },
             duration: {
                 type: 'Number',
-                shortHand: 'du'
+                short: 'du'
             },
             click: {
                 type: 'String',
-                shortHand: 'c'
+                short: 'c'
             },
             play: {
                 type: 'Boolean',
-                shortHand: 'p'
+                short: 'p'
             },
             src: {
                 type: 'String',
-                shortHand: 's'
+                short: 's'
             }
         },
 

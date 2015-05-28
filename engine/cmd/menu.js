@@ -17,35 +17,35 @@ webvn.use(function (script, ui) {
         options: {
             'bgm': {
                 type: 'String',
-                shortHand: 'bgm'
+                short: 'bgm'
             },
             'btn': {
                 type: 'Json',
-                shortHand: 'btn'
+                short: 'btn'
             },
             'btnHoverSound': {
                 type: 'String',
-                shortHand: 'bhs'
+                short: 'bhs'
             },
             'btnClickSound': {
                 type: 'String',
-                shortHand: 'bcs'
+                short: 'bcs'
             },
             'display': {
                 type: 'Boolean',
-                shortHand: 'd'
+                short: 'd'
             },
             'duration': {
                 type: 'Number',
-                shortHand: 'du'
+                short: 'du'
             },
             'fadeIn': {
                 type: 'Boolean',
-                shortHand: 'fi'
+                short: 'fi'
             },
             'fadeOut': {
                 type: 'Boolean',
-                shortHand: 'fo'
+                short: 'fo'
             }
         },
         orders: [

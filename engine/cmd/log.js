@@ -11,15 +11,15 @@ webvn.use(function (script, log) {
         options: {
             type: {
                 type: 'String',
-                shortHand: 't'
+                short: 't'
             },
             message: {
                 type: 'String',
-                shortHand: 'm'
+                short: 'm'
             },
             playNext: {
                 type: 'Boolean',
-                shortHand: 'pn',
+                short: 'pn',
                 defaultValue: true
             }
         },

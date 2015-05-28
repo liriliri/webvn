@@ -11,15 +11,15 @@ webvn.use(function (script, log, system) {
         options: {
             name: {
                 type: 'String',
-                shortHand: 'n'
+                short: 'n'
             },
             value: {
                 type: 'String',
-                shortHand: 'v'
+                short: 'v'
             },
             playNext: {
                 type: 'Boolean',
-                shortHand: 'pn',
+                short: 'pn',
                 defaultValue: true
             }
         },
@@ -39,6 +39,45 @@ webvn.use(function (script, log, system) {
 
     });
 
+    var define = script.define;
+
+    script.createCommand({
+
+        constructor: function () {
+            this.callSuper('define')
+        },
+
+        options: {
+            name: {
+                type: 'string',
+                short: 'n'
+            },
+            value: {
+                type: 'String',
+                short: 'v'
+            },
+            playNext: {
+                type: 'Boolean',
+                short: 'pn',
+                defaultValue: true
+            }
+        },
+
+        orders: [
+            'name',
+            'playNext'
+        ],
+
+        name: function (value, values) {
+            if (values.value) {
+                define.create(value, values.value);
+            } else {
+                log.warn('Define value must be set');
+            }
+        }
+
+    });
+
     script.createCommand({
 
         constructor: function ScriptCommand() {
@@ -48,7 +87,7 @@ webvn.use(function (script, log, system) {
         options: {
             jump: {
                 type: 'String',
-                shortHand: 'j'
+                short: 'j'
             }
         },
 
@@ -71,11 +110,11 @@ webvn.use(function (script, log, system) {
         options: {
             title: {
                 type: 'String',
-                shortHand: 't'
+                short: 't'
             },
             playNext: {
                 type: 'Boolean',
-                shortHand: 'pn',
+                short: 'pn',
                 defaultValue: true
             }
         },

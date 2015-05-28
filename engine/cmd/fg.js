@@ -10,75 +10,75 @@ webvn.use(function (script, ui) {
         options: {
             filter: {
                 type: 'Json',
-                shortHand: 'f'
+                short: 'f'
             },
             hide: {
                 type: 'Boolean',
-                shortHand: 'h'
+                short: 'h'
             },
             scaleX: {
                 type: 'Number',
-                shortHand: 'sx'
+                short: 'sx'
             },
             scaleY: {
                 type: 'Number',
-                shortHand: 'sy'
+                short: 'sy'
             },
             scale: {
                 type: 'Number',
-                shortHand: 'sc'
+                short: 'sc'
             },
             fadeIn: {
                 type: 'Boolean',
-                shortHand: 'fi'
+                short: 'fi'
             },
             fadeOut: {
                 type: 'Boolean',
-                shortHand: 'fo'
+                short: 'fo'
             },
             display: {
                 type: 'Boolean',
-                shortHand: 'd'
+                short: 'd'
             },
             alpha: {
                 type: 'Number',
-                shortHand: 'al'
+                short: 'al'
             },
             duration: {
                 type: 'Number',
-                shortHand: 'du'
+                short: 'du'
             },
             select: {
                 type: 'Number',
-                shortHand: 'sel'
+                short: 'sel'
             },
             transition: {
                 type: 'String',
-                shortHand: 't'
+                short: 't'
             },
             src: {
                 type: 'String',
-                shortHand: 's'
+                short: 's'
             },
             x: {
                 type: 'Number',
-                shortHand: 'x'
+                short: 'x'
             },
             y: {
                 type: 'Number',
-                shortHand: 'y'
+                short: 'y'
             },
             position: {
                 type: 'String',
-                shortHand: 'pos'
+                short: 'pos'
             },
             animate: {
                 type: 'Json',
-                shortHand: 'a'
+                short: 'a'
             },
             playNext: {
                 type: 'Boolean',
-                shortHand: 'pn',
+                short: 'pn',
                 defaultValue: true
             }
         },

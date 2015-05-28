@@ -28,6 +28,10 @@ function setAlias(name, value) {
     alias -n={{name}} -v={{value}}
 }
 
+function setDefine(name, value) {
+    define -n={{name}} -v={{value}}
+}
+
 function title(name) {
     system -t={{name}}
 }

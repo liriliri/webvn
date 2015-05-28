@@ -29,7 +29,7 @@ webvn.extend('script', function (exports, Class, util) {
             var shortHands = {},
                 defaults = {};
             util.each(this.options, function (value, key) {
-                value.shortHand && (shortHands[value.shortHand] = key);
+                value.short && (shortHands[value.short] = key);
                 value.defaultValue && (defaults[key] = value.defaultValue);
             });
             this.shortHands = shortHands;

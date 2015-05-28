@@ -173,27 +173,45 @@ webvn.module('script', function (config, parser, parserNode, util, loader, lexer
 
     };
 
-    var alias = exports.alias = Class.module(function () {
-        var exports = {};
-
-        var container = {};
+    var alias = exports.alias = Class.module(function (exports) {
+        var aliases = {};
 
         exports.create = function (name, value) {
-            container[name] = value;
+            aliases[name] = value;
         };
 
         var commandRegex = /^[^\s]+/;
 
         exports.parse = function (str) {
             var command = commandRegex.exec(str)[0];
-            if (container[command]) {
-                return str.replace(commandRegex, container[command]);
-            }
+            if (aliases[command]) return str.replace(commandRegex, aliases[command]);
+
+            return str;
+        };
+    });
+
+    var define = exports.define = Class.module(function (exports) {
+        var defines = {};
+
+        exports.create = function (name, value) {
+            defines[name] = value;
+        };
+
+        exports.parse = function (str) {
+            util.each(defines, function (val, key) {
+                str = str.replace(reg(key), val);
+            });
 
             return str;
         };
 
-        return exports;
+        var regExp = {};
+
+        function reg(str) {
+            if (!regExp[str]) regExp[str] = new RegExp(str, 'g');
+
+            return regExp[str];
+        }
     });
 
     var functions = Class.module(function () {
@@ -239,8 +257,11 @@ webvn.module('script', function (config, parser, parserNode, util, loader, lexer
 
         log.info('Command: ' + commandText + ' ' + lineNum);
 
-        // Before parse command, do the alias replacement first.
+        // Do alias replacement.
         commandText = alias.parse(commandText);
+
+        // Do define replacement.
+        commandText = define.parse(commandText);
 
         command = exports.parseCommand(commandText);
         var name = command.name,

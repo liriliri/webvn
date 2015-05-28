@@ -10,39 +10,39 @@ webvn.use(function (script, media) {
         options: {
             duration: {
                 type: 'number',
-                shortHand: 'du'
+                short: 'du'
             },
             fadeIn: {
                 type: 'boolean',
-                shortHand: 'fi'
+                short: 'fi'
             },
             fadeOut: {
                 type: 'boolean',
-                shortHand: 'fo'
+                short: 'fo'
             },
             loop: {
                 type: 'boolean',
-                shortHand: 'l'
+                short: 'l'
             },
             play: {
                 type: 'boolean',
-                shortHand: 'p'
+                short: 'p'
             },
             src: {
                 type: 'string',
-                shortHand: 's'
+                short: 's'
             },
             stop: {
                 type: 'boolean',
-                shortHand: 'st'
+                short: 'st'
             },
             volume: {
                 type: 'number',
-                shortHand: 'v'
+                short: 'v'
             },
             playNext: {
                 type: 'boolean',
-                shortHand: 'pn',
+                short: 'pn',
                 defaultValue: true
             }
         },
@@ -108,11 +108,11 @@ webvn.use(function (script, media) {
         options: {
             loop: {
                 type: 'Boolean',
-                shortHand: 'l'
+                short: 'l'
             },
             src: {
                 type: 'String',
-                shortHand: 's'
+                short: 's'
             }
         },
 
@@ -151,11 +151,11 @@ webvn.use(function (script, media) {
         options: {
             loop: {
                 type: 'Boolean',
-                shortHand: 'l'
+                short: 'l'
             },
             src: {
                 type: 'String',
-                shortHand: 's'
+                short: 's'
             }
         },
 

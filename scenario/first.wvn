@@ -10,8 +10,13 @@ setAlias 别名 setAlias
 别名 标题画面 menu
 别名 标题 title
 别名 跳转 jump
+别名 宏 setDefine
+宏 背景乐： bgm=
+宏 线性模糊效果 linearBlur
+宏 波纹过渡效果 ripple
+宏 客厅背景 living_room
+宏 回廊背景 corridor
 
-// 宏
 function 温蒂(text) {
     对话 -d -n='温蒂' -t={{text}}
 }
@@ -33,7 +38,7 @@ if (g.firstPlay !== false) {
 标题画面 -d \
     -bhs=asset/sound/onmouse.wav \
     -bcs=asset/sound/onclick.wav \
-    -bgm=bgm1
+    -背景乐：bgm1
 
 *start
 
@@ -43,7 +48,7 @@ if (g.firstPlay !== false) {
 日志 '开始执行 WebVN demo'
 
 // 显示背景和人物
-背景 -d -src=corridor
+背景 -d -src=客厅背景
 立绘 -d -src=wendy_normal -pos=bottomCenter
 
 // 播放背景乐
@@ -69,8 +74,8 @@ WebVN可以在游戏中对图片的亮度、对比度进行调节，比如背景
 背景 -f='{"name":"contrast", "value":1.2}' -pn=false
 背景 -f=null
 WebVN内置了超过二十种的图片过渡效果，比如线性模糊，水波。
-背景 -t=linearBlur -s=living_room -du=2000 -pn=false
-背景 -t=ripple -s=corridor -pn=false -wt
+背景 -t=线性模糊效果 -s=living_room -du=2000 -pn=false
+背景 -t=波纹过渡效果 -s=corridor -pn=false -wt
 这些效果是通过webgl shader实现的。如果需要扩展过渡方法，你可以自行编写shader来实现。
 此外，传统的利用遮罩图片来实现过渡效果的方法也是支持的，比如下面这个。
 背景 -t=lumaWipe -s=living_room -pn=false -wt
