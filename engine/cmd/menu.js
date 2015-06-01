@@ -6,7 +6,7 @@ webvn.use(function (script, ui) {
      * @class webvn.cmd.MenuCommand
      * @extends webvn.script.Command
      */
-    var Command = script.Command.extend({
+    script.command.create({
         constructor: function MenuCommand() {
             this.callSuper('menu');
         },
@@ -95,5 +95,4 @@ webvn.use(function (script, ui) {
             }
         }
     });
-    new Command;
 });

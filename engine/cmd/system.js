@@ -2,7 +2,7 @@ webvn.use(function (script, log, system) {
 
     var alias = script.alias;
 
-    script.createCommand({
+    script.command.create({
 
         constructor: function AliasCommand() {
             this.callSuper('alias');
@@ -20,7 +20,7 @@ webvn.use(function (script, log, system) {
             playNext: {
                 type: 'Boolean',
                 short: 'pn',
-                defaultValue: true
+                default: true
             }
         },
 
@@ -41,7 +41,7 @@ webvn.use(function (script, log, system) {
 
     var define = script.define;
 
-    script.createCommand({
+    script.command.create({
 
         constructor: function () {
             this.callSuper('define')
@@ -59,7 +59,7 @@ webvn.use(function (script, log, system) {
             playNext: {
                 type: 'Boolean',
                 short: 'pn',
-                defaultValue: true
+                default: true
             }
         },
 
@@ -78,7 +78,7 @@ webvn.use(function (script, log, system) {
 
     });
 
-    script.createCommand({
+    script.command.create({
 
         constructor: function ScriptCommand() {
             this.callSuper('script');
@@ -101,7 +101,7 @@ webvn.use(function (script, log, system) {
 
     });
 
-    script.createCommand({
+    script.command.create({
 
         constructor: function SystemCommand() {
             this.callSuper('system');
@@ -115,7 +115,7 @@ webvn.use(function (script, log, system) {
             playNext: {
                 type: 'Boolean',
                 short: 'pn',
-                defaultValue: true
+                default: true
             }
         },
 

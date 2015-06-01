@@ -1,8 +1,7 @@
 webvn.use(function (script, log) {
-
     var type = 'info';
 
-    script.createCommand({
+    script.command.create({
 
         constructor: function FigureCommand() {
             this.callSuper('log');
@@ -20,7 +19,7 @@ webvn.use(function (script, log) {
             playNext: {
                 type: 'Boolean',
                 short: 'pn',
-                defaultValue: true
+                default: true
             }
         },
 

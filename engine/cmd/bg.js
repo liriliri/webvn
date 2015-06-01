@@ -6,7 +6,7 @@ webvn.use(function (script, ui) {
      * @class webvn.cmd.BgCommand
      * @extends webvn.script.Command
      */
-    script.createCommand({
+    script.command.create({
 
         constructor: function BgCommand() {
             this.callSuper('bg');
@@ -72,7 +72,7 @@ webvn.use(function (script, ui) {
             playNext: {
                 type: 'Boolean',
                 short: 'pn',
-                defaultValue: true
+                default: true
             },
             waitTransition: {
                 type: 'Boolean',

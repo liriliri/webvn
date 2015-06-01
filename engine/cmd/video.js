@@ -6,7 +6,7 @@ webvn.use(function (script, ui) {
      * @class webvn.cmd.VideoCommand
      * @extends webvn.script.Command
      */
-    script.createCommand({
+    script.command.create({
 
         constructor: function VideoCommand() {
             this.callSuper('video');

@@ -1,72 +1,34 @@
-webvn.extend('script', function (exports, Class, util) {
+webvn.extend('script', function (exports, Class, log, util) {
     "use strict";
-    var commands = {};
+    var Command = Class.create({
 
-    exports.getCommand = function (name) {
-        return commands[name];
-    };
-
-    exports.createCommand = function (px) {
-        new (Command.extend(px));
-    };
-
-    /**
-     * Command Class <br>
-     * Every command that is used should be created using this class.
-     * otherwise, the command may not be executed properly by the script interpreter.
-     * @class webvn.script.Command
-     * @param {string} name command name
-     */
-    var Command = exports.Command = Class.create({
         constructor: function Command(name) {
-            // Add to commands first
-            if (commands[name]) {
-                log.warn('The command ' + name + ' is overwritten');
-            }
+            // Add to commands
+            if (commands[name]) log.warn('Command ' + name + ' is overwritten');
             commands[name] = this;
 
-            // Init shortHands and defaults
-            var shortHands = {},
+            // Init ShortHands and defaults
+            var shorts = {},
                 defaults = {};
-            util.each(this.options, function (value, key) {
-                value.short && (shortHands[value.short] = key);
-                value.defaultValue && (defaults[key] = value.defaultValue);
+            util.each(this.options, function (val, key) {
+                val.short && (shorts[val.short] = key);
+                val.default && (defaults[key] = val.default);
             });
-            this.shortHands = shortHands;
+
+            this.shorts = shorts;
             this.defaults = defaults;
         },
 
-        shortHands: {},
-        options: {},
-        orders: [],
-
-        playNext: function (value) {
-            value && exports.play();
-        },
-
-        /**
-         * Execute command with given options.
-         * @method webvn.script.Command#exec
-         * @param {object} values
-         */
         execute: function (values) {
-            values = this.parseOptions(values);
+            values = this.parseOpts(values);
             values = this.evalValue(values);
             this.execution(values);
         },
 
-        /**
-         * Call functions according to option values.
-         * If you like, you can re-implement it.
-         * @method webvn.script.Command#execution
-         * @param {object} values values parsed from scripts
-         */
         execution: function (values) {
             var orders = this.orders,
                 defaults = this.defaults,
                 value, order, def;
-
-            this.beforeExec(values);
 
             for (var i = 0, len = orders.length; i < len; i++) {
                 order = orders[i];
@@ -74,7 +36,7 @@ webvn.extend('script', function (exports, Class, util) {
                 def = defaults[order];
 
                 if (!util.isFunction(this[order])) {
-                     continue;
+                    continue;
                 }
 
                 if (value !== undefined) {
@@ -83,13 +45,40 @@ webvn.extend('script', function (exports, Class, util) {
                     this[order](def, values);
                 }
             }
-
-            this.afterExec(values);
         },
 
-        beforeExec: function (values) {},
+        parseOpts: function (values) {
+            var ret = {},
+                i, len, keys, key, option,
+                options = this.options,
+                shorts = this.shorts;
 
-        afterExec: function (values) {},
+            util.each(values, function (val, key) {
+                if (util.startsWith(key, '--')) {
+                    key = key.substr(2);
+                    ret[key] = val;
+                } else {
+                    key = key.substr(1);
+                    if (shorts[key]) {
+                        ret[shorts[key]] = val;
+                    } else {
+                        for (i = 0, len = key.length; i < len; i++) {
+                            if (shorts[key[i]]) ret[shorts[key[i]]] = val;
+                        }
+                    }
+                }
+            });
+
+            // Parse values
+            keys = util.keys(ret);
+            for (i = 0, len = keys.length; i < len; i++) {
+                key = keys[i];
+                option = options[key];
+                if (option) ret[key] = parseVal(option.type, ret[key]);
+            }
+
+            return ret;
+        },
 
         evalValue: function (values) {
             var ret = {};
@@ -105,181 +94,92 @@ webvn.extend('script', function (exports, Class, util) {
             return ret;
         },
 
-        /**
-         * Parse options for final usage in execution function.
-         * @param values
-         * @returns {object}
-         */
-        parseOptions: function (values) {
-            var ret = {},
-                self = this,
-                shortHands = this.shortHands;
-            util.each(values, function (value, key) {
-                var keys = [], opt;
-                if (util.startsWith(key, '--')) {
-                    key = key.substr(2, key.length - 2);
-                    ret[key] = value;
-                    keys.push(key);
-                } else {
-                    key = key.substr(1, key.length - 1);
-                    if (shortHands[key]) {
-                        ret[shortHands[key]] = value;
-                        keys.push(shortHands[key]);
-                    } else {
-                        for (var i = 0, len = key.length; i < len; i++) {
-                            var k = shortHands[key[i]];
-                            if (k) {
-                                ret[k] = value;
-                            }
-                            keys.push(k);
-                        }
-                    }
-                }
-                // Get rid of illegal options and parse values
-                for (i = 0, len = keys.length; i < len; i++) {
-                    key = keys[i];
-                    opt = self.options[key];
-                    if (opt) {
-                        ret[key] = self.parseValue(opt.type, ret[key]);
-                    } else {
-                        delete ret[key];
-                    }
-                }
-            });
-            return ret;
-        },
+        options: {},
+        orders: [],
 
-        /**
-         * Parse option value into specific type
-         * @method webvn.script.Command#parseValue
-         * @param {string} type String, Boolean...
-         * @param {string} value value to be parsed
-         * @returns {*}
-         */
-        parseValue: function (type, value) {
-            // Support null assignment
-            switch (value) {
-                case 'null':
-                    return null;
-            }
-
-            // LowerCase the type, so that you can write either 'String' or 'string'
-            type = type.toLowerCase();
-            switch (type) {
-                case 'string':
-                    return String(value);
-                case 'boolean':
-                    return !(value === 'false' || value === '0');
-                case 'number':
-                    return Number(value);
-                case 'json':
-                    return JSON.parse(value);
-                default:
-                    return value;
-            }
+        playNext: function (value) {
+            value && exports.play();
         }
 
     });
 
-    exports.parseCommand = function (text) {
-
-        /* Break the command into different parts by space
-         * The space inside quotes is ignored.
-         */
-        var parts = [],
-            sq = "'",
-            dq = '"',
-            insideSq = false,
-            insideDq = false,
-            word = '',
-            lastC = '';
-        for (var i = 0, len = text.length; i < len; i++, lastC = c) {
-            var c = text[i];
-            if (i === len - 1) {
-                if (c !== sq && c !== dq) {
-                    word += c;
-                }
-                parts.push(word);
-            }
-            switch (c) {
-                case ' ':
-                    if (lastC !== ' ') {
-                        if (insideDq || insideSq) {
-                            word += c;
-                            continue;
-                        } else {
-                            parts.push(word);
-                            word = '';
-                        }
-                    }
-                    continue;
-                case sq:
-                    if (insideSq) {
-                        insideSq = false;
-                    } else {
-                        if (!insideDq) {
-                            insideSq = true;
-                        } else {
-                            word += c;
-                        }
-                    }
-                    continue;
-                case dq:
-                    if (insideDq) {
-                        insideDq = false;
-                    } else {
-                        if (!insideSq) {
-                            insideDq = true;
-                        } else {
-                            word += c;
-                        }
-                    }
-                    continue;
-            }
-            word += c;
+    function parseVal(type, val) {
+        // Support null assignment
+        switch (val) {
+            case 'null':
+                return null;
         }
 
-        var options = {},
-            ret = {},
-            values = [];
+        // LowerCase the type, so that you can write either 'String' or 'string'
+        type = type.toLowerCase();
+        switch (type) {
+            case 'string':
+                return String(val);
+            case 'boolean':
+                return !(val === 'false' || val === '0');
+            case 'number':
+                return Number(val);
+            case 'json':
+                return JSON.parse(val);
+            default:
+                return val;
+        }
+    }
+
+    function parseCmd(cmdText) {
+        var ret = {},
+            options = {},
+            option,
+            values = [],
+            parts = cmdText.match(regSplit);
+
         ret.name = parts.shift();
-        for (i = 0, len = parts.length; i < len; i++) {
-            var part = parts[i];
-            if (util.startsWith(part, '-')) {
-                var opt = parseOption(part);
-                options[opt.name] = opt.value;
-                continue;
+
+        util.each(parts, function (val) {
+            if (val[0] === '-') {
+                option = parseOpt(val);
+                options[option[0]] = option[1];
+                return;
             }
-            values.push(part);
-        }
+            values.push(val);
+        });
+
         ret.options = options;
         ret.values = values;
 
         return ret;
+    }
+    var regSplit = /(?:[^\s"]+|"[^"]*")+/g;
 
-    };
-
-    /* Change --t=none
-     * into {name:'--t', value:'none'}
-     */
-    function parseOption(text) {
-
-        var ret = {},
+    function parseOpt(text) {
+        var ret = [],
             equalPos = text.indexOf('=');
 
-        /* If the option has value, set it to the value
-         * Otherwise, just set it to true
-         */
         if (equalPos > -1) {
-            ret.name = text.substr(0, equalPos);
-            ret.value = text.substr(equalPos + 1, text.length - equalPos - 1);
+            ret.push(text.substr(0, equalPos));
+            ret.push(text.substr(equalPos + 1));
         } else {
-            ret.name = text;
-            ret.value = true;
+            ret.push(text);
+            ret.push(true);
         }
 
         return ret;
-
     }
 
+    var commands = {};
+
+    function get(name) {
+        return commands[name];
+    }
+
+    function create(px) {
+        new (Command.extend(px));
+    }
+
+    exports.command = {
+        parse: parseCmd,
+        create: create,
+        get: get,
+        Command: Command
+    };
 });

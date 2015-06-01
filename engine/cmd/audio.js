@@ -1,7 +1,7 @@
 webvn.use(function (script, media) {
     var bgm = media.audio.get('bgm');
 
-    script.createCommand({
+    script.command.create({
 
         constructor: function BgmCommand() {
             this.callSuper('bgm');
@@ -43,7 +43,7 @@ webvn.use(function (script, media) {
             playNext: {
                 type: 'boolean',
                 short: 'pn',
-                defaultValue: true
+                default: true
             }
         },
 
@@ -94,7 +94,7 @@ webvn.use(function (script, media) {
      * @extends webvn.script.Command
      */
     var se = media.audio.get('se');
-    script.createCommand({
+    script.command.create({
 
         constructor: function SeCommand() {
             this.callSuper('se');
@@ -137,7 +137,7 @@ webvn.use(function (script, media) {
      * @class webvn.cmd.VoiceCommand
      * @extends webvn.script.Command
      */
-    script.createCommand({
+    script.command.create({
 
         constructor: function VoiceCommand() {
             this.callSuper('voice');

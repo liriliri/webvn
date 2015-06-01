@@ -1,7 +1,7 @@
 webvn.use(function (script, ui) {
     var figure = ui.get('figure');
 
-    script.createCommand({
+    script.command.create({
 
         constructor: function FigureCommand() {
             this.callSuper('fg');
@@ -79,7 +79,7 @@ webvn.use(function (script, ui) {
             playNext: {
                 type: 'Boolean',
                 short: 'pn',
-                defaultValue: true
+                default: true
             }
         },
 
