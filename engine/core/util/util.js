@@ -1,5 +1,19 @@
-webvn.module('util', function (exports) {
+/**
+ * @module util
+ */
+/**
+ * @class util
+ * @static
+ * @constructor
+ */
+WebVN.module('util', function (exports) {
     "use strict";
+
+    /**
+     * @method each
+     * @param obj
+     * @param fn
+     */
     exports.each = function (obj, fn) {
         var keys, i = 0, len = obj.length;
 
@@ -17,6 +31,10 @@ webvn.module('util', function (exports) {
         }
     };
 
+    /**
+     * @method uid
+     * @return {String}
+     */
     exports.uid = function (prefix) {
         return (prefix || '') + uid++;
     };

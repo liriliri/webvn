@@ -1,6 +1,5 @@
-webvn.extend('select', function (exports, Class, util) {
-    "use strict";
-
+webvn.extend('select', function (exports, Class, util)
+{
     var selectUtil = exports.util;
 
     /**

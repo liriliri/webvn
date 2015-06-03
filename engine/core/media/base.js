@@ -1,4 +1,8 @@
-webvn.module('media', function (Class, log, util, anim, config, storage, exports) {
+/**
+ * @module media
+ */
+WebVN.module('media', function (exports, Class, log, util, anim, config, storage)
+{
     // Const variables
     var STATE = exports.STATE = {
         NOT_LOADED: 0,
@@ -6,21 +10,29 @@ webvn.module('media', function (Class, log, util, anim, config, storage, exports
         PLAY: 2
     };
 
+    /**
+     * @class Base
+     */
     var Base = exports.Base = Class.create({
+
+        /**
+         * @constructor
+         */
         constructor: function Base() {
             this.state = STATE.NOT_LOADED;
             this.el = null;
         },
 
+        /**
+         * @method isLoaded
+         * @return {Boolean}
+         */
         isLoaded: function () {
             return this.state !== STATE.NOT_LOADED;
         },
 
         /**
-         * Load media and play(optional)
-         * @method webvn.media.Base#load
-         * @param {string} src source of media
-         * @param {boolean=} [autoPlay=true] play media after loading
+         * @method load
          */
         load: function (src, autoPlay) {
             if (autoPlay === undefined) {
@@ -46,8 +58,7 @@ webvn.module('media', function (Class, log, util, anim, config, storage, exports
         },
 
         /**
-         * Pause media
-         * @method webvn.media.Base#pause
+         * @method pause
          */
         pause: function () {
             if (this.state === STATE.PLAY) {
@@ -57,8 +68,7 @@ webvn.module('media', function (Class, log, util, anim, config, storage, exports
         },
 
         /**
-         * Play media
-         * @method webvn.media.Base#play
+         * @method play
          */
         play: function () {
             if (this.state === STATE.PAUSE) {
@@ -67,17 +77,19 @@ webvn.module('media', function (Class, log, util, anim, config, storage, exports
             }
         },
 
+        /**
+         * @method isPlaying
+         */
         isPlaying: function () {
-            "use strict";
             return this.state === STATE.PLAY;
         },
 
         /**
-         * Stop media
-         * @method webvn.media.Base#stop
+         * @method stop
          */
         stop: function () {
-            if (this.state !== STATE.NOT_LOADED) {
+            if (this.state !== STATE.NOT_LOADED)
+            {
                 this.curTime = 0;
                 this.pause();
                 this.state = STATE.PAUSE;
@@ -85,18 +97,18 @@ webvn.module('media', function (Class, log, util, anim, config, storage, exports
         },
 
         /**
-         * Set events of media
-         * @method webvn.media.Base#event
-         * @param {object} events events such as onload, onended
+         * @method events
          */
         events: function (events) {
             var self = this;
+
             util.each(events, function (fn, type) {
                 self.el['on' + type] = fn;
             });
         }
 
     }, {
+
         loop: {
             get: function () {
                 return this.el.loop;
@@ -105,14 +117,18 @@ webvn.module('media', function (Class, log, util, anim, config, storage, exports
                 this.el.loop = val;
             }
         },
+
         curTime: {
-            get: function () {
+            get: function ()
+            {
                 return this.el.currentTime;
             },
-            set: function (val) {
+            set: function (val)
+            {
                 this.el.currentTime = val;
             }
         },
+
         volume: {
             get: function () {
                 return this.el.volume;
@@ -121,11 +137,13 @@ webvn.module('media', function (Class, log, util, anim, config, storage, exports
                 this.el.volume = val;
             }
         }
+
     });
 
-
-
-    // Unlike audio, video object is passed by user.
+    /**
+     * @class Video
+     * @extends Base
+     */
     var Video = exports.Video = Base.extend({
 
         constructor: function Video(video) {
@@ -135,7 +153,7 @@ webvn.module('media', function (Class, log, util, anim, config, storage, exports
 
     });
 
-    exports.video = Class.module(function (exports) {
+    exports.video = WebVN.module(function (exports) {
         exports.create = function (video) {
             return new Video(video);
         }

@@ -1,14 +1,18 @@
-webvn.use(function (script, ui) {
+/**
+ * @module command
+ */
+webvn.use(function (script, ui)
+{
     var background = ui.get('background');
 
-    /**
-     * Background Command
-     * @class webvn.cmd.BgCommand
-     * @extends webvn.script.Command
-     */
     script.command.create({
 
-        constructor: function BgCommand() {
+        /**
+         * Background Command
+         * @class CmdBg
+         */
+        constructor: function CmdBg()
+        {
             this.callSuper('bg');
         },
 

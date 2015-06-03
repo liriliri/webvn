@@ -43,16 +43,15 @@
         "core": {
             "path": "engine/core/",
             "files": [
-                "log",
+                "webvn/log",
                 "class/Class",
-                "class/module",
                 "storage/storage",
                 "storage/save",
                 "storage/config",
                 "storage/asset",
                 "select/util",
                 "select/select",
-                "system",
+                "webvn/system",
                 "loader/loader",
                 "script/parserNode",
                 "script/parser",
@@ -82,7 +81,7 @@
                 "ui/ui",
                 "ui/lang",
                 "ui/template",
-                "test"
+                "webvn/test"
             ]
         },
         "lib": {

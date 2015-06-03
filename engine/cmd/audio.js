@@ -1,17 +1,31 @@
-webvn.use(function (script, media) {
+webvn.use(function (script, media)
+{
     var bgm = media.audio.get('bgm');
 
     script.command.create({
 
-        constructor: function BgmCommand() {
+        /**
+         * @class CmdBgm
+         * @memberof command
+         */
+        constructor: function CmdBgm() {
             this.callSuper('bgm');
         },
 
+        /**
+         * @property {Object} options
+         */
         options: {
+            /**
+             * @property {Number} options.duration
+             */
             duration: {
                 type: 'number',
                 short: 'du'
             },
+            /**
+             * @property {Boolean} options.fadeIn
+             */
             fadeIn: {
                 type: 'boolean',
                 short: 'fi'
@@ -94,9 +108,13 @@ webvn.use(function (script, media) {
      * @extends webvn.script.Command
      */
     var se = media.audio.get('se');
+
+    /**
+     * @class CmdSe
+     */
     script.command.create({
 
-        constructor: function SeCommand() {
+        constructor: function CmdSe() {
             this.callSuper('se');
         },
 

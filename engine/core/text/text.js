@@ -1,4 +1,5 @@
-webvn.module('text', function (util, Class, select, exports) {
+WebVN.module('text', function (exports, util, Class, select)
+{
     var TextAnim = exports.TextAnim = Class.create({
 
         constructor: function TextAnim($el) {

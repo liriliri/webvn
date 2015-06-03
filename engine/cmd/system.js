@@ -1,5 +1,4 @@
 webvn.use(function (script, log, system) {
-
     var alias = script.alias;
 
     script.command.create({
@@ -10,15 +9,15 @@ webvn.use(function (script, log, system) {
 
         options: {
             name: {
-                type: 'String',
+                type: 'string',
                 short: 'n'
             },
             value: {
-                type: 'String',
+                type: 'string',
                 short: 'v'
             },
             playNext: {
-                type: 'Boolean',
+                type: 'boolean',
                 short: 'pn',
                 default: true
             }

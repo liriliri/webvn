@@ -1,4 +1,5 @@
-webvn.module('ui', function (Class, select, config, util, script, exports) {
+WebVN.module('ui', function (exports, Class, select, config, util, script)
+{
     var cfg = config.create('ui'),
         cfgContainer = cfg.get('container'),
         cfgDefaultTpl = cfg.get('defaultTpl'),

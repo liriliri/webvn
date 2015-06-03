@@ -1,109 +1,138 @@
-webvn.extend('script', function (exports, Class, log, util) {
-    "use strict";
-    var Command = Class.create({
+/**
+ * @namespace script.command
+ * @memberof script
+ */
+WebVN.extend('script', function (exports, Class, log, util)
+{
+    /**
+     * @class Command
+     * @extends Class.Base
+     * @memberof script.command
+     */
+    var Command = Class.create(
+        /** @lends script.command.Command.prototype */
+        {
+            constructor: function Command(name)
+            {
+                // Add to commands
+                if (commands[name]) log.warn('Command ' + name + ' is overwritten');
+                commands[name] = this;
 
-        constructor: function Command(name) {
-            // Add to commands
-            if (commands[name]) log.warn('Command ' + name + ' is overwritten');
-            commands[name] = this;
+                // Init ShortHands and defaults
+                var shorts = {},
+                    defaults = {};
+                util.each(this.options, function (val, key)
+                {
+                    val.short && (shorts[val.short] = key);
+                    val.default && (defaults[key] = val.default);
+                });
 
-            // Init ShortHands and defaults
-            var shorts = {},
-                defaults = {};
-            util.each(this.options, function (val, key) {
-                val.short && (shorts[val.short] = key);
-                val.default && (defaults[key] = val.default);
-            });
+                this.shorts = shorts;
+                this.defaults = defaults;
+            },
 
-            this.shorts = shorts;
-            this.defaults = defaults;
-        },
+            /**
+             * @param {string} values
+             */
+            execute: function (values)
+            {
+                values = this.parseOpts(values);
+                values = this.evalValue(values);
+                this.execution(values);
+            },
 
-        execute: function (values) {
-            values = this.parseOpts(values);
-            values = this.evalValue(values);
-            this.execution(values);
-        },
+            /**
+             * @param values
+             */
+            execution: function (values)
+            {
+                var orders = this.orders,
+                    defaults = this.defaults,
+                    value, order, def;
 
-        execution: function (values) {
-            var orders = this.orders,
-                defaults = this.defaults,
-                value, order, def;
+                for (var i = 0, len = orders.length; i < len; i++) {
+                    order = orders[i];
+                    value = values[order];
+                    def = defaults[order];
 
-            for (var i = 0, len = orders.length; i < len; i++) {
-                order = orders[i];
-                value = values[order];
-                def = defaults[order];
+                    if (!util.isFunction(this[order])) {
+                        continue;
+                    }
 
-                if (!util.isFunction(this[order])) {
-                    continue;
-                }
-
-                if (value !== undefined) {
-                    this[order](value, values);
-                } else if (def !== undefined) {
-                    this[order](def, values);
-                }
-            }
-        },
-
-        parseOpts: function (values) {
-            var ret = {},
-                i, len, keys, key, option,
-                options = this.options,
-                shorts = this.shorts;
-
-            util.each(values, function (val, key) {
-                if (util.startsWith(key, '--')) {
-                    key = key.substr(2);
-                    ret[key] = val;
-                } else {
-                    key = key.substr(1);
-                    if (shorts[key]) {
-                        ret[shorts[key]] = val;
-                    } else {
-                        for (i = 0, len = key.length; i < len; i++) {
-                            if (shorts[key[i]]) ret[shorts[key[i]]] = val;
-                        }
+                    if (value !== undefined) {
+                        this[order](value, values);
+                    } else if (def !== undefined) {
+                        this[order](def, values);
                     }
                 }
-            });
+            },
 
-            // Parse values
-            keys = util.keys(ret);
-            for (i = 0, len = keys.length; i < len; i++) {
-                key = keys[i];
-                option = options[key];
-                if (option) ret[key] = parseVal(option.type, ret[key]);
-            }
+            /**
+             * @param values
+             */
+            parseOpts: function (values)
+            {
+                var ret = {},
+                    i, len, keys, key, option,
+                    options = this.options,
+                    shorts = this.shorts;
 
-            return ret;
-        },
+                util.each(values, function (val, key)
+                {
+                    if (util.startsWith(key, '--')) {
+                        key = key.substr(2);
+                        ret[key] = val;
+                    } else {
+                        key = key.substr(1);
+                        if (shorts[key]) {
+                            ret[shorts[key]] = val;
+                        } else {
+                            for (i = 0, len = key.length; i < len; i++) {
+                                if (shorts[key[i]]) ret[shorts[key[i]]] = val;
+                            }
+                        }
+                    }
+                });
 
-        evalValue: function (values) {
-            var ret = {};
-
-            util.each(values, function (value, key) {
-                if (util.isString(value) && util.startsWith(value, '`')) {
-                    ret[key] = exports.jsEvalVal(value.substr(1));
-                } else {
-                    ret[key] = value;
+                // Parse values
+                keys = util.keys(ret);
+                for (i = 0, len = keys.length; i < len; i++) {
+                    key = keys[i];
+                    option = options[key];
+                    if (option) ret[key] = parseVal(option.type, ret[key]);
                 }
-            });
 
-            return ret;
-        },
+                return ret;
+            },
 
-        options: {},
-        orders: [],
+            evalValue: function (values)
+            {
+                var ret = {};
 
-        playNext: function (value) {
-            value && exports.play();
+                util.each(values, function (value, key)
+                {
+                    if (util.isString(value) && util.startsWith(value, '`')) {
+                        ret[key] = exports.jsEvalVal(value.substr(1));
+                    } else {
+                        ret[key] = value;
+                    }
+                });
+
+                return ret;
+            },
+
+            options: {},
+            orders: [],
+
+            playNext: function (value)
+            {
+                value && exports.play();
+            }
         }
+    );
 
-    });
-
-    function parseVal(type, val) {
+    function parseVal(type, val)
+    {
         // Support null assignment
         switch (val) {
             case 'null':
@@ -126,7 +155,8 @@ webvn.extend('script', function (exports, Class, log, util) {
         }
     }
 
-    function parseCmd(cmdText) {
+    function parseCmd(cmdText)
+    {
         var ret = {},
             options = {},
             option,
@@ -135,7 +165,8 @@ webvn.extend('script', function (exports, Class, log, util) {
 
         ret.name = parts.shift();
 
-        util.each(parts, function (val) {
+        util.each(parts, function (val)
+        {
             if (val[0] === '-') {
                 option = parseOpt(val);
                 options[option[0]] = option[1];
@@ -149,9 +180,11 @@ webvn.extend('script', function (exports, Class, log, util) {
 
         return ret;
     }
+
     var regSplit = /(?:[^\s"]+|"[^"]*")+/g;
 
-    function parseOpt(text) {
+    function parseOpt(text)
+    {
         var ret = [],
             equalPos = text.indexOf('=');
 
@@ -168,11 +201,13 @@ webvn.extend('script', function (exports, Class, log, util) {
 
     var commands = {};
 
-    function get(name) {
+    function get(name)
+    {
         return commands[name];
     }
 
-    function create(px) {
+    function create(px)
+    {
         new (Command.extend(px));
     }
 

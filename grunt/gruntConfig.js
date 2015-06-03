@@ -27,12 +27,19 @@ exports.jsdoc = {
             configure: "grunt/jsdoc.json"
         },
         src: [
-            'engine/core/*.js',
-            'engine/ui/*.js',
-            'engine/cmd/*.js',
+            'engine/**/*.js',
             'config/*.js',
             'README.md'
         ]
+    }
+};
+
+exports.yuidoc = {
+    dist: {
+        options: {
+            paths: 'engine/',
+            outdir: 'doc/yuidoc'
+        }
     }
 };
 

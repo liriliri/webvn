@@ -1,5 +1,8 @@
-webvn.module('script', function (config, parser, parserNode, util, loader, lexer, log, storage, Class, exports) {
-    "use strict";
+/**
+ * @namespace script
+ */
+WebVN.module('script', function (exports, config, parser, parserNode, util, loader, lexer, log, storage, Class)
+{
     var conf = config.create('script');
 
     lexer = lexer.lexer;
@@ -92,9 +95,8 @@ webvn.module('script', function (config, parser, parserNode, util, loader, lexer
         }
     }
 
-    var label = Class.module(function () {
-        var exports = {};
-
+    var label = WebVN.module(function (exports)
+    {
         var labels = {};
 
         exports.create = function (name, lineNum) {
@@ -108,8 +110,6 @@ webvn.module('script', function (config, parser, parserNode, util, loader, lexer
         exports.get = function (name) {
             return labels[name];
         };
-
-        return exports;
     });
 
     var asset = storage.createAsset(conf.get('path'), conf.get('extension'));
@@ -166,7 +166,7 @@ webvn.module('script', function (config, parser, parserNode, util, loader, lexer
 
     };
 
-    var alias = exports.alias = Class.module(function (exports) {
+    var alias = exports.alias = WebVN.module(function (exports) {
         var aliases = {};
 
         exports.create = function (name, value) {
@@ -183,7 +183,7 @@ webvn.module('script', function (config, parser, parserNode, util, loader, lexer
         };
     });
 
-    var define = exports.define = Class.module(function (exports) {
+    var define = exports.define = WebVN.module(function (exports) {
         var defines = {};
 
         exports.create = function (name, value) {
@@ -207,9 +207,8 @@ webvn.module('script', function (config, parser, parserNode, util, loader, lexer
         }
     });
 
-    var functions = Class.module(function () {
-        var exports = {};
-
+    var functions = WebVN.module(function (exports)
+    {
         var container = {};
 
         exports.create = function (name, fn) {
@@ -240,8 +239,6 @@ webvn.module('script', function (config, parser, parserNode, util, loader, lexer
             executions = middles.concat(executions);
             middles = [];
         };
-
-        return exports;
     });
 
     function execCommand(command) {

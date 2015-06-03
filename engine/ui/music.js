@@ -1,4 +1,4 @@
-webvn.use(function (ui, select, media, config, storage, util, Class) {
+WebVN.use(function (ui, select, media, config, storage, util) {
     "use strict";
     var uiName = 'music',
         exports = ui.create(uiName),
@@ -23,7 +23,7 @@ webvn.use(function (ui, select, media, config, storage, util, Class) {
         $nextBtn = $el.find('.next'),
         $preBtn = $el.find('.previous');
 
-    var controller = Class.module(function (exports) {
+    var controller = WebVN.module(function (exports) {
         var music = media.audio.create('music');
         music.asset = storage.createAsset(cfgPath, cfgExtension);
         music.loop = true;

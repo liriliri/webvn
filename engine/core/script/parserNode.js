@@ -1,7 +1,7 @@
 /* Provide function used by parser,
  * and helper function related to wvnScript/javaScript translation
  */
-webvn.module('parserNode', function (Class, util, exports) {
+webvn.module('parserNode', function (exports, Class, util) {
     'use strict';
     exports.lineNum = function (value) {
         lineNum = value;

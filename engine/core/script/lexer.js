@@ -1,5 +1,5 @@
-webvn.module('lexer', function (Class, log, util, exports) {
-    "use strict";
+webvn.module('lexer', function (exports, Class, log, util)
+{
     /**
      * @class webvn.script.Token
      * @param {string} tag tag name

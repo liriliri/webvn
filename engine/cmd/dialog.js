@@ -1,4 +1,8 @@
-webvn.use(function (script, ui) {
+/**
+ * @module command
+ */
+WebVN.use(function (script, ui)
+{
     var dialog = ui.get('dialog');
 
     script.command.create({

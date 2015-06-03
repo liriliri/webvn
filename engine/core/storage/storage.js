@@ -1,10 +1,7 @@
-webvn.module('storage', function (Class, util) {
+WebVN.module('storage', function (exports, Class, util) {
     "use strict";
-    var exports = {};
-
-    var localStore = Class.module(function () {
-        var exports = {};
-
+    var localStore = WebVN.module(function (exports)
+    {
         var localStore = window.localStorage;
 
         exports.get = function (key) {
@@ -26,8 +23,6 @@ webvn.module('storage', function (Class, util) {
         exports.remove = function (key) {
             localStore.removeItem(key);
         };
-
-        return exports;
     });
 
     var prefix = 'wvn-';

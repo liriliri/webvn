@@ -1,19 +1,34 @@
-webvn.extend('util', function (exports) {
-    'use strict';
-    var keys = exports.keys = (function (objKeys) {
-        if (objKeys) {
-            return function (obj) {
+/**
+ * @module util
+ */
+/**
+ * @class util
+ * @static
+ * @constructor
+ */
+WebVN.extend('util', function (exports)
+{
+    /**
+     * @method keys
+     */
+    exports.keys = (function (objKeys)
+    {
+        if (objKeys)
+        {
+            return function (obj)
+            {
                 return objKeys(obj);
             };
         }
 
-        return function (obj) {
-            var ret = [], prop;
+        return function (obj)
+        {
+            var ret = [],
+                prop;
 
-            for (prop in obj) {
-                if (obj.hasOwnProperty(prop)) {
-                    ret.push(prop);
-                }
+            for (prop in obj)
+            {
+                if (obj.hasOwnProperty(prop)) ret.push(prop);
             }
 
             return ret;

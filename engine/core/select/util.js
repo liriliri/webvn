@@ -1,10 +1,8 @@
 /**
  * @namespace webvn.select
  */
-webvn.module('select', function (util) {
-    "use strict";
-    var exports = {};
-
+webvn.module('select', function (exports, util)
+{
     var selectUtil = {};
 
     /**
@@ -86,6 +84,4 @@ webvn.module('select', function (util) {
     };
 
     exports.util = selectUtil;
-
-    return exports;
 });

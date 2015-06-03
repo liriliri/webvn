@@ -3,10 +3,8 @@
  * Zepto's implementation is way too simple and has some kind of problem
  * Now I have to implement my own version :(
  */
-webvn.module('event', function (util, select, Class) {
-
-    var event = {};
-
+WebVN.module('event', function (exports, util, select, Class)
+{
     /* Add event
      * All events are attached to the elem's events, it looks as below:
      * ele.events = {
@@ -14,8 +12,8 @@ webvn.module('event', function (util, select, Class) {
      *      'mouseenter': []
      * }
      */
-    event.add = function (ele, type, fn, selector) {
-
+    var add = exports.add = function (ele, type, fn, selector)
+    {
         var handleObj = {
             selector: selector,
             handler: fn
@@ -42,7 +40,7 @@ webvn.module('event', function (util, select, Class) {
 
     };
 
-    event.Event = Class.create({
+    var Event = Class.create({
         constructor: function Event(e) {
 
             this.originalEvent = e;
@@ -99,7 +97,7 @@ webvn.module('event', function (util, select, Class) {
             handlerObj,
             handlerQueue = formatHandlers.call(this, e, handlers);
 
-        e = new event.Event(e);
+        e = new Event(e);
 
         var i, j, matched, ret;
 
@@ -170,11 +168,8 @@ webvn.module('event', function (util, select, Class) {
                 selector = undefined;
             }
             return this.each(function (_, ele) {
-                event.add(ele, type, fn, selector);
+                add(ele, type, fn, selector);
             });
         }
     });
-
-    return event;
-
 });

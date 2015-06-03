@@ -1,8 +1,7 @@
-webvn.module('webgl', function (Class, util, log, config, exports) {
+WebVN.module('webgl', function (exports, Class, util, log, config)
+{
     "use strict";
-    exports.fragShader = Class.module(function () {
-        var exports = {};
-
+    exports.fragShader = WebVN.module(function (exports) {
         var shaders = {};
 
         exports.create = function (name, value) {
@@ -18,13 +17,9 @@ webvn.module('webgl', function (Class, util, log, config, exports) {
         exports.get = function (name) {
             return shaders[name];
         };
-
-        return exports;
     });
 
-    exports.vertexShader = Class.module(function () {
-        var exports = {};
-
+    exports.vertexShader = WebVN.module(function (exports) {
         var shaders = {};
 
         exports.create = function (name, value) {
@@ -40,8 +35,6 @@ webvn.module('webgl', function (Class, util, log, config, exports) {
         exports.get = function (name) {
             return shaders[name];
         };
-
-        return exports;
     });
 
     var Shader = exports.Shader = Class.create({

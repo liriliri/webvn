@@ -95,7 +95,7 @@ webvn.extend('media', function (exports, storage, config, Class) {
 
     });
 
-    var audio = exports.audio = Class.module(function (exports) {
+    var audio = exports.audio = WebVN.module(function (exports) {
         var audios = {};
 
         exports.create = function (name) {

@@ -9,6 +9,7 @@
         "grunt-contrib-cssmin",
         "grunt-contrib-sass",
         "grunt-contrib-copy",
+        "grunt-contrib-yuidoc",
         "grunt-exec",
         "grunt-jsdoc"
     ],

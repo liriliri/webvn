@@ -1,9 +1,20 @@
-webvn.use(function (script, ui) {
+/**
+ * @module command
+ */
+webvn.use(function (script, ui)
+{
     var figure = ui.get('figure');
 
+    /**
+     * @class FgCmd
+     */
     script.command.create({
 
-        constructor: function FigureCommand() {
+        /**
+         * @constructor
+         */
+        constructor: function FgCmd()
+        {
             this.callSuper('fg');
         },
 

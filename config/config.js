@@ -1,8 +1,7 @@
 /**
  * Stores all configuration of all modules.
- * @namespace webvn.config
  */
-webvn.extend('config', ['util'], function (exports, util) {
+webvn.extend('config', function (exports, util) {
 
     // Config can be overitten by global config
     if (window.config) {

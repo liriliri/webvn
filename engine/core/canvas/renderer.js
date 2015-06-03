@@ -1,23 +1,19 @@
 /**
- * @namespace webvn.canvas
+ * @module canvas
  */
-webvn.module('canvas', function (Class, exports) {
-    "use strict";
-    var renderer = exports.renderer = Class.module(function () {
-        var exports = {};
+WebVN.module('canvas', function (exports, Class)
+{
+    var reqAnim = window.requestAnimationFrame;
 
-        var requestAnim = window.requestAnimationFrame;
+    var renderer = exports.renderer = WebVN.module(function (exports) {
 
-        var isPaused = true;
-
-        var scenes = [];
-
-        var len = 0, i;
+        var isPaused = true,
+            scenes   = [],
+            len      = 0, i;
 
         function render(timestamp) {
-            if (isPaused) {
-                return;
-            }
+
+            if (isPaused) return;
 
             for (i = 0; i < len; i++) {
                 if (scenes[i].change()) {
@@ -25,16 +21,17 @@ webvn.module('canvas', function (Class, exports) {
                 }
             }
 
-            requestAnim(render);
+            reqAnim(render);
         }
 
         exports.start = function () {
+
             if (!isPaused) {
                 return;
             }
             isPaused = false;
 
-            requestAnim(render);
+            reqAnim(render);
         };
 
         exports.stop = function () {
@@ -55,8 +52,6 @@ webvn.module('canvas', function (Class, exports) {
             }
             scenes.splice(index, 1);
         };
-
-        return exports;
     });
 
     renderer.start();

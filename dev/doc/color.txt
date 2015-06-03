@@ -1,0 +1,6 @@
+yellow: #ffdb2c #f7aa16
+red   : #fe6361 #fb0504
+black : #414141 #1f1f1f
+gray  : #f8f8f8 #c3d0e0
+blue  : #afd0fe #83a6e5
+green : #94d279 #86b06a

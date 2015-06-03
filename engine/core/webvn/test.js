@@ -4,8 +4,8 @@
  * It should be removed when the game is realeased.
  * @namespace webvn.test
  */
-webvn.module('test', function (Class, select, script, util, exports) {
-
+WebVN.module('test', function (exports, Class, select, script, util)
+{
     // Component testing
     exports.Component = Class.create({
 

@@ -1,6 +1,5 @@
-webvn.extend('loader', function (exports, util) {
-    "use strict";
-
+WebVN.module('loader', function (exports, util)
+{
     var ajaxSettings = {
         // Default type of request
         type: 'GET',
