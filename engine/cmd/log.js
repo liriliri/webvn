@@ -1,52 +1,44 @@
-webvn.use(function (script, log) {
+webvn.use(function (script, log)
+{
     var type = 'info';
 
-    script.command.create({
+    /**
+     * Log command.
+     * @class CmdLog
+     * @memberof script.command
+     * @extends script.command.Command
+     */
+    script.command.create(
+        /** @lends script.command.CmdLog.prototype */
+        {
+            constructor: function CmdLog() { this.callSuper('log'); },
 
-        constructor: function FigureCommand() {
-            this.callSuper('log');
-        },
-
-        options: {
-            type: {
-                type: 'String',
-                short: 't'
+            /**
+             * @type {Object}
+             */
+            options: {
+                type    : { type: 'String',  short: 't' },
+                message : { type: 'String',  short: 'm' },
+                playNext: { type: 'Boolean', short: 'pn', default: true }
             },
-            message: {
-                type: 'String',
-                short: 'm'
-            },
-            playNext: {
-                type: 'Boolean',
-                short: 'pn',
-                default: true
-            }
-        },
 
-        orders: [
-            'type',
-            'message',
-            'playNext'
-        ],
+            orders: [
+                'type',
+                'message',
+                'playNext'
+            ],
 
-        type: function (value) {
-            type = value;
-        },
-
-        message: function (value) {
-            switch (type) {
-                case 'info':
-                    log.info(value);
-                    break;
-                case 'warn':
-                    log.warn(value);
-                    break;
-                case 'error':
-                    log.error(value);
-                    break;
+            type   : function (val) { type = val },
+            message: function (val)
+            {
+                switch (type)
+                {
+                    case 'info' : log.info(val);  break;
+                    case 'warn' : log.warn(val);  break;
+                    case 'error': log.error(val); break;
+                }
             }
         }
-
-    });
+    );
 
 });

@@ -1,4 +1,8 @@
 anim
 attrs
+autoplay
 memberof
+onerror
+onload
+onloadeddata
 webvn

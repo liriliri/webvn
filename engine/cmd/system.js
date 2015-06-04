@@ -1,132 +1,74 @@
-webvn.use(function (script, log, system) {
-    var alias = script.alias;
+webvn.use(function (script, log, system)
+{
+    var command = script.command,
+        define  = script.define,
+        alias   = script.alias;
 
-    script.command.create({
+    command.create(
+        {
+            constructor: function CmdAlias() { this.callSuper('alias') },
 
-        constructor: function AliasCommand() {
-            this.callSuper('alias');
-        },
-
-        options: {
-            name: {
-                type: 'string',
-                short: 'n'
+            options: {
+                name    : { type: 'string',  short: 'n' },
+                value   : { type: 'string',  short: 'v' },
+                playNext: { type: 'boolean', short: 'pn', default: true }
             },
-            value: {
-                type: 'string',
-                short: 'v'
-            },
-            playNext: {
-                type: 'boolean',
-                short: 'pn',
-                default: true
-            }
-        },
 
-        orders: [
-            'name',
-            'playNext'
-        ],
+            orders: ['name', 'playNext'],
 
-        name: function (value, values) {
-            if (values.value) {
-                alias.create(value, values.value);
-            } else {
-                log.warn('Alias value must be set');
+            name: function (val, values)
+            {
+                values.value && alias.create(val, values.value);
             }
         }
+    );
 
-    });
 
-    var define = script.define;
+    command.create(
+        {
+            constructor: function () { this.callSuper('define') },
 
-    script.command.create({
-
-        constructor: function () {
-            this.callSuper('define')
-        },
-
-        options: {
-            name: {
-                type: 'string',
-                short: 'n'
+            options: {
+                name    : { type: 'string',  short: 'n' },
+                value   : { type: 'String',  short: 'v' },
+                playNext: { type: 'Boolean', short: 'pn', default: true }
             },
-            value: {
-                type: 'String',
-                short: 'v'
+
+            orders: ['name', 'playNext'],
+
+            name: function (val, values)
+            {
+                values.value && define.create(val, values.value);
+            }
+    });
+
+    command.create(
+        {
+            constructor: function CmdScript() { this.callSuper('script') },
+
+            options: {
+                jump: { type: 'String', short: 'j' }
             },
-            playNext: {
-                type: 'Boolean',
-                short: 'pn',
-                default: true
-            }
-        },
 
-        orders: [
-            'name',
-            'playNext'
-        ],
+            orders: ['jump'],
 
-        name: function (value, values) {
-            if (values.value) {
-                define.create(value, values.value);
-            } else {
-                log.warn('Define value must be set');
-            }
+            jump: function (val) { script.jump(val) }
         }
+    );
 
-    });
+    command.create(
+        {
+            constructor: function CmdSystem () {this.callSuper('system') },
 
-    script.command.create({
-
-        constructor: function ScriptCommand() {
-            this.callSuper('script');
-        },
-
-        options: {
-            jump: {
-                type: 'String',
-                short: 'j'
-            }
-        },
-
-        orders: [
-            'jump'
-        ],
-
-        jump: function (value) {
-            script.jump(value);
-        }
-
-    });
-
-    script.command.create({
-
-        constructor: function SystemCommand() {
-            this.callSuper('system');
-        },
-
-        options: {
-            title: {
-                type: 'String',
-                short: 't'
+            options: {
+                title   : { type: 'String',  short: 't' },
+                playNext: { type: 'Boolean', short: 'pn', default: true }
             },
-            playNext: {
-                type: 'Boolean',
-                short: 'pn',
-                default: true
-            }
-        },
 
-        orders: [
-            'title',
-            'playNext'
-        ],
+            orders: ['title', 'playNext'],
 
-        title: function (value) {
-            system.title(value);
+            title: function (val) { system.title(val) }
         }
-
-    });
+    );
 
 });

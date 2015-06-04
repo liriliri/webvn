@@ -1,134 +1,65 @@
-/**
- * @module command
- */
 WebVN.use(function (script, ui)
 {
     var dialog = ui.get('dialog');
 
-    script.command.create({
+    /**
+     * Dialog command.
+     * @class CmdDialog
+     * @memberof script.command
+     * @extends script.command.Command
+     */
+    script.command.create(
+        /** @lends script.command.CmdDialog.prototype */
+        {
+            constructor: function CmdDialog() { this.callSuper('dialog'); },
 
-        constructor: function DialogCommand() {
-            this.callSuper('dialog');
-        },
-
-        options: {
-            display: {
-                type: 'Boolean',
-                short: 'd'
+            /**
+             * @type {Object}
+             */
+            options: {
+                display      : { type: 'boolean', short: 'd' },
+                style        : { type: 'string',  short: 's' },
+                face         : { type: 'String',  short: 'f' },
+                duration     : { type: 'Number',  short: 'du' },
+                fadeIn       : { type: 'Boolean', short: 'fi' },
+                fadeOut      : { type: 'Boolean', short: 'fo' },
+                name         : { type: 'String',  short: 'n' },
+                text         : { type: 'String',  short: 't' },
+                textDuration : { type: 'Number',  short: 'td' },
+                textType     : { type: 'String',  short: 'tt' },
+                voice        : { type: 'String',  short: 'v' },
+                stopAnimation: { type: 'boolean', short: 'sa' },
+                playNext     : { type: 'Boolean', short: 'pn' }
             },
-            style: {
-                type: 'String',
-                short: 's'
-            },
-            face: {
-                type: 'String',
-                short: 'f'
-            },
-            duration: {
-                type: 'Number',
-                short: 'du'
-            },
-            fadeIn: {
-                type: 'Boolean',
-                short: 'fi'
-            },
-            fadeOut: {
-                type: 'Boolean',
-                short: 'fo'
-            },
-            name: {
-                type: 'String',
-                short: 'n'
-            },
-            text: {
-                type: 'String',
-                short: 't'
-            },
-            textDuration: {
-                type: 'Number',
-                short: 'td'
-            },
-            textType: {
-                type: 'String',
-                short: 'tt'
-            },
-            voice: {
-                type: 'String',
-                short: 'v'
-            },
-            stopAnimation: {
-                type: 'boolean',
-                short: 'sa'
-            },
-            playNext: {
-                type: 'Boolean',
-                short: 'pn'
-            }
-        },
 
-        orders: [
-            'fadeIn',
-            'fadeOut',
-            'style',
-            'duration',
-            'textType',
-            'textDuration',
-            'face',
-            'display',
-            'name',
-            'text',
-            'voice',
-            'stopAnimation',
-            'playNext'
-        ],
+            orders: [
+                'fadeIn',
+                'fadeOut',
+                'style',
+                'duration',
+                'textType',
+                'textDuration',
+                'face',
+                'display',
+                'name',
+                'text',
+                'voice',
+                'stopAnimation',
+                'playNext'
+            ],
 
-        stopAnimation: function (value) {
-            value && dialog.stopAnim();
-        },
-
-        face: function (value) {
-            dialog.face(value);
-        },
-
-        style: function (value) {
-            dialog.style(value);
-        },
-
-        fadeIn: function (value) {
-            dialog.fadeIn = value;
-        },
-
-        fadeOut: function (value) {
-            dialog.fadeOut = value;
-        },
-
-        duration: function (value) {
-            dialog.duration = value;
-        },
-
-        textType: function (value) {
-            dialog.textType = value;
-        },
-
-        textDuration: function (value) {
-            dialog.textDuration = value;
-        },
-
-        display: function (value) {
-            value ? dialog.show() : dialog.hide();
-        },
-
-        name: function (value) {
-            dialog.name(value);
-        },
-
-        text: function (value) {
-            dialog.text(value);
-        },
-
-        voice: function (value) {
-            dialog.voice(value);
+            stopAnimation: function (val) { val && dialog.stopAnim() },
+            face         : function (val) { dialog.face(val) },
+            style        : function (val) { dialog.style(val) },
+            fadeIn       : function (val) { dialog.fadeIn       = val },
+            fadeOut      : function (val) { dialog.fadeOut      = val },
+            duration     : function (val) { dialog.duration     = val },
+            textType     : function (val) { dialog.textType     = val },
+            textDuration : function (val) { dialog.textDuration = val },
+            display      : function (val) { val ? dialog.show() : dialog.hide() },
+            name         : function (val) { dialog.name(val) },
+            text         : function (val) { dialog.text(val) },
+            voice        : function (val) { dialog.voice(val) }
         }
-
-    });
+    );
 });

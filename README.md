@@ -6,13 +6,12 @@ A game engine designed specifically for making visual novels.
 
 ## Features
 
+* True Multi-platform
 * WebGL Filters and Transition Effects
-* Multiple Themes
+* User-friendly Script Style
 * Custom UI with CSS
 * Component Manager
-* Built-in Weather Effects
 * Free to Use (MIT License)
-* User-friendly Script Style
 
 ## Related Projects
 

@@ -11,41 +11,41 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
     parser = parser.parser;
 
     parser.lexer = {
-        lex: function () {
-
+        lex: function ()
+        {
             var tag, token;
             token = parser.tokens[this.pos++];
 
-            if (token) {
+            if (token)
+            {
                 tag = token[0];
-                this.yytext = token[1];
-                this.yyloc = token[2];
+                this.yytext   = token[1];
+                this.yyloc    = token[2];
                 this.yylineno = this.yyloc.first_line;
-            } else {
-                tag = '';
-            }
+            } else tag = '';
 
             return tag;
-
         },
-        setInput: function (tokens) {
-
+        setInput: function (tokens)
+        {
             parser.tokens = tokens;
 
             return this.pos = 0;
-
         }
     };
 
     parser.yy = parserNode;
 
-    var parse = exports.parse = function (scenario) {
+    var parse = exports.parse = function (scenario)
+    {
         var tokens = lexer(scenario);
+
         return parser.parse(tokens);
     };
 
     // Parse the source code and eval it
-    var wvnEval = exports.eval = function (code) {
+    var wvnEval = exports.eval = function (code)
+    {
         exports.jsEval(parse(code));
     };
 
@@ -66,7 +66,8 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
     var isSource = true;
 
     //noinspection JSUnusedLocalSymbols
-    exports.$$ = function () {
+    exports.$$ = function ()
+    {
         var source = util.toArray(arguments);
 
         preExec(source, sources.length);
@@ -75,23 +76,18 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
          * command defined inside a if statement
          * should be loaded into middles.
          */
-        if (isSource) {
-            sources.push(source);
-        } else {
-            middles.push(source);
-        }
+        isSource ? sources.push(source)
+                 : middles.push(source);
     };
 
     // Execute command when first load, handle things like label
-    function preExec(source, line) {
-        switch (source[0]) {
-            case 'label':
-                label.create(source[1], line);
-                break;
-            case 'function':
-                // Since functions can't be stored, we have to create them at start
-                functions.create(source[1], source[2]);
-                break;
+    function preExec(source, line)
+    {
+        switch (source[0])
+        {
+            case 'label': label.create(source[1], line); break;
+            // Since functions can't be stored, we have to create them at start
+            case 'function': functions.create(source[1], source[2]); break;
         }
     }
 
@@ -99,37 +95,25 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
     {
         var labels = {};
 
-        exports.create = function (name, lineNum) {
-            labels[name] = lineNum;
-        };
+        exports.create = function (name, lineNum) { labels[name] = lineNum };
 
-        exports.has = function (name) {
-            return labels[name] !== undefined;
-        };
+        exports.has = function (name) { return labels[name] !== undefined };
 
-        exports.get = function (name) {
-            return labels[name];
-        };
+        exports.get = function (name) { return labels[name] };
     });
 
     var asset = storage.createAsset(conf.get('path'), conf.get('extension'));
 
     // Load scenarios and begin executing them
-    exports.load = function (scenarios) {
-
+    exports.load = function (scenarios)
+    {
         scenarios = scenarios || conf.get('scenarios');
 
-        if (!util.isArray(scenarios)) {
-            scenarios = [scenarios];
-        }
+        if (!util.isArray(scenarios)) scenarios = [scenarios];
 
-        scenarios = scenarios.map(function (value) {
-            return asset.get(value);
-        });
+        scenarios = scenarios.map(function (value) { return asset.get(value) });
 
-        loader.scenario(scenarios, function (data, isLast) {
-            loadText(data, isLast);
-        });
+        loader.scenario(scenarios, function (data, isLast) { loadText(data, isLast) });
 
     };
 
@@ -138,44 +122,36 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
      * @param {string} str
      * @param {boolean=} startGame
      */
-    var loadText = exports.loadText = function (str, startGame) {
+    var loadText = exports.loadText = function (str, startGame)
+    {
         wvnEval(str);
-        if (startGame) {
-            start();
-        }
+        if (startGame) start();
     };
 
     // Execute command or code
-    var exec = exports.exec = function (unit) {
-
-        switch (unit[0]) {
-            case 'command':
-                execCommand(unit);
-                break;
-            case 'code':
-                execCode(unit);
-                break;
-            case 'label':
-                // Just pass it
-                play();
-                break;
-            default:
-                log.warn("Unknown command type");
-                break;
+    var exec = exports.exec = function (unit)
+    {
+        switch (unit[0])
+        {
+            case 'command': execCommand(unit); break;
+            case 'code'   : execCode(unit); break;
+            // Just pass it
+            case 'label': play(); break;
+            default: log.warn("Unknown command type"); break;
         }
 
     };
 
-    var alias = exports.alias = WebVN.module(function (exports) {
+    var alias = exports.alias = WebVN.module(function (exports)
+    {
         var aliases = {};
 
-        exports.create = function (name, value) {
-            aliases[name] = value;
-        };
+        exports.create = function (name, value) { aliases[name] = value };
 
         var commandRegex = /^[^\s]+/;
 
-        exports.parse = function (str) {
+        exports.parse = function (str)
+        {
             var command = commandRegex.exec(str)[0];
             if (aliases[command]) return str.replace(commandRegex, aliases[command]);
 
@@ -183,15 +159,16 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
         };
     });
 
-    var define = exports.define = WebVN.module(function (exports) {
+    var define = exports.define = WebVN.module(function (exports)
+    {
         var defines = {};
 
-        exports.create = function (name, value) {
-            defines[name] = value;
-        };
+        exports.create = function (name, value) { defines[name] = value };
 
-        exports.parse = function (str) {
-            util.each(defines, function (val, key) {
+        exports.parse = function (str)
+        {
+            util.each(defines, function (val, key)
+            {
                 str = str.replace(reg(key), val);
             });
 
@@ -200,7 +177,8 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
 
         var regExp = {};
 
-        function reg(str) {
+        function reg(str)
+        {
             if (!regExp[str]) regExp[str] = new RegExp(str, 'g');
 
             return regExp[str];
@@ -211,24 +189,21 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
     {
         var container = {};
 
-        exports.create = function (name, fn) {
-            container[name] = fn;
-        };
+        exports.create = function (name, fn) { container[name] = fn };
 
-        exports.has = function (name) {
-            return container[name] !== undefined;
-        };
+        exports.has = function (name) { return container[name] !== undefined };
 
         var spaceRegex = /\s/;
 
-        exports.execute = function (name, params) {
+        exports.execute = function (name, params)
+        {
             var fn = container[name];
 
             // Wrap params with spaces
-            params = params.map(function (value) {
-                if (spaceRegex.test(value)) {
-                    value = "'" + value + "'";
-                }
+            params = params.map(function (value)
+            {
+                if (spaceRegex.test(value)) value = "'" + value + "'";
+
                 return value;
             });
 
@@ -237,12 +212,13 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
             isSource = true;
 
             executions = middles.concat(executions);
-            middles = [];
+            middles    = [];
         };
     });
 
-    function execCommand(command) {
-        var lineNum = command[2],
+    function execCommand(command)
+    {
+        var lineNum     = command[2],
             commandText = cmdBeautify(command[1]);
 
         log.info('Command: ' + commandText + ' ' + lineNum);
@@ -254,12 +230,13 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
         commandText = define.parse(commandText);
 
         command = exports.command.parse(commandText);
-        var name = command.name,
+        var name    = command.name,
             options = command.options,
-            values = command.values;
+            values  = command.values;
 
         // Execute function
-        if (functions.has(name)) {
+        if (functions.has(name))
+        {
             functions.execute(name, values);
             play();
             return;
@@ -267,8 +244,10 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
 
         // Execute command
         var cmd = exports.command.get(name);
-        if (!cmd) {
-            if (functions.has('default')) {
+        if (!cmd)
+        {
+            if (functions.has('default'))
+            {
                 functions.execute('default', [commandText]);
                 play();
                 return;
@@ -279,14 +258,17 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
         cmd.execute(options);
     }
 
-    function cmdBeautify(str) {
-        return str.split('\n').
-            map(function (value) {
-                return util.trim(value);
-            }).join(' ');
+    function cmdBeautify(str)
+    {
+        return str.split('\n')
+                  .map(function (value)
+                  {
+                      return util.trim(value);
+                  }).join(' ');
     }
 
-    function execCode(code) {
+    function execCode(code)
+    {
         var lineNum = code[2];
         log.info('Code: ' + code[1] + ' ' + lineNum);
         exports.jsEval(code[1]);
@@ -298,14 +280,17 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
     var curNum = 0;
 
     // Start executing the scripts from beginning.
-    var start = exports.start = function () {
+    var start = exports.start = function ()
+    {
         reset();
         play();
     };
 
-    exports.jump = function (labelName) {
+    exports.jump = function (labelName)
+    {
         // Clear executions
-        if (!label.has(labelName)) {
+        if (!label.has(labelName))
+        {
             log.warn('Label ' + labelName + ' not found');
             return;
         }
@@ -314,17 +299,19 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
         resume();
     };
 
-    exports.insertCmd = function (script) {
+    exports.insertCmd = function (script)
+    {
         isSource = false;
         wvnEval(script);
         isSource = true;
     };
 
     // Reset everything to initial state
-    var reset = exports.reset = function () {
-        isPaused = false;
-        curNum = 0;
-        middles = [];
+    var reset = exports.reset = function ()
+    {
+        isPaused   = false;
+        curNum     = 0;
+        middles    = [];
         executions = [];
     };
 
@@ -333,38 +320,36 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
 
     // Similar to play, except the isPaused will be changed to true.
     //noinspection JSUnusedLocalSymbols
-    var resume = exports.resume = function () {
-
+    var resume = exports.resume = function ()
+    {
         isPaused = false;
         play();
-
     };
 
     /* Play the next command,
      * if isPaused is true, then it's not going to work.
      */
-    var play = exports.play = function () {
-        if (isPaused) {
-            return;
-        }
+    var play = exports.play = function ()
+    {
+        if (isPaused) return;
+
         var execution = loadExecutions();
-        if (execution) {
-            exec(execution);
-        }
+        if (execution) exec(execution);
     };
 
     // Load executions script
-    function loadExecutions() {
+    function loadExecutions()
+    {
         var source, isCommand = false;
 
-        while (true) {
-            if (!_loadExecutions()) {
-                return;
-            }
+        while (true)
+        {
+            if (!_loadExecutions()) return;
 
             source = executions.shift();
 
-            switch (source[0]) {
+            switch (source[0])
+            {
                 case 'if':
                     isSource = false;
                     source[1]();
@@ -379,18 +364,18 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
                     isCommand = true;
             }
 
-            if (isCommand) {
-                break;
-            }
+            if (isCommand) break;
         }
 
         return source;
     }
 
-    function _loadExecutions() {
-
-        if (executions.length === 0) {
-            if (curNum >= sources.length) {
+    function _loadExecutions()
+    {
+        if (executions.length === 0)
+        {
+            if (curNum >= sources.length)
+            {
                 log.warn('End of scripts');
                 isPaused = true;
                 return false;
@@ -400,28 +385,26 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
         }
 
         return true;
-
     }
 
     //noinspection JSUnusedLocalSymbols
-    var pause = exports.pause = function (duration, cb) {
-
+    var pause = exports.pause = function (duration, cb)
+    {
         isPaused = true;
 
-        if (duration) {
-            setTimeout(function () {
-
+        if (duration)
+        {
+            setTimeout(function ()
+            {
                 isPaused = false;
                 cb && cb();
-
             }, duration);
         }
 
     };
 
-    exports.wait = function (duration) {
-        pause(duration, function () {
-            play();
-        });
+    exports.wait = function (duration)
+    {
+        pause(duration, function () {play() });
     };
 });

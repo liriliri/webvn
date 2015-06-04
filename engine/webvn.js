@@ -13,6 +13,7 @@ window.WebVN = window.webvn = (function(exports)
     return exports;
 })({});
 
+// Basic setup
 (function()
 {
     var head = document.getElementsByTagName('head')[0];
@@ -268,56 +269,57 @@ window.WebVN = window.webvn = (function(exports)
 WebVN.use(function ()
 {
     // Get build info, dev, test, debug or release
-    var scripts = document.getElementsByTagName('script'), build;
-    for (var i = 0, len = scripts.length; i < len; i++) {
+    var scripts  = document.getElementsByTagName('script'),
+        basePath = '',
+        build, i, len;
+
+    for (i = 0, len = scripts.length; i < len; i++)
+    {
         build = scripts[i].getAttribute('data-build');
-        if (build) {
-            break;
-        }
+        if (build) break;
     }
 
-    webvn.module('config', function () {
-        "use strict";
-        return {
-            build: build
-        }
+    webvn.module('config', function (exports)
+    {
+        exports.build = build;
     });
 
-    var basePath = '';
-    if (build === 'test') {
-        basePath = '../';
-    }
+    if (build === 'test') basePath = '../';
 
     // Load webvn.json
     var xhr = new window.XMLHttpRequest();
-    xhr.onload = function () {
+    xhr.onload = function ()
+    {
         var data = JSON.parse(xhr.responseText);
         loadFiles(data);
     };
-
     xhr.open('get', basePath + 'webvn.json');
     xhr.send();
 
-    function loadFiles(data) {
+    function loadFiles(data)
+    {
         var css = data.css,
-            js = data.js;
-        each(css, function (value) {
+            js  = data.js;
+
+        each(css, function (value)
+        {
             WebVN.css.path = basePath + value.path;
             WebVN.css(value.files);
         });
-        each(js, function (value) {
+
+        each(js, function (value)
+        {
             WebVN.js.path = basePath + value.path;
             WebVN.js(value.files);
         });
     }
 
-    function each(object, fn) {
-        "use strict";
+    function each(object, fn)
+    {
         var key;
-        for (key in object) {
-            if (object.hasOwnProperty(key)) {
-                fn(object[key], key);
-            }
+        for (key in object)
+        {
+            if (object.hasOwnProperty(key)) fn(object[key], key);
         }
     }
 });

@@ -19,15 +19,15 @@ WebVN.extend('script', function (exports, Class, log, util)
                 commands[name] = this;
 
                 // Init ShortHands and defaults
-                var shorts = {},
+                var shorts   = {},
                     defaults = {};
                 util.each(this.options, function (val, key)
                 {
-                    val.short && (shorts[val.short] = key);
+                    val.short   && (shorts[val.short] = key);
                     val.default && (defaults[key] = val.default);
                 });
 
-                this.shorts = shorts;
+                this.shorts   = shorts;
                 this.defaults = defaults;
             },
 
@@ -46,22 +46,23 @@ WebVN.extend('script', function (exports, Class, log, util)
              */
             execution: function (values)
             {
-                var orders = this.orders,
+                var orders   = this.orders,
                     defaults = this.defaults,
-                    value, order, def;
+                    value, order, def, i, len;
 
-                for (var i = 0, len = orders.length; i < len; i++) {
+                for (i = 0, len = orders.length; i < len; i++)
+                {
                     order = orders[i];
                     value = values[order];
-                    def = defaults[order];
+                    def   = defaults[order];
 
-                    if (!util.isFunction(this[order])) {
-                        continue;
-                    }
+                    if (!util.isFunction(this[order])) continue;
 
-                    if (value !== undefined) {
+                    if (value !== undefined)
+                    {
                         this[order](value, values);
-                    } else if (def !== undefined) {
+                    } else if (def !== undefined)
+                    {
                         this[order](def, values);
                     }
                 }
@@ -73,21 +74,26 @@ WebVN.extend('script', function (exports, Class, log, util)
             parseOpts: function (values)
             {
                 var ret = {},
-                    i, len, keys, key, option,
                     options = this.options,
-                    shorts = this.shorts;
+                    shorts = this.shorts,
+                    i, len, keys, key, option;
 
                 util.each(values, function (val, key)
                 {
-                    if (util.startsWith(key, '--')) {
+                    if (util.startsWith(key, '--'))
+                    {
                         key = key.substr(2);
                         ret[key] = val;
-                    } else {
+                    } else
+                    {
                         key = key.substr(1);
-                        if (shorts[key]) {
+                        if (shorts[key])
+                        {
                             ret[shorts[key]] = val;
-                        } else {
-                            for (i = 0, len = key.length; i < len; i++) {
+                        } else
+                        {
+                            for (i = 0, len = key.length; i < len; i++)
+                            {
                                 if (shorts[key[i]]) ret[shorts[key[i]]] = val;
                             }
                         }
@@ -96,8 +102,9 @@ WebVN.extend('script', function (exports, Class, log, util)
 
                 // Parse values
                 keys = util.keys(ret);
-                for (i = 0, len = keys.length; i < len; i++) {
-                    key = keys[i];
+                for (i = 0, len = keys.length; i < len; i++)
+                {
+                    key    = keys[i];
                     option = options[key];
                     if (option) ret[key] = parseVal(option.type, ret[key]);
                 }
@@ -111,11 +118,10 @@ WebVN.extend('script', function (exports, Class, log, util)
 
                 util.each(values, function (value, key)
                 {
-                    if (util.isString(value) && util.startsWith(value, '`')) {
+                    if (util.isString(value) && util.startsWith(value, '`'))
+                    {
                         ret[key] = exports.jsEvalVal(value.substr(1));
-                    } else {
-                        ret[key] = value;
-                    }
+                    } else ret[key] = value;
                 });
 
                 return ret;
@@ -124,50 +130,45 @@ WebVN.extend('script', function (exports, Class, log, util)
             options: {},
             orders: [],
 
-            playNext: function (value)
-            {
-                value && exports.play();
-            }
+            playNext: function (val) { val && exports.play() }
         }
     );
 
     function parseVal(type, val)
     {
         // Support null assignment
-        switch (val) {
-            case 'null':
-                return null;
+        switch (val)
+        {
+            case 'null'     : return null;
+            case 'undefined': return;
         }
 
         // LowerCase the type, so that you can write either 'String' or 'string'
         type = type.toLowerCase();
-        switch (type) {
-            case 'string':
-                return String(val);
-            case 'boolean':
-                return !(val === 'false' || val === '0');
-            case 'number':
-                return Number(val);
-            case 'json':
-                return JSON.parse(val);
-            default:
-                return val;
+        switch (type)
+        {
+            case 'string' : return String(val);
+            case 'boolean': return !(val === 'false' || val === '0');
+            case 'number' : return Number(val);
+            case 'json'   : return JSON.parse(val);
+            default       : return val;
         }
     }
 
     function parseCmd(cmdText)
     {
-        var ret = {},
+        var ret     = {},
             options = {},
-            option,
-            values = [],
-            parts = cmdText.match(regSplit);
+            values  = [],
+            parts   = cmdText.match(regSplit),
+            option;
 
         ret.name = parts.shift();
 
         util.each(parts, function (val)
         {
-            if (val[0] === '-') {
+            if (val[0] === '-')
+            {
                 option = parseOpt(val);
                 options[option[0]] = option[1];
                 return;
@@ -176,7 +177,7 @@ WebVN.extend('script', function (exports, Class, log, util)
         });
 
         ret.options = options;
-        ret.values = values;
+        ret.values  = values;
 
         return ret;
     }
@@ -185,13 +186,15 @@ WebVN.extend('script', function (exports, Class, log, util)
 
     function parseOpt(text)
     {
-        var ret = [],
+        var ret      = [],
             equalPos = text.indexOf('=');
 
-        if (equalPos > -1) {
+        if (equalPos > -1)
+        {
             ret.push(text.substr(0, equalPos));
             ret.push(text.substr(equalPos + 1));
-        } else {
+        } else
+        {
             ret.push(text);
             ret.push(true);
         }
@@ -201,20 +204,14 @@ WebVN.extend('script', function (exports, Class, log, util)
 
     var commands = {};
 
-    function get(name)
-    {
-        return commands[name];
-    }
+    function get(name) { return commands[name] }
 
-    function create(px)
-    {
-        new (Command.extend(px));
-    }
+    function create(px) { new (Command.extend(px)) }
 
     exports.command = {
-        parse: parseCmd,
-        create: create,
-        get: get,
+        parse  : parseCmd,
+        create : create,
+        get    : get,
         Command: Command
     };
 });

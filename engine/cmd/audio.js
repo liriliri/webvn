@@ -1,195 +1,114 @@
 webvn.use(function (script, media)
 {
-    var bgm = media.audio.get('bgm');
-
-    script.command.create({
-
-        /**
-         * @class CmdBgm
-         * @memberof command
-         */
-        constructor: function CmdBgm() {
-            this.callSuper('bgm');
-        },
-
-        /**
-         * @property {Object} options
-         */
-        options: {
-            /**
-             * @property {Number} options.duration
-             */
-            duration: {
-                type: 'number',
-                short: 'du'
-            },
-            /**
-             * @property {Boolean} options.fadeIn
-             */
-            fadeIn: {
-                type: 'boolean',
-                short: 'fi'
-            },
-            fadeOut: {
-                type: 'boolean',
-                short: 'fo'
-            },
-            loop: {
-                type: 'boolean',
-                short: 'l'
-            },
-            play: {
-                type: 'boolean',
-                short: 'p'
-            },
-            src: {
-                type: 'string',
-                short: 's'
-            },
-            stop: {
-                type: 'boolean',
-                short: 'st'
-            },
-            volume: {
-                type: 'number',
-                short: 'v'
-            },
-            playNext: {
-                type: 'boolean',
-                short: 'pn',
-                default: true
-            }
-        },
-
-        orders: [
-            'fadeIn',
-            'fadeOut',
-            'duration',
-            'play',
-            'loop',
-            'stop',
-            'src',
-            'playNext'
-        ],
-
-        fadeIn: function (value) {
-            bgm.fadeIn = value;
-        },
-
-        fadeOut: function (value) {
-            bgm.fadeOut = value;
-        },
-
-        duration: function (value) {
-            bgm.duration = value;
-        },
-
-        play: function (value) {
-            value ? bgm.play() : bgm.pause();
-        },
-
-        loop: function (value) {
-            bgm.loop(value);
-        },
-
-        stop: function (value) {
-            value && bgm.stop();
-        },
-
-        src: function (value) {
-            bgm.load(value);
-        }
-
-    });
+    var audio   = media.audio,
+        bgm     = audio.get('bgm'),
+        se      = audio.get('se'),
+        voice   = audio.get('voice'),
+        command = script.command;
 
     /**
-     * Se Command
-     * @class webvn.cmd.SeCommand
-     * @extends webvn.script.Command
+     * Background music command.
+     * @class CmdBgm
+     * @memberof script.command
+     * @extends script.command.Command
      */
-    var se = media.audio.get('se');
+    command.create(
+        /** @lends script.command.CmdBgm.prototype */
+        {
+            constructor: function CmdBgm() { this.callSuper('bgm'); },
+
+            /**
+             * @type {Object}
+             * @property {number} duration(du) Fade in, fade out duration.
+             */
+            options: {
+                duration: { type: 'number',  short: 'du' },
+                fadeIn  : { type: 'boolean', short: 'fi' },
+                fadeOut : { type: 'boolean', short: 'fo' },
+                loop    : { type: 'boolean', short: 'l' },
+                play    : { type: 'boolean', short: 'p' },
+                src     : { type: 'string',  short: 's' },
+                stop    : { type: 'boolean', short: 'st' },
+                volume  : { type: 'number',  short: 'v' },
+                playNext: { type: 'boolean', short: 'pn', default: true }
+            },
+
+            orders: [
+                'fadeIn',
+                'fadeOut',
+                'duration',
+                'play',
+                'loop',
+                'stop',
+                'src',
+                'playNext'
+            ],
+
+            fadeIn  : function (val) { bgm.fadeIn   = val; },
+            fadeOut : function (val) { bgm.fadeOut  = val; },
+            duration: function (val) { bgm.duration = val; },
+            play    : function (val) { val ? bgm.play() : bgm.pause(); },
+            loop    : function (val) { bgm.loop(val); },
+            stop    : function (val) { val && bgm.stop(); },
+            src     : function (val) { bgm.load(val); }
+        }
+    );
 
     /**
+     * Sound effect Command
      * @class CmdSe
+     * @memberof script.command
+     * @extends script.command.Command
      */
-    script.command.create({
+    command.create(
+        /** @lends script.command.CmdSe.prototype */
+        {
+            constructor: function CmdSe() { this.callSuper('se'); },
 
-        constructor: function CmdSe() {
-            this.callSuper('se');
-        },
-
-        /**
-         * @memberof webvn.cmd.SeCommand
-         * @property {Boolean} loop(l) loop bgm or not
-         * @property {String} src(s) load bgm and play
-         */
-        options: {
-            loop: {
-                type: 'Boolean',
-                short: 'l'
+            /**
+             * @type {Object}
+             */
+            options: {
+                loop: { type: 'boolean', short: 'l' },
+                src : { type: 'string',  short: 's' }
             },
-            src: {
-                type: 'String',
-                short: 's'
-            }
-        },
 
-        orders: [
-            'src',
-            'loop'
-        ],
+            orders: [
+                'src',
+                'loop'
+            ],
 
-        src: function (value) {
-            se.load(value);
-        },
-
-        loop: function (value) {
-            se.loop(value);
+            src : function (val) { se.load(val); },
+            loop: function (val) { se.loop(val); }
         }
+    );
 
-    });
-
-    var voice = media.audio.get('voice');
     /**
      * Voice Command
-     * @class webvn.cmd.VoiceCommand
-     * @extends webvn.script.Command
+     * @class CmdVo
+     * @memberof script.command
+     * @extends script.command.Command
      */
-    script.command.create({
+    command.create(
+        /** @lends script.command.CmdVo.prototype */
+        {
+            constructor: function CmdVo() { this.callSuper('voice'); },
 
-        constructor: function VoiceCommand() {
-            this.callSuper('voice');
-        },
-
-        /**
-         * @memberof webvn.cmd.VoiceCommand
-         * @property {Boolean} loop(l) loop bgm or not
-         * @property {String} src(s) load bgm and play
-         */
-        options: {
-            loop: {
-                type: 'Boolean',
-                short: 'l'
+            /**
+             * @type {Object}
+             */
+            options: {
+                loop: { type: 'boolean', short: 'l' },
+                src : { type: 'string',  short: 's'}
             },
-            src: {
-                type: 'String',
-                short: 's'
-            }
-        },
 
-        orders: [
-            'src',
-            'loop'
-        ],
+            orders: [
+                'src',
+                'loop'
+            ],
 
-        src: function (value) {
-            voice.load(value);
-        },
-
-        loop: function (value) {
-            voice.loop(value);
+            src : function (val) { voice.load(val); },
+            loop: function (val) { voice.loop(val); }
         }
-
-    });
-
+    );
 });

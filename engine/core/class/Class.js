@@ -48,10 +48,7 @@ WebVN.module('Class', function (exports, util)
         });
 
         // Set statics
-        util.each(sx, function (val, p)
-        {
-            _class[p] = val;
-        });
+        util.each(sx, function (val, p) { _class[p] = val });
 
         _class.extend = function (px, attrs, sx)
         {
@@ -74,9 +71,10 @@ WebVN.module('Class', function (exports, util)
         if (ObjCreate)
         {
             newProto = ObjCreate(proto);
-        } else {
+        } else
+        {
             Empty.prototype = proto;
-            newProto = new Empty();
+            newProto        = new Empty();
         }
 
         newProto.constructor = constructor;
@@ -113,17 +111,11 @@ WebVN.module('Class', function (exports, util)
         {
             if (!val.get)
             {
-                val.get = function ()
-                {
-                    return this['_' + key];
-                }
+                val.get = function () { return this['_' + key] }
             }
             if (!val.set)
             {
-                val.set = function (val)
-                {
-                    this['_' + key] = val;
-                }
+                val.set = function (val) { this['_' + key] = val }
             }
         });
         Object.defineProperties(newPx, attrs);
@@ -158,14 +150,10 @@ WebVN.module('Class', function (exports, util)
                 obj = self;
 
                 var name = method.__name__;
-                if (!name) {
-                    return undefined;
-                }
+                if (!name) return undefined;
 
                 var member = method.__owner__.superclass[name];
-                if (!member) {
-                    return undefined;
-                }
+                if (!member) return undefined;
 
                 return member.apply(obj, args || []);
             }

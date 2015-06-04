@@ -2,7 +2,7 @@
  * Usage: node grammar
  */
 var Parser = require('jison').Parser,
-    fs = require('fs');
+    fs     = require('fs');
 
 var grammar = {
     Root: [
@@ -78,4 +78,3 @@ code = ['webvn.module("parser", function (exports) {',
         '});'].join('\n');
 
 fs.writeFile('parser.js', code);
-
