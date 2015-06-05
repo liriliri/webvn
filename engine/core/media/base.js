@@ -1,5 +1,5 @@
 /**
- * @module media
+ * @namespace media
  */
 WebVN.module('media', function (exports, Class, log, util)
 {
@@ -12,12 +12,12 @@ WebVN.module('media', function (exports, Class, log, util)
 
     /**
      * @class Base
+     * @memberof media
+     * @extends Class.Base
      */
     var Base = exports.Base = Class.create(
+        /** @lends media.Base.prototype */
         {
-            /**
-                * @constructor
-                */
             constructor: function Base()
             {
                 this.state = STATE.NOT_LOADED;
@@ -25,27 +25,30 @@ WebVN.module('media', function (exports, Class, log, util)
             },
 
             /**
-                * @method isLoaded
-                * @return {Boolean}
-                */
+             * Media is loaded or not.
+             * @method
+             * @return {Boolean}
+             */
             isLoaded: function ()
             {
                 return this.state !== STATE.NOT_LOADED;
             },
 
             /**
-                * @method load
-                */
-            load: function (src, autoPlay)
+             * @method
+             * @param {string} src
+             * @param {boolean} autoplay
+             */
+            load: function (src, autoplay)
             {
-                if (autoPlay === undefined) autoPlay = true;
+                if (autoplay === undefined) autoPlay = true;
 
                 var self = this;
                 // Stop playing music
                 this.stop();
                 this.state = STATE.NOT_LOADED;
                 // AutoPlay init
-                if (autoPlay)
+                if (autoplay)
                 {
                     this.el.onloadeddata = function ()
                     {
@@ -63,8 +66,8 @@ WebVN.module('media', function (exports, Class, log, util)
             },
 
             /**
-                * @method pause
-                */
+             * @method
+             */
             pause: function ()
             {
                 if (this.state === STATE.PLAY)
@@ -75,8 +78,8 @@ WebVN.module('media', function (exports, Class, log, util)
             },
 
             /**
-                * @method play
-                */
+             * @method
+             */
             play: function ()
             {
                 if (this.state === STATE.PAUSE)
@@ -87,16 +90,16 @@ WebVN.module('media', function (exports, Class, log, util)
             },
 
             /**
-                * @method isPlaying
-                */
+             * @method
+             */
             isPlaying: function ()
             {
                 return this.state === STATE.PLAY;
             },
 
             /**
-                * @method stop
-                */
+             * @method
+             */
             stop: function ()
             {
                 if (this.state !== STATE.NOT_LOADED)
@@ -108,8 +111,8 @@ WebVN.module('media', function (exports, Class, log, util)
             },
 
             /**
-                * @method events
-                */
+             * @method
+             */
             events: function (events)
             {
                 var self = this;
@@ -138,11 +141,14 @@ WebVN.module('media', function (exports, Class, log, util)
 
     /**
      * @class Video
-     * @extends Base
+     * @memberof media
+     * @extends media.Base
      */
     var Video = exports.Video = Base.extend(
+        /** @lends media.Video.prototype */
         {
-            constructor: function Video(video) {
+            constructor: function Video(video)
+            {
                 this.callSuper();
                 this.el = video;
             }

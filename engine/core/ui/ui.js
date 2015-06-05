@@ -1,4 +1,4 @@
-WebVN.module('ui', function (exports, Class, select, config, util, script)
+WebVN.module('ui', function (exports, Class, select, config, util, script, event)
 {
     var cfg = config.create('ui'),
         cfgContainer = cfg.get('container'),
@@ -73,7 +73,9 @@ WebVN.module('ui', function (exports, Class, select, config, util, script)
     // Base class for all ui class
     var BaseUi = Class.create({
 
-        constructor: function BaseUi(name) {
+        constructor: function BaseUi()
+        {
+            event.observer.create(this);
             this.init();
         },
 

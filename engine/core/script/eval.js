@@ -1,18 +1,32 @@
+/**
+ * @namespace js
+ * @memberof script
+ */
 webvn.extend('script', function (exports, util, storage, log)
 {
     var globalStore = storage.createLocalStore('global'),
-        s           = {};
+        s           = {},
+        js          = {};
 
-    // Quick reference
     var playNext = exports.play;
 
-    // Eval javaScript code with not return value.
-    exports.jsEval = function (code) { _jsEval(code) };
-
-    /* Eval javaScript code with return value.
-     * Only simple expressions are allowed to pass in.
+    /**
+     * Eval javaScript code without return value.
+     * @method eval
+     * @memberof script.js
+     * @param {string} code Javascript code to eval.
      */
-    exports.jsEvalVal = function (code) { return _jsEval(code, true) };
+    js.eval = function (code) { _jsEval(code) };
+
+    /**
+     * Eval javaScript code with return value. <br>
+     * Only simple expressions are allowed to pass in.
+     * @method val
+     * @memberof script.js
+     * @param {string} code JavaScript code to eval.
+     * @return {*} Eval result.
+     */
+    js.val = function (code) { return _jsEval(code, true) };
 
     var emptyStr = '';
 
@@ -52,4 +66,6 @@ webvn.extend('script', function (exports, util, storage, log)
     var save = storage.create('s');
     save.save(function () { return s })
         .load(function (val) { s = val });
+
+    exports.js = js;
 });

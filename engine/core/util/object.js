@@ -1,10 +1,5 @@
 /**
- * @module util
- */
-/**
- * @class util
- * @static
- * @constructor
+ * @namespace util
  */
 WebVN.extend('util', function (exports)
 {
@@ -35,35 +30,29 @@ WebVN.extend('util', function (exports)
         }
     })(Object.keys);
 
-    /*
-    exports.values = function (obj) {
-        var _keys = keys(obj),
-            len = _keys.length,
-            values = new Array(len);
+    /**
+     * Combine properties from all the objects into first one.
+     * @method mixIn
+     * @memberof util
+     * @param {Object} target Target object.
+     * @param {...Object} objects Objects to be combined.
+     * @return {Object} Target object.
+     */
+    exports.mixIn = function (target, objects)
+    {
+        var i   = 0,
+            len = arguments.length,
+            obj;
 
-        for (var i = 0; i < len; i++) {
-            values[i] = obj[keys[i]];
+        while (++i < len)
+        {
+            obj = arguments[i];
+            if (obj != null) {
+                exports.each(obj, function (val, key) {target[key] = val});
+            }
         }
 
-        return values;
-    };
+        return target;
+    }
 
-    exports.merge = function () {
-
-    };
-
-    exports.mixIn = function () {
-
-    };
-
-    exports.clone = function (val) {
-        switch (exports.type(val)) {
-            case 'object':
-
-        }
-    };
-
-    exports.deepClone = function (val) {
-
-    };*/
 });

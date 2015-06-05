@@ -1,32 +1,35 @@
-/* Provide function used by parser,
- * and helper function related to wvnScript/javaScript translation
+/**
+ * Provide helper function related to wvnScript/javaScript translation.
+ * @namespace parserNode
+ * @memberof script
  */
-webvn.module('parserNode', function (exports, Class, util)
+webvn.module('script', function (exports, Class, util)
 {
-    var lineNum = 0;
+    var parserNode = {},
+        lineNum    = 0;
 
-    exports.lineNum = function (value) { lineNum = value };
+    parserNode.lineNum = function (value) { lineNum = value };
 
-    exports.expression = function (content)
+    parserNode.expression = function (content)
     {
         content = removeLastLineBreak(content);
 
         return '$$(' + content + ', ' + lineNum + ');\n';
     };
 
-    exports.label = function (label)
+    parserNode.label = function (label)
     {
         return '"label", "' + util.trim(label) + '"';
     };
 
-    exports.command = function (command)
+    parserNode.command = function (command)
     {
         command = formatParam(escapeQuote(command));
 
         return '"command", "' + util.trim(command) + '"';
     };
 
-    exports.code = function (code)
+    parserNode.code = function (code)
     {
         // Trim every line to make it look decent
         var lines = code.split('\n'),
@@ -42,38 +45,38 @@ webvn.module('parserNode', function (exports, Class, util)
         return '"code", "' + code + '"';
     };
 
-    exports.block = function (block)
+    parserNode.block = function (block)
     {
         block = indent(block);
 
         return ' {\n' + block + '}\n';
     };
 
-    exports.paramList = function (paramList, param)
+    parserNode.paramList = function (paramList, param)
     {
         return paramList + ', ' + param;
     };
 
-    exports.ifWrapper = function (body)
+    parserNode.ifWrapper = function (body)
     {
         body = indent(body);
 
         return '"if", function () {\n' + body + '}\n';
     };
 
-    exports['if'] = function (condition, block)
+    parserNode['if'] = function (condition, block)
     {
         return 'if (' + condition + ')' + block;
     };
 
-    exports.ifElse = function (former, latter)
+    parserNode.ifElse = function (former, latter)
     {
         former = removeLastLineBreak(former);
 
         return former + ' else ' + util.trim(latter) + '\n';
     };
 
-    exports['function'] = function (name, param, block)
+    parserNode['function'] = function (name, param, block)
     {
         if (block === undefined)
         {
@@ -112,7 +115,7 @@ webvn.module('parserNode', function (exports, Class, util)
     }
 
     // https://github.com/joliss/js-string-escape/blob/master/index.js
-    var escapeQuote = exports.escapeQuote = function (text)
+    var escapeQuote = parserNode.escapeQuote = function (text)
     {
         return ('' + text).replace(/["'\\\n\r\u2028\u2029]/g, function (character)
         {
@@ -128,4 +131,6 @@ webvn.module('parserNode', function (exports, Class, util)
             }
         });
     };
+
+    exports.parserNode = parserNode;
 });

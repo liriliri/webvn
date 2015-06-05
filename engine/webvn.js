@@ -129,10 +129,12 @@ window.WebVN = window.webvn = (function(exports)
     }
 
     /**
+     * Create module.
      * @method module
      * @memberof WebVN
-     * @param {string|function} name
-     * @param {function} module
+     * @param {string} [name] Module name.
+     * @param {function} module Module body.
+     * @return {object} Object returned by function.
      */
     WebVN.module = function (name, module)
     {

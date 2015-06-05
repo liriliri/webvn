@@ -1,3 +1,9 @@
-webvn.use(function (ui) {
+webvn.use(function (ui, script)
+{
+    var uiName  = 'console',
+        exports = ui.create(uiName);
 
+    exports.listenTo(script, 'execCmd', function (text)
+    {
+    });
 });

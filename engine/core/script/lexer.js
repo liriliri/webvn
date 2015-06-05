@@ -1,13 +1,16 @@
-webvn.module('lexer', function (exports, Class, log, util)
+WebVN.extend('script', function (exports, Class, log, util)
 {
+    var lexer = {};
+
     /**
-     * @class webvn.script.Token
+     * @class
+     * @memberof script
      * @param {string} tag tag name
      * @param {string} value value
-     * @param {object} locationData {first_line, first_column, last_line, last_column}
-     * @returns {Array} result [tag, value, locationData]
+     * @param {Object} locationData {first_line, first_column, last_line, last_column}
+     * @return {Array} result [tag, value, locationData]
      */
-    var Token = exports.Token = Class.create(
+    var Token = lexer.Token = Class.create(
         {
             constructor: function (tag, value, locationData)
             {
@@ -23,7 +26,7 @@ webvn.module('lexer', function (exports, Class, log, util)
 
     var EOF = 'END_OF_FILE';
 
-    var Lexer = exports.Lexer = Class.create(
+    var Lexer = lexer.Lexer = Class.create(
         {
             constructor: function Lexer() {},
 

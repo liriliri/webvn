@@ -63,18 +63,21 @@ var operators = [
 ];
 
 var parser = new Parser({
-    tokens: tokens,
-    bnf: grammar,
-    operators: operators.reverse(),
+    tokens     : tokens,
+    bnf        : grammar,
+    operators  : operators.reverse(),
     startSymbol: 'Root'
 });
 
 var code = parser.generate();
 
 // Wrap inside webvn namespace
-code = ['webvn.module("parser", function (exports) {',
-            'var require = function(){};',
+code = ['webvn.extend("script", function (exports) {',
+            'var require = function(){},',
+                'exp = exports;',
+                'exports = {};',
             code,
+            'exp.parser = exports.parser',
         '});'].join('\n');
 
 fs.writeFile('parser.js', code);

@@ -6,8 +6,8 @@ WebVN.extend('script', function (exports, Class, log, util)
 {
     /**
      * @class Command
-     * @extends Class.Base
      * @memberof script.command
+     * @extends Class.Base
      */
     var Command = Class.create(
         /** @lends script.command.Command.prototype */
@@ -120,7 +120,7 @@ WebVN.extend('script', function (exports, Class, log, util)
                 {
                     if (util.isString(value) && util.startsWith(value, '`'))
                     {
-                        ret[key] = exports.jsEvalVal(value.substr(1));
+                        ret[key] = exports.js.val(value.substr(1));
                     } else ret[key] = value;
                 });
 
@@ -206,12 +206,28 @@ WebVN.extend('script', function (exports, Class, log, util)
 
     function get(name) { return commands[name] }
 
+    /**
+     * Create new Command.
+     * @method create
+     * @memberof script.command
+     * @param {Object} px New command class prototype.
+     */
     function create(px) { new (Command.extend(px)) }
+
+    /**
+     * Check command exists or not.
+     * @method has
+     * @memberof script.command
+     * @param {string} name Command name.
+     * @returns {boolean} Exists or not.
+     */
+    function has(name) { return commands[name] != undefined }
 
     exports.command = {
         parse  : parseCmd,
         create : create,
         get    : get,
+        has    : has,
         Command: Command
     };
 });

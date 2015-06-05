@@ -1,20 +1,20 @@
 /**
  * @namespace script
  */
-WebVN.module('script', function (exports, config, parser, parserNode, util, loader, lexer, log, storage, Class)
+WebVN.extend('script', function (exports, config, util, loader, log, storage, event)
 {
-    var conf = config.create('script');
+    var conf   = config.create('script'),
+        parser = exports.parser,
+        lexer  = exports.lexer;
 
-    lexer = lexer.lexer;
+    event.observer.create(exports);
 
-    // Parser
-    parser = parser.parser;
-
+    parser.yy    = exports.parserNode;
     parser.lexer = {
         lex: function ()
         {
-            var tag, token;
-            token = parser.tokens[this.pos++];
+            var token = parser.tokens[this.pos++],
+                tag;
 
             if (token)
             {
@@ -34,22 +34,86 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
         }
     };
 
-    parser.yy = parserNode;
-
-    var parse = exports.parse = function (scenario)
+    /**
+     * @namespace func
+     * @memberof script
+     */
+    /**
+     * @alias script.func
+     */
+    var func = exports.func = WebVN.module(function (exports, script)
     {
-        var tokens = lexer(scenario);
+        var functions = {},
+            regSpace = /\s/,
+            fn;
 
-        return parser.parse(tokens);
+        /**
+         * Create a function.
+         * @method create
+         * @memberof script.func
+         * @param {string} name Function name.
+         * @param {function} fn Function to create.
+         */
+        exports.create = function (name, fn)
+        {
+            script.command.has(name) &&
+            log.warn('You are overwriting command ' + name + '.');
+
+            functions[name] = fn;
+        };
+
+        /**
+         * Check function exists or not.
+         * @method has
+         * @memberof script.func
+         * @param {string} name Function name.
+         * @returns {boolean} Exists or not.
+         */
+        exports.has = function (name) { return functions[name] !== undefined };
+
+        exports.execute = function (name, params)
+        {
+            fn = functions[name];
+
+            // Wrap params with spaces
+            params = params.map(function (val)
+            {
+                if (regSpace.test(val)) val = "'" + val + "'";
+
+                return val;
+            });
+
+            isSource = false;
+            fn.apply(null, params);
+            isSource = true;
+
+            executions = middles.concat(executions);
+            middles    = [];
+        };
+    });
+
+    /**
+     * Parse scenario into javaScript.
+     * @method parse
+     * @memberof script
+     * @param {string} scenarioText Pure scenario text.
+     * @return {string} JavaScript code converted from scenario text.
+     */
+    var parse = exports.parse = function (scenarioText)
+    {
+        return parser.parse(lexer(scenarioText));
     };
 
-    // Parse the source code and eval it
-    var wvnEval = exports.eval = function (code)
+    /**
+     * Parse the scenario into javaScript and eval it, just a wrapper of parse.
+     * @method eval
+     * @memberof script
+     * @param {string} scenarioText Pure scenario text.
+     */
+    var wvnEval = exports.eval = function (scenarioText)
     {
-        exports.jsEval(parse(code));
+        exports.js.eval(parse(scenarioText));
     };
-
-    // Script controller
 
     /* Contains the result of source file eval:
      * [ ['command', 'dialog -d'], ['if', function () { if... }]... ]
@@ -87,7 +151,7 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
         {
             case 'label': label.create(source[1], line); break;
             // Since functions can't be stored, we have to create them at start
-            case 'function': functions.create(source[1], source[2]); break;
+            case 'function': func.create(source[1], source[2]); break;
         }
     }
 
@@ -139,7 +203,6 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
             case 'label': play(); break;
             default: log.warn("Unknown command type"); break;
         }
-
     };
 
     var alias = exports.alias = WebVN.module(function (exports)
@@ -185,43 +248,14 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
         }
     });
 
-    var functions = WebVN.module(function (exports)
-    {
-        var container = {};
-
-        exports.create = function (name, fn) { container[name] = fn };
-
-        exports.has = function (name) { return container[name] !== undefined };
-
-        var spaceRegex = /\s/;
-
-        exports.execute = function (name, params)
-        {
-            var fn = container[name];
-
-            // Wrap params with spaces
-            params = params.map(function (value)
-            {
-                if (spaceRegex.test(value)) value = "'" + value + "'";
-
-                return value;
-            });
-
-            isSource = false;
-            fn.apply(null, params);
-            isSource = true;
-
-            executions = middles.concat(executions);
-            middles    = [];
-        };
-    });
-
     function execCommand(command)
     {
         var lineNum     = command[2],
             commandText = cmdBeautify(command[1]);
 
-        log.info('Command: ' + commandText + ' ' + lineNum);
+        var logText = 'Cmd: ' + commandText + ' ' + lineNum;
+        log.info(logText);
+        exports.trigger('execCmd', logText);
 
         // Do alias replacement.
         commandText = alias.parse(commandText);
@@ -235,9 +269,9 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
             values  = command.values;
 
         // Execute function
-        if (functions.has(name))
+        if (func.has(name))
         {
-            functions.execute(name, values);
+            func.execute(name, values);
             play();
             return;
         }
@@ -246,9 +280,9 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
         var cmd = exports.command.get(name);
         if (!cmd)
         {
-            if (functions.has('default'))
+            if (func.has('default'))
             {
-                functions.execute('default', [commandText]);
+                func.execute('default', [commandText]);
                 play();
                 return;
             }
@@ -271,7 +305,7 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
     {
         var lineNum = code[2];
         log.info('Code: ' + code[1] + ' ' + lineNum);
-        exports.jsEval(code[1]);
+        exports.js.eval(code[1]);
     }
 
     /* Indicate which line is being executed now,
@@ -358,7 +392,7 @@ WebVN.module('script', function (exports, config, parser, parserNode, util, load
                     middles = [];
                     break;
                 case 'function':
-                    functions.create(source[1], source[2]);
+                    func.create(source[1], source[2]);
                     break;
                 default:
                     isCommand = true;

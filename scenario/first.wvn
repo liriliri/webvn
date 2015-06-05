@@ -38,7 +38,6 @@ if (g.firstPlay !== false) {
 标题画面 -d \
     -bhs=asset/sound/onmouse.wav \
     -bcs=asset/sound/onclick.wav \
-    -背景乐：bgm1
 
 *start
 

@@ -44,13 +44,13 @@ webvn.use(function (script, media)
                 'playNext'
             ],
 
-            fadeIn  : function (val) { bgm.fadeIn   = val; },
-            fadeOut : function (val) { bgm.fadeOut  = val; },
-            duration: function (val) { bgm.duration = val; },
-            play    : function (val) { val ? bgm.play() : bgm.pause(); },
-            loop    : function (val) { bgm.loop(val); },
-            stop    : function (val) { val && bgm.stop(); },
-            src     : function (val) { bgm.load(val); }
+            fadeIn  : function (val) { bgm.fadeIn   = val },
+            fadeOut : function (val) { bgm.fadeOut  = val },
+            duration: function (val) { bgm.duration = val },
+            play    : function (val) { val ? bgm.play() : bgm.pause() },
+            loop    : function (val) { bgm.loop(val) },
+            stop    : function (val) { val && bgm.stop() },
+            src     : function (val) { bgm.load(val) }
         }
     );
 

@@ -1,24 +1,24 @@
 /* This ui component is also served as a template.
  * Every other components should be written in the same style.
  */
-webvn.use(function (ui, script, media, util, config, storage) {
-    "use strict";
-    var uiName = 'menu',
+webvn.use(function (ui, script, media, util, config, storage)
+{
+    var uiName  = 'menu',
         exports = ui.create(uiName),
-        $el = exports.$el,
-        lang = ui.lang.get(uiName),
-        tpl = ui.template.get(uiName),
-        save = storage.create(uiName);
+        $el     = exports.$el,
+        lang    = ui.lang.get(uiName),
+        tpl     = ui.template.get(uiName),
+        save    = storage.create(uiName);
 
-    var cfg = config.create('uiMenu'),
+    var cfg           = config.create('uiMenu'),
         cfgStartLabel = cfg.get('startLabel');
 
     $el.addClass('fill').html(tpl({
-        'Start': lang.get('Start'),
-        'Load': lang.get('Load'),
+        'Start'  : lang.get('Start'),
+        'Load'   : lang.get('Load'),
         'Gallery': lang.get('Gallery'),
-        'Music': lang.get('Music'),
-        'Config': lang.get('Config')
+        'Music'  : lang.get('Music'),
+        'Config' : lang.get('Config')
     }));
 
     var bgm = media.audio.get('bgm'),

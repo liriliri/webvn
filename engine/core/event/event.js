@@ -88,7 +88,7 @@ WebVN.module('event', function (exports, util, select, Class)
             while ((handlerObj = matched.handlers[j++]) &&
                     !e.isImmediatePropagationStopped())
             {
-                ret = handleObj.handler.apply(matched.elem, [e]);
+                ret = handlerObj.handler.apply(matched.elem, [e]);
                 if (ret === false)
                 {
                     e.preventDefault();
@@ -119,7 +119,7 @@ WebVN.module('event', function (exports, util, select, Class)
                     {
                         matches[sel] = util.contains(this.querySelectorAll(sel), cur);
                     }
-                    if (matches[sel]) matches.push(handleObj);
+                    if (matches[sel]) matches.push(handlerObj);
                 }
                 if (matches.length) handlerQueue.push({elem: cur, handlers: matches});
             }
