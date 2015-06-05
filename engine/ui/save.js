@@ -75,12 +75,12 @@ webvn.use(function (ui, config, util, storage, select, system) {
             });
         }
 
-        $el.html(tpl({
-            Title: lang.get('Save'),
-            Close: lang.get('Close'),
-            type: 'save',
+        $el.html = tpl({
+            Title  : lang.get('Save'),
+            Close  : lang.get('Close'),
+            type   : 'save',
             records: records
-        }));
+        });
     }
 
     function renderLoad() {
@@ -93,12 +93,12 @@ webvn.use(function (ui, config, util, storage, select, system) {
             });
         }
 
-        $el.html(tpl({
+        $el.html = tpl({
             Title: lang.get('Load'),
             Close: lang.get('Close'),
             type: 'load',
             records: records
-        }));
+        });
     }
 
     exports.show = function (type) {

@@ -9,7 +9,8 @@ webvn.use(function (ui, media, script, config, storage) {
         cfgPath = cfg.get('path'),
         cfgExtension = cfg.get('extension');
 
-    $el.addClass('fill').html(tpl());
+    $el.addClass('fill');
+    $el.html = tpl();
 
     var asset = storage.createAsset(cfgPath, cfgExtension),
         video = media.video.create($el.find('video').get(0));

@@ -1,5 +1,5 @@
 /**
- * @namespace webvn.select
+ * @namespace select
  */
 webvn.module('select', function (exports, util)
 {

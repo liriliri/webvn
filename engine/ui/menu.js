@@ -13,13 +13,14 @@ webvn.use(function (ui, script, media, util, config, storage)
     var cfg           = config.create('uiMenu'),
         cfgStartLabel = cfg.get('startLabel');
 
-    $el.addClass('fill').html(tpl({
+    $el.addClass('fill');
+    $el.html = tpl({
         'Start'  : lang.get('Start'),
         'Load'   : lang.get('Load'),
         'Gallery': lang.get('Gallery'),
         'Music'  : lang.get('Music'),
         'Config' : lang.get('Config')
-    }));
+    });
 
     var bgm = media.audio.get('bgm'),
         se = media.audio.get('se');

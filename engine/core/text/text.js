@@ -42,7 +42,7 @@ WebVN.module('text', function (exports, util, Class, select)
 
             this.isPlaying = true;
 
-            $el.html(this.splitText(this.data));
+            $el.html = this.splitText(this.data);
 
             var $span = $el.find('span');
             $span.hide();

@@ -1,20 +1,21 @@
-WebVN.use(function (ui, select, media, config, storage, util) {
-    "use strict";
-    var uiName = 'music',
+WebVN.use(function (ui, select, media, config, storage, util)
+{
+    var uiName  = 'music',
         exports = ui.create(uiName),
-        $el = exports.$el,
-        lang = ui.lang.get(uiName),
-        tpl = ui.template.get(uiName);
+        $el     = exports.$el,
+        lang    = ui.lang.get(uiName),
+        tpl     = ui.template.get(uiName);
 
     var cfg = config.create('uiMusic'),
         cfgPath = cfg.get('path'),
         cfgExtension = cfg.get('extension');
 
-    $el.addClass('fill').html(tpl({
+    $el.addClass('fill');
+    $el.html = tpl({
         Music: lang.get('Music'),
         Close: lang.get('Close'),
-        Play: lang.get('Play')
-    }));
+        Play : lang.get('Play')
+    });
 
     var $progress = $el.find('.progress'),
         $progressFill = $progress.find('span'),
@@ -31,19 +32,19 @@ WebVN.use(function (ui, select, media, config, storage, util) {
 
             'timeupdate': function () {
                 var percentage = music.curTime / music.duration;
-                $progressFill.css('width', $progress.width() * percentage);
+                $progressFill.css('width', $progress.width * percentage);
             }
 
         });
 
-        $progress.on('click', function (e) {
-            if (!music.isPlaying()) {
-                return;
-            }
+        $progress.on('click', function (e)
+        {
+            if (!music.isPlaying()) return;
+
             // OffsetX has to divided by scale
             e = e.originalEvent;
             var x = e.offsetX / ui.scale,
-                percentage = x / $progress.width();
+                percentage = x / $progress.width;
             music.curTime = music.duration * percentage;
         });
 
@@ -51,7 +52,7 @@ WebVN.use(function (ui, select, media, config, storage, util) {
         util.each(files, function (file, index) {
             html += '<li class="num' + index + '" data-num="' + index + '">' + file + '</li>';
         });
-        $container.html(html);
+        $container.html = html;
 
         var $all = $container.find('li');
 

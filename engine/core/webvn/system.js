@@ -1,7 +1,7 @@
 /**
  * Provide some common system info and function,
  * such as the screen width and height.
- * @namespace webvn.system
+ * @namespace system
  */
 webvn.module('system', function (exports, select, config) {
     "use strict";
@@ -14,11 +14,11 @@ webvn.module('system', function (exports, select, config) {
     var $title = select.get('title');
 
     // Set window title
-    var title = exports.title = function (text) {
-        if (text === undefined) {
-            return $title.text();
-        }
-        $title.text(text);
+    var title = exports.title = function (text)
+    {
+        if (text === undefined) return $title.text();
+
+        $title.text = text;
     };
 
     // Set default title

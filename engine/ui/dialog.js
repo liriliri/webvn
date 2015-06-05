@@ -11,7 +11,8 @@ webvn.use(function (ui, text, media, config, storage, script) {
         cfgPath = cfg.get('path'),
         cfgExtension = cfg.get('extension');
 
-    $el.addClass('fill').html(tpl({
+    $el.addClass('fill');
+    $el.html = tpl({
         Q_Save: lang.get('Q-Save'),
         Q_Load: lang.get('Q-Load'),
         Load: lang.get('Load'),
@@ -19,7 +20,7 @@ webvn.use(function (ui, text, media, config, storage, script) {
         Config: lang.get('Config'),
         History: lang.get('History'),
         Title: lang.get('Title')
-    }));
+    });
 
     var $content = $el.find('.content'),
         $name = $el.find('.name'),
@@ -90,7 +91,7 @@ webvn.use(function (ui, text, media, config, storage, script) {
     };
 
     exports.name = function (name) {
-        $name.html('【' + name + '】');
+        $name.html = '【' + name + '】';
     };
 
     exports.text = function (text) {

@@ -25,21 +25,17 @@ webvn.extend('select', function (exports, Class, util)
 
     var emptyArr = [],
         slice    = emptyArr.slice;
+
     /**
-     * Select class
-     * @class webvn.select.Select
-     * @param {string|object} selector
+     * @class Select
+     * @memberof select
      */
     var Select = exports.Select = Class.create(
+        /** @lends select.Select.prototype */
         {
-            /**
-                * @memberof webvn.select.Select
-                */
-            length: 0,
-            constructor: function Select(selector) {
-                /* Nothing is passed in
-                 * Return empty Select instance
-                 */
+            constructor: function Select(selector)
+            {
+                // Nothing is passed in, return empty Select instance
                 if (!selector) return this;
 
                 // No context specified
@@ -51,66 +47,62 @@ webvn.extend('select', function (exports, Class, util)
                     this.length = 1;
                 }
             },
+
+            length: 0,
+
             /**
-                * Get the descendants of each element in the current set
-                * of matched elements, filtered by a selector.
-                * @method webvn.select.Select#find
-                * @param {string} selector
-                */
-            find: function (selector) {
+             * Get the descendants of each element in the current set
+             * of matched elements, filtered by a selector.
+             * @param {string} selector
+             */
+            find: function (selector)
+            {
                 var result = [];
-                util.each(this, function (value) {
+
+                util.each(this, function (value)
+                {
                     Select.merge(result, value.querySelectorAll(selector));
                 });
                 var select = new Select();
                 return Select.merge(select, result);
             },
+
             /**
-                * Iterate elements
-                * @method webvn.select.Select#each
-                * @param {function} fn
-                * @returns {Select}
-                */
-            each: function (fn) {
-                util.each(this, function (element, index) {
+             * Iterate elements
+             * @param {function} fn
+             * @return {Select}
+             */
+            each: function (fn)
+            {
+                util.each(this, function (element, index)
+                {
                     fn.call(element, index, element);
                 });
+
                 return this;
             },
-            /**
-                * Return first element.
-                * @method webvn.select.Select#first
-                * @returns {Select}
-                */
-            first: function () {
-                return new Select(this[0]);
-            },
-            /**
-                * Return last element.
-                * @method webvn.select.Select#last
-                * @returns {Select}
-                */
-            last: function () {
-                return new Select(this[this.length - 1]);
-            },
+
             /**
                 * Determine whether any of the matched elements are assigned the given class.
                 * @method webvn.select.Select#hasClass
                 * @param {string} name
                 * @returns {boolean}
                 */
-            hasClass: function (name) {
+            hasClass: function (name)
+            {
                 return emptyArr.some.call(this, function (element) {
                     return this.test(element.className);
                 }, new RegExp('(^|\\s)' + name + '(\\s|$)'));
             },
+
             /**
                 * Adds the specified class(es) to each element in the set of matched elements.
                 * @method webvn.select.Select#addClass
                 * @param {string} name
                 * @returns {Select}
                 */
-            addClass: function (name) {
+            addClass: function (name)
+            {
                 return this.each(function (index) {
                     var classList = [];
                     // Only add classes that do not exist
@@ -127,13 +119,15 @@ webvn.extend('select', function (exports, Class, util)
                     }
                 });
             },
+
             /**
                 * Removes class(es)
                 * @method webvn.select.Select#removeClass
                 * @param {string} name
                 * @returns {Select}
                 */
-            removeClass: function (name) {
+            removeClass: function (name)
+            {
                 return this.each(function () {
                     var classList = this.className;
                     name.split(/\s+/g).forEach(function (Class) {
@@ -142,29 +136,9 @@ webvn.extend('select', function (exports, Class, util)
                     this.className = classList;
                 });
             },
-            /**
-                * Set Text
-                * @method webvn.select.Select#text
-                * @param {string} text
-                * @returns {Select}
-                */
-            /**
-                * Get Text
-                * @method webvn.select.Select#text
-                * @returns {string}
-                */
-            text: function (text) {
-                // Get text
-                if (text === undefined) {
-                    return this[0].textContent;
-                }
-                // Set text
-                return this.each(function (index) {
-                    this.textContent = text;
-                });
-            },
 
-            visible: function (visiblity) {
+            visible: function (visiblity)
+            {
                 if (visiblity === undefined) {
                     return this.css('display') !== 'none';
                 }
@@ -180,13 +154,15 @@ webvn.extend('select', function (exports, Class, util)
                 * @method webvn.select.Select#show
                 * @returns {Select}
                 */
-            show: function () {
+            show: function ()
+            {
                 return this.each(function () {
                     if (getComputedStyle(this, '').getPropertyValue('display') === 'none') {
                         this.style.display = selectUtil.defaultDisplay(this.nodeName);
                     }
                 });
             },
+
             /**
                 * Get Style Value
                 * @method webvn.select.Select#css
@@ -200,7 +176,8 @@ webvn.extend('select', function (exports, Class, util)
                 * @param {string=} value
                 * @returns {Select}
                 */
-            css: function (property, value) {
+            css: function (property, value)
+            {
                 // Get style value
                 if (value === undefined) {
                     var computedStyle, element = this[0];
@@ -231,7 +208,9 @@ webvn.extend('select', function (exports, Class, util)
                     this.style.cssText += ';' + css;
                 });
             },
-            cssComputed: function (property) {
+
+            cssComputed: function (property)
+            {
                 var computedStyle, element = this[0], ret;
                 computedStyle = getComputedStyle(element, '');
                 if (util.isString(property)) {
@@ -247,9 +226,7 @@ webvn.extend('select', function (exports, Class, util)
                     return props;
                 }
             },
-            width: function () {
-                return this.cssComputed('width');
-            },
+
             /**
                 * Set Element Attribute
                 * @method webvn.select.Select#attr
@@ -262,7 +239,8 @@ webvn.extend('select', function (exports, Class, util)
                 * @method webvn.select.Select#attr
                 * @param {string} name
                 */
-            attr: function (name, value) {
+            attr: function (name, value)
+            {
                 // Get attributes
                 if (value === undefined && util.isString(name)) {
                     return this[0].getAttribute(name);
@@ -280,7 +258,8 @@ webvn.extend('select', function (exports, Class, util)
                 });
             },
 
-            data: function (name, value) {
+            data: function (name, value)
+            {
                 if (util.isString(name)) {
                     name = 'data-' + name;
                 } else if (util.isObject(name)) {
@@ -292,17 +271,8 @@ webvn.extend('select', function (exports, Class, util)
                 return this.attr(name, value);
             },
 
-            val: function (val) {
-                if (val === undefined) {
-                    return this[0] && this[0].value;
-                }
-
-                return this.each(function () {
-                    this.value = val;
-                });
-            },
-
-            removeAttr: function (name) {
+            removeAttr: function (name)
+            {
                 return this.each(function () {
                     if (this.nodeType === 1) {
                         name.split(' ').forEach(function (name) {
@@ -313,63 +283,75 @@ webvn.extend('select', function (exports, Class, util)
             },
 
             /**
-                * Set HTML
-                * @method webvn.select.Select#html
-                * @param {string} html
-                * @returns {Select}
-                */
-            /**
-                * Get HTML
-                * @method webvn.select.Select#html
-                * @returns {string}
-                */
-            html: function (html) {
-                // Get html
-                if (html === undefined) {
-                    return this[0].innerHTML;
-                }
-                // Set html
-                return this.each(function () {
-                    this.innerHTML = html;
-                });
-            },
-            /**
-                * Get Element Number
-                * @method webvn.select.Select#size
-                * @returns {number}
-                */
-            size: function () {
-                return this.length;
-            },
-            /**
                 * Get Raw Element <br>
                 * If index is undefined, then returns all elements.
                 * @method webvn.select.Select#get
                 * @param {number=} index
                 */
-            get: function (index) {
+            get: function (index)
+            {
                 if (index === undefined) {
                     return slice.call(this);
                 }
                 return this[index];
             },
+
             /**
                 * Hide Element
                 * @method webvn.select.Select#hide
                 */
-            hide: function () {
+            hide: function ()
+            {
                 return this.css('display', 'none');
             },
+
             /**
                 * Change Select Into Array
                 * @method webvn.select.Select#toArray
                 * @returns {Array}
                 */
-            toArray: function () {
+            toArray: function ()
+            {
                 return this.get();
             }
-        }, {}, {
-
+        },
+        /** @lends select.Select.prototype */
+        {
+            html: {
+                get: function () { return this[0].innerHTML },
+                set: function (val)
+                {
+                    this.each(function () { this.innerHTML = val });
+                }
+            },
+            text: {
+                get: function () { return this[0].textContent },
+                set: function (val)
+                {
+                    this.each(function () { this.textContent = val });
+                }
+            },
+            size: {
+                get: function () { return this.length }
+            },
+            first: {
+                get: function () { return new Select(this[0]) }
+            },
+            last: {
+                get: function () { return new Select(this[this.length - 1]) }
+            },
+            val: {
+                get: function () { return this[0] && this[0].value },
+                set: function (val)
+                {
+                    this.each(function () { this.value = val });
+                }
+            },
+            width: {
+                get: function () { return this.cssComputed('width') }
+            }
+        },
+        {
             /**
                 * Merge Second Array Into First Array
                 * @function webvn.select.Select.merge

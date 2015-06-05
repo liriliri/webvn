@@ -8,7 +8,8 @@ webvn.use(function (ui, config, media) {
 
     var cfg = config.create('uiConfig');
 
-    $el.addClass('fill').html(tpl({
+    $el.addClass('fill');
+    $el.html = tpl({
         Config: lang.get('Config'),
         Close: lang.get('Close'),
         Text_Speed: lang.get('Text Speed'),
@@ -16,16 +17,16 @@ webvn.use(function (ui, config, media) {
         Music: lang.get('Music'),
         Sound: lang.get('Sound'),
         Voice: lang.get('Voice')
-    }));
+    });
 
     var audio = media.audio,
         bgm = audio.get('bgm'),
         se = audio.get('se'),
         vo = audio.get('vo');
 
-    $el.find('.music').val(bgm.volume);
-    $el.find('.sound').val(se.volume);
-    $el.find('.voice').val(vo.volume);
+    $el.find('.music').val = bgm.volume;
+    $el.find('.sound').val = se.volume;
+    $el.find('.voice').val = vo.volume;
 
     exports.stopPropagation().properties({
         fadeIn: cfg.get('fadeIn'),
@@ -41,20 +42,9 @@ webvn.use(function (ui, config, media) {
             ui.get('dialog').textSpeed = this.val();
         },
 
-        'change .music': function () {
-            var val = this.val();
-            bgm.volume = val;
-        },
-
-        'change .sound': function () {
-            var val = this.val();
-            se.volume = val;
-        },
-
-        'change .voice': function () {
-            var val = this.val();
-            vo.volume = val;
-        }
+        'change .music': function () { bgm.volume = this.val },
+        'change .sound': function () { se.volume  = this.val },
+        'change .voice': function () { vo.volume  = this.val }
 
     });
 

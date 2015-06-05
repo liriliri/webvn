@@ -14,11 +14,12 @@ webvn.use(function (ui, select, config, storage, util) {
     var pageSize = 6,
         pageCount = Math.ceil(cfgFiles.length / pageSize);
 
-    $el.addClass('fill').html(tpl({
+    $el.addClass('fill');
+    $el.html = tpl({
         Gallery: lang.get('Gallery'),
         Close: lang.get('Close'),
         pageCount: pageCount
-    }));
+    });
 
     var $container = $el.find('.container'),
         $viewer = $el.find('.viewer'),
@@ -59,9 +60,7 @@ webvn.use(function (ui, select, config, storage, util) {
             });
         }
 
-        $container.html(imageTpl({
-            images: images
-        }));
+        $container.html = imageTpl({ images: images });
 
         curImgs = images;
     }
