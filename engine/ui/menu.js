@@ -1,5 +1,8 @@
-/* This ui component is also served as a template.
+/**
+ * The source code of this ui component is also served as a template. <br>
  * Every other components should be written in the same style.
+ * @namespace menu
+ * @memberof ui
  */
 webvn.use(function (ui, script, media, util, config, storage)
 {
@@ -15,29 +18,26 @@ webvn.use(function (ui, script, media, util, config, storage)
 
     $el.addClass('fill');
     $el.html = tpl({
-        'Start'  : lang.get('Start'),
-        'Load'   : lang.get('Load'),
-        'Gallery': lang.get('Gallery'),
-        'Music'  : lang.get('Music'),
-        'Config' : lang.get('Config')
+        Start  : lang.get('Start'),
+        Load   : lang.get('Load'),
+        Gallery: lang.get('Gallery'),
+        Music  : lang.get('Music'),
+        Config : lang.get('Config')
     });
 
     var bgm = media.audio.get('bgm'),
         se = media.audio.get('se');
 
-    save.save(function () {
-        return {};
-    }).load(function () {
-        $el.hide();
-    });
+    save.save(function () { return {} })
+        .load(function () { $el.hide() });
 
     exports.stopPropagation().properties({
-        bgm: cfg.get('bgm'),
+        bgm          : cfg.get('bgm'),
         btnClickSound: cfg.get('btnClkSound'),
         btnHoverSound: cfg.get('btnHoverSound'),
-        duration: cfg.get('Duration'),
-        fadeIn: cfg.get('fadeIn'),
-        fadeOut: cfg.get('FadeOut')
+        duration     : cfg.get('Duration'),
+        fadeIn       : cfg.get('fadeIn'),
+        fadeOut      : cfg.get('FadeOut')
     }).events({
 
         'click .start': function () {
@@ -53,17 +53,11 @@ webvn.use(function (ui, script, media, util, config, storage)
             }
         },
 
-        'click .load': function () {
-            ui.get('save').show('load');
-        },
+        'click .load': function () { ui.get('save').show('load') },
 
-        'click .setting': function () {
-            ui.get('config').show();
-        },
+        'click .setting': function () { ui.get('config').show() },
 
-        'click .cg': function () {
-            ui.get('gallery').show();
-        },
+        'click .cg': function () { ui.get('gallery').show() },
 
         'click .music': function () {
             if (exports.bgm) bgm.stop();
@@ -72,30 +66,36 @@ webvn.use(function (ui, script, media, util, config, storage)
         },
 
         'mouseover li': function () {
-            if (exports.btnHoverSound) se.load(exports.btnHoverSound);
+            exports.btnHoverSound && se.load(exports.btnHoverSound);
         },
 
         'click li': function () {
-            if (exports.btnClickSound) se.load(exports.btnClickSound);
+            exports.btnClickSound && se.load(exports.btnClickSound);
         }
 
     });
 
-    exports.reset = function () {
-        $el.hide();
-    };
+    exports.reset = function () { $el.hide() };
 
-    exports.show = function () {
+    /**
+     * @method show
+     * @memberof ui.menu
+     */
+    exports.show = function ()
+    {
         if (exports.bgm) bgm.load(exports.bgm);
 
         exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();
     };
 
-    exports.buttons = function (buttons) {
-        util.each(buttons, function (value, key) {
+    exports.buttons = function (buttons)
+    {
+        util.each(buttons, function (value, key)
+        {
             var $e = $el.find('ul li.' + key);
 
-            if (util.isString(value)) {
+            if (util.isString(value))
+            {
                 $e.text(value);
                 return;
             }
@@ -104,8 +104,9 @@ webvn.use(function (ui, script, media, util, config, storage)
         });
     };
 
-    exports.playBgm = function () {
-        if (exports.bgm) bgm.load(exports.bgm);
+    exports.playBgm = function ()
+    {
+        exports.bgm && bgm.load(exports.bgm);
     };
 
 });

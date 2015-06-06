@@ -40,9 +40,8 @@ webvn.module('script', function (exports, Class, util)
             lines[i] = util.trim(lines[i]);
         }
         code = lines.join('\n');
-        code = escapeQuote(code);
 
-        return '"code", "' + code + '"';
+        return '"code", function () {\n' + code + '\n}';
     };
 
     parserNode.block = function (block)

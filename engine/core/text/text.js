@@ -99,7 +99,7 @@ WebVN.module('text', function (exports, util, Class, select)
         stop: function () {
             this.isPlaying = false;
             this.stopTimer();
-            this.$el.find('span').show().removeAttr('class');
+            this.$el.find('span').show().rmAttr('class');
         },
 
         stopTimer: function () {

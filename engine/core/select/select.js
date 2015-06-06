@@ -3,10 +3,11 @@ webvn.extend('select', function (exports, Class, util)
     var selectUtil = exports.util;
 
     /**
-     * Create New Select Object
-     * @function webvn.select.create
-     * @param {string} name node name, div, canvas...
-     * @returns {Select}
+     * Create new select object.
+     * @method create
+     * @memberof select
+     * @param {String} name Node name, div, canvas...
+     * @return {Select}
      */
     exports.create = function (name)
     {
@@ -16,10 +17,11 @@ webvn.extend('select', function (exports, Class, util)
     };
 
     /**
-     * Get Select Object by Selector
-     * @function webvn.select.get
-     * @param {string} selector
-     * @returns {Select}
+     * Get select object by selector.
+     * @method get
+     * @memberof select
+     * @param {String} selector
+     * @return {Select}
      */
     exports.get = function (selector) { return new Select(selector) };
 
@@ -27,7 +29,8 @@ webvn.extend('select', function (exports, Class, util)
         slice    = emptyArr.slice;
 
     /**
-     * @class Select
+     * @name Select
+     * @class
      * @memberof select
      */
     var Select = exports.Select = Class.create(
@@ -39,11 +42,13 @@ webvn.extend('select', function (exports, Class, util)
                 if (!selector) return this;
 
                 // No context specified
-                if (util.isString(selector)) {
+                if (util.isString(selector))
+                {
                     return rootSelect.find(selector);
-                } else if (selector.nodeType) {
+                } else if (selector.nodeType)
+                {
                     // Handle: dom
-                    this[0] = selector;
+                    this[0]     = selector;
                     this.length = 1;
                 }
             },
@@ -64,6 +69,7 @@ webvn.extend('select', function (exports, Class, util)
                     Select.merge(result, value.querySelectorAll(selector));
                 });
                 var select = new Select();
+
                 return Select.merge(select, result);
             },
 
@@ -90,17 +96,18 @@ webvn.extend('select', function (exports, Class, util)
                 */
             hasClass: function (name)
             {
-                return emptyArr.some.call(this, function (element) {
+                return emptyArr.some.call(this, function (element)
+                {
                     return this.test(element.className);
                 }, new RegExp('(^|\\s)' + name + '(\\s|$)'));
             },
 
             /**
-                * Adds the specified class(es) to each element in the set of matched elements.
-                * @method webvn.select.Select#addClass
-                * @param {string} name
-                * @returns {Select}
-                */
+             * Adds the specified class(es) to each element in the set of matched elements.
+             * @method webvn.select.Select#addClass
+             * @param {string} name
+             * @returns {Select}
+             */
             addClass: function (name)
             {
                 return this.each(function (index) {
@@ -227,18 +234,6 @@ webvn.extend('select', function (exports, Class, util)
                 }
             },
 
-            /**
-                * Set Element Attribute
-                * @method webvn.select.Select#attr
-                * @param {string|object} name
-                * @param {string=} value
-                * @returns {Select}
-                */
-            /**
-                * Get Element Attribute
-                * @method webvn.select.Select#attr
-                * @param {string} name
-                */
             attr: function (name, value)
             {
                 // Get attributes
@@ -271,7 +266,7 @@ webvn.extend('select', function (exports, Class, util)
                 return this.attr(name, value);
             },
 
-            removeAttr: function (name)
+            rmAttr: function (name)
             {
                 return this.each(function () {
                     if (this.nodeType === 1) {
@@ -353,12 +348,12 @@ webvn.extend('select', function (exports, Class, util)
         },
         {
             /**
-                * Merge Second Array Into First Array
-                * @function webvn.select.Select.merge
-                * @param {Array} first
-                * @param {Array} second
-                * @returns {Array}
-                */
+             * Merge Second Array Into First Array
+             * @function webvn.select.Select.merge
+             * @param {Array} first
+             * @param {Array} second
+             * @returns {Array}
+             */
             merge: function (first, second) {
                 var len = +second.length,
                     i = first.length;

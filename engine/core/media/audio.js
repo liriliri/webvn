@@ -3,8 +3,14 @@ webvn.extend('media', function (exports, storage, config)
     var Base  = exports.Base,
         STATE = exports.STATE;
 
-    // Append class in order not to conflict with primitive Audio class.
+    /**
+     * Append class in order not to conflict with primitive Audio class.
+     * @class AudioClass
+     * @memberof media
+     * @extends media.Base
+     */
     var AudioClass = exports.AudioClass = Base.extend(
+        /** @lends media.AudioClass.prototype */
         {
             constructor: function AudioClass()
             {

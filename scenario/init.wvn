@@ -1,41 +1,51 @@
-/* Initialization script
+/**
+ * Initialization script.
  * Alias and macro function are defined here.
  * Creating your own alias and macro here is not recommended.
  * Please create another script file to define your own.
  */
 
-function default(text) {
+function default(text)
+{
     dialog -t={{text}}
 }
 
-function jump(label) {
+function jump(label)
+{
     script -j={{label}}
 }
 
-function logInfo(msg) {
+function logInfo(msg)
+{
     log -t=info -m={{msg}}
 }
 
-function playBgm(src) {
+function playBgm(src)
+{
     bgm -s={{src}}
 }
 
-function playVideo(src) {
+function playVideo(src)
+{
     video -d -p -s={{src}} -c=skip
 }
 
-function setAlias(name, value) {
+function setAlias(name, value)
+{
     alias -n={{name}} -v={{value}}
 }
 
-function setDefine(name, value) {
+function setDefine(name, value)
+{
     define -n={{name}} -v={{value}}
 }
 
-function title(name) {
+function title(name)
+{
     system -t={{name}}
 }
 
-function stopBgm() {
+function stopBgm()
+{
     bgm -p=false
 }
