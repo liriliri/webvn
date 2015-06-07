@@ -1,4 +1,4 @@
-webvn.use(function (ui, script)
+WebVN.use(function (ui, script)
 {
     var uiName  = 'console',
         exports = ui.create(uiName);

@@ -1,5 +1,5 @@
-webvn.extend('webgl', function (exports, Class, log, util, config) {
-
+WebVN.extend('webgl', function (exports, Class, log, util, config)
+{
     var Shader = exports.Shader,
         createShader = exports.createShader,
         createTexture = exports.createTexture,

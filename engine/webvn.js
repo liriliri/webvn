@@ -1,7 +1,7 @@
 /**
  * @namespace WebVN
  */
-window.WebVN = window.webvn = (function(exports)
+window.WebVN = (function(exports)
 {
     /**
      * The version string of this release.
@@ -13,7 +13,6 @@ window.WebVN = window.webvn = (function(exports)
     return exports;
 })({});
 
-// Basic setup
 (function()
 {
     var head = document.getElementsByTagName('head')[0];
@@ -57,7 +56,6 @@ window.WebVN = window.webvn = (function(exports)
         });
     }
 
-    // Js file list
     var jsQueue     = [],
         isJsLoading = false;
 
@@ -267,10 +265,8 @@ window.WebVN = window.webvn = (function(exports)
     }
 })();
 
-// Look for config file and load files
 WebVN.use(function ()
 {
-    // Get build info, dev, test, debug or release
     var scripts  = document.getElementsByTagName('script'),
         basePath = '',
         build, i, len;
@@ -281,14 +277,13 @@ WebVN.use(function ()
         if (build) break;
     }
 
-    webvn.module('config', function (exports)
+    WebVN.module('config', function (exports)
     {
         exports.build = build;
     });
 
     if (build === 'test') basePath = '../';
 
-    // Load webvn.json
     var xhr = new window.XMLHttpRequest();
     xhr.onload = function ()
     {

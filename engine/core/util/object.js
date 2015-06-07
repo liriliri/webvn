@@ -1,6 +1,3 @@
-/**
- * @namespace util
- */
 WebVN.extend('util', function (exports)
 {
     /**

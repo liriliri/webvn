@@ -4,7 +4,7 @@
  * @namespace menu
  * @memberof ui
  */
-webvn.use(function (ui, script, media, util, config, storage)
+WebVN.use(function (ui, script, media, util, config, storage)
 {
     var uiName  = 'menu',
         exports = ui.create(uiName),

@@ -59,23 +59,27 @@ WebVN.use(function (ui, select, media, config, storage, util)
         var curNum = -1,
             total = files.length;
 
-        var play = exports.play = function (num) {
+        var play = exports.play = function (num)
+        {
             if (num === undefined) {
-                if (!music.isLoaded()) {
-                    return;
-                }
-                if (music.isPlaying()) {
+                if (!music.isLoaded()) return;
+
+                if (music.isPlaying())
+                {
                     $playBtn.text(lang.get('Play'));
                     music.pause();
-                } else {
+                } else
+                {
                     $playBtn.text(lang.get('Pause'));
                     music.play();
                 }
-            } else {
-                $playBtn.removeClass('disabled').text(lang.get('Pause'));
-                $nextBtn.removeClass('disabled');
-                $preBtn.removeClass('disabled');
-                $all.removeClass('playing');
+            } else
+            {
+                $playBtn.rmClass('disabled');
+                $playBtn.text = lang.get('Pause');
+                $nextBtn.rmClass('disabled');
+                $preBtn.rmClass('disabled');
+                $all.rmClass('playing');
                 curNum = num;
                 $el.find('.num' + num).addClass('playing');
                 music.load(files[num]);

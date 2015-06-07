@@ -1,5 +1,5 @@
-webvn.extend('storage', function (exports, Class, util) {
-    "use strict";
+WebVN.extend('storage', function (exports, Class, util)
+{
     var createLocalStore = exports.createLocalStore;
 
     function emptyFunc() {}

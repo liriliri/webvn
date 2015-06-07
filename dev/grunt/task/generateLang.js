@@ -2,7 +2,7 @@
 var util = require('../util'),
     path = require('path');
 
-var intro = 'webvn.use(function (ui) { ui.lang.create(',
+var intro = 'WebVN.use(function (ui) { ui.lang.create(',
     outro = ');});';
 
 function exportsFunc(grunt) {

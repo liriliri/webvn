@@ -1,6 +1,5 @@
-webvn.extend('config', function (exports) {
-    "use strict";
-
+WebVN.extend('config', function (exports)
+{
     exports.uiBackground = {
         path: 'asset/bg/',
         extension: 'jpg',

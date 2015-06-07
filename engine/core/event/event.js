@@ -1,16 +1,20 @@
-/* Event module
- * Note: jQuery's implementation is too complex for this one
- * Zepto's implementation is way too simple and has some kind of problem
+/**
+ * Event module.
+ * Note: jQuery's implementation is too complex for this one.
+ * Zepto's implementation is way too simple and has some kind of problem.
  * Now I have to implement my own version :(
+ * @namespace event
  */
 WebVN.module('event', function (exports, util, select, Class)
 {
-    /* Add event
-     * All events are attached to the elem's events, it looks as below:
-     * ele.events = {
-     *      'click': [],
-     *      'mouseenter': []
-     * }
+    /**
+     * Add event
+     * @method add
+     * @memberof event
+     * @param ele
+     * @param type
+     * @param fn
+     * @param selector
      */
     var add = exports.add = function (ele, type, fn, selector)
     {

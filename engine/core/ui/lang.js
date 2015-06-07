@@ -1,5 +1,5 @@
-webvn.extend('ui', function (exports, util, config, Class) {
-    'use strict';
+WebVN.extend('ui', function (exports, util, config, Class)
+{
     var cfg = config.create('ui'),
         cfgLang = cfg.get('lang');
 

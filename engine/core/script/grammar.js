@@ -72,7 +72,7 @@ var parser = new Parser({
 var code = parser.generate();
 
 // Wrap inside webvn namespace
-code = ['webvn.extend("script", function (exports) {',
+code = ['WebVN.extend("script", function (exports) {',
             'var require = function(){},',
                 'exp = exports;',
                 'exports = {};',

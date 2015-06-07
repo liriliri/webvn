@@ -2,9 +2,9 @@
  * Wrapper of Console <br>
  * This module is used to display logs.
  * and notice that only under debug mode, the info is displayed
- * @namespace webvn.log
+ * @namespace log
  */
-webvn.module('log', function (exports, config, util)
+WebVN.module('log', function (exports, config, util)
 {
     var conf = config.log;
     var colors = conf.colors;

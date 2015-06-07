@@ -1,19 +1,26 @@
+/**
+ * @namespace anim
+ */
 WebVN.module('anim', function (exports, Class, util, select, state)
 {
     var reqAnim = window.requestAnimationFrame;
 
-    var State = state.create('pause',
-        [
-            { name: 'play',  from: 'pause', to: 'play' },
-            { name: 'pause', from: 'play', to: 'play'}
-        ]
-    );
+    var State = state.create('pause', [
+        { name: 'play',  from: 'pause', to: 'play' },
+        { name: 'pause', from: 'play',  to: 'play'}
+    ]);
 
     /**
      * @class Anim
      * @memberof anim
+     * @property {Array} steps
+     * @property {State} state
+     * @property {Boolean} loop
+     * @property {Number} current
+     * @property target
      */
     var Anim = exports.Anim = Class.create(
+        /** @lends anim.Anim.prototype */
         {
             constructor: function Anim(target)
             {
@@ -21,21 +28,63 @@ WebVN.module('anim', function (exports, Class, util, select, state)
                 this.target  = target;
                 this.state   = new State;
                 this.steps   = [];
-                this.curStep = 0;
+                this.current = 0;
             },
 
-            to: function (props, duration, easeName)
+            /**
+             * Add animation step, trigger play afterwards.
+             * @param {Object} props
+             * @param {Number} [duration]
+             * @param {String} [ease]
+             * @return {Anim}
+             */
+            to: function (props, duration, ease)
             {
-                if (!util.isNumber(duration) || duration < 0) duration = 0;
-                easeName = easeName || 'linear';
-                easeName = exports.ease[easeName];
+                duration = duration || 0;
+                ease     = ease || 'linear';
+                ease     = exports.ease[ease];
 
                 this.steps.push({
                     type    : 'to',
                     props   : props,
                     duration: duration,
-                    ease    : easeName
+                    ease    : ease
                 });
+
+                this.play();
+
+                return this;
+            },
+
+            /**
+             * Add wait step, trigger play afterwards.
+             * @param {Number} duration
+             * @return {Anim}
+             */
+            wait: function (duration)
+            {
+                this.steps.push({
+                    type    : 'wait',
+                    duration: duration
+                });
+
+                this.play();
+
+                return this;
+            },
+
+            /**
+             * Add call step, trigger play afterwards.
+             * @param {Function} fn
+             * @return {Anim}
+             */
+            call: function (fn)
+            {
+                this.steps.push({
+                    type: 'call',
+                    fn  : fn
+                });
+
                 this.play();
 
                 return this;
@@ -50,7 +99,7 @@ WebVN.module('anim', function (exports, Class, util, select, state)
 
             stop: function ()
             {
-                this.curStep = 0;
+                this.current = 0;
 
                 this.pause();
             },
@@ -59,21 +108,19 @@ WebVN.module('anim', function (exports, Class, util, select, state)
             {
                 if (this.steps.length === 0 || this.state.is('play')) return;
 
-                if (this.curStep >= this.steps.length)
+                if (this.current >= this.steps.length)
                 {
                     if (this.loop)
                     {
-                        this.curStep = 0;
+                        this.current = 0;
                         this.play();
                     } else this.stop();
 
                     return;
                 }
 
-                var step = this.steps[this.curStep];
-                this.curStep++;
-
-                this.state.play();
+                var step = this.steps[this.current];
+                this.current++;
 
                 switch (step.type)
                 {
@@ -81,6 +128,8 @@ WebVN.module('anim', function (exports, Class, util, select, state)
                     case 'call': this.playCall(step); break;
                     case 'wait': this.playWait(step); break;
                 }
+
+                this.state.play();
 
                 return this;
             },
@@ -93,9 +142,6 @@ WebVN.module('anim', function (exports, Class, util, select, state)
                     origin = {},
                     diff   = {};
 
-                /* If target is a Select instance,
-                 * Animate Css properties instead.
-                 */
                 var isSelect = false;
                 if (select.isSelect(this.target)) isSelect = true;
 
@@ -113,7 +159,6 @@ WebVN.module('anim', function (exports, Class, util, select, state)
 
                     var time = +new Date;
 
-                    // One step of tween is finish
                     if (time > finish)
                     {
                         isSelect ? self.target.css(step.props)
@@ -124,7 +169,7 @@ WebVN.module('anim', function (exports, Class, util, select, state)
                                              });
 
                         self.state.pause();
-                        // Play the next step
+
                         self.play();
 
                         return;
@@ -166,30 +211,6 @@ WebVN.module('anim', function (exports, Class, util, select, state)
                     self.state.pause();
                     self.play();
                 }, step.duration);
-            },
-
-            wait: function (duration)
-            {
-                this.steps.push({
-                    type    : 'wait',
-                    duration: duration
-                });
-                this.play();
-
-                return this;
-            },
-
-            call: function (fn)
-            {
-                if (!util.isFunction(fn)) return;
-
-                this.steps.push({
-                    type: 'call',
-                    fn  : fn
-                });
-                this.play();
-
-                return this;
             }
         }
     );

@@ -1,10 +1,14 @@
+/**
+ * @namespace lexer
+ * @memberof script
+ */
 WebVN.extend('script', function (exports, Class, log, util)
 {
     var lexer = {};
 
     /**
      * @class
-     * @memberof script
+     * @memberof script.lexer
      * @param {string} tag tag name
      * @param {string} value value
      * @param {Object} locationData {first_line, first_column, last_line, last_column}

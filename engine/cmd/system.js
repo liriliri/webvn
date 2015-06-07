@@ -1,4 +1,4 @@
-webvn.use(function (script, log, system)
+WebVN.use(function (script, log, system)
 {
     var command = script.command,
         define  = script.define,

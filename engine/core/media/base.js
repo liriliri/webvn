@@ -1,14 +1,14 @@
 /**
  * @namespace media
  */
-WebVN.module('media', function (exports, Class, log, util)
+WebVN.module('media', function (exports, Class, log, util, state)
 {
-    // Const variables
-    var STATE = exports.STATE = {
-        NOT_LOADED: 0,
-        PAUSE     : 1,
-        PLAY      : 2
-    };
+    var State = state.create('empty', [
+        { name: 'load',   from: 'empty', to: 'pause' },
+        { name: 'play',   from: 'pause', to: 'play' },
+        { name: 'pause',  from: 'play',  to: 'pause' },
+        { name: 'unload', from: ['play', 'pause'], to: 'empty' }
+    ]);
 
     /**
      * @class Base
@@ -20,7 +20,7 @@ WebVN.module('media', function (exports, Class, log, util)
         {
             constructor: function Base()
             {
-                this.state = STATE.NOT_LOADED;
+                this.state = new State;
                 this.el    = null;
             },
 
@@ -31,7 +31,7 @@ WebVN.module('media', function (exports, Class, log, util)
              */
             isLoaded: function ()
             {
-                return this.state !== STATE.NOT_LOADED;
+                return !this.state.is('empty');
             },
 
             /**
@@ -41,24 +41,25 @@ WebVN.module('media', function (exports, Class, log, util)
              */
             load: function (src, autoplay)
             {
-                if (autoplay === undefined) autoPlay = true;
+                if (autoplay === undefined) autoplay = true;
 
                 var self = this;
                 // Stop playing music
                 this.stop();
-                this.state = STATE.NOT_LOADED;
+
+                this.state.unload();
                 // AutoPlay init
                 if (autoplay)
                 {
                     this.el.onloadeddata = function ()
                     {
-                        self.state = STATE.PAUSE;
+                        self.state.pause();
                         self.play();
                     };
                 } else {
                     this.el.onloadeddata = function ()
                     {
-                        self.state = STATE.PAUSE;
+                        self.state.pause();
                     }
                 }
                 // Start loading
@@ -70,10 +71,10 @@ WebVN.module('media', function (exports, Class, log, util)
              */
             pause: function ()
             {
-                if (this.state === STATE.PLAY)
+                if (this.state.is('play'))
                 {
                     this.el.pause();
-                    this.state = STATE.PAUSE;
+                    this.state.pause();
                 }
             },
 
@@ -82,10 +83,10 @@ WebVN.module('media', function (exports, Class, log, util)
              */
             play: function ()
             {
-                if (this.state === STATE.PAUSE)
+                if (this.state.is('pause'))
                 {
                     this.el.play();
-                    this.state = STATE.PLAY;
+                    this.state.play();
                 }
             },
 
@@ -94,7 +95,7 @@ WebVN.module('media', function (exports, Class, log, util)
              */
             isPlaying: function ()
             {
-                return this.state === STATE.PLAY;
+                return this.state.is('play');
             },
 
             /**
@@ -102,11 +103,11 @@ WebVN.module('media', function (exports, Class, log, util)
              */
             stop: function ()
             {
-                if (this.state !== STATE.NOT_LOADED)
+                if (!this.state.is('empty'))
                 {
                     this.curTime = 0;
                     this.pause();
-                    this.state = STATE.PAUSE;
+                    this.state.pause();
                 }
             },
 

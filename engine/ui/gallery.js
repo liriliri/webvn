@@ -1,5 +1,5 @@
-webvn.use(function (ui, select, config, storage, util) {
-    "use strict";
+WebVN.use(function (ui, select, config, storage, util)
+{
     var uiName = 'gallery',
         exports = ui.create('gallery'),
         $el = exports.$el,
@@ -66,16 +66,18 @@ webvn.use(function (ui, select, config, storage, util) {
     }
 
     exports.stopPropagation().properties({
-        fadeIn: cfg.get('fadeIn'),
-        fadeOut: cfg.get('fadeOut'),
+        fadeIn  : cfg.get('fadeIn'),
+        fadeOut : cfg.get('fadeOut'),
         duration: cfg.get('duration')
     }).events({
 
-        'click .close': function () {
+        'click .close': function ()
+        {
             hide();
         },
 
-        'click li img': function () {
+        'click li img': function ()
+        {
             var num = this.data('num');
 
             if (!num) return;
@@ -88,11 +90,13 @@ webvn.use(function (ui, select, config, storage, util) {
             $viewer.fadeIn(exports.duration);
         },
 
-        'click .pagination li': function () {
+        'click .pagination li': function ()
+        {
             renderPage(Number(this.attr('data-num')));
         },
 
-        'click .viewer': function () {
+        'click .viewer': function ()
+        {
             if (!viewerClick) return;
 
             viewerClick = false;
@@ -118,13 +122,17 @@ webvn.use(function (ui, select, config, storage, util) {
 
     });
 
-    exports.show = function () {
+    exports.show = function ()
+    {
         renderPage(1);
 
-        exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();
+        exports.fadeIn ? $el.fadeIn(exports.duration)
+                       : $el.show();
     };
 
-    var hide = exports.hide = function () {
-        exports.fadeOut ? $el.fadeOut(exports.duration) : $el.hide();
+    var hide = exports.hide = function ()
+    {
+        exports.fadeOut ? $el.fadeOut(exports.duration)
+                        : $el.hide();
     };
 });

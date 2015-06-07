@@ -1,6 +1,5 @@
-webvn.extend('webgl', function (exports, Class, util) {
-    "use strict";
-
+WebVN.extend('webgl', function (exports, Class, util)
+{
     var Texture = exports.Texture = Class.create({
 
         constructor: function Texture(gl) {

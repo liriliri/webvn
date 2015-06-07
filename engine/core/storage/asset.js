@@ -1,6 +1,5 @@
-webvn.extend('storage', function (exports, Class, config) {
-    "use strict";
-
+WebVN.extend('storage', function (exports, Class, config)
+{
     var basePath = '';
     if (config.build === 'test') {
         basePath = '../';

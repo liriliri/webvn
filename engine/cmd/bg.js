@@ -1,16 +1,17 @@
-webvn.use(function (script, ui)
+WebVN.use(function (script, ui)
 {
     var background = ui.get('background');
 
     /**
      * Background command.
-     * @class CmdBg
+     * @class Bg
      * @memberof script.command
      * @extends script.command.Command
      */
     script.command.create(
+        /** @lends script.command.Bg.prototype */
         {
-            constructor: function CmdBg() { this.callSuper('bg'); },
+            constructor: function Bg() { this.callSuper('bg'); },
 
             options: {
                 fadeIn        : { type: 'boolean', short: 'fi' },

@@ -1,10 +1,12 @@
 anim
 attrs
 autoplay
+circ
 memberof
 onerror
 onload
 onloadeddata
 onresize
+outro
 webgl
 webvn

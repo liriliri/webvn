@@ -27,7 +27,6 @@
             "files": [
                 "util/util",
                 "util/string",
-                "util/array",
                 "util/lang",
                 "util/object"
             ]

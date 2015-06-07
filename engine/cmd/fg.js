@@ -1,20 +1,20 @@
 /**
  * @module command
  */
-webvn.use(function (script, ui)
+WebVN.use(function (script, ui)
 {
     var figure = ui.get('figure');
 
     /**
      * Figure command
-     * @class CmdFg
+     * @class Fg
      * @memberof script.command
      * @extends script.command.Command
      */
     script.command.create(
-        /** @lends script.command.Command.prototype */
+        /** @lends script.command.Fg.prototype */
         {
-            constructor: function CmdFg() { this.callSuper('fg'); },
+            constructor: function Fg() { this.callSuper('fg'); },
 
             options: {
                 filter    : { type: 'json',    short: 'f' },

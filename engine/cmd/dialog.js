@@ -4,14 +4,14 @@ WebVN.use(function (script, ui)
 
     /**
      * Dialog command.
-     * @class CmdDialog
+     * @class Dialog
      * @memberof script.command
      * @extends script.command.Command
      */
     script.command.create(
-        /** @lends script.command.CmdDialog.prototype */
+        /** @lends script.command.Dialog.prototype */
         {
-            constructor: function CmdDialog() { this.callSuper('dialog'); },
+            constructor: function Dialog() { this.callSuper('dialog'); },
 
             /**
              * @type {Object}

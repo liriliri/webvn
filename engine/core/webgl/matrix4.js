@@ -1,5 +1,5 @@
-webvn.extend('webgl', function (exports, Class) {
-    "use strict";
+WebVN.extend('webgl', function (exports, Class)
+{
     var Matrix4 = exports.Matrix4 = Class.create({
 
         constructor: function (opt_src) {

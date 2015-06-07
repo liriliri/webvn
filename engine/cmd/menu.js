@@ -1,17 +1,17 @@
-webvn.use(function (script, ui)
+WebVN.use(function (script, ui)
 {
     var menu = ui.get('menu');
 
     /**
      * Menu Command
-     * @class CmdMenu
+     * @class Menu
      * @memberof script.command
      * @extends script.command.Command
      */
     script.command.create(
-        /** @lends script.command.CmdMenu.prototype */
+        /** @lends script.command.Menu.prototype */
         {
-            constructor: function CmdMenu() { this.callSuper('menu') },
+            constructor: function Menu() { this.callSuper('menu') },
 
             /**
              * @type {Object}

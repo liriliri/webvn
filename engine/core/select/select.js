@@ -128,12 +128,12 @@ WebVN.extend('select', function (exports, Class, util)
             },
 
             /**
-                * Removes class(es)
-                * @method webvn.select.Select#removeClass
-                * @param {string} name
-                * @returns {Select}
-                */
-            removeClass: function (name)
+             * Removes class(es)
+             * @method webvn.select.Select#removeClass
+             * @param {string} name
+             * @returns {Select}
+             */
+            rmClass: function (name)
             {
                 return this.each(function () {
                     var classList = this.className;

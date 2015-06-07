@@ -1,10 +1,10 @@
-webvn.use(function (ui, canvas, storage, config) {
-    "use strict";
-    var uiName = 'background',
+WebVN.use(function (ui, canvas, storage, config)
+{
+    var uiName  = 'background',
         exports = ui.create(uiName, 'canvas'),
-        $el = exports.$el,
-        cvs = exports.getCanvas(),
-        save = storage.create(uiName);
+        $el     = exports.$el,
+        cvs     = exports.getCanvas(),
+        save    = storage.create(uiName);
 
     var cfg = config.create('uiBackground'),
         cfgPath = cfg.get('path'),

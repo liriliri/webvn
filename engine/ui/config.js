@@ -1,5 +1,5 @@
-webvn.use(function (ui, config, media) {
-    "use strict";
+WebVN.use(function (ui, config, media)
+{
     var uiName = 'config',
         exports = ui.create(uiName),
         $el = exports.$el,

@@ -1,17 +1,17 @@
-webvn.use(function (script, log)
+WebVN.use(function (script, log)
 {
     var type = 'info';
 
     /**
      * Log command.
-     * @class CmdLog
+     * @class Log
      * @memberof script.command
      * @extends script.command.Command
      */
     script.command.create(
-        /** @lends script.command.CmdLog.prototype */
+        /** @lends script.command.Log.prototype */
         {
-            constructor: function CmdLog() { this.callSuper('log'); },
+            constructor: function Log() { this.callSuper('log'); },
 
             /**
              * @type {Object}

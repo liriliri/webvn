@@ -1,12 +1,4 @@
-/**
- * @module util
- */
-/**
- * @class util
- * @static
- * @constructor
- */
-webvn.extend('util', function (exports)
+WebVN.extend('util', function (exports)
 {
     var regType  = /^\[object (.*)]$/,
         toString = Object.prototype.toString,

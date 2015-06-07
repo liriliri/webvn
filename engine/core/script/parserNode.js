@@ -3,7 +3,7 @@
  * @namespace parserNode
  * @memberof script
  */
-webvn.module('script', function (exports, Class, util)
+WebVN.module('script', function (exports, Class, util)
 {
     var parserNode = {},
         lineNum    = 0;

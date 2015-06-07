@@ -1,4 +1,4 @@
-webvn.use(function (script, media)
+WebVN.use(function (script, media)
 {
     var audio   = media.audio,
         bgm     = audio.get('bgm'),
@@ -8,14 +8,14 @@ webvn.use(function (script, media)
 
     /**
      * Background music command.
-     * @class CmdBgm
+     * @class Bgm
      * @memberof script.command
      * @extends script.command.Command
      */
     command.create(
-        /** @lends script.command.CmdBgm.prototype */
+        /** @lends script.command.Bgm.prototype */
         {
-            constructor: function CmdBgm() { this.callSuper('bgm'); },
+            constructor: function Bgm() { this.callSuper('bgm'); },
 
             /**
              * @type {Object}
@@ -56,14 +56,14 @@ webvn.use(function (script, media)
 
     /**
      * Sound effect Command
-     * @class CmdSe
+     * @class Se
      * @memberof script.command
      * @extends script.command.Command
      */
     command.create(
-        /** @lends script.command.CmdSe.prototype */
+        /** @lends script.command.Se.prototype */
         {
-            constructor: function CmdSe() { this.callSuper('se'); },
+            constructor: function Se() { this.callSuper('se'); },
 
             /**
              * @type {Object}
@@ -85,14 +85,14 @@ webvn.use(function (script, media)
 
     /**
      * Voice Command
-     * @class CmdVo
+     * @class Vo
      * @memberof script.command
      * @extends script.command.Command
      */
     command.create(
-        /** @lends script.command.CmdVo.prototype */
+        /** @lends script.command.Vo.prototype */
         {
-            constructor: function CmdVo() { this.callSuper('voice'); },
+            constructor: function Vo() { this.callSuper('voice'); },
 
             /**
              * @type {Object}

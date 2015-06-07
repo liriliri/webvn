@@ -1,11 +1,3 @@
-/**
- * @module util
- */
-/**
- * @class util
- * @static
- * @constructor
- */
 WebVN.extend('util', function (exports)
 {
     "use strict";

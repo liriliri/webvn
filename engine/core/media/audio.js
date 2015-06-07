@@ -1,7 +1,7 @@
-webvn.extend('media', function (exports, storage, config)
+WebVN.extend('media', function (exports, storage, config)
 {
     var Base  = exports.Base,
-        STATE = exports.STATE;
+        State = exports.State;
 
     /**
      * Append class in order not to conflict with primitive Audio class.
@@ -30,7 +30,7 @@ webvn.extend('media', function (exports, storage, config)
 
                 // Stop playing music
                 this.stop();
-                this.state = STATE.NOT_LOADED;
+                this.state.unload();
 
                 var el = this.el;
 
@@ -40,7 +40,7 @@ webvn.extend('media', function (exports, storage, config)
                     el.onloadeddata = function ()
                     {
                         self.duration = self.el.duration;
-                        self.state    = STATE.PAUSE;
+                        self.state.pause();
                         self.play();
                     };
                 } else
@@ -48,7 +48,7 @@ webvn.extend('media', function (exports, storage, config)
                     el.onloadeddata = function ()
                     {
                         self.duration = self.el.duration;
-                        self.state    = STATE.PAUSE;
+                        self.state.pause();
                     }
                 }
 
@@ -77,7 +77,7 @@ webvn.extend('media', function (exports, storage, config)
             {
                 var self = this;
 
-                if (this.state !== STATE.PLAY) return;
+                if (!this.state.is('play')) return;
 
                 if (this.fadeOut)
                 {
@@ -91,12 +91,12 @@ webvn.extend('media', function (exports, storage, config)
                         self._anim = null;
                         self.volume(self._volume);
                         self.el.pause();
-                        self.state = STATE.PAUSE;
+                        self.state.pause();
                     });
                 } else
                 {
                     this.el.pause();
-                    this.state = STATE.PAUSE;
+                    this.state.pause();
                 }
             },
 

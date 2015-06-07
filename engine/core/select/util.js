@@ -1,7 +1,7 @@
 /**
  * @namespace select
  */
-webvn.module('select', function (exports, util)
+WebVN.module('select', function (exports, util)
 {
     var selectUtil = {};
 

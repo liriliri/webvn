@@ -3,8 +3,8 @@
  * such as the screen width and height.
  * @namespace system
  */
-webvn.module('system', function (exports, select, config) {
-    "use strict";
+WebVN.module('system', function (exports, select, config)
+{
     var conf = config.create('system');
 
     // Screen width and height

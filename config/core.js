@@ -1,5 +1,5 @@
-webvn.extend('config', function (exports) {
-
+WebVN.extend('config', function (exports)
+{
     exports.script = {
         scenarios: [
             'init',

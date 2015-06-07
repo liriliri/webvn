@@ -1,4 +1,4 @@
-webvn.extend('canvas', function (exports, Class, loader, anim, util, config, storage)
+WebVN.extend('canvas', function (exports, Class, loader, anim, util, config, storage)
 {
     var conf = config.create('canvas');
 

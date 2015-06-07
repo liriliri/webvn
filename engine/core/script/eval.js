@@ -2,7 +2,7 @@
  * @namespace js
  * @memberof script
  */
-webvn.extend('script', function (exports, util, storage, log)
+WebVN.extend('script', function (exports, util, storage, log)
 {
     var globalStore = storage.createLocalStore('global'),
         s           = {},

@@ -1,17 +1,17 @@
-webvn.use(function (script, ui)
+WebVN.use(function (script, ui)
 {
     var video = ui.get('video');
 
     /**
      * Video Command
-     * @class CmdVid
+     * @class Video
      * @memberof script.command
      * @extends script.command.Command
      */
     script.command.create(
-        /** @lends script.command.CmdVid.prototype */
+        /** @lends script.command.Video.prototype */
         {
-            constructor: function CmdVid() { this.callSuper('video') },
+            constructor: function Video() { this.callSuper('video') },
 
             /**
              * @type {object}

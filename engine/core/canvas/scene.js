@@ -1,4 +1,4 @@
-webvn.extend('canvas', function (exports, Class, webgl)
+WebVN.extend('canvas', function (exports, Class, webgl)
 {
     var Scene = exports.Scene = Class.create(
         {

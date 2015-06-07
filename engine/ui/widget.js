@@ -1,3 +1,4 @@
-webvn.use(function (ui) {
+WebVN.use(function (ui)
+{
 
 });

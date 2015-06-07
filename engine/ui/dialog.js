@@ -1,5 +1,5 @@
-webvn.use(function (ui, text, media, config, storage, script) {
-    "use strict";
+WebVN.use(function (ui, text, media, config, storage, script)
+{
     var uiName = 'dialog',
         exports = ui.create(uiName, 'div'),
         $el = exports.$el,

@@ -1,5 +1,5 @@
-webvn.extend('webgl', function (exports, Class) {
-    "use strict";
+WebVN.extend('webgl', function (exports, Class)
+{
     var DrawImageProgram = exports.DrawImageProgram,
         createFrameBuffer = exports.createFrameBuffer,
         TransitionProgram = exports.TransitionProgram,

@@ -1,6 +1,5 @@
-webvn.extend('webgl', function (exports, Class, util) {
-    "use strict";
-
+WebVN.extend('webgl', function (exports, Class, util)
+{
     var createTexture = exports.createTexture;
 
     var FrameBuffer = exports.FrameBuffer = Class.create({

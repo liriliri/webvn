@@ -1,4 +1,4 @@
-webvn.use(function (ui) { ui.lang.create({
+WebVN.use(function (ui) { ui.lang.create({
     "config": {
         "zh": {
             "Config": "环境设定",

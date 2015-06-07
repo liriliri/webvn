@@ -1,5 +1,5 @@
-webvn.extend('ui', function (exports, util) {
-    'use strict';
+WebVN.extend('ui', function (exports, util)
+{
     var templates = {};
 
     // underscore template

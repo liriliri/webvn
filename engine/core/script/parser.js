@@ -1,4 +1,4 @@
-webvn.extend("script", function (exports) {
+WebVN.extend("script", function (exports) {
 var require = function(){},
 exp = exports;
 exports = {};
