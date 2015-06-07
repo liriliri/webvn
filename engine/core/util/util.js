@@ -1,33 +1,27 @@
 /**
- * @module util
+ * @namespace util
  */
-/**
- * @class util
- * @static
- * @constructor
- */
-WebVN.module('util', function (exports) {
-    "use strict";
-
+WebVN.module('util', function (exports)
+{
     /**
      * @method each
+     * @memberof util
      * @param obj
      * @param fn
+     * @param ctx
      */
-    exports.each = function (obj, fn) {
+    exports.each = function (obj, fn, ctx) {
         var keys, i = 0, len = obj.length;
 
-        if (len === +len) {
-            for (; i < len; i++) {
-                fn(obj[i], i, obj);
-            }
-        } else {
+        if (len === +len)
+        {
+            for (; i < len; i++) fn.call(ctx, obj[i], i, obj);
+        } else
+        {
             keys = exports.keys(obj);
-            len = keys.length;
+            len  = keys.length;
 
-            for (; i < len; i++) {
-                fn(obj[keys[i]], keys[i], obj);
-            }
+            for (; i < len; i++) fn.call(ctx, obj[keys[i]], keys[i], obj);
         }
     };
 

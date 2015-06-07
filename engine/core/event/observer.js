@@ -29,6 +29,8 @@ WebVN.extend('event', function (exports, util)
         var events = this._events[name],
             args   = util.toArray(arguments);
 
+        if (!events) return;
+
         args.shift();
 
         util.each(events, function (val)
@@ -48,6 +50,7 @@ WebVN.extend('event', function (exports, util)
     function create(object) { return util.mixIn(object, event) }
 
     exports.observer = {
-        create: create
+        create: create,
+        Event: event
     };
 });

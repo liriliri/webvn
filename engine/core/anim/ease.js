@@ -1,4 +1,4 @@
-webvn.module('anim', function (exports)
+webvn.extend('anim', function (exports)
 {
     var ease = {};
 

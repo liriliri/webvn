@@ -1,26 +1,27 @@
-webvn.extend('anim', function (exports, Class, util, select)
+WebVN.module('anim', function (exports, Class, util, select, state)
 {
-    var STATE = {
-            PAUSE: 0,
-            PLAY : 1
-        },
-        reqAnim = window.requestAnimationFrame;
+    var reqAnim = window.requestAnimationFrame;
 
+    var State = state.create('pause',
+        [
+            { name: 'play',  from: 'pause', to: 'play' },
+            { name: 'pause', from: 'play', to: 'play'}
+        ]
+    );
+
+    /**
+     * @class Anim
+     * @memberof anim
+     */
     var Anim = exports.Anim = Class.create(
         {
             constructor: function Anim(target)
             {
-                this.loop   = false;
-                this.target = target;
-
-                this.clear();
-            },
-
-            clear: function ()
-            {
-                this.state    = STATE.PAUSE;
-                this._steps   = [];
-                this._curStep = 0;
+                this.loop    = false;
+                this.target  = target;
+                this.state   = new State;
+                this.steps   = [];
+                this.curStep = 0;
             },
 
             to: function (props, duration, easeName)
@@ -29,7 +30,7 @@ webvn.extend('anim', function (exports, Class, util, select)
                 easeName = easeName || 'linear';
                 easeName = exports.ease[easeName];
 
-                this._steps.push({
+                this.steps.push({
                     type    : 'to',
                     props   : props,
                     duration: duration,
@@ -42,35 +43,37 @@ webvn.extend('anim', function (exports, Class, util, select)
 
             pause: function ()
             {
-                if (this.state === STATE.PAUSE) return;
+                if (this.state.is('pause')) return;
 
-                this.state = STATE.PAUSE;
+                this.state.pause();
             },
 
             stop: function ()
             {
-                this._curStep = 0;
+                this.curStep = 0;
 
                 this.pause();
             },
 
             play: function ()
             {
-                if (this._steps.length === 0 || this.state === STATE.PLAY) return;
+                if (this.steps.length === 0 || this.state.is('play')) return;
 
-                if (this._curStep >= this._steps.length)
+                if (this.curStep >= this.steps.length)
                 {
                     if (this.loop)
                     {
-                        this._curStep = 0;
+                        this.curStep = 0;
                         this.play();
                     } else this.stop();
 
                     return;
                 }
 
-                var step = this._steps[this._curStep];
-                this._curStep++;
+                var step = this.steps[this.curStep];
+                this.curStep++;
+
+                this.state.play();
 
                 switch (step.type)
                 {
@@ -78,7 +81,6 @@ webvn.extend('anim', function (exports, Class, util, select)
                     case 'call': this.playCall(step); break;
                     case 'wait': this.playWait(step); break;
                 }
-                this.state = STATE.PLAY;
 
                 return this;
             },
@@ -105,9 +107,9 @@ webvn.extend('anim', function (exports, Class, util, select)
                     diff[key] = value - origin[key];
                 });
 
-                this._render = function ()
+                this.render = function ()
                 {
-                    if (self.state === STATE.PAUSE) return;
+                    if (self.state.is('pause')) return;
 
                     var time = +new Date;
 
@@ -121,7 +123,7 @@ webvn.extend('anim', function (exports, Class, util, select)
                                                  self.target[key] = val;
                                              });
 
-                        self.state = STATE.PAUSE;
+                        self.state.pause();
                         // Play the next step
                         self.play();
 
@@ -142,16 +144,16 @@ webvn.extend('anim', function (exports, Class, util, select)
 
                     isSelect && self.target.css(values);
 
-                    reqAnim(self._render);
+                    reqAnim(self.render);
                 };
 
-                reqAnim(this._render);
+                reqAnim(this.render);
             },
 
             playCall: function (step)
             {
                 step.fn.call(this);
-                this.state = STATE.PAUSE;
+                this.state.pause();
                 this.play();
             },
 
@@ -161,14 +163,14 @@ webvn.extend('anim', function (exports, Class, util, select)
 
                 setTimeout(function ()
                 {
-                    self.state = STATE.PAUSE;
+                    self.state.pause();
                     self.play();
                 }, step.duration);
             },
 
             wait: function (duration)
             {
-                this._steps.push({
+                this.steps.push({
                     type    : 'wait',
                     duration: duration
                 });
@@ -181,7 +183,7 @@ webvn.extend('anim', function (exports, Class, util, select)
             {
                 if (!util.isFunction(fn)) return;
 
-                this._steps.push({
+                this.steps.push({
                     type: 'call',
                     fn  : fn
                 });

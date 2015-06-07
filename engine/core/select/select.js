@@ -1,4 +1,4 @@
-webvn.extend('select', function (exports, Class, util)
+WebVN.extend('select', function (exports, Class, util)
 {
     var selectUtil = exports.util;
 

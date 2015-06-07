@@ -28,7 +28,6 @@ WebVN.module('Class', function (exports, util)
 
         var _class;
 
-        // Whether a constructor is defined
         if (px.hasOwnProperty('constructor'))
         {
             _class = px.constructor;
@@ -37,7 +36,6 @@ WebVN.module('Class', function (exports, util)
             px.constructor = _class;
         }
 
-        // Atach __name__ and __owner__ to each prototype method, used for callSuper
         util.each(px, function (val, key)
         {
             if (util.isFunction(val))
@@ -47,7 +45,6 @@ WebVN.module('Class', function (exports, util)
             }
         });
 
-        // Set statics
         util.each(sx, function (val, p) { _class[p] = val });
 
         _class.extend = function (px, attrs, sx)
@@ -138,7 +135,7 @@ WebVN.module('Class', function (exports, util)
 
             /**
              * Call super function.
-             * @returns {*}
+             * @return {*}
              */
             callSuper: function ()
             {
