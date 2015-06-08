@@ -1,3 +1,7 @@
+/**
+ * @namespace config
+ * @memberof ui
+ */
 WebVN.use(function (ui, config, media)
 {
     var uiName = 'config',

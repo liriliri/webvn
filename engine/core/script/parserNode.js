@@ -22,6 +22,11 @@ WebVN.module('script', function (exports, Class, util)
         return '"label", "' + util.trim(label) + '"';
     };
 
+    parserNode.ret = function ()
+    {
+        return '"return"';
+    };
+
     parserNode.command = function (command)
     {
         command = formatParam(escapeQuote(command));

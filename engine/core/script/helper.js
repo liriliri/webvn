@@ -44,10 +44,7 @@ WebVN.extend('script', function (exports, script)
             return val;
         });
 
-        var $$ = exports.$$;
-        exports.isSource = false;
         fn.apply(null, params);
-        exports.isSource = true;
 
         exports.executions = exports.middles.concat(exports.executions);
         exports.middles    = [];
@@ -139,61 +136,5 @@ WebVN.extend('script', function (exports)
         create: create,
         has   : has,
         get   : get
-    };
-});
-
-/**
- * @namespace source
- * @memberof script
- */
-WebVN.extend('script', function (exports)
-{
-    var sources = [],
-        len     = 0,
-        pointer = 0;
-
-    /**
-     * Push command into source.
-     * @method push
-     * @memberof script.source
-     * @param {Array} source Looks like ['command', '...'], ['function', function () {...}].
-     */
-    function push(source)
-    {
-        len++;
-        sources.push(source);
-    }
-
-    /**
-     * Get the current command or the specified command.
-     * @method get
-     * @memberof script.source
-     * @param {Number} [num]
-     * @return {Array|undefined}
-     */
-    function get(num)
-    {
-        if (num !== undefined)
-        {
-            if (num < 0 || num >= len) return;
-            pointer = num;
-        }
-
-        return sources[pointer];
-    }
-
-    /**
-     * Get the next command.
-     * @method next
-     * @memberof script.source
-     * @return {Array}
-     */
-    function next() { return get(pointer + 1) }
-
-    exports.source = {
-        push  : push,
-        get   : get,
-        next  : next,
-        length: len
     };
 });

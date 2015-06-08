@@ -45,7 +45,7 @@ WebVN.extend('util', function (exports)
         {
             obj = arguments[i];
             if (obj != null) {
-                exports.each(obj, function (val, key) {target[key] = val});
+                exports.each(obj, function (val, key) { target[key] = val });
             }
         }
 

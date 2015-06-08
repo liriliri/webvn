@@ -1,5 +1,5 @@
 // 中文支持
-setAlias 别名 setAlias
+/*setAlias 别名 setAlias
 别名 背景乐 playBgm
 别名 停止背景乐 stopBgm
 别名 立绘 fg
@@ -25,9 +25,7 @@ function 乘二(a) {
     ```
     console.log(Number(a) * 2);
     ```
-}
-
-乘二 5
+}*/
 
 /* 播放OP
  * 第一次打开时无法跳过，之后点击跳过
@@ -41,7 +39,7 @@ if (g.firstPlay !== false) {
 `g.firstPlay = false; playNext();
 */
 
-*menu
+/*menu
 
 标题画面 -d \
     -bhs=asset/sound/onmouse.wav \
@@ -90,4 +88,23 @@ WebVN内置了超过二十种的图片过渡效果，比如线性模糊，水波
 使用HTML5的最大好处就是能够使用其庞大的生态资源，比如下面利用Three.js半小时写出来的粒子特效。
 myUi -d
 
-该引擎还在制作阶段，本次demo到此为此，谢谢观赏。
+该引擎还在制作阶段，本次demo到此为此，谢谢观赏。*/
+
+function retTest() {
+    dialog -d -t=Ret1
+    dialog -t=Ret2
+    return
+    dialog
+}
+
+retTest
+
+dialog -d -t=HelloWorld!
+
+dialog -t=Fuck1
+
+logInfo fuck
+
+dialog -t=Fuck2
+
+dialog -t=Fuck3

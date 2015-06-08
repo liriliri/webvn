@@ -1,7 +1,4 @@
-/**
- * @namespace loader
- */
-WebVN.module('loader', function (exports, util)
+WebVN.extend('loader', function (exports, util)
 {
     var ajaxSettings = {
         // Default type of request

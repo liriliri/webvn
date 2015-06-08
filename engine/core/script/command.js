@@ -178,6 +178,7 @@ WebVN.extend('script', function (exports, Class, log, util)
 
         ret.options = options;
         ret.values  = values;
+        ret.parts   = parts;
 
         return ret;
     }

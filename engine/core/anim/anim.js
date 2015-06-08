@@ -11,7 +11,8 @@ WebVN.module('anim', function (exports, Class, util, select, state)
     ]);
 
     /**
-     * @class Anim
+     * @name Anim
+     * @class
      * @memberof anim
      * @property {Array} steps
      * @property {State} state
@@ -215,5 +216,11 @@ WebVN.module('anim', function (exports, Class, util, select, state)
         }
     );
 
+    /**
+     * @method create
+     * @memberof anim
+     * @param target
+     * @return {Anim}
+     */
     exports.create = function (target) { return new Anim(target) };
 });

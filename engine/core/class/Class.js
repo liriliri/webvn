@@ -5,23 +5,10 @@ WebVN.module('Class', function (exports, util)
 {
     var ObjCreate = Object.create;
 
-    /**
-     * Create new class.
-     * @method create
-     * @memberof Class
-     * @param {Object} px
-     * @param {Object} attrs
-     * @param {Object} sx
-     */
-    exports.create = function (px, attrs, sx)
-    {
-        return Base.extend(px, attrs, sx);
-    };
-
     /* Create a new class using px's constructor if exists.
      * Also set static method of the class
      */
-    function create(px, sx)
+    var create = exports.create = function (px, sx)
     {
         px = px || {};
         sx = sx || {};
@@ -54,9 +41,9 @@ WebVN.module('Class', function (exports, util)
         _class.prototype = px;
 
         return _class;
-    }
+    };
 
-    var Empty = function() {};
+    function Empty() {}
 
     /* Create a new object with prototype
      * equals to object.create
@@ -123,37 +110,4 @@ WebVN.module('Class', function (exports, util)
 
         return _class;
     }
-
-    /**
-     * @class
-     * @memberof Class
-     */
-    var Base = exports.Base = create(
-        /** @lends Class.Base.prototype */
-        {
-            constructor: function Base () {},
-
-            /**
-             * Call super function.
-             * @return {*}
-             */
-            callSuper: function ()
-            {
-                var method, obj,
-                    self = this,
-                    args = arguments;
-
-                method = arguments.callee.caller;
-                obj = self;
-
-                var name = method.__name__;
-                if (!name) return undefined;
-
-                var member = method.__owner__.superclass[name];
-                if (!member) return undefined;
-
-                return member.apply(obj, args || []);
-            }
-        }
-    );
 });

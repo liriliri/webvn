@@ -1,3 +1,7 @@
+/**
+ * @namespace video
+ * @memberof ui
+ */
 WebVN.use(function (ui, media, script, config, storage)
 {
     var uiName = 'video',
@@ -12,14 +16,14 @@ WebVN.use(function (ui, media, script, config, storage)
     $el.addClass('fill');
     $el.html = tpl();
 
-    var asset = storage.createAsset(cfgPath, cfgExtension),
+    var asset = storage.asset.create(cfgPath, cfgExtension),
         video = media.video.create($el.find('video').get(0));
 
     exports.stopPropagation().properties({
         clickAction: cfg.get('clickAction'),
-        duration: cfg.get('duration'),
-        fadeIn: cfg.get('fadeIn'),
-        fadeOut: cfg.get('fadeOut')
+        duration   : cfg.get('duration'),
+        fadeIn     : cfg.get('fadeIn'),
+        fadeOut    : cfg.get('fadeOut')
     }).events({
 
         'click video': function () {
@@ -29,23 +33,17 @@ WebVN.use(function (ui, media, script, config, storage)
                     hide();
                     break;
                 case 'pause':
-                    if (video.isPlaying()) {
-                        video.pause();
-                    } else {
-                        video.play();
-                    }
+                    video.isPlaying() ? video.pause()
+                                      : video.play();
                     break;
             }
         }
 
     });
 
-
     video.events({
 
-        ended: function () {
-            hide();
-        }
+        ended: function () { hide(); }
 
     });
 

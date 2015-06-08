@@ -1,3 +1,7 @@
+/**
+ * @namespace music
+ * @memberof ui
+ */
 WebVN.use(function (ui, select, media, config, storage, util)
 {
     var uiName  = 'music',
@@ -26,7 +30,7 @@ WebVN.use(function (ui, select, media, config, storage, util)
 
     var controller = WebVN.module(function (exports) {
         var music = media.audio.create('music');
-        music.asset = storage.createAsset(cfgPath, cfgExtension);
+        music.asset = storage.asset.create(cfgPath, cfgExtension);
         music.loop = true;
         music.events({
 

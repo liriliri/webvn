@@ -1,6 +1,7 @@
 WebVN.extend('media', function (exports, storage, config)
 {
     var Base  = exports.Base,
+        asset = storage.asset,
         State = exports.State;
 
     /**
@@ -132,7 +133,7 @@ WebVN.extend('media', function (exports, storage, config)
     var cfgBgm = cfg.get('bgm'),
         bgm    = audio.create('bgm');
 
-    bgm.asset    = storage.createAsset(cfgBgm.path, cfgBgm.extension);
+    bgm.asset    = asset.create(cfgBgm.path, cfgBgm.extension);
     bgm.loop     = true;
     bgm.duration = 2000;
     bgm.volume   = cfgBgm.volume;
@@ -140,12 +141,12 @@ WebVN.extend('media', function (exports, storage, config)
     var cfgSe = cfg.get('se'),
         se    = audio.create('se');
 
-    se.asset  = storage.createAsset(cfgSe.path, cfgSe.extension);
+    se.asset  = asset.create(cfgSe.path, cfgSe.extension);
     se.volume = cfgSe.volume;
 
     var cfgVo = cfg.get('vo'),
         vo    = audio.create('vo');
 
-    vo.asset  = storage.createAsset(cfgVo.path, cfgVo.extension);
+    vo.asset  = asset.create(cfgVo.path, cfgVo.extension);
     vo.volume = cfgVo.volume;
 });

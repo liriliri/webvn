@@ -57,47 +57,7 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
         exports.js.eval(parse(scenarioText));
     };
 
-
-    // Middle scripts, temporary usage
-    exports.middles = [];
-
-    /* Final command waiting for executing
-     */
-    exports.executions = [];
-
-    exports.isSource = true;
-
-    //noinspection JSUnusedLocalSymbols
-    exports.$$ = function ()
-    {
-        var source = exports.source,
-            data   = util.toArray(arguments);
-
-        preExec(data, source.length);
-
-        /* When executing,
-         * command defined inside a if statement
-         * should be loaded into middles.
-         */
-        exports.isSource ? source.push(data)
-                         : exports.middles.push(data);
-    };
-
-    // Execute command when first load, handle things like label
-    function preExec(source, line)
-    {
-        var func  = exports.func,
-            label = exports.label;
-
-        switch (source[0])
-        {
-            case 'label': label.create(source[1], line); break;
-            // Since functions can't be stored, we have to create them at start
-            case 'function': func.create(source[1], source[2]); break;
-        }
-    }
-
-    var asset = storage.createAsset(conf.get('path'), conf.get('extension'));
+    var asset = storage.asset.create(conf.get('path'), conf.get('extension'));
 
     // Load scenarios and begin executing them
     exports.load = function (scenarios)
@@ -121,19 +81,6 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
     {
         wvnEval(str);
         if (startGame) start();
-    };
-
-    // Execute command or code
-    var exec = exports.exec = function (unit)
-    {
-        switch (unit[0])
-        {
-            case 'command': execCommand(unit); break;
-            case 'code'   : execCode(unit); break;
-            // Just pass it
-            case 'label': play(); break;
-            default: log.warn("Unknown command type"); break;
-        }
     };
 
     function execCommand(command)
@@ -181,15 +128,6 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
             return;
         }
         cmd.execute(options);
-    }
-
-    function cmdBeautify(str)
-    {
-        return str.split('\n')
-                  .map(function (value)
-                  {
-                      return util.trim(value);
-                  }).join(' ');
     }
 
     function execCode(code) { code[1]() }
@@ -256,65 +194,10 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
     {
         if (isPaused) return;
 
-        var execution = loadExecutions();
-        if (execution) exec(execution);
+        var command = exports.stack.getCmd();
+
+        if (command != undefined) exports.execute(command);
     };
-
-    // Load executions script
-    function loadExecutions()
-    {
-        var isCommand = false,
-            func      = exports.func,
-            source;
-
-        while (true)
-        {
-            if (!_loadExecutions()) return;
-
-            source = exports.executions.shift();
-
-            switch (source[0])
-            {
-                case 'if':
-                    exports.isSource = false;
-                    source[1]();
-                    exports.isSource = true;
-                    exports.executions = middles.concat(exports.executions);
-                    exports.middles = [];
-                    break;
-                case 'function':
-                    func.create(source[1], source[2]);
-                    break;
-                default:
-                    isCommand = true;
-            }
-
-            if (isCommand) break;
-        }
-
-        return source;
-    }
-
-    function _loadExecutions()
-    {
-        var source = exports.source;
-
-        if (exports.executions.length === 0)
-        {
-            var nextSrc = source.next();
-
-            if (!nextSrc)
-            {
-                log.warn('End of scripts');
-                isPaused = true;
-                return false;
-            }
-
-            exports.executions.push(nextSrc);
-        }
-
-        return true;
-    }
 
     //noinspection JSUnusedLocalSymbols
     var pause = exports.pause = function (duration, cb)

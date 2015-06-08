@@ -1,3 +1,7 @@
+/**
+ * @namespace background
+ * @memberof ui
+ */
 WebVN.use(function (ui, canvas, storage, config)
 {
     var uiName  = 'background',
@@ -12,7 +16,7 @@ WebVN.use(function (ui, canvas, storage, config)
 
     $el.addClass('fill');
 
-    var asset = storage.createAsset(cfgPath, cfgExtension),
+    var asset = storage.asset.create(cfgPath, cfgExtension),
         image = canvas.createImage(),
         scene = new canvas.Scene(cvs);
 

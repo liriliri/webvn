@@ -1,3 +1,7 @@
+/**
+ * @namespace console
+ * @memberof ui
+ */
 WebVN.use(function (ui, script)
 {
     var uiName  = 'console',

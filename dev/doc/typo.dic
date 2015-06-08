@@ -6,6 +6,7 @@ memberof
 onerror
 onload
 onloadeddata
+onmouse
 onresize
 outro
 webgl

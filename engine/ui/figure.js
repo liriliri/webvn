@@ -1,3 +1,7 @@
+/**
+ * @namespace figure
+ * @memberof ui
+ */
 WebVN.use(function (ui, canvas, util, config, storage)
 {
     var uiName = 'figure',
@@ -12,7 +16,7 @@ WebVN.use(function (ui, canvas, util, config, storage)
 
     $el.addClass('fill');
 
-    var asset = storage.createAsset(cfgPath, cfgExtension),
+    var asset = storage.asset.create(cfgPath, cfgExtension),
         scene = canvas.createScene(cvs),
         figures = [],
         curFigure;

@@ -47,7 +47,7 @@ WebVN.extend('script', function (exports, util, storage, log)
         try
         {
             var g  = globalStore.get(),
-                $$ = exports.$$;
+                $$ = exports.stack.$$;
             eval(code);
         } catch (e)
         {

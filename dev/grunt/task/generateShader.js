@@ -1,22 +1,25 @@
 var util = require('../util'),
     path = require('path');
 
-function exportsFunc(grunt) {
-    "use strict";
-    grunt.registerMultiTask('generateShader', 'generate shader files', function () {
+function exportsFunc(grunt)
+{
+    grunt.registerMultiTask('generateShader', 'generate shader files', function ()
+    {
         var options = this.options(),
-            type = options.type,
-            files = this.files;
+            type    = options.type,
+            files   = this.files;
 
         var intro = 'WebVN.use(function (webgl) { webgl.' + type + '.create(',
             outro = ');});';
 
-        util.each(files, function (value) {
-            var src = value.src,
-                dest = value.dest,
+        util.each(files, function (value)
+        {
+            var src     = value.src,
+                dest    = value.dest,
                 content = {};
 
-            util.each(src, function (value) {
+            util.each(src, function (value)
+            {
                 var fileName = path.basename(value).split('.')[0];
                 content[fileName] = grunt.file.read(value);
             });

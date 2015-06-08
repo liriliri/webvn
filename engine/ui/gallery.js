@@ -1,3 +1,7 @@
+/**
+ * @namespace gallery
+ * @memberof ui
+ */
 WebVN.use(function (ui, select, config, storage, util)
 {
     var uiName = 'gallery',
@@ -26,7 +30,7 @@ WebVN.use(function (ui, select, config, storage, util)
         $viewerImgFore = $viewer.find('img.fore'),
         $viewerImgBack = $viewer.find('img.back');
 
-    var asset = storage.createAsset(cfgPath, cfgExtension),
+    var asset = storage.asset.create(cfgPath, cfgExtension),
         globalStore = storage.createLocalStore('global'),
         imageTpl = ui.template.get('gallery_image'),
         curImg, curImgNum, curImgs, viewerClick = true;

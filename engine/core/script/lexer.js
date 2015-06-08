@@ -7,7 +7,7 @@ WebVN.extend('script', function (exports, Class, log, util)
     var lexer = {};
 
     /**
-     * @class
+     * @class Token
      * @memberof script.lexer
      * @param {string} tag tag name
      * @param {string} value value
@@ -15,6 +15,7 @@ WebVN.extend('script', function (exports, Class, log, util)
      * @return {Array} result [tag, value, locationData]
      */
     var Token = lexer.Token = Class.create(
+        /** @lends script.lexer.Token.prototype */
         {
             constructor: function (tag, value, locationData)
             {
@@ -30,7 +31,17 @@ WebVN.extend('script', function (exports, Class, log, util)
 
     var EOF = 'END_OF_FILE';
 
+    /**
+     * @class Lexer
+     * @memberof script.lexer
+     * @property input
+     * @property {Array.<Token>} tokens
+     * @property {Number} currentLine
+     * @property {Number} currentColumn
+     * @property {String} c
+     */
     var Lexer = lexer.Lexer = Class.create(
+        /** @lends script.lexer.Lexer.prototype */
         {
             constructor: function Lexer() {},
 
@@ -154,15 +165,16 @@ WebVN.extend('script', function (exports, Class, log, util)
                             {
                                 this.consumes(8);
                                 return this.createToken('FUNCTION');
-                            } else if (this.c === '*')
+                            } else if (this.c === 'r' && this.lookAhead(5, 'eturn'))
+                            {
+                                this.consume(6);
+                                return this.createToken('RETURN');
+                            }else if (this.c === '*')
                             {
                                 this.consume(1);
                                 return this.label();
                             }else if (this.isLetter(this.c))
                             {
-                                /* If nothing above matches and it is a letter currently,
-                                 * it is a command(function call, alias command).
-                                 */
                                 return this.command();
                             } else this.consume();
                         }

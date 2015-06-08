@@ -16,7 +16,7 @@ WebVN.extend('canvas', function (exports, Class, loader, anim, util, config, sto
         }
     );
 
-    var lumaAsset = storage.createAsset(conf.get('lumaPath'), conf.get('lumaExtension'));
+    var lumaAsset = storage.asset.create(conf.get('lumaPath'), conf.get('lumaExtension'));
 
     var ImageEntity = exports.ImageEntity = Entity.extend(
         {

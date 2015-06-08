@@ -4,9 +4,13 @@ WebVN.use(function (script, log, system)
         define  = script.define,
         alias   = script.alias;
 
+    /**
+     * @class Alias
+     * @memberof script.command
+     */
     command.create(
         {
-            constructor: function CmdAlias() { this.callSuper('alias') },
+            constructor: function Alias() { this.callSuper('alias') },
 
             options: {
                 name    : { type: 'string',  short: 'n' },
@@ -23,10 +27,13 @@ WebVN.use(function (script, log, system)
         }
     );
 
-
+    /**
+     * @class Define
+     * @memberof script.Define
+     */
     command.create(
         {
-            constructor: function () { this.callSuper('define') },
+            constructor: function Define() { this.callSuper('define') },
 
             options: {
                 name    : { type: 'string',  short: 'n' },
@@ -42,9 +49,13 @@ WebVN.use(function (script, log, system)
             }
     });
 
+    /**
+     * @class Script
+     * @memberof script.command
+     */
     command.create(
         {
-            constructor: function CmdScript() { this.callSuper('script') },
+            constructor: function Script() { this.callSuper('script') },
 
             options: {
                 jump: { type: 'String', short: 'j' }
@@ -56,9 +67,13 @@ WebVN.use(function (script, log, system)
         }
     );
 
+    /**
+     * @class System
+     * @memberof script.command
+     */
     command.create(
         {
-            constructor: function CmdSystem () {this.callSuper('system') },
+            constructor: function System() {this.callSuper('system') },
 
             options: {
                 title   : { type: 'String',  short: 't' },

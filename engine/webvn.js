@@ -1,4 +1,5 @@
 /**
+ * Global namespace, all modules should be defined within it.
  * @namespace WebVN
  */
 window.WebVN = (function(exports)
@@ -18,19 +19,26 @@ window.WebVN = (function(exports)
     var head = document.getElementsByTagName('head')[0];
 
     /**
+     * @namespace loader
+     */
+    WebVN.loader = {};
+
+    var loader = WebVN.loader;
+
+    /**
      * Load css.
      * @method css
-     * @memberof WebVN
+     * @memberof loader
      * @param {Array|String} files File names without css extension.
      */
-    WebVN.css = function (files)
+    loader.css = function (files)
     {
         if (!isArray(files)) files = [files];
 
         // Add css path and file extension
         files = files.map(function (file)
         {
-            return WebVN.css.path + file + '.css';
+            return loader.css.path + file + '.css';
         });
 
         loadCss(files);
@@ -41,7 +49,7 @@ window.WebVN = (function(exports)
      * @name css.path
      * @memberof WebVN
      */
-    WebVN.css.path = '';
+    loader.css.path = '';
 
     function loadCss(hrefs)
     {
@@ -62,16 +70,16 @@ window.WebVN = (function(exports)
     /**
      * Load js.
      * @method js
-     * @memberof WebVN
+     * @memberof loader
      * @param {Array|String} files File names without js extension.
      */
-    WebVN.js = function (files)
+    loader.js = function (files)
     {
         if (!isArray(files)) files = [files];
 
         files = files.map(function (js)
         {
-            return WebVN.js.path + js + '.js';
+            return loader.js.path + js + '.js';
         });
 
         jsQueue = jsQueue.concat(files);
@@ -83,7 +91,7 @@ window.WebVN = (function(exports)
      * Path of js Files
      * @property {String} js.path
      */
-    WebVN.js.path = '';
+    loader.js.path = '';
 
     function loadJs()
     {
@@ -228,9 +236,9 @@ window.WebVN = (function(exports)
     {
         if (!isArray(requires)) requires = [requires];
 
-        return requires.map(function (value)
+        return requires.map(function (val)
         {
-            return WebVN[value];
+            return WebVN[val];
         });
     }
 
@@ -245,9 +253,11 @@ window.WebVN = (function(exports)
 
         if (ret === null) return [];
 
-        if (ret[0] === 'exports') {
+        if (ret[0] === 'exports')
+        {
             ret.shift();
-        } else if (ret[ret.length - 1] === 'exports') {
+        } else if (ret[ret.length - 1] === 'exports')
+        {
             ret.pop();
         }
 
@@ -265,7 +275,7 @@ window.WebVN = (function(exports)
     }
 })();
 
-WebVN.use(function ()
+WebVN.use(function (loader)
 {
     var scripts  = document.getElementsByTagName('script'),
         basePath = '',
@@ -300,14 +310,14 @@ WebVN.use(function ()
 
         each(css, function (value)
         {
-            WebVN.css.path = basePath + value.path;
-            WebVN.css(value.files);
+            loader.css.path = basePath + value.path;
+            loader.css(value.files);
         });
 
         each(js, function (value)
         {
-            WebVN.js.path = basePath + value.path;
-            WebVN.js(value.files);
+            loader.js.path = basePath + value.path;
+            loader.js(value.files);
         });
     }
 

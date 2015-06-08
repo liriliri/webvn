@@ -1,4 +1,8 @@
-WebVN.use(function (ui) 
+/**
+ * @namespace selection
+ * @memberof ui
+ */
+WebVN.use(function (ui)
 {
     var uiName = 'selection',
         exports = ui.create('selection'),

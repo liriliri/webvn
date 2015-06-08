@@ -1,3 +1,7 @@
+/**
+ * @namespace dialog
+ * @memberof ui
+ */
 WebVN.use(function (ui, text, media, config, storage, script)
 {
     var uiName = 'dialog',
@@ -27,7 +31,7 @@ WebVN.use(function (ui, text, media, config, storage, script)
         $face = $el.find('.face'),
         $text = $content.find('.text');
 
-    var asset = storage.createAsset(cfgPath, cfgExtension),
+    var asset = storage.asset.create(cfgPath, cfgExtension),
         textAnim = text.createAnim($text),
         voice = media.audio.get('vo');
 

@@ -44,6 +44,7 @@
             "files": [
                 "webvn/log",
                 "class/Class",
+                "class/base",
                 "storage/storage",
                 "storage/save",
                 "storage/config",
@@ -61,6 +62,8 @@
                 "script/lexer",
                 "script/script",
                 "script/helper",
+                "script/stack",
+                "script/execution",
                 "script/eval",
                 "script/command",
                 "anim/anim",

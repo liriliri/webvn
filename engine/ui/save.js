@@ -1,3 +1,7 @@
+/**
+ * @namespace save
+ * @memberof ui
+ */
 WebVN.use(function (ui, config, util, storage, select, system)
 {
     var uiName = 'save',
