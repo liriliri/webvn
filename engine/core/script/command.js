@@ -155,6 +155,8 @@ WebVN.extend('script', function (exports, Class, log, util)
         }
     }
 
+    var regSplit = /(?:[^\s"']+|"[^"]*"|'[^']*')+/g;
+
     function parseCmd(cmdText)
     {
         var ret     = {},
@@ -165,8 +167,9 @@ WebVN.extend('script', function (exports, Class, log, util)
 
         ret.name = parts.shift();
 
-        util.each(parts, function (val)
+        util.each(parts, function (val, idx)
         {
+            val = parts[idx] = trimQuote(val);
             if (val[0] === '-')
             {
                 option = parseOpt(val);
@@ -183,7 +186,12 @@ WebVN.extend('script', function (exports, Class, log, util)
         return ret;
     }
 
-    var regSplit = /(?:[^\s"]+|"[^"]*")+/g;
+    var regTrimQuote = /^'|^"|'$|"$/g;
+
+    function trimQuote(str)
+    {
+        return str.replace(regTrimQuote, '');
+    }
 
     function parseOpt(text)
     {
@@ -193,7 +201,7 @@ WebVN.extend('script', function (exports, Class, log, util)
         if (equalPos > -1)
         {
             ret.push(text.substr(0, equalPos));
-            ret.push(text.substr(equalPos + 1));
+            ret.push(trimQuote(text.substr(equalPos + 1)));
         } else
         {
             ret.push(text);

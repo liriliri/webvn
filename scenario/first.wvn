@@ -1,5 +1,5 @@
 // 中文支持
-/*setAlias 别名 setAlias
+setAlias 别名 setAlias
 别名 背景乐 playBgm
 别名 停止背景乐 stopBgm
 别名 立绘 fg
@@ -25,7 +25,7 @@ function 乘二(a) {
     ```
     console.log(Number(a) * 2);
     ```
-}*/
+}
 
 /* 播放OP
  * 第一次打开时无法跳过，之后点击跳过
@@ -39,7 +39,7 @@ if (g.firstPlay !== false) {
 `g.firstPlay = false; playNext();
 */
 
-/*menu
+*menu
 
 标题画面 -d \
     -bhs=asset/sound/onmouse.wav \
@@ -60,8 +60,6 @@ if (g.firstPlay !== false) {
 // 背景乐 bgm2
 
 // 简单介绍
-标题 简单介绍
-对话 -tt=zoomInRight -pn
 温蒂 '你好！我是温蒂（Wendy），该视觉小说引擎的拟人化萌娘代言人。'
 首先，欢迎使用WebVN，这是一个完全由HTML5技术编写的视觉小说引擎。
 通过WebVN，你可以利用网页技术来创作属于自己的游戏。所有HTML5能够办到的事，你都可以将其应用到自己的游戏中去。
@@ -83,28 +81,8 @@ WebVN内置了超过二十种的图片过渡效果，比如线性模糊，水波
 背景 -t=波纹过渡效果 -s=corridor -pn=false -wt
 这些效果是通过webgl shader实现的。如果需要扩展过渡方法，你可以自行编写shader来实现。
 此外，传统的利用遮罩图片来实现过渡效果的方法也是支持的，比如下面这个。
-背景 -t=lumaWipe -s=living_room -pn=false -wt
+// 背景 -t=lumaWipe -s=living_room -pn=false -wt
 
 使用HTML5的最大好处就是能够使用其庞大的生态资源，比如下面利用Three.js半小时写出来的粒子特效。
-myUi -d
 
-该引擎还在制作阶段，本次demo到此为此，谢谢观赏。*/
-
-function retTest() {
-    dialog -d -t=Ret1
-    dialog -t=Ret2
-    return
-    dialog
-}
-
-retTest
-
-dialog -d -t=HelloWorld!
-
-dialog -t=Fuck1
-
-logInfo fuck
-
-dialog -t=Fuck2
-
-dialog -t=Fuck3
+该引擎还在制作阶段，本次demo到此为此，谢谢观赏。

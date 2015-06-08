@@ -148,14 +148,12 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
     {
         var label = exports.label;
 
-        // Clear executions
         if (!label.has(labelName))
         {
             log.warn('Label ' + labelName + ' not found');
             return;
         }
-        exports.executions = [];
-        curNum = label.get(labelName);
+        exports.stack.jump(label.get(labelName));
         resume();
     };
 

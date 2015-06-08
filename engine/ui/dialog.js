@@ -103,7 +103,6 @@ WebVN.use(function (ui, text, media, config, storage, script)
         textAnim.type = exports.textType;
         textAnim.duration = 1000 * (1 - exports.textSpeed);
         textAnim.load(text);
-        script.insertCmd('dialog -sa');
     };
 
     exports.stopAnim = function () {

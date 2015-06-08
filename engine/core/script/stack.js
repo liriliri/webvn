@@ -10,15 +10,17 @@ WebVN.extend('script', function (exports, Class, util, log)
      * @property {Array} commands
      * @property {Number} len
      * @property {Number} pointer
+     * @property {String} type
      */
     var Frame = Class.create(
         /** @lends script.stack.Frame.prototype */
         {
-            constructor: function Stack ()
+            constructor: function Frame(type)
             {
                 this.commands = [];
                 this.len      = 0;
                 this.pointer  = -1;
+                this.type     = type || 'function';
             },
 
             get: function (num)
@@ -48,25 +50,20 @@ WebVN.extend('script', function (exports, Class, util, log)
     );
 
     var stacks   = [],
-        pushFlag = true,
         curFrame = new Frame,
         mainFrame = curFrame;
 
     stacks.push(curFrame);
 
-    function toggle()
-    {
-        pushFlag = !pushFlag;
-    }
-
     function $$()
     {
         var cmd = util.toArray(arguments);
 
+        if (cmd[1] === 'dialog -sa') debugger;
+
         exports.preExecute(cmd, curFrame.len);
 
-        pushFlag ? curFrame.push(cmd)
-                 : curFrame.insert(cmd)
+        curFrame.push(cmd);
     }
 
     function getCmd()
@@ -91,16 +88,28 @@ WebVN.extend('script', function (exports, Class, util, log)
         return command;
     }
 
-    function push()
+    function push(type)
     {
-        curFrame = new Frame;
+        curFrame = new Frame(type);
         stacks.push(curFrame);
     }
 
     function pop()
     {
+        while (curFrame.type !== 'function') {
+            stacks.pop();
+            curFrame = stacks[stacks.length - 1];
+        }
+
         stacks.pop();
         curFrame = stacks[stacks.length - 1];
+    }
+
+    function jump(num)
+    {
+        stacks = [mainFrame];
+        curFrame = mainFrame;
+        curFrame.pointer = num;
     }
 
     exports.stack = {
@@ -108,6 +117,6 @@ WebVN.extend('script', function (exports, Class, util, log)
         getCmd: getCmd,
         push  : push,
         pop   : pop,
-        toggle: toggle
+        jump  : jump
     };
 });
