@@ -2,12 +2,13 @@ WebVN.extend('script', function (exports, log, util)
 {
     function command(cmd)
     {
-        var lineNum = cmd[2],
-            text    = cmd[1];
+        var lineNum  = cmd[3],
+            fileName = cmd[2],
+            text     = cmd[1];
 
         text = text.split('\n').map(function (value) { return util.trim(value) }).join(' ');
 
-        log.info('Cmd: ' + text + ' ' + lineNum);
+        log.info('Cmd: ' + text + ' ' + fileName + ':' + lineNum);
 
         var alias  = exports.alias,
             define = exports.define,
@@ -23,7 +24,9 @@ WebVN.extend('script', function (exports, log, util)
 
         if (func.has(name))
         {
+            exports.stack.push();
             func.call(name, cmd.parts);
+            exports.play();
             return;
         }
 
@@ -34,11 +37,18 @@ WebVN.extend('script', function (exports, log, util)
             cmd.execute(options);
         } else if (func.has('default'))
         {
+            exports.stack.push();
             func.call('default', [text]);
+            exports.play();
         } else
         {
             log.warn('Command ' + name + ' does not exist.');
         }
+    }
+
+    function code(cmd)
+    {
+        cmd[1]();
     }
 
     function ret()
@@ -70,6 +80,7 @@ WebVN.extend('script', function (exports, log, util)
         switch (type)
         {
             case 'command' : command(cmd); break;
+            case 'code'    : code(cmd); break;
             case 'if'      : ifBlock(cmd); break;
             case 'return'  : ret(); break;
             case 'label'   :

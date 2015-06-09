@@ -6,15 +6,18 @@
 WebVN.module('script', function (exports, Class, util)
 {
     var parserNode = {},
+        fileName   = '',
         lineNum    = 0;
 
-    parserNode.lineNum = function (value) { lineNum = value };
+    parserNode.file = function (val) { fileName = val };
+
+    parserNode.lineNum = function (val) { lineNum = val };
 
     parserNode.expression = function (content)
     {
         content = removeLastLineBreak(content);
 
-        return '$$(' + content + ', ' + lineNum + ');\n';
+        return '$$(' + content + ', "' + fileName + '", ' + lineNum + ');\n';
     };
 
     parserNode.label = function (label)

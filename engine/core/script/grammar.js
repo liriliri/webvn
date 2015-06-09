@@ -59,7 +59,7 @@ var grammar = {
     ]
 };
 
-var tokens = 'CODE_BLOCK COMMAND FUNCTION FUNCTION_NAME PARAM IF';
+var tokens = 'CODE_BLOCK COMMAND FUNCTION FUNCTION_NAME PARAM IF RETURN';
 
 var operators = [
     ['nonassoc', '{', '}'],

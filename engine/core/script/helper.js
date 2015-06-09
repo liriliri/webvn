@@ -44,9 +44,7 @@ WebVN.extend('script', function (exports, script)
             return val;
         });
 
-        exports.stack.push();
         fn.apply(null, params);
-        exports.play();
 
         exports.executions = exports.middles.concat(exports.executions);
         exports.middles    = [];

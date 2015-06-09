@@ -105,7 +105,7 @@ WebVN.use(function (ui, select, media, config, storage, util)
         };
 
         exports.pause = function () {
-            $playBtn.text(lang.get('Play'));
+            $playBtn.text = lang.get('Play');
             music.pause();
         };
     });

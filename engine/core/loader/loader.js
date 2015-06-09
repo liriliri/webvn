@@ -116,7 +116,7 @@ WebVN.extend('loader', function (exports, util)
     {
         ajax.get(scenes[i]).then(function (value)
         {
-            cb(value, i === scenes.length - 1);
+            cb(value, i === scenes.length - 1, scenes[i]);
             if (i < scenes.length - 1) _scenario(scenes, i + 1, cb);
         });
     }

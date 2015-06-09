@@ -105,6 +105,11 @@ WebVN.extend('script', function (exports, Class, util, log)
         curFrame = stacks[stacks.length - 1];
     }
 
+    function insert(command)
+    {
+        curFrame.insert(command);
+    }
+
     function jump(num)
     {
         stacks = [mainFrame];
@@ -117,6 +122,7 @@ WebVN.extend('script', function (exports, Class, util, log)
         getCmd: getCmd,
         push  : push,
         pop   : pop,
+        insert: insert,
         jump  : jump
     };
 });

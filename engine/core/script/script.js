@@ -3,9 +3,9 @@
  */
 WebVN.extend('script', function (exports, config, util, loader, log, storage, event)
 {
-    var conf   = config.create('script'),
-        parser = exports.parser,
-        lexer  = exports.lexer;
+    var conf     = config.create('script'),
+        parser   = exports.parser,
+        lexer    = exports.lexer;
 
     event.observer.create(exports);
 
@@ -68,7 +68,10 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
 
         scenarios = scenarios.map(function (value) { return asset.get(value) });
 
-        loader.scenario(scenarios, function (data, isLast) { loadText(data, isLast) });
+        loader.scenario(scenarios, function (data, isLast, fileName)
+        {
+            loadText(data, isLast, fileName);
+        });
 
     };
 
@@ -77,65 +80,12 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
      * @param {string} str
      * @param {boolean=} startGame
      */
-    var loadText = exports.loadText = function (str, startGame)
+    var loadText = exports.loadText = function (str, startGame, fileName)
     {
+        exports.parserNode.file(fileName);
         wvnEval(str);
         if (startGame) start();
     };
-
-    function execCommand(command)
-    {
-        var lineNum     = command[2],
-            alias       = exports.alias,
-            define      = exports.define,
-            func        = exports.func,
-            commandText = cmdBeautify(command[1]);
-
-        var logText = 'Cmd: ' + commandText + ' ' + lineNum;
-        log.info(logText);
-        exports.trigger('execCmd', logText);
-
-        // Do alias replacement.
-        commandText = alias.parse(commandText);
-
-        // Do define replacement.
-        commandText = define.parse(commandText);
-
-        command = exports.command.parse(commandText);
-        var name    = command.name,
-            options = command.options,
-            values  = command.values;
-
-        // Execute function
-        if (func.has(name))
-        {
-            func.call(name, values);
-            play();
-            return;
-        }
-
-        // Execute command
-        var cmd = exports.command.get(name);
-        if (!cmd)
-        {
-            if (func.has('default'))
-            {
-                func.call('default', [commandText]);
-                play();
-                return;
-            }
-            log.warn('Command ' + name + ' doesn\'t exist');
-            return;
-        }
-        cmd.execute(options);
-    }
-
-    function execCode(code) { code[1]() }
-
-    /* Indicate which line is being executed now,
-     * related to sources array.
-     */
-    var curNum = 0;
 
     // Start executing the scripts from beginning.
     var start = exports.start = function ()

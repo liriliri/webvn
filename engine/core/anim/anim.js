@@ -7,7 +7,7 @@ WebVN.module('anim', function (exports, Class, util, select, state)
 
     var State = state.create('pause', [
         { name: 'play',  from: 'pause', to: 'play' },
-        { name: 'pause', from: 'play',  to: 'play'}
+        { name: 'pause', from: 'play',  to: 'pause'}
     ]);
 
     /**
@@ -81,6 +81,8 @@ WebVN.module('anim', function (exports, Class, util, select, state)
              */
             call: function (fn)
             {
+                if (!util.isFunction(fn)) return this;
+
                 this.steps.push({
                     type: 'call',
                     fn  : fn
@@ -90,6 +92,8 @@ WebVN.module('anim', function (exports, Class, util, select, state)
 
                 return this;
             },
+
+            render: function () {},
 
             pause: function ()
             {
@@ -123,14 +127,14 @@ WebVN.module('anim', function (exports, Class, util, select, state)
                 var step = this.steps[this.current];
                 this.current++;
 
+                this.state.play();
+
                 switch (step.type)
                 {
                     case 'to'  : this.playTo(step);   break;
                     case 'call': this.playCall(step); break;
                     case 'wait': this.playWait(step); break;
                 }
-
-                this.state.play();
 
                 return this;
             },

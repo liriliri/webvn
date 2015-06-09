@@ -43,7 +43,7 @@ WebVN.use(function (ui, config, media)
         },
 
         'change .text-speed': function () {
-            ui.get('dialog').textSpeed = this.val();
+            ui.get('dialog').textSpeed = this.val;
         },
 
         'change .music': function () { bgm.volume = this.val },
