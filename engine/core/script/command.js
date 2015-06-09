@@ -136,14 +136,18 @@ WebVN.extend('script', function (exports, Class, log, util)
 
     function parseVal(type, val)
     {
-        // Support null assignment
         switch (val)
         {
             case 'null'     : return null;
             case 'undefined': return;
         }
 
-        // LowerCase the type, so that you can write either 'String' or 'string'
+        if (util.isArray(type))
+        {
+            if (util.inArray(type, val)) return val;
+            return;
+        }
+
         type = type.toLowerCase();
         switch (type)
         {
@@ -151,8 +155,9 @@ WebVN.extend('script', function (exports, Class, log, util)
             case 'boolean': return !(val === 'false' || val === '0');
             case 'number' : return Number(val);
             case 'json'   : return JSON.parse(val);
-            default       : return val;
         }
+
+        return val;
     }
 
     var regSplit = /(?:[^\s"']+|"[^"]*"|'[^']*')+/g;

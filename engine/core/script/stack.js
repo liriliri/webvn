@@ -40,11 +40,6 @@ WebVN.extend('script', function (exports, Class, util, log)
             {
                 this.len++;
                 this.commands.push(command);
-            },
-
-            insert: function (command)
-            {
-                this.commands.splice(this.pointer, 0, command);
             }
         }
     );
@@ -105,16 +100,17 @@ WebVN.extend('script', function (exports, Class, util, log)
         curFrame = stacks[stacks.length - 1];
     }
 
-    function insert(command)
+    function jump(num)
     {
-        curFrame.insert(command);
+        reset();
+        curFrame.pointer = num;
     }
 
-    function jump(num)
+    function reset()
     {
         stacks = [mainFrame];
         curFrame = mainFrame;
-        curFrame.pointer = num;
+        curFrame.pointer = -1;
     }
 
     exports.stack = {
@@ -122,7 +118,7 @@ WebVN.extend('script', function (exports, Class, util, log)
         getCmd: getCmd,
         push  : push,
         pop   : pop,
-        insert: insert,
-        jump  : jump
+        jump  : jump,
+        reset : reset
     };
 });

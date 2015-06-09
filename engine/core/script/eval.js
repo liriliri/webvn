@@ -55,9 +55,6 @@ WebVN.extend('script', function (exports, util, storage, log)
             return emptyStr;
         }
 
-        /* Save it after a while,
-         * in case that the eval process is not finished.
-         */
         setTimeout(function () { globalStore.save() }, 1000);
 
         return scope[functionName]();

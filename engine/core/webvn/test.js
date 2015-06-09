@@ -6,17 +6,18 @@
  */
 WebVN.module('test', function (exports, Class, select, script, util)
 {
-    // Component testing
-    exports.Component = Class.create({
+    exports.Script = Class.create(
+        {
+            constructor: function Component(scenarioId)
+            {
+                this.scenario = util.trim(select.get('#' + scenarioId).text);
+                this.start();
+            },
 
-        constructor: function Component(scenarioId) {
-            this.scenario = util.trim(select.get('#' + scenarioId).text());
-        },
-
-        start: function () {
-            script.loadText(this.scenario, true);
+            start: function ()
+            {
+                script.loadText(this.scenario, true, 'test');
+            }
         }
-
-    });
-
+    );
 });

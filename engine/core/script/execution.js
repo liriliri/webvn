@@ -1,4 +1,4 @@
-WebVN.extend('script', function (exports, log, util)
+WebVN.extend('script', function (exports, log, util, storage)
 {
     function command(cmd)
     {
@@ -8,7 +8,9 @@ WebVN.extend('script', function (exports, log, util)
 
         text = text.split('\n').map(function (value) { return util.trim(value) }).join(' ');
 
-        log.info('Cmd: ' + text + ' ' + fileName + ':' + lineNum);
+        var fileInfo = fileName ? fileName  + ':' + lineNum
+                                : 'Unknown' + ':' + '0';
+        log.info('Cmd: ' + text + ' ' + fileInfo);
 
         var alias  = exports.alias,
             define = exports.define,
@@ -49,6 +51,8 @@ WebVN.extend('script', function (exports, log, util)
     function code(cmd)
     {
         cmd[1]();
+
+        storage.createLocalStore('global').save();
     }
 
     function ret()
@@ -61,6 +65,7 @@ WebVN.extend('script', function (exports, log, util)
     {
         exports.stack.push('if');
         cmd[1].call();
+        exports.play();
     }
 
     function func(cmd)

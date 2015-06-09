@@ -33,8 +33,8 @@ WebVN.use(function (ui, config, media)
     $el.find('.voice').val = vo.volume;
 
     exports.stopPropagation().properties({
-        fadeIn: cfg.get('fadeIn'),
-        fadeOut: cfg.get('fadeOut'),
+        fadeIn  : cfg.get('fadeIn'),
+        fadeOut : cfg.get('fadeOut'),
         duration: cfg.get('duration')
     }).events({
 

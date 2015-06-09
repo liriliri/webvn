@@ -93,6 +93,16 @@ WebVN.module('anim', function (exports, Class, util, select, state)
                 return this;
             },
 
+            /**
+             * Clear everything for reuse, target remains the same.
+             */
+            clear: function ()
+            {
+                this.stop();
+                this.steps = [];
+                this.loop  = false;
+            },
+
             render: function () {},
 
             pause: function ()
@@ -139,6 +149,9 @@ WebVN.module('anim', function (exports, Class, util, select, state)
                 return this;
             },
 
+            /**
+             * @param step
+             */
             playTo: function (step)
             {
                 var self   = this,
@@ -200,6 +213,9 @@ WebVN.module('anim', function (exports, Class, util, select, state)
                 reqAnim(this.render);
             },
 
+            /**
+             * @param step
+             */
             playCall: function (step)
             {
                 step.fn.call(this);
@@ -207,6 +223,9 @@ WebVN.module('anim', function (exports, Class, util, select, state)
                 this.play();
             },
 
+            /**
+             * @param step
+             */
             playWait: function (step)
             {
                 var self = this;

@@ -17,23 +17,23 @@ WebVN.use(function (ui, text, media, config, storage, script)
 
     $el.addClass('fill');
     $el.html = tpl({
-        Q_Save: lang.get('Q-Save'),
-        Q_Load: lang.get('Q-Load'),
-        Load: lang.get('Load'),
-        Save: lang.get('Save'),
-        Config: lang.get('Config'),
+        Q_Save : lang.get('Q-Save'),
+        Q_Load : lang.get('Q-Load'),
+        Load   : lang.get('Load'),
+        Save   : lang.get('Save'),
+        Config : lang.get('Config'),
         History: lang.get('History'),
-        Title: lang.get('Title')
+        Title  : lang.get('Title')
     });
 
     var $content = $el.find('.content'),
-        $name = $el.find('.name'),
-        $face = $el.find('.face'),
-        $text = $content.find('.text');
+        $name    = $el.find('.name'),
+        $face    = $el.find('.face'),
+        $text    = $content.find('.text');
 
-    var asset = storage.asset.create(cfgPath, cfgExtension),
+    var asset    = storage.asset.create(cfgPath, cfgExtension),
         textAnim = text.createAnim($text),
-        voice = media.audio.get('vo');
+        voice    = media.audio.get('vo');
 
     save.save(function () {
         return {
@@ -90,22 +90,26 @@ WebVN.use(function (ui, text, media, config, storage, script)
         !src ? $face.hide() : $face.show().attr('src', asset.get(src));
     };
 
-    exports.hide = function () {
+    exports.hide = function ()
+    {
         exports.fadeOut ? $el.fadeOut(exports.duration) : $el.hide();
     };
 
-    exports.name = function (name) {
+    exports.name = function (name)
+    {
         $name.html = '【' + name + '】';
     };
 
-    exports.text = function (text) {
+    exports.text = function (text)
+    {
         textAnim.stopTimer();
-        textAnim.type = exports.textType;
+        textAnim.type     = exports.textType;
         textAnim.duration = 1000 * (1 - exports.textSpeed);
         textAnim.load(text);
     };
 
-    exports.stopAnim = function () {
+    exports.stopAnim = function ()
+    {
         if (textAnim.isStop()) {
             script.play();
         } else {
@@ -113,11 +117,13 @@ WebVN.use(function (ui, text, media, config, storage, script)
         }
     };
 
-    exports.voice = function (src) {
+    exports.voice = function (src)
+    {
         voice.load(src);
     };
 
-    exports.style = function (name) {
+    exports.style = function (name)
+    {
         name === 'big' ? $el.addClass('big') : $el.removeClass('big');
     };
 

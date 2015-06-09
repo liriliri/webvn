@@ -1,7 +1,7 @@
 /**
  * @namespace script
  */
-WebVN.extend('script', function (exports, config, util, loader, log, storage, event)
+WebVN.extend('script', function (exports, config, util, loader, log, storage, event, state)
 {
     var conf     = config.create('script'),
         parser   = exports.parser,
@@ -87,13 +87,30 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
         if (startGame) start();
     };
 
-    // Start executing the scripts from beginning.
+    var State = state.create('pause', [
+        { name: 'play',  from: 'pause', to: 'play' },
+        { name: 'pause', from: 'play',  to: 'pause'}
+    ]);
+
+    state = new State;
+
+    /**
+     * Start executing the scripts from beginning.
+     * @method start
+     * @memberof script
+     */
     var start = exports.start = function ()
     {
         reset();
         play();
     };
 
+    /**
+     * Jump to specified label.
+     * @method jump
+     * @memberof script
+     * @param labelName
+     */
     exports.jump = function (labelName)
     {
         var label = exports.label;
@@ -103,68 +120,98 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
             log.warn('Label ' + labelName + ' not found');
             return;
         }
+
         exports.stack.jump(label.get(labelName));
+
         resume();
     };
 
-    exports.insertCmd = function (script)
-    {
-        exports.isSource = false;
-        wvnEval(script);
-        exports.isSource = true;
-    };
-
-    // Reset everything to initial state
+    /**
+     * Reset everything to initial state
+     * @method reset
+     * @memberof script
+     */
     var reset = exports.reset = function ()
     {
-        isPaused = false;
-        curNum   = 0;
-
-        exports.middles    = [];
-        exports.executions = [];
+        exports.stack.reset();
+        state.play();
     };
 
-    // Whether
-    var isPaused = false;
-
-    // Similar to play, except the isPaused will be changed to true.
-    //noinspection JSUnusedLocalSymbols
+    /**
+     * Similar to play, except the isPaused will be changed to true.
+     * @method resume
+     * @memberof script
+     */
     var resume = exports.resume = function ()
     {
-        isPaused = false;
+        state.play();
         play();
     };
 
-    /* Play the next command,
-     * if isPaused is true, then it's not going to work.
+    /**
+     * Play the next command, if state is true, then it's not going to work.
+     * @method play
+     * @memberof script
      */
     var play = exports.play = function ()
     {
-        if (isPaused) return;
+        if (state.is('pause')) return;
 
         var command = exports.stack.getCmd();
 
         if (command != undefined) exports.execute(command);
     };
 
-    //noinspection JSUnusedLocalSymbols
+    /**
+     * Pause script.
+     * @method pause
+     * @memberof script
+     * @param {Number} [duration]
+     * @param {Function} [cb]
+     */
     var pause = exports.pause = function (duration, cb)
     {
-        isPaused = true;
+        state.pause();
 
         if (duration)
         {
             setTimeout(function ()
             {
-                isPaused = false;
+                state.play();
                 cb && cb();
             }, duration);
         }
-
     };
 
+    /**
+     * Pause script for a time and execute script when finished.
+     * @method wait
+     * @memberof script
+     * @param duration
+     */
     exports.wait = function (duration)
     {
         pause(duration, function () { play() });
+    };
+
+    /**
+     * Insert Command to current stack.
+     * @method insert
+     * @memberof script
+     * @param {Array.<Array>} commands
+     */
+    exports.insert = function (commands)
+    {
+        var stack = exports.stack,
+            len, i;
+
+        if (!util.isArray(commands[0])) commands = [commands];
+
+        stack.push('insertion');
+
+        for (i = 0, len = commands.length; i < len; i++)
+        {
+            stack.$$.apply(null, commands[i]);
+        }
     };
 });

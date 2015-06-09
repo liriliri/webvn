@@ -25,29 +25,39 @@ WebVN.use(function (ui, script, media, util, config, storage)
         Config : lang.get('Config')
     });
 
-    var bgm = media.audio.get('bgm'),
-        se = media.audio.get('se');
+    var bgm   = media.audio.get('bgm'),
+        se    = media.audio.get('se'),
+        asset = storage.asset.create(cfg.get('path'), cfg.get('extension'));
 
     save.save(function () { return {} })
         .load(function () { $el.hide() });
 
     exports.stopPropagation().properties({
-        bgm          : cfg.get('bgm'),
-        btnClickSound: cfg.get('btnClkSound'),
-        btnHoverSound: cfg.get('btnHoverSound'),
-        duration     : cfg.get('Duration'),
-        fadeIn       : cfg.get('fadeIn'),
-        fadeOut      : cfg.get('FadeOut')
+        background   : {
+            set: function (val)
+            {
+                $el.css('background', 'url(' + asset.get(val) + ')');
+            }
+        },
+        bgm       : cfg.get('bgm'),
+        clickSound: cfg.get('clickSound'),
+        hoverSound: cfg.get('hoverSound'),
+        duration  : cfg.get('duration'),
+        fadeIn    : cfg.get('fadeIn'),
+        fadeOut   : cfg.get('FadeOut')
     }).events({
 
         'click .start': function () {
             if (exports.bgm) bgm.stop();
 
-            if (exports.fadeOut) {
-                $el.fadeOut(exports.duration, function () {
+            if (exports.fadeOut)
+            {
+                $el.fadeOut(exports.duration, function ()
+                {
                     script.jump(cfgStartLabel);
                 });
-            } else {
+            } else
+            {
                 $el.hide();
                 script.jump(cfgStartLabel);
             }
@@ -55,9 +65,9 @@ WebVN.use(function (ui, script, media, util, config, storage)
 
         'click .load': function () { ui.get('save').show('load') },
 
-        'click .setting': function () { ui.get('config').show() },
+        'click .config': function () { ui.get('config').show() },
 
-        'click .cg': function () { ui.get('gallery').show() },
+        'click .gallery': function () { ui.get('gallery').show() },
 
         'click .music': function () {
             if (exports.bgm) bgm.stop();
@@ -66,11 +76,11 @@ WebVN.use(function (ui, script, media, util, config, storage)
         },
 
         'mouseover li': function () {
-            exports.btnHoverSound && se.load(exports.btnHoverSound);
+            exports.hoverSound && se.load(exports.hoverSound);
         },
 
         'click li': function () {
-            exports.btnClickSound && se.load(exports.btnClickSound);
+            exports.clickSound && se.load(exports.clickSound);
         }
 
     });
@@ -88,19 +98,23 @@ WebVN.use(function (ui, script, media, util, config, storage)
         exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();
     };
 
+    /**
+     * @method buttons
+     * @memberof ui.menu
+     * @param buttons
+     */
     exports.buttons = function (buttons)
     {
-        util.each(buttons, function (value, key)
+        util.each(buttons, function (val, key)
         {
             var $e = $el.find('ul li.' + key);
 
-            if (util.isString(value))
+            if (util.isString(val))
             {
-                $e.text(value);
-                return;
+                $e.text = val;
+            } else {
+                val ? $e.show() : $e.hide();
             }
-
-            value ? $e.css('display', 'block') : $e.css('display', 'none');
         });
     };
 

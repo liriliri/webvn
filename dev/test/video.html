@@ -1,28 +1,20 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Test</title>
-		<script>
-		var config = {
-			debug: true,
-			test: true
-		};
-		</script>
-		<script src="/engine/core/webvn.js"></script>
-	</head>
-	<body>
-		<div class="center">
-			<div id="webvn"></div>
-		</div>
-		<div id="scenario" class="hidden">
-			video -d -pl -c=pause -s=/asset/test/video.mp4
-		</div>
-		<script>
-		webvn.call(['test'], function (s, test) {
-			var component = new test.Component('scenario');
-			component.start();
-		});
-		</script>
-	</body>
+<head>
+	<meta charset="utf-8">
+	<base href="../../" target="_blank">
+	<title>Menu</title>
+	<script src="engine/webvn.js" data-build="test"></script>
+</head>
+<body>
+<div class="center">
+	<div id="webvn"></div>
+</div>
+<div id="scenario" class="hidden">
+	video -p -d -src=op
+</div>
+<script>
+	WebVN.call(function (test) { new test.Script('scenario') });
+</script>
+</body>
 </html>

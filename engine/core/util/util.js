@@ -35,8 +35,6 @@ WebVN.module('util', function (exports)
     var uid = 0;
 
     // Undone
-    // Quick references
-    var ArrProto = Array.prototype;
 
     // Const
     var CLONE_MARKER = 'webvn_clone',
@@ -78,7 +76,7 @@ WebVN.module('util', function (exports)
             return memory[input[CLONE_MARKER]].destination;
         } else if (typeof input === 'object') {
             var Constructor = o.constructor;
-            if (exports.inArray(Constructor, [Boolean, String, Number, Date, RegExp])) {
+            if (exports.inArray([Boolean, String, Number, Date, RegExp], Constructor)) {
                 destination = new Constructor(o.valueOf());
             } else if (isArray) {
                 destination = o.concat();
@@ -119,28 +117,7 @@ WebVN.module('util', function (exports)
         if (o.length !== +o.length) {
             o = exports.values(o);
         }
-        return exports.indexOf(target, o) >= 0;
-    };
-
-    /**
-     * Whether an element is in the specific array
-     * @function webvn.util.inArray
-     * @param elem
-     * @param {Array} arr
-     * @returns {boolean}
-     */
-    exports.inArray = function (elem, arr) {
-        return exports.indexOf(elem, arr) > -1;
-    };
-
-    /**
-     * Index of elem in the specific array
-     * @param elem
-     * @param {Array} arr
-     * @returns {number}
-     */
-    exports.indexOf = function (elem, arr) {
-        return ArrProto.indexOf.call(arr, elem);
+        return exports.indexOf(o, target) >= 0;
     };
 
     /**

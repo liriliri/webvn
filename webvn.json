@@ -17,7 +17,6 @@
         "custom": {
             "path": "custom/",
             "files": [
-                "style"
             ]
         }
     },
@@ -28,7 +27,8 @@
                 "util/util",
                 "util/string",
                 "util/lang",
-                "util/object"
+                "util/object",
+                "util/array"
             ]
         },
         "config": {
@@ -104,7 +104,6 @@
                 "config",
                 "save",
                 "menu",
-                "console",
                 "background",
                 "dialog",
                 "figure",

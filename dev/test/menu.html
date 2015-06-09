@@ -2,20 +2,22 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <base href="../../" target="_blank">
     <title>Menu</title>
-    <script src="../engine/core/webvn.js" data-build="test"></script>
+    <script src="engine/webvn.js" data-build="test"></script>
 </head>
 <body>
 <div class="center">
     <div id="webvn"></div>
 </div>
 <div id="scenario" class="hidden">
+    menu -d -bg=menu \
+         -bgm=bgm1 -fi -du=500 \
+         -btn='{"start":"开始旅途", "config":false}' \
+         -hs=onmouse -cs=onclick
 </div>
 <script>
-    webvn.call(['test'], function (test) {
-        var component = new test.Component('scenario');
-        component.start();
-    });
+    WebVN.call(function (test) { new test.Script('scenario') });
 </script>
 </body>
 </html>

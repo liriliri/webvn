@@ -6,7 +6,7 @@ WebVN.module('media', function (exports, Class, log, util, state)
     var State = state.create('empty', [
         { name: 'load',   from: 'empty', to: 'pause' },
         { name: 'play',   from: 'pause', to: 'play' },
-        { name: 'pause',  from: 'play',  to: 'pause' },
+        { name: 'pause',  from: ['play', 'empty'], to: 'pause' },
         { name: 'unload', from: ['play', 'pause'], to: 'empty' }
     ]);
 
@@ -14,6 +14,7 @@ WebVN.module('media', function (exports, Class, log, util, state)
      * @class Base
      * @memberof media
      * @extends Class.Base
+     * @property state
      */
     var Base = exports.Base = Class.create(
         /** @lends media.Base.prototype */

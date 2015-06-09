@@ -10,10 +10,12 @@ WebVN.extend('config', function (exports)
     };
 
     exports.uiMenu = {
-        duration: 300,
-        fadeIn: true,
-        fadeOut: true,
-        startLabel: 'start'
+        duration  : 300,
+        fadeIn    : false,
+        fadeOut   : true,
+        startLabel: 'start',
+        path      : 'asset/image/',
+        extension : 'jpg'
     };
 
     exports.uiFigure = {

@@ -273,12 +273,16 @@ window.WebVN = (function(exports)
     {
         return typeof func === 'function';
     }
+
+    WebVN.call(function (log, version)
+    {
+        log.info('WebVN v' + version + ' | https://github.com/surunzi/WebVN');
+    });
 })();
 
 WebVN.use(function (loader)
 {
     var scripts  = document.getElementsByTagName('script'),
-        basePath = '',
         build, i, len;
 
     for (i = 0, len = scripts.length; i < len; i++)
@@ -292,15 +296,13 @@ WebVN.use(function (loader)
         exports.build = build;
     });
 
-    if (build === 'test') basePath = '../';
-
     var xhr = new window.XMLHttpRequest();
     xhr.onload = function ()
     {
         var data = JSON.parse(xhr.responseText);
         loadFiles(data);
     };
-    xhr.open('get', basePath + 'webvn.json');
+    xhr.open('get', 'webvn.json');
     xhr.send();
 
     function loadFiles(data)
@@ -310,13 +312,13 @@ WebVN.use(function (loader)
 
         each(css, function (value)
         {
-            loader.css.path = basePath + value.path;
+            loader.css.path = value.path;
             loader.css(value.files);
         });
 
         each(js, function (value)
         {
-            loader.js.path = basePath + value.path;
+            loader.js.path = value.path;
             loader.js(value.files);
         });
     }

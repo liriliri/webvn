@@ -5,7 +5,6 @@
 WebVN.extend('script', function (exports, script)
 {
     var functions = {},
-        regSpace = /\s/,
         fn;
 
     /**
@@ -36,18 +35,7 @@ WebVN.extend('script', function (exports, script)
     {
         fn = functions[name];
 
-        // Wrap params with spaces
-        params = params.map(function (val)
-        {
-            if (regSpace.test(val)) val = "'" + val + "'";
-
-            return val;
-        });
-
         fn.apply(null, params);
-
-        exports.executions = exports.middles.concat(exports.executions);
-        exports.middles    = [];
     }
 
     exports.func = {

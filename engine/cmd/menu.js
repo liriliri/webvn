@@ -15,37 +15,47 @@ WebVN.use(function (script, ui)
 
             /**
              * @type {Object}
+             * @property {Boolean} display(d) Show or hide menu.
+             * @property {String} bgm(bgm) Background music src.
+             * @property {String} background(bg) Background image.
+             * @property {Json} button(btn) Set button property.
+             * @property {Boolean} fadeIn(fi) Fade in or not.
+             * @property {Boolean} fadeOut(fo) Fade out or not.
+             * @property {Number} duration(du) Fade in, fade out duration.
              */
             options: {
-                bgm          : { type: 'string',  short: 'bgm' },
-                btn          : { type: 'json',    short: 'btn' },
-                btnHoverSound: { type: 'string',  short: 'bhs' },
-                btnClickSound: { type: 'string',  short: 'bcs' },
-                display      : { type: 'boolean', short: 'd' },
-                duration     : { type: 'number',  short: 'du' },
-                fadeIn       : { type: 'boolean', short: 'fi' },
-                fadeOut      : { type: 'boolean', short: 'fo' }
+                display   : { type: 'boolean', short: 'd' },
+                bgm       : { type: 'string',  short: 'bgm' },
+                background: { type: 'string',  short: 'bg' },
+                button    : { type: 'json',    short: 'btn' },
+                hoverSound: { type: 'string',  short: 'hs' },
+                clickSound: { type: 'string',  short: 'cs' },
+                duration  : { type: 'number',  short: 'du' },
+                fadeIn    : { type: 'boolean', short: 'fi' },
+                fadeOut   : { type: 'boolean', short: 'fo' }
             },
 
             orders: [
                 'bgm',
-                'btn',
-                'btnClickSound',
-                'btnHoverSound',
+                'button',
+                'background',
+                'clickSound',
+                'hoverSound',
                 'duration',
                 'fadeIn',
                 'fadeOut',
                 'display'
             ],
 
-            bgm          : function (val) { menu.bgm           = val },
-            btnClickSound: function (val) { menu.btnClickSound = val },
-            btnHoverSound: function (val) { menu.btnHoverSound = val },
-            duration     : function (val) { menu.duration      = val },
-            fadeIn       : function (val) { menu.fadeIn        = val },
-            fadeOut      : function (val) { menu.fadeOut       = val },
-            btn          : function (val) { menu.buttons(val) },
-            display      : function (val) { val ? menu.show() : menu.hide() }
+            bgm       : function (val) { menu.bgm        = val },
+            clickSound: function (val) { menu.clickSound = val },
+            hoverSound: function (val) { menu.hoverSound = val },
+            background: function (val) { menu.background = val },
+            duration  : function (val) { menu.duration   = val },
+            fadeIn    : function (val) { menu.fadeIn     = val },
+            fadeOut   : function (val) { menu.fadeOut    = val },
+            button    : function (val) { menu.buttons(val) },
+            display   : function (val) { val ? menu.show() : menu.hide() }
         }
     );
 });

@@ -5,6 +5,21 @@
  * Please create another script file to define your own.
  */
 
+function showMenu(bgm, bg)
+{
+    menu -d -bgm={{bgm}} -bg={{bg}}
+}
+
+function playVideo(src, click)
+{
+    video -dp -src={{src}} -c={{click}}
+}
+
+function logInfo(msg)
+{
+    log -t=info -m='{{msg}}'
+}
+
 function default(text)
 {
     dialog -t={{text}}
@@ -15,19 +30,9 @@ function jump(label)
     script -j={{label}}
 }
 
-function logInfo(msg)
-{
-    log -t=info -m={{msg}}
-}
-
 function playBgm(src)
 {
     bgm -s={{src}}
-}
-
-function playVideo(src)
-{
-    video -d -p -s={{src}} -c=skip
 }
 
 function setAlias(name, value)

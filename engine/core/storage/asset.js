@@ -4,10 +4,6 @@
  */
 WebVN.extend('storage', function (exports, Class, config, util)
 {
-    var basePath = '';
-
-    if (config.build === 'test') basePath = '../';
-
     var regFileExt = /(jpg|png|bmp|ogg|webm|wav)$/;
 
     /**
@@ -34,9 +30,9 @@ WebVN.extend('storage', function (exports, Class, config, util)
             {
                 if (util.startsWith(src, 'http')) return src;
 
-                if (regFileExt.test(src)) return basePath + src;
+                if (regFileExt.test(src)) return src;
 
-                return basePath + this.path + src + '.' + this.extension;
+                return this.path + src + '.' + this.extension;
             }
         }
     );

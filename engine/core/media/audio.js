@@ -1,8 +1,14 @@
-WebVN.extend('media', function (exports, storage, config)
+WebVN.extend('media', function (exports, storage, config, state)
 {
     var Base  = exports.Base,
-        asset = storage.asset,
-        State = exports.State;
+        asset = storage.asset;
+
+    var State = state.create('empty', [
+        { name: 'load',   from: 'empty', to: 'pause' },
+        { name: 'play',   from: 'pause', to: 'play' },
+        { name: 'pause',  from: ['play', 'empty'], to: 'pause' },
+        { name: 'unload', from: ['play', 'pause'], to: 'empty' }
+    ]);
 
     /**
      * Append class in order not to conflict with primitive Audio class.
@@ -18,6 +24,7 @@ WebVN.extend('media', function (exports, storage, config)
                 this.callSuper();
 
                 this.el       = new Audio;
+                this.state    = new State;
                 this.duration = 0;
                 this.fadeIn   = false;
                 this.fadeOut  = false;
@@ -29,7 +36,6 @@ WebVN.extend('media', function (exports, storage, config)
 
                 var self = this;
 
-                // Stop playing music
                 this.stop();
                 this.state.unload();
 
