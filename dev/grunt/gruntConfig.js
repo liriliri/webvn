@@ -148,6 +148,16 @@ exports.copy = {
                 '../WebVN-demo/scenario/init.wvn': 'dist/scenario/init.wvn'
             }
         ]
+    },
+    jsdoc: {
+        files: [
+            {
+                expand: true,
+                cwd: 'dev/doc/jsdoc',
+                src: ['*.*', '**/*.*'],
+                dest: '../WebVN-sae/1/public/jsdoc'
+            }
+        ]
     }
 };
 

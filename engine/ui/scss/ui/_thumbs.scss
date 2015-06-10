@@ -6,7 +6,8 @@
     display: inline-block;
     max-width: 100%;
     line-height: 0;
-    transition: all .3s ease-out;
+    transition: box-shadow .3s ease-out;
+    transform: translateZ(0);
     &:hover {
         box-shadow: 0 0 6px 1px $blue;
     }

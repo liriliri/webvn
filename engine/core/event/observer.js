@@ -4,9 +4,13 @@
  */
 WebVN.extend('event', function (exports, util)
 {
-    var event = {};
+    /**
+     * @name Event
+     * @memberof event.observer
+     */
+    var Event = {};
 
-    event.on = function (name, cb, context)
+    Event.on = function (name, cb, context)
     {
         context = context || this;
 
@@ -19,12 +23,12 @@ WebVN.extend('event', function (exports, util)
         this._events = events;
     };
 
-    event.listenTo = function (target, name, cb)
+    Event.listenTo = function (target, name, cb)
     {
         target.on(name, cb, this);
     };
 
-    event.trigger = function (name)
+    Event.trigger = function (name)
     {
         var events = this._events[name],
             args   = util.toArray(arguments);
@@ -39,7 +43,7 @@ WebVN.extend('event', function (exports, util)
         });
     };
 
-    event._events = {};
+    Event._events = {};
 
     /**
      * @method create
@@ -47,10 +51,10 @@ WebVN.extend('event', function (exports, util)
      * @param {Object} object
      * @return {Object}
      */
-    function create(object) { return util.mixIn(object, event) }
+    function create(object) { return util.mixIn(object, Event) }
 
     exports.observer = {
         create: create,
-        Event: event
+        Event: Event
     };
 });

@@ -29,7 +29,8 @@ WebVN.use(function (script, ui)
                 textType     : { type: 'String',  short: 'tt' },
                 voice        : { type: 'String',  short: 'v' },
                 stopAnimation: { type: 'boolean', short: 'sa' },
-                playNext     : { type: 'Boolean', short: 'pn' }
+                playNext     : { type: 'boolean', short: 'pn' },
+                clearText    : { type: 'boolean', short: 'ct'}
             },
 
             orders: [
@@ -42,11 +43,23 @@ WebVN.use(function (script, ui)
                 'face',
                 'display',
                 'name',
+                'clearText',
                 'text',
                 'voice',
                 'stopAnimation',
                 'playNext'
             ],
+
+            beforeExec: function (vals, text) {
+                if (dialog.textAnim.isPlaying())
+                {
+                    dialog.textAnim.stop();
+                    script.insert(['command', text]);
+                    return false;
+                }
+
+                return true;
+            },
 
             stopAnimation: function (val) { val && dialog.stopAnim() },
             face         : function (val) { dialog.face(val) },
@@ -59,7 +72,8 @@ WebVN.use(function (script, ui)
             display      : function (val) { val ? dialog.show() : dialog.hide() },
             name         : function (val) { dialog.name(val) },
             text         : function (val) { dialog.text(val) },
-            voice        : function (val) { dialog.voice(val) }
+            voice        : function (val) { dialog.voice(val) },
+            clearText    : function (val) { val && dialog.text.clear() }
         }
     );
 });

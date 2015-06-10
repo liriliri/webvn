@@ -3,6 +3,8 @@
  * Every other components should be written in the same style.
  * @namespace menu
  * @memberof ui
+ * @property {String} background
+ * @property {String} bgm
  */
 WebVN.use(function (ui, script, media, util, config, storage)
 {
@@ -69,20 +71,22 @@ WebVN.use(function (ui, script, media, util, config, storage)
 
         'click .gallery': function () { ui.get('gallery').show() },
 
-        'click .music': function () {
+        'click .music': function ()
+        {
             if (exports.bgm) bgm.stop();
 
             ui.get('music').show();
         },
 
-        'mouseover li': function () {
+        'mouseover li': function ()
+        {
             exports.hoverSound && se.load(exports.hoverSound);
         },
 
-        'click li': function () {
+        'click li': function ()
+        {
             exports.clickSound && se.load(exports.clickSound);
         }
-
     });
 
     exports.reset = function () { $el.hide() };
@@ -101,7 +105,7 @@ WebVN.use(function (ui, script, media, util, config, storage)
     /**
      * @method buttons
      * @memberof ui.menu
-     * @param buttons
+     * @param {Object} buttons
      */
     exports.buttons = function (buttons)
     {
@@ -112,7 +116,8 @@ WebVN.use(function (ui, script, media, util, config, storage)
             if (util.isString(val))
             {
                 $e.text = val;
-            } else {
+            } else
+            {
                 val ? $e.show() : $e.hide();
             }
         });
@@ -122,5 +127,4 @@ WebVN.use(function (ui, script, media, util, config, storage)
     {
         exports.bgm && bgm.load(exports.bgm);
     };
-
 });

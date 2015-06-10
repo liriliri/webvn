@@ -36,7 +36,7 @@ WebVN.extend('script', function (exports, log, util, storage)
 
         if (cmd)
         {
-            cmd.execute(options);
+            cmd.execute(options, text);
         } else if (func.has('default'))
         {
             exports.stack.push();

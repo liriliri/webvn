@@ -2,13 +2,16 @@ anim
 attrs
 autoplay
 circ
+dest
 memberof
 mouseover
+onended
 onerror
 onload
 onloadeddata
 onmouse
 onresize
 outro
+vals
 webgl
 webvn

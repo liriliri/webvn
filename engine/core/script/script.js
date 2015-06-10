@@ -198,7 +198,7 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
      * Insert Command to current stack.
      * @method insert
      * @memberof script
-     * @param {Array.<Array>} commands
+     * @param {Array.<Array>|Array} commands
      */
     exports.insert = function (commands)
     {

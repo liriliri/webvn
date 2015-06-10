@@ -3,7 +3,7 @@ WebVN.extend('config', function (exports)
     exports.script = {
         scenarios: [
             'init',
-            'first'
+            'start'
         ],
         path: 'scenario/',
         extension: 'wvn'

@@ -20,9 +20,14 @@ function logInfo(msg)
     log -t=info -m='{{msg}}'
 }
 
+function clearDialogText()
+{
+    dialog -ct -pn
+}
+
 function default(text)
 {
-    dialog -t={{text}}
+    dialog -t='{{text}}' -ct
 }
 
 function jump(label)

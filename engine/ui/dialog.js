@@ -2,7 +2,7 @@
  * @namespace dialog
  * @memberof ui
  */
-WebVN.use(function (ui, text, media, config, storage, script)
+WebVN.use(function (ui, text, media, config, storage, script, util)
 {
     var uiName = 'dialog',
         exports = ui.create(uiName, 'div'),
@@ -32,19 +32,18 @@ WebVN.use(function (ui, text, media, config, storage, script)
         $text    = $content.find('.text');
 
     var asset    = storage.asset.create(cfgPath, cfgExtension),
-        textAnim = text.createAnim($text),
         voice    = media.audio.get('vo');
 
     save.save(function () {
         return {
             visible: $el.visible(),
-            name: $name.html(),
-            text: $text.html()
+            name: $name.html,
+            text: $text.html
         };
     }).load(function (val) {
         if (val.visible) $el.show();
-        $name.html(val.name);
-        $text.html(val.text);
+        $name.html = val.name;
+        $text.html = val.text;
     });
 
     exports.properties({
@@ -80,6 +79,8 @@ WebVN.use(function (ui, text, media, config, storage, script)
 
     });
 
+    var textAnim = exports.textAnim =  text.anim.create($text);
+
     exports.show = function () {
         if ($el.visible()) return;
 
@@ -102,10 +103,14 @@ WebVN.use(function (ui, text, media, config, storage, script)
 
     exports.text = function (text)
     {
-        textAnim.stopTimer();
         textAnim.type     = exports.textType;
         textAnim.duration = 1000 * (1 - exports.textSpeed);
-        textAnim.load(text);
+        textAnim.show(text, true);
+    };
+
+    exports.text.clear = function ()
+    {
+        $text.html = '';
     };
 
     exports.stopAnim = function ()
@@ -126,5 +131,4 @@ WebVN.use(function (ui, text, media, config, storage, script)
     {
         name === 'big' ? $el.addClass('big') : $el.removeClass('big');
     };
-
 });

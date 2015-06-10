@@ -8,6 +8,8 @@ WebVN.extend('script', function (exports, Class, log, util)
      * @class Command
      * @memberof script.command
      * @extends Class.Base
+     * @property shorts
+     * @property defaults
      */
     var Command = Class.create(
         /** @lends script.command.Command.prototype */
@@ -32,14 +34,18 @@ WebVN.extend('script', function (exports, Class, log, util)
             },
 
             /**
-             * @param {string} values
+             * @param {string} vals
+             * @param text
              */
-            execute: function (values)
+            execute: function (vals, text)
             {
-                values = this.parseOpts(values);
-                values = this.evalValue(values);
-                this.execution(values);
+                vals = this.parseOpts(vals);
+                vals = this.evalValue(vals);
+
+                if (this.beforeExec(vals, text)) this.execution(vals);
             },
+
+            beforeExec: function () { return true },
 
             /**
              * @param values
@@ -106,7 +112,7 @@ WebVN.extend('script', function (exports, Class, log, util)
                 {
                     key    = keys[i];
                     option = options[key];
-                    if (option) ret[key] = parseVal(option.type, ret[key]);
+                    if (option) ret[key] = parseVal(option.type, ret[key], option.range);
                 }
 
                 return ret;
@@ -134,7 +140,7 @@ WebVN.extend('script', function (exports, Class, log, util)
         }
     );
 
-    function parseVal(type, val)
+    function parseVal(type, val, range)
     {
         switch (val)
         {
@@ -142,19 +148,19 @@ WebVN.extend('script', function (exports, Class, log, util)
             case 'undefined': return;
         }
 
-        if (util.isArray(type))
-        {
-            if (util.inArray(type, val)) return val;
-            return;
-        }
-
         type = type.toLowerCase();
         switch (type)
         {
-            case 'string' : return String(val);
-            case 'boolean': return !(val === 'false' || val === '0');
-            case 'number' : return Number(val);
-            case 'json'   : return JSON.parse(val);
+            case 'string' : val = String(val); break;
+            case 'boolean': val = !(val === 'false' || val === '0'); break;
+            case 'number' : val = Number(val); break;
+            case 'json'   : val = JSON.parse(val); break;
+        }
+
+        if (range)
+        {
+            if (util.inArray(type, val)) return val;
+            return;
         }
 
         return val;

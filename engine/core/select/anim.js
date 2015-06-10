@@ -3,6 +3,7 @@ WebVN.extend('select', function (exports, anim, util)
     var Anim = anim.Anim;
 
     exports.Select.extendFn(
+        /** @lends select.Select.prototype */
         {
             fadeIn: function (duration, cb)
             {
@@ -31,5 +32,4 @@ WebVN.extend('select', function (exports, anim, util)
             }
         }
     );
-
 });

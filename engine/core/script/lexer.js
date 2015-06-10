@@ -248,8 +248,12 @@ WebVN.extend('script', function (exports, Class, log, util)
                 var code = char.charCodeAt(0);
                 return ((code >= 65) && (code <= 90))   ||
                         ((code >= 97) && (code <= 122)) ||
-                        // Chinese is regarded as legal letter too.
-                        ((code >= 19968) && (code <= 40869));
+                        // Chinese letter
+                        ((code >= 19968) && (code <= 40869)) ||
+                        // Number
+                        ((code >= 48) && (code <= 58)) ||
+                        // ", ', and [
+                        code === 34 || code === 39 || code === 91;
             },
 
             // Line comment, starts with '//' until the line break

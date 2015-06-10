@@ -2,29 +2,30 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Dialog</title>
-    <script src="../engine/core/webvn.js" data-build="test"></script>
+    <base href="../../" target="_blank">
+    <title>Menu</title>
+    <script src="engine/webvn.js" data-build="test"></script>
 </head>
 <body>
 <div class="center">
     <div id="webvn"></div>
 </div>
 <div id="scenario" class="hidden">
-    dialog -d --name=RedHoodSu -f=face1 -t="Hello world!"
-    dialog -f=face2 -t="Hello world again!!"
-    dialog -s=big
-    dialog -d=false
-    dialog -d
-    dialog -t="Hello world again!" -tt=bounceIn
-    dialog -n=Surunzi -t="Hello world plus!!!" -td=1000
-    dialog -d=false
-    dialog -d
+    function default(text) {
+        dialog -t={{text}}
+    }
+    dialog -d -n=RedHood -t='Hello, [br]my love!'
+    dialog -ct -pn
+    这是一个非常长的对话，要点击才能使它快速显示完毕！
+    这是一个非常长的对话，要点击才能使它快速显示完毕！
+    这是一个非常长的对话，要点击才能使它快速显示完毕！
+    对话框测试开始！
+    3!
+    2!
+    1!开始...
 </div>
 <script>
-    webvn.call(['test'], function (test) {
-        var component = new test.Component('scenario');
-        component.start();
-    });
+    WebVN.call(function (test) { new test.Script('scenario') });
 </script>
 </body>
 </html>

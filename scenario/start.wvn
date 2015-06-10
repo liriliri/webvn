@@ -7,6 +7,7 @@ setAlias 别名 setAlias
 别名 立绘 fg
 别名 背景 bg
 别名 对话 dialog
+别名 清屏 clearDialogText
 别名 日志 logInfo
 别名 标题 title
 别名 跳转 jump
@@ -20,7 +21,7 @@ setAlias 别名 setAlias
 // 自定义函数
 function 温蒂(text)
 {
-    对话 -d -n=温蒂 -t='{{text}}'
+    对话 -d -n=温蒂 -t='{{text}}' -ct
 }
 
 /* 播放OP
@@ -49,7 +50,8 @@ if (g.firstPlay !== false)
 // 背景乐 bgm2
 
 // 简单介绍
-温蒂 你好！我是温蒂（Wendy），该视觉小说引擎的拟人化萌娘代言人。
+温蒂 你好！我是温蒂（Wendy）。[br]该视觉小说引擎的拟人化萌娘代言人。
+清屏
 首先，欢迎使用WebVN，这是一个完全由HTML5技术编写的视觉小说引擎。
 通过WebVN，你可以利用网页技术来创作属于自己的游戏。所有HTML5能够办到的事，你都可以将其应用到自己的游戏中去。
 接下来我会介绍一下该引擎的主要特性，并通过该demo向您实际展示一下。
