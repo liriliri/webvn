@@ -16,7 +16,7 @@ WebVN.module('system', function (exports, select, config)
     // Set window title
     var title = exports.title = function (text)
     {
-        if (text === undefined) return $title.text();
+        if (text === undefined) return $title.text;
 
         $title.text = text;
     };

@@ -7,28 +7,14 @@
     <link rel="stylesheet" href="/engine/ui/css/index.css">
     <script>
         var testCore = [
-            'util',
-            'class',
-            'canvas',
-            'webgl',
-            'script',
-            'log',
-            'select',
-            'ui',
+            'util'  , 'class', 'canvas', 'webgl',
+            'script', 'log'  , 'select', 'ui'   ,
             'anim'
         ];
         var testUi = [
-            'dialog',
-            'background',
-            'video',
-            'audio',
-            'figure',
-            'cg',
-            'menu',
-            'config',
-            'music',
-            'gallery',
-            'setting'
+            'dialog', 'background', 'video', 'audio' ,
+            'figure', 'cg'        , 'menu' , 'config',
+            'music' , 'gallery'
         ];
     </script>
 </head>
@@ -66,16 +52,20 @@
     </ul>
 </div>
 <script>
-    var i, len;
     var $testUi = $('#test-ui'),
-            $testCore = $('#test-core'),
-            body = '';
-    for (i = 0, len = testCore.length; i < len; i++) {
+        $testCore = $('#test-core'),
+        body = '',
+        i, len;
+
+    for (i = 0, len = testCore.length; i < len; i++)
+    {
         body += '<li><a href="dev/test/' + testCore[i] + '.html">' + testCore[i] + '</a></li>'
     }
     $testCore.html(body);
+
     body = '';
-    for (i = 0, len = testUi.length; i < len; i++) {
+    for (i = 0, len = testUi.length; i < len; i++)
+    {
         body += '<li><a href="dev/test/' + testUi[i] + '.html">' + testUi[i] + '</a></li>'
     }
     $testUi.html(body);

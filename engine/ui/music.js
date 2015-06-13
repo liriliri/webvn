@@ -70,11 +70,11 @@ WebVN.use(function (ui, select, media, config, storage, util)
 
                 if (music.isPlaying())
                 {
-                    $playBtn.text(lang.get('Play'));
+                    $playBtn.text = lang.get('Play');
                     music.pause();
                 } else
                 {
-                    $playBtn.text(lang.get('Pause'));
+                    $playBtn.text = lang.get('Pause');
                     music.play();
                 }
             } else

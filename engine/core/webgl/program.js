@@ -512,7 +512,6 @@ WebVN.extend('webgl', function (exports, Class, log, util, config)
             ]);
         },
 
-
         sharpen: function(amount) {
             var a = amount || 1;
             this.convolution([

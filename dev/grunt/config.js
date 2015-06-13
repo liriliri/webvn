@@ -92,7 +92,7 @@ exports.generateShader = {
     }
 };
 
-var tempDir = 'grunt/temp';
+var tempDir = 'dev/grunt/temp';
 
 exports.copy = {
     dist: {
@@ -171,14 +171,14 @@ exports.concat = {
     dist: {
         files: [
             {
-                'grunt/temp/core.js': coreFiles,
-                'grunt/temp/basic.js': basicFiles,
-                'grunt/temp/ui.js': uiFiles,
-                'grunt/temp/cmd.js': cmdFiles,
-                'grunt/temp/init.js': initFiles
+                'dev/grunt/temp/core.js': coreFiles,
+                'dev/grunt/temp/basic.js': basicFiles,
+                'dev/grunt/temp/ui.js': uiFiles,
+                'dev/grunt/temp/cmd.js': cmdFiles,
+                'dev/grunt/temp/init.js': initFiles
             },
             {
-                'grunt/temp/webvn.css': uiCssFiles
+                'dev/grunt/temp/webvn.css': uiCssFiles
             }]
     }
 };

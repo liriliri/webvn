@@ -11,15 +11,17 @@
     <div id="webvn"></div>
 </div>
 <div id="scenario" class="hidden">
-    function default(text) {
+    function default(text)
+    {
         dialog -t={{text}}
     }
     dialog -d -n=RedHood -t='Hello, [br]my love!'
     dialog -ct -pn
     这是一个非常长的对话，要点击才能使它快速显示完毕！
-    这是一个非常长的对话，要点击才能使它快速显示完毕！
+    dialog -f=face1 -pn
     这是一个非常长的对话，要点击才能使它快速显示完毕！
     对话框测试开始！
+    dialog -s=big -pn
     3!
     2!
     1!开始...

@@ -1,37 +1,38 @@
-var config = require('./grunt.json'),
-    util = require('./util'),
-    gruntConfig = require('./gruntConfig'),
-    gruntTask = require('./gruntTask');
+var config      = require('./grunt.json'),
+    util        = require('./util'),
+    gruntConfig = require('./config'),
+    gruntTask   = require('./task');
 
-function initGrunt(grunt) {
-    "use strict";
+function initGrunt(grunt)
+{
     var fileBase = config['fileBase'];
     grunt.file.setBase(fileBase);
 }
 
-function loadNpmTasks(grunt) {
-    "use strict";
+function loadNpmTasks(grunt)
+{
     var npmTasks = config['npmTasks'];
     npmTasks.forEach(function (element) {
         grunt.loadNpmTasks(element);
     });
 }
 
-function initConfig(grunt) {
-    "use strict";
+function initConfig(grunt)
+{
     grunt.initConfig(gruntConfig);
 }
 
-function initTasks(grunt) {
-    "use strict";
-    util.each(gruntTask, function (value, key) {
+function initTasks(grunt)
+{
+    util.each(gruntTask, function (value, key)
+    {
         grunt.registerTask(key, value);
     });
     grunt.loadTasks(config['taskDir']);
 }
 
-function exportsFunc(grunt) {
-    "use strict";
+function exportsFunc(grunt)
+{
     initGrunt(grunt);
     loadNpmTasks(grunt);
     initConfig(grunt);

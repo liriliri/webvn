@@ -11,13 +11,11 @@
         },
         "theme": {
             "path": "engine/theme/",
-            "files": [
-            ]
+            "files": []
         },
         "custom": {
             "path": "custom/",
-            "files": [
-            ]
+            "files": []
         }
     },
     "js": {
@@ -34,7 +32,6 @@
         "config": {
             "path": "config/",
             "files": [
-                "config",
                 "core",
                 "ui"
             ]
@@ -47,7 +44,7 @@
                 "class/base",
                 "storage/storage",
                 "storage/save",
-                "storage/config",
+                "webvn/config",
                 "storage/asset",
                 "select/util",
                 "select/select",
@@ -92,8 +89,7 @@
         },
         "lib": {
             "path": "lib/",
-            "files": [
-            ]
+            "files": []
         },
         "ui": {
             "path": "engine/ui/",
@@ -126,8 +122,7 @@
         },
         "custom": {
             "path": "custom/",
-            "files": [
-            ]
+            "files": []
         },
         "init": {
             "path": "engine/",

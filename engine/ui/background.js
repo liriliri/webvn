@@ -10,21 +10,23 @@ WebVN.use(function (ui, canvas, storage, config)
         cvs     = exports.getCanvas(),
         save    = storage.create(uiName);
 
-    var cfg = config.create('uiBackground'),
+    var cfg     = config.create('uiBackground'),
         cfgPath = cfg.get('path'),
-        cfgExtension = cfg.get('extension');
+        cfgExt  = cfg.get('extension');
 
     $el.addClass('fill');
 
-    var asset = storage.asset.create(cfgPath, cfgExtension),
+    var asset = storage.asset.create(cfgPath, cfgExt),
         image = canvas.createImage(),
         scene = new canvas.Scene(cvs);
 
     scene.add(image);
 
-    save.save(function () {
+    save.save(function ()
+    {
         return {};
-    }).load(function (value) {
+    }).load(function (value)
+    {
     });
 
     exports.properties({
@@ -33,41 +35,31 @@ WebVN.use(function (ui, canvas, storage, config)
         fadeOut: cfg.get('fadeOut'),
         transition: cfg.get('transition'),
         filter: {
-            set: function (val) {
-                image.filter = val;
-            }
+            set: function (val) { image.filter = val }
         },
         scaleX: {
-            set: function (val) {
-                image.scaleX = val;
-            }
+            set: function (val) { image.scaleX = val }
         },
         scaleY: {
-            set: function (val) {
-                image.scaleY = val;
-            }
+            set: function (val) { image.scaleY = val }
         },
         scale: {
-            set: function (val) {
-                image.scaleX = image.scaleY = val;
-            }
+            set: function (val) { image.scaleX = image.scaleY = val }
         }
     });
 
-    exports.load = function (src) {
+    exports.load = function (src)
+    {
         image.transition = exports.transition;
         image.load(asset.get(src), exports.duration);
     };
 
-    exports.position = function (x, y) {
-        image.setPosition(x, y);
-    };
+    exports.position = function (x, y) { image.setPosition(x, y) };
 
-    exports.animate = function (to) {
-        image.animate(to, exports.duration);
-    };
+    exports.animate = function (to) { image.animate(to, exports.duration) };
 
-    exports.show = function () {
+    exports.show = function ()
+    {
         canvas.renderer.add(scene);
 
         if ($el.visible()) return;
@@ -75,7 +67,8 @@ WebVN.use(function (ui, canvas, storage, config)
         exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();
     };
 
-    exports.hide = function () {
+    exports.hide = function ()
+    {
         canvas.renderer.remove(scene);
 
         exports.fadeOut ? $el.fadeOut(exports.duration) : $el.hide();

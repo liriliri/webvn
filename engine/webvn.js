@@ -138,9 +138,9 @@ window.WebVN = (function(exports)
      * Create module.
      * @method module
      * @memberof WebVN
-     * @param {string} [name] Module name.
-     * @param {function} module Module body.
-     * @return {object} Object returned by function.
+     * @param {String|Function} [name] Module name.
+     * @param {Function} module Module body.
+     * @return {Object} Object returned by function.
      */
     WebVN.module = function (name, module)
     {
@@ -155,7 +155,9 @@ window.WebVN = (function(exports)
         var requires = getModules(getFnParams(module));
         requires.unshift(exports);
 
-        module.apply(null, requires);
+        var ret = module.apply(null, requires);
+
+        if (ret) WebVN[name] = ret;
 
         return exports;
     };
@@ -280,6 +282,30 @@ window.WebVN = (function(exports)
     });
 })();
 
+/**
+ * @namespace config
+ */
+WebVN.module('config', function (exports)
+{
+    /**
+     * @method config
+     * @memberof WebVN
+     * @param cfg
+     */
+    exports = function (cfg)
+    {
+        WebVN.use(function (util)
+        {
+            util.each(cfg, function (val, key)
+            {
+                exports[key] = val;
+            });
+        });
+    };
+
+    return exports;
+});
+
 WebVN.use(function (loader)
 {
     var scripts  = document.getElementsByTagName('script'),
@@ -291,10 +317,7 @@ WebVN.use(function (loader)
         if (build) break;
     }
 
-    WebVN.module('config', function (exports)
-    {
-        exports.build = build;
-    });
+    WebVN.extend('config', function (exports) { exports.build = build });
 
     var xhr = new window.XMLHttpRequest();
     xhr.onload = function ()

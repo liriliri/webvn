@@ -1,14 +1,12 @@
 <!doctype html>
 <html>
 <head>
+<head>
     <meta charset="utf-8">
-    <title>Test</title>
-    <script src="../engine/core/webvn.js" data-build="test"></script>
-    <style>
-        #testParticle, #test {
-            position: absolute;
-        }
-    </style>
+    <base href="../../" target="_blank">
+    <title>Canvas</title>
+        <script src="engine/webvn.js" data-build="test"></script>
+    </head>
 </head>
 <body>
 <div class="center">
@@ -17,38 +15,37 @@
     </div>
 </div>
 <script>
-    webvn.call(['canvas', 'anim'], function (canvas, anim) {
-
+    WebVN.call(function (canvas, anim) {
         var scene = canvas.createScene(document.getElementById('test'));
         var img = new canvas.ImageEntity();
         var img2 = new canvas.ImageEntity();
-        img2.load('/asset/test/fg1.png', 2000);
-        img.load('/asset/test/bg1.bmp', 2000);
+        img2.load('/asset/fg/fg1.png', 2000);
+        img.load('/asset/bg/corridor.jpg', 2000);
         img2.x = 400;
+        img2.y = 100;
         scene.add(img);
         scene.add(img2);
         canvas.renderer.add(scene);
         setTimeout(function () {
-            img.load('/asset/test/bg2.bmp', 2000);
+            setTimeout(function () {
+                img.load('/asset/bg/living_room.jpg', 2000);
+            }, 2000);
             var myTween = anim.create(img);
             myTween.loop = true;
             myTween.to({
                 x: 200
-            }, 3000, 'easeInElastic').call(function () {
+            }, 3000, 'inElastic').call(function () {
                 console.log('finish');
             }).to({
                 x: 0,
                 y: 200
-            }, 3000, 'easeInElastic').wait(1000).to({
+            }, 3000, 'inElastic').wait(1000).to({
                 y: 0
             }, 1000);
         }, 0);
         setTimeout(function () {
-
-            img2.load('/asset/test/fg2.png', 2000);
-
+            img2.load('/asset/fg/fg2.png', 2000);
         }, 4000);
-
     });
 </script>
 </body>
