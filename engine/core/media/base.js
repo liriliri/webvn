@@ -1,7 +1,7 @@
 /**
  * @namespace media
  */
-WebVN.module('media', function (exports, Class, log, util, state)
+WebVN.module('media', function (exports, Class, log, util, state, module)
 {
     var State = state.create('empty', [
         { name: 'load',   from: 'empty', to: 'pause' },
@@ -157,7 +157,7 @@ WebVN.module('media', function (exports, Class, log, util, state)
         }
     );
 
-    exports.video = WebVN.module(function (exports)
+    exports.video = module(function (exports)
     {
         exports.create = function (video) { return new Video(video) }
     });

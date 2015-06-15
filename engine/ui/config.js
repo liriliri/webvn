@@ -38,11 +38,10 @@ WebVN.use(function (ui, config, media)
         duration: cfg.get('duration')
     }).events({
 
-        'click .close': function () {
-            hide();
-        },
+        'click .close': function () { hide() },
 
-        'change .text-speed': function () {
+        'change .text-speed': function ()
+        {
             ui.get('dialog').textSpeed = this.val;
         },
 
@@ -52,13 +51,13 @@ WebVN.use(function (ui, config, media)
 
     });
 
-    exports.show = function () {
+    exports.show = function ()
+    {
         exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();
     };
 
-    var hide = exports.hide = function () {
+    var hide = exports.hide = function ()
+    {
         exports.fadeOut ? $el.fadeOut(exports.duration) : $el.hide();
     };
-
-    return exports;
 });

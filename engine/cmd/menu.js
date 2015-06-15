@@ -25,12 +25,12 @@ WebVN.use(function (script, ui)
              */
             options: {
                 display   : { type: 'boolean', short: 'd' },
-                bgm       : { type: 'string',  short: 'bgm' },
-                background: { type: 'string',  short: 'bg' },
-                button    : { type: 'json',    short: 'btn' },
-                hoverSound: { type: 'string',  short: 'hs' },
-                clickSound: { type: 'string',  short: 'cs' },
-                duration  : { type: 'number',  short: 'du' },
+                bgm       : { type: 'string' , short: 'bgm' },
+                background: { type: 'string' , short: 'bg' },
+                button    : { type: 'json'   , short: 'btn' },
+                hoverSound: { type: 'string' , short: 'hs' },
+                clickSound: { type: 'string' , short: 'cs' },
+                duration  : { type: 'number' , short: 'du' },
                 fadeIn    : { type: 'boolean', short: 'fi' },
                 fadeOut   : { type: 'boolean', short: 'fo' }
             },

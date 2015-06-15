@@ -2,7 +2,7 @@
  * Global namespace, all modules should be defined within it.
  * @namespace WebVN
  */
-window.WebVN = (function(exports)
+var WebVN = window.WebVN = (function(exports)
 {
     /**
      * The version string of this release.
@@ -35,7 +35,6 @@ window.WebVN = (function(exports)
     {
         if (!isArray(files)) files = [files];
 
-        // Add css path and file extension
         files = files.map(function (file)
         {
             return loader.css.path + file + '.css';
@@ -99,8 +98,8 @@ window.WebVN = (function(exports)
 
         var js = jsQueue.shift();
 
-        // JsList is empty
-        if (js === undefined) {
+        if (js === undefined)
+        {
             isJsLoading = false;
             return;
         }
@@ -126,7 +125,6 @@ window.WebVN = (function(exports)
                 return;
             }
 
-            // Load next js file
             loadJs();
         };
         script.src = js;
@@ -255,13 +253,8 @@ window.WebVN = (function(exports)
 
         if (ret === null) return [];
 
-        if (ret[0] === 'exports')
-        {
-            ret.shift();
-        } else if (ret[ret.length - 1] === 'exports')
-        {
-            ret.pop();
-        }
+        var exportsIdx = ret.indexOf('exports');
+        if (exportsIdx > -1) ret.splice(exportsIdx, 1);
 
         return ret;
     }
@@ -296,10 +289,7 @@ WebVN.module('config', function (exports)
     {
         WebVN.use(function (util)
         {
-            util.each(cfg, function (val, key)
-            {
-                exports[key] = val;
-            });
+            util.each(cfg, function (val, key) { exports[key] = val });
         });
     };
 

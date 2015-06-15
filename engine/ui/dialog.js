@@ -13,7 +13,7 @@ WebVN.use(function (ui, text, media, config, storage, script, util)
 
     var cfg = config.create('uiDialog'),
         cfgPath = cfg.get('path'),
-        cfgExtension = cfg.get('extension');
+        cfgExt = cfg.get('extension');
 
     $el.addClass('fill');
     $el.html = tpl({
@@ -31,7 +31,7 @@ WebVN.use(function (ui, text, media, config, storage, script, util)
         $face    = $el.find('.face'),
         $text    = $content.find('.text');
 
-    var asset    = storage.asset.create(cfgPath, cfgExtension),
+    var asset    = storage.asset.create(cfgPath, cfgExt),
         voice    = media.audio.get('vo');
 
     save.save(function () {
@@ -52,30 +52,18 @@ WebVN.use(function (ui, text, media, config, storage, script, util)
         fadeIn: cfg.get('fadeIn'),
         fadeOut: cfg.get('fadeOut'),
         textSpeed: {
-            get: function () {
-                return cfg.get('textSpeed');
-            },
-            set: function (val) {
-                cfg.set('textSpeed', val);
-            }
+            get: function () { return cfg.get('textSpeed') },
+            set: function (val) { cfg.set('textSpeed', val) }
         }
     }).events({
 
-        'click .save': function () {
-            ui.get('save').show('save');
-        },
+        'click .save': function () { ui.get('save').show('save') },
 
-        'click .load': function () {
-            ui.get('save').show('load');
-        },
+        'click .load': function () { ui.get('save').show('load') },
 
-        'click .config': function () {
-            ui.get('config').show();
-        },
+        'click .config': function () { ui.get('config').show() },
 
-        'click .exit': function () {
-            ui.get('menu').show();
-        }
+        'click .exit': function () { ui.get('menu').show() }
 
     });
 

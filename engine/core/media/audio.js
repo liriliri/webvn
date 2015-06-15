@@ -1,4 +1,4 @@
-WebVN.extend('media', function (exports, storage, config, state)
+WebVN.extend('media', function (exports, storage, config, state, module)
 {
     var Base  = exports.Base,
         asset = storage.asset;
@@ -118,7 +118,7 @@ WebVN.extend('media', function (exports, storage, config, state)
 
     });
 
-    var audio = exports.audio = WebVN.module(function (exports)
+    var audio = exports.audio = module(function (exports)
     {
         var audios = {};
 

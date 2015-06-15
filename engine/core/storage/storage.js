@@ -1,6 +1,6 @@
-WebVN.module('storage', function (exports, Class, util) {
-    "use strict";
-    var localStore = WebVN.module(function (exports)
+WebVN.module('storage', function (exports, Class, util, module)
+{
+    var localStore = module(function (exports)
     {
         var localStore = window.localStorage;
 

@@ -1,12 +1,12 @@
 /**
  * @module canvas
  */
-WebVN.module('canvas', function (exports, Class)
+WebVN.module('canvas', function (exports, module)
 {
     var reqAnim = window.requestAnimationFrame;
 
     var renderer = exports.renderer
-                 = WebVN.module(function (exports)
+                 = module(function (exports)
     {
         var isPaused = true,
             scenes   = [],

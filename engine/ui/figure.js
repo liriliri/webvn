@@ -23,10 +23,9 @@ WebVN.use(function (ui, canvas, util, config, storage)
 
     curFigure = createFigure(0);
 
-    function createFigure(num) {
-        if (figures[num]) {
-            return figures[num];
-        }
+    function createFigure(num)
+    {
+        if (figures[num]) return figures[num];
 
         var figure = figures[num] = canvas.createImage();
         scene.add(figure);
@@ -34,9 +33,11 @@ WebVN.use(function (ui, canvas, util, config, storage)
         return figure;
     }
 
-    save.save(function () {
+    save.save(function ()
+    {
         return {};
-    }).load(function (value) {
+    }).load(function (val)
+    {
 
     });
 
@@ -46,51 +47,37 @@ WebVN.use(function (ui, canvas, util, config, storage)
         fadeOut: cfg.get('fadeOut'),
         transition: cfg.get('transition'),
         select: {
-            set: function (val) {
-                curFigure = createFigure(val);
-            }
+            set: function (val) { curFigure = createFigure(val) }
         },
         scaleX: {
-            set: function (val) {
-                curFigure.scaleX = val;
-            }
+            set: function (val) { curFigure.scaleX = val }
         },
         scaleY: {
-            set: function (val) {
-                curFigure.scaleY = val;
-            }
+            set: function (val) { curFigure.scaleY = val }
         },
         scale: {
-            set: function (val) {
-                curFigure.scaleX = curFigure.scaleY = value;
-            }
+            set: function (val) { curFigure.scaleX = curFigure.scaleY = val }
         },
         alpha: {
-            set: function (val) {
-                curFigure.alpha = val;
-            }
+            set: function (val) { curFigure.alpha = val }
         },
         filter: {
-            set: function (val) {
-                curFigure.filter = val;
-            }
+            set: function (val) { curFigure.filter = val }
         }
     });
 
-    exports.hideFigure = function () {
-        curFigure.fadeOut(exports.duration);
-    };
+    exports.hideFigure = function () { curFigure.fadeOut(exports.duration) };
 
-    exports.load = function (src) {
+    exports.load = function (src)
+    {
         curFigure.transition = exports.transition;
         curFigure.load(asset.get(src), exports.duration);
     };
 
-    exports.position = function (x, y) {
-        curFigure.setPosition(x, y);
-    };
+    exports.position = function (x, y) { curFigure.setPosition(x, y) };
 
-    exports.show = function () {
+    exports.show = function ()
+    {
         canvas.renderer.add(scene);
 
         if ($el.visible()) return;
@@ -98,14 +85,12 @@ WebVN.use(function (ui, canvas, util, config, storage)
         exports.fadeIn ? $el.fadeIn(exports.duration) : $el.show();
     };
 
-    exports.hide = function () {
+    exports.hide = function ()
+    {
         canvas.renderer.remove(scene);
 
         exports.fadeOut ? $el.fadeOut(exports.duration) : $el.hide();
     };
 
-    exports.animate = function (to) {
-        curFigure.animate(to, exports.duration);
-    };
-
+    exports.animate = function (to) { curFigure.animate(to, exports.duration) };
 });

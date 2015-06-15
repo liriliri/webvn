@@ -45,15 +45,15 @@ WebVN.extend('webgl', function (exports, Class, util)
         }
 
         var texture;
-        // Cache textures to improve performance.
-        if (!gl.ttId) {
+
+        if (!gl.ttId)
+        {
             gl.ttId = util.uid('tt');
             textures[gl.ttId] = {};
-        } else {
+        } else
+        {
             texture = textures[gl.ttId][image.src];
-            if (texture) {
-                return texture;
-            }
+            if (texture) return texture;
         }
 
         texture = new Texture(gl);
@@ -62,5 +62,4 @@ WebVN.extend('webgl', function (exports, Class, util)
 
         return texture;
     };
-
 });

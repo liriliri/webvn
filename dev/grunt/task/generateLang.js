@@ -1,4 +1,3 @@
-// Generate template file
 var util = require('../util'),
     path = require('path');
 

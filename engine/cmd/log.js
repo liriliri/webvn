@@ -17,8 +17,8 @@ WebVN.use(function (script, log)
              * @type {Object}
              */
             options: {
-                type    : { type: 'String',  short: 't' },
-                message : { type: 'String',  short: 'm' },
+                type    : { type: 'String' , short: 't' },
+                message : { type: 'String' , short: 'm' },
                 playNext: { type: 'Boolean', short: 'pn', default: true }
             },
 

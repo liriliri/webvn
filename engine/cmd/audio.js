@@ -22,14 +22,14 @@ WebVN.use(function (script, media)
              * @property {number} duration(du) Fade in, fade out duration.
              */
             options: {
-                duration: { type: 'number',  short: 'du' },
+                duration: { type: 'number' , short: 'du' },
                 fadeIn  : { type: 'boolean', short: 'fi' },
                 fadeOut : { type: 'boolean', short: 'fo' },
-                loop    : { type: 'boolean', short: 'l' },
-                play    : { type: 'boolean', short: 'p' },
-                src     : { type: 'string',  short: 's' },
+                loop    : { type: 'boolean', short: 'l'  },
+                play    : { type: 'boolean', short: 'p'  },
+                src     : { type: 'string' , short: 's'  },
                 stop    : { type: 'boolean', short: 'st' },
-                volume  : { type: 'number',  short: 'v' },
+                volume  : { type: 'number' , short: 'v'  },
                 playNext: { type: 'boolean', short: 'pn', default: true }
             },
 
@@ -63,14 +63,14 @@ WebVN.use(function (script, media)
     command.create(
         /** @lends script.command.Se.prototype */
         {
-            constructor: function Se() { this.callSuper('se'); },
+            constructor: function Se() { this.callSuper('se') },
 
             /**
              * @type {Object}
              */
             options: {
                 loop: { type: 'boolean', short: 'l' },
-                src : { type: 'string',  short: 's' }
+                src : { type: 'string' , short: 's' }
             },
 
             orders: [
@@ -78,8 +78,8 @@ WebVN.use(function (script, media)
                 'loop'
             ],
 
-            src : function (val) { se.load(val); },
-            loop: function (val) { se.loop(val); }
+            src : function (val) { se.load(val) },
+            loop: function (val) { se.loop(val) }
         }
     );
 
@@ -92,7 +92,7 @@ WebVN.use(function (script, media)
     command.create(
         /** @lends script.command.Vo.prototype */
         {
-            constructor: function Vo() { this.callSuper('voice'); },
+            constructor: function Vo() { this.callSuper('voice') },
 
             /**
              * @type {Object}
@@ -107,8 +107,8 @@ WebVN.use(function (script, media)
                 'loop'
             ],
 
-            src : function (val) { voice.load(val); },
-            loop: function (val) { voice.loop(val); }
+            src : function (val) { voice.load(val) },
+            loop: function (val) { voice.loop(val) }
         }
     );
 });
