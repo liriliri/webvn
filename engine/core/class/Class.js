@@ -45,8 +45,11 @@ WebVN.module('Class', function (exports, util)
 
     function Empty() {}
 
-    /* Create a new object with prototype
+    /**
+     * Create a new object with prototype
      * equals to object.create
+     * @method createObj
+     * @memberof Class
      */
     function createObj(proto, constructor)
     {
@@ -61,10 +64,12 @@ WebVN.module('Class', function (exports, util)
             newProto        = new Empty();
         }
 
-        newProto.constructor = constructor;
+        if (constructor) newProto.constructor = constructor;
 
         return newProto;
     }
+
+    exports.createObj = createObj;
 
     /* Extend a class that already exist.
      * All it does is just to set the superClass's prototype into px's __proto__.

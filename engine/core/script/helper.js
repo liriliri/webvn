@@ -2,7 +2,7 @@
  * @namespace func
  * @memberof script
  */
-WebVN.extend('script', function (exports, script)
+WebVN.extend('script', function (exports, script, util)
 {
     var functions = {},
         fn;
@@ -19,6 +19,8 @@ WebVN.extend('script', function (exports, script)
         script.command.has(name) &&
         log.warn('You are overwriting command ' + name + '.');
 
+        fn.params = util.getFnParams(fn);
+
         functions[name] = fn;
     }
 
@@ -33,8 +35,19 @@ WebVN.extend('script', function (exports, script)
 
     function call(name, params)
     {
+        var scope = {};
+
+        exports.stack.push();
+
         fn = functions[name];
 
+        util.each(params, function (val, idx)
+        {
+            scope[fn.params[idx]] = params[idx]
+                                  = exports.command.evalVal(val);
+        });
+
+        exports.scope.push(scope);
         fn.apply(null, params);
     }
 
@@ -124,5 +137,47 @@ WebVN.extend('script', function (exports)
         create: create,
         has   : has,
         get   : get
+    };
+});
+
+/**
+ * @namespace scope
+ * @memberof script
+ */
+WebVN.extend('script', function (exports, Class, util)
+{
+    var scopes = [],
+        current = {};
+
+    scopes.push(current);
+
+    function push(scope)
+    {
+        current = scope;
+
+        scopes.push(current);
+    }
+
+    function pop()
+    {
+        scopes.pop();
+        current = util.last(scopes);
+    }
+
+    function get(name)
+    {
+        if (name) return current[name];
+
+        var ret = {}, key;
+
+        for (key in current) ret[key] = '"' + current[key] + '"';
+
+        return ret;
+    }
+
+    exports.scope = {
+        push: push,
+        pop : pop,
+        get : get
     };
 });

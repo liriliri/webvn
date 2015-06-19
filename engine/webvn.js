@@ -19,6 +19,58 @@ var WebVN = window.WebVN = (function(exports)
     var head = document.getElementsByTagName('head')[0];
 
     /**
+     * @namespace util
+     */
+    WebVN.util = {};
+
+    var util = WebVN.util;
+
+    /**
+     * @method isArray
+     * @memberof util
+     * @param val
+     * @return {Boolean}
+     */
+    var isArray = util.isArray = function (array)
+    {
+        return Object.prototype.toString.call(array) === '[object Array]';
+    };
+
+    /**
+     * @method isFunction
+     * @memberof util
+     * @param val
+     * @return {Boolean}
+     */
+    var isFunction = util.isFunction = function isFunction(func)
+    {
+        return typeof func === 'function';
+    };
+
+    var regStripComments = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg,
+        regArgNames      = /[^\s,]+/g;
+
+    /**
+     * @method getFnParams
+     * @memberof util
+     * @param fn
+     * @return {Array}
+     */
+    var getFnParams = util.getFnParams = function (fn)
+    {
+        var fnStr = fn.toString().replace(regStripComments, ''),
+            ret   = fnStr.slice(fnStr.indexOf('(') + 1, fnStr.indexOf(')'))
+                .match(regArgNames);
+
+        if (ret === null) return [];
+
+        var exportsIdx = ret.indexOf('exports');
+        if (exportsIdx > -1) ret.splice(exportsIdx, 1);
+
+        return ret;
+    };
+
+    /**
      * @namespace loader
      */
     WebVN.loader = {};
@@ -240,33 +292,6 @@ var WebVN = window.WebVN = (function(exports)
         {
             return WebVN[val];
         });
-    }
-
-    var regStripComments = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg,
-        regArgNames      = /[^\s,]+/g;
-
-    function getFnParams(fn)
-    {
-        var fnStr = fn.toString().replace(regStripComments, ''),
-            ret   = fnStr.slice(fnStr.indexOf('(') + 1, fnStr.indexOf(')'))
-                         .match(regArgNames);
-
-        if (ret === null) return [];
-
-        var exportsIdx = ret.indexOf('exports');
-        if (exportsIdx > -1) ret.splice(exportsIdx, 1);
-
-        return ret;
-    }
-
-    function isArray(array)
-    {
-        return Object.prototype.toString.call(array) === '[object Array]';
-    }
-
-    function isFunction(func)
-    {
-        return typeof func === 'function';
     }
 
     WebVN.call(function (log, version)

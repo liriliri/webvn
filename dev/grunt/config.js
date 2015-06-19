@@ -167,6 +167,7 @@ var coreFiles = util.webvnFiles(webvn['js'].core, 'js'),
     cmdFiles = util.webvnFiles(webvn['js'].cmd, 'js'),
     initFiles = util.webvnFiles(webvn['js'].init, 'js'),
     uiCssFiles = util.webvnFiles(webvn['css'].ui, 'css');
+
 exports.concat = {
     dist: {
         files: [

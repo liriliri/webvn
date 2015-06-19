@@ -47,23 +47,6 @@ WebVN.use(function (script, log, system)
             {
                 values.value && define.create(val, values.value);
             }
-    });
-
-    /**
-     * @class Script
-     * @memberof script.command
-     */
-    command.create(
-        {
-            constructor: function Script() { this.callSuper('script') },
-
-            options: {
-                jump: { type: 'String', short: 'j' }
-            },
-
-            orders: ['jump'],
-
-            jump: function (val) { script.jump(val) }
         }
     );
 

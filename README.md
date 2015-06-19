@@ -16,7 +16,7 @@ A game engine designed specifically for making visual novels.
 ## Related Projects
 
 * [WebVN-doc](http://surunzi.github.io/WebVN): Documentation of WebVN, Chinese only.
-* [WebVN-site](http://webvn.surunzi.com): Official site, providing free resources to create your own games.
+* [WebVN-site](http://webvn.club): Official site, providing free resources to create your own games.
 * [WebVN-demo](https://github.com/surunzi/WebVN-demo): WebVN demo, example of engine usage.
 * [WebVN-st](https://github.com/surunzi/WebVN-st): Sublime Text plugin for WebVN.
 * [WebVN-cli](https://github.com/surunzi/WebVN-cli): Cli tool, mainly used for WebVN component management.

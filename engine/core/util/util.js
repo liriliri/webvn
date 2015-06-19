@@ -1,7 +1,4 @@
-/**
- * @namespace util
- */
-WebVN.module('util', function (exports)
+WebVN.extend('util', function (exports)
 {
     /**
      * @method each
@@ -34,7 +31,7 @@ WebVN.module('util', function (exports)
     };
     var uid = 0;
 
-    // Undone
+    /** @TODO Object util */
 
     // Const
     var CLONE_MARKER = 'webvn_clone',

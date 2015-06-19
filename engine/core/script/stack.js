@@ -44,11 +44,11 @@ WebVN.extend('script', function (exports, Class, util, log)
         }
     );
 
-    var stacks   = [],
-        curFrame = new Frame,
-        mainFrame = curFrame;
+    var stacks    = [],
+        current  = new Frame,
+        mainFrame = current;
 
-    stacks.push(curFrame);
+    stacks.push(current);
 
     function $$()
     {
@@ -56,27 +56,34 @@ WebVN.extend('script', function (exports, Class, util, log)
 
         if (cmd[1] === 'dialog -sa') debugger;
 
-        exports.preExecute(cmd, curFrame.len);
+        exports.preExecute(cmd, current.len);
 
-        curFrame.push(cmd);
+        current.push(cmd);
     }
 
     function getCmd()
     {
-        var command = curFrame.next();
+        var command = current.next();
 
         while (command === undefined)
         {
-            if (curFrame === mainFrame)
+            if (current === mainFrame)
             {
                 log.warn('End of script.');
                 exports.pause();
                 return;
             } else
             {
-                stacks.pop();
-                curFrame = stacks[stacks.length - 1];
-                command = curFrame.next();
+                if (current.type === 'function')
+                {
+                    pop();
+                    command = current.next();
+                } else
+                {
+                    stacks.pop();
+                    current = stacks[stacks.length - 1];
+                    command = current.next();
+                }
             }
         }
 
@@ -85,32 +92,33 @@ WebVN.extend('script', function (exports, Class, util, log)
 
     function push(type)
     {
-        curFrame = new Frame(type);
-        stacks.push(curFrame);
+        current = new Frame(type);
+        stacks.push(current);
     }
 
     function pop()
     {
-        while (curFrame.type !== 'function') {
+        while (current.type !== 'function') {
             stacks.pop();
-            curFrame = stacks[stacks.length - 1];
+            current = util.last(stacks);
         }
 
+        exports.scope.pop();
         stacks.pop();
-        curFrame = stacks[stacks.length - 1];
+        current = util.last(stacks);
     }
 
     function jump(num)
     {
         reset();
-        curFrame.pointer = num;
+        current.pointer = num;
     }
 
     function reset()
     {
         stacks = [mainFrame];
-        curFrame = mainFrame;
-        curFrame.pointer = -1;
+        current = mainFrame;
+        current.pointer = -1;
     }
 
     exports.stack = {

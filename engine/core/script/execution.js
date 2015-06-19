@@ -26,7 +26,6 @@ WebVN.extend('script', function (exports, log, util, storage)
 
         if (func.has(name))
         {
-            exports.stack.push();
             func.call(name, cmd.parts);
             exports.play();
             return;
@@ -39,7 +38,6 @@ WebVN.extend('script', function (exports, log, util, storage)
             cmd.execute(options, text);
         } else if (func.has('default'))
         {
-            exports.stack.push();
             func.call('default', [text]);
             exports.play();
         } else

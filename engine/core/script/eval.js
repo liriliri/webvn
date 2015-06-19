@@ -5,8 +5,9 @@
 WebVN.extend('script', function (exports, util, storage, log)
 {
     var globalStore = storage.createLocalStore('global'),
-        s           = {},
-        js          = {};
+        s  = {},
+        t  = {},
+        js = {};
 
     var playNext = exports.play;
 
@@ -35,19 +36,29 @@ WebVN.extend('script', function (exports, util, storage, log)
 
         if (util.trim(code) === '') return emptyStr;
 
-        var scope = {};
-
         var functionName = util.uid('eval');
 
+        var scope    = exports.scope.get(),
+            scopeStr = '';
+
+        util.mixIn(scope, {
+            'g': 'globalStore.get()',
+            '$$': 'exports.stack.$$'
+        });
+
+        util.each(scope, function (val, key)
+        {
+            scopeStr += 'var ' + key + '=' + val + ';';
+        });
+
         code = 'scope["' + functionName + '"]=function(){' +
+               scopeStr +
                (returnOrNot ? 'return (' : '') +
                code +
                (returnOrNot ? ');' : '') +'}';
 
         try
         {
-            var g  = globalStore.get(),
-                $$ = exports.stack.$$;
             eval(code);
         } catch (e)
         {

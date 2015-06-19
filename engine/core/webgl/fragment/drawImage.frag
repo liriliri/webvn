@@ -4,7 +4,6 @@
 
 uniform sampler2D u_Sampler;
 uniform float u_Alpha;
-varying vec4 test;
 varying vec2 v_TexCoord;
 
 void main() {

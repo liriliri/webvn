@@ -1,9 +1,6 @@
 WebVN.config({
     "script": {
-        "scenarios": [
-            "init",
-            "start"
-        ],
+        "scenarios": ["init", "start"],
         "path": "scenario/",
         "extension": "wvn"
     },

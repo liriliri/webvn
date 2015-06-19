@@ -16,6 +16,8 @@ WebVN.extend('util', function (exports)
                       .toLowerCase();
     };
 
+    var isArray = exports.isArray;
+
     /**
      * @method isNumber
      * @return {Boolean}
@@ -45,16 +47,6 @@ WebVN.extend('util', function (exports)
     };
 
     /**
-     * @method isFunction
-     * @param val
-     * @return {Boolean}
-     */
-    exports.isFunction = function (val)
-    {
-        return type(val) === 'function';
-    };
-
-    /**
      * @method isObject
      * @param val
      * @return {Boolean}
@@ -62,16 +54,6 @@ WebVN.extend('util', function (exports)
     var isObject = exports.isObject = function (val)
     {
         return type(val) === 'object';
-    };
-
-    /**
-     * @method isArray
-     * @param val
-     * @return {Boolean}
-     */
-    var isArray = exports.isArray = function (val)
-    {
-        return type(val) === 'array';
     };
 
     /**

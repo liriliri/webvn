@@ -2,34 +2,32 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <base href="../../" target="_blank">
     <title>Figure</title>
-    <script src="../engine/core/webvn.js" data-build="test"></script>
+    <script src="engine/webvn.js" data-build="test"></script>
 </head>
 <body>
 <div class="center">
     <div id="webvn"></div>
 </div>
 <div id="scenario" class="hidden">
-    fg -d -sel=0 -s=fg1 -pos=center -f='{"name":"emboss", "value":2}'
-    fg -s=fg2 -t=burn -sx=1.5
-    fg -a='{"x":0, "y":200, "alpha":0.8, "ease":"easeInElastic"}' -du=3000
-    fg -pos=bottomCenter -al=1 -h
-    fg -pos=topCenter
-    fg -sel=1 -s=fg3 -pos=left
-    fg -pos=bottomLeft
-    fg -pos=topLeft
-    fg -sel=2 -s=fg4 -pos=right
-    fg -pos=bottomRight
-    fg -pos=topRight
-    fg -sel=0 -pos=bottomCenter
-    fg -sel=1 -pos=bottomLeft
-    fg -sel=2 -pos=bottomRight
+    fg -d -sel=0 -s=fg1 -pos=center -f='{"name":"emboss", "value":2}' -pn=false
+    fg -s=fg2 -t=burn -sx=1.5 -pn=false
+    fg -a='{"x":0, "y":200, "alpha":0.8, "ease":"inElastic"}' -du=3000 -pn=false
+    fg -pos=bottomCenter -al=1 -h -pn=false
+    fg -pos=topCenter -pn=false
+    fg -sel=1 -s=fg3 -pos=bottomLeft -pn=false
+    fg -pos=bottomLeft -pn=false
+    fg -pos=bottomLeft -pn=false
+    fg -sel=2 -s=fg4 -pos=bottomRight -pn=false
+    fg -pos=bottomRight -pn=false
+    fg -pos=topRight -pn=false
+    fg -sel=0 -pos=bottomCenter -pn=false
+    fg -sel=1 -pos=bottomLeft -pn=false
+    fg -sel=2 -pos=bottomRight -pn=false
 </div>
 <script>
-    webvn.call(['test'], function (test) {
-        var component = new test.Component('scenario');
-        component.start();
-    });
+    WebVN.call(function (test) { new test.Script('scenario') });
 </script>
 </body>
 </html>

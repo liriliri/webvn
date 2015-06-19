@@ -20,6 +20,11 @@ function logInfo(msg)
     log -t=info -m='{{msg}}'
 }
 
+function wait(duration)
+{
+    script -w={{duration}}
+}
+
 function clearDialogText()
 {
     dialog -ct -pn
@@ -28,6 +33,20 @@ function clearDialogText()
 function default(text)
 {
     dialog -t='{{text}}' -ct
+}
+
+function logo(src, duration)
+{
+    `t.duration=Number(duration);playNext();
+    bg -d -du=3000 -src={{src}}
+    if (duration)
+    {
+        wait ${3000+t.duration}
+    } else {
+        wait 3000
+    }
+    bg -d=false
+    wait 3000
 }
 
 function jump(label)

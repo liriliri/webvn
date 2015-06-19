@@ -16,13 +16,12 @@ WebVN.extend('script', function (exports, Class, log, util)
         {
             constructor: function Command(name)
             {
-                // Add to commands
                 if (commands[name]) log.warn('Command ' + name + ' is overwritten');
                 commands[name] = this;
 
-                // Init ShortHands and defaults
                 var shorts   = {},
                     defaults = {};
+
                 util.each(this.options, function (val, key)
                 {
                     val.short   && (shorts[val.short] = key);
@@ -40,7 +39,6 @@ WebVN.extend('script', function (exports, Class, log, util)
             execute: function (vals, text)
             {
                 vals = this.parseOpts(vals);
-                vals = this.evalValue(vals);
 
                 if (this.beforeExec(vals, text)) this.execution(vals);
             },
@@ -106,7 +104,6 @@ WebVN.extend('script', function (exports, Class, log, util)
                     }
                 });
 
-                // Parse values
                 keys = util.keys(ret);
                 for (i = 0, len = keys.length; i < len; i++)
                 {
@@ -114,21 +111,6 @@ WebVN.extend('script', function (exports, Class, log, util)
                     option = options[key];
                     if (option) ret[key] = parseVal(option.type, ret[key], option.range);
                 }
-
-                return ret;
-            },
-
-            evalValue: function (values)
-            {
-                var ret = {};
-
-                util.each(values, function (value, key)
-                {
-                    if (util.isString(value) && util.startsWith(value, '`'))
-                    {
-                        ret[key] = exports.js.val(value.substr(1));
-                    } else ret[key] = value;
-                });
 
                 return ret;
             },
@@ -142,6 +124,8 @@ WebVN.extend('script', function (exports, Class, log, util)
 
     function parseVal(type, val, range)
     {
+        val = evalVal(val);
+
         switch (val)
         {
             case 'null'     : return null;
@@ -160,7 +144,22 @@ WebVN.extend('script', function (exports, Class, log, util)
         if (range)
         {
             if (util.inArray(type, val)) return val;
+
             return;
+        }
+
+        return val;
+    }
+
+    var regEvalVal = /\$\{([^}]*)}/g;
+
+    function evalVal(val)
+    {
+        var match = regEvalVal.exec(val);
+        while (match)
+        {
+            val = val.replace(match[0], exports.js.val(match[1]));
+            match = regEvalVal.exec(val);
         }
 
         return val;
@@ -248,6 +247,7 @@ WebVN.extend('script', function (exports, Class, log, util)
         create : create,
         get    : get,
         has    : has,
+        evalVal: evalVal,
         Command: Command
     };
 });

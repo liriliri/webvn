@@ -8,14 +8,6 @@
                 "component",
                 "ui"
             ]
-        },
-        "theme": {
-            "path": "engine/theme/",
-            "files": []
-        },
-        "custom": {
-            "path": "custom/",
-            "files": []
         }
     },
     "js": {
@@ -87,10 +79,6 @@
                 "webvn/test"
             ]
         },
-        "lib": {
-            "path": "lib/",
-            "files": []
-        },
         "ui": {
             "path": "engine/ui/",
             "files": [
@@ -117,12 +105,9 @@
                 "fg",
                 "log",
                 "dialog",
+                "script",
                 "system"
             ]
-        },
-        "custom": {
-            "path": "custom/",
-            "files": []
         },
         "init": {
             "path": "engine/",

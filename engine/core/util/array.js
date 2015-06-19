@@ -27,4 +27,16 @@ WebVN.extend('util', function (exports)
     {
         return exports.indexOf(arr, item) > -1;
     };
+
+    /**
+     * Returns the last element of an array without modifying the array.
+     * @method last
+     * @memberof util
+     */
+    exports.last = function (arr)
+    {
+        if (arr == null || arr.length < 1) return undefined;
+
+        return arr[arr.length - 1];
+    };
 });
