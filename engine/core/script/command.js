@@ -179,7 +179,8 @@ WebVN.extend('script', function (exports, Class, log, util)
 
         util.each(parts, function (val, idx)
         {
-            val = parts[idx] = trimQuote(val);
+            parts[idx] = val;
+            val = trimQuote(val);
             if (val[0] === '-')
             {
                 option = parseOpt(val);

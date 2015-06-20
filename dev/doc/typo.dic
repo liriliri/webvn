@@ -5,6 +5,7 @@ circ
 contrib
 dest
 jison
+ltrim
 memberof
 mouseover
 nonassoc
@@ -16,6 +17,7 @@ onmouse
 onresize
 outdir
 outro
+rtrim
 shaders
 sourcemap
 surunzi

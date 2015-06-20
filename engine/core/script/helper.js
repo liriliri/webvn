@@ -43,12 +43,31 @@ WebVN.extend('script', function (exports, script, util)
 
         util.each(params, function (val, idx)
         {
-            scope[fn.params[idx]] = params[idx]
-                                  = exports.command.evalVal(val);
+            scope[fn.params[idx]] = params[idx] = parseParam(val);
         });
 
         exports.scope.push(scope);
         fn.apply(null, params);
+    }
+
+    function parseParam(val)
+    {
+        var ret;
+
+        ret = Number(val);
+        if (ret === ret) return ret;
+
+        if (val === 'false') return false;
+
+        if (val === 'true') return true;
+
+        try {
+            ret = JSON.parse(val);
+            return ret;
+        } catch (e) {}
+
+        ret = exports.command.evalVal(val);
+        return ret;
     }
 
     exports.func = {
@@ -168,11 +187,7 @@ WebVN.extend('script', function (exports, Class, util)
     {
         if (name) return current[name];
 
-        var ret = {}, key;
-
-        for (key in current) ret[key] = '"' + current[key] + '"';
-
-        return ret;
+        return current;
     }
 
     exports.scope = {

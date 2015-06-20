@@ -89,4 +89,9 @@ WebVN.extend('util', function (exports)
 
         return ret;
     };
+
+    exports.toString = function (val)
+    {
+        return val == null ? '' : val.toString();
+    };
 });

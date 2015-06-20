@@ -9,8 +9,6 @@ WebVN.extend('script', function (exports, util, storage, log)
         t  = {},
         js = {};
 
-    var playNext = exports.play;
-
     /**
      * Eval javaScript code without return value.
      * @method eval
@@ -38,17 +36,20 @@ WebVN.extend('script', function (exports, util, storage, log)
 
         var functionName = util.uid('eval');
 
-        var scope    = exports.scope.get(),
+        var scope = exports.scope.get(),
             scopeStr = '';
 
         util.mixIn(scope, {
-            'g': 'globalStore.get()',
-            '$$': 'exports.stack.$$'
+            'g'       : globalStore.get(),
+            's'       : s,
+            't'       : t,
+            '$$'      : exports.stack.$$,
+            'playNext': exports.play
         });
 
         util.each(scope, function (val, key)
         {
-            scopeStr += 'var ' + key + '=' + val + ';';
+            scopeStr += 'var ' + key + '= scope["' + key + '"];';
         });
 
         code = 'scope["' + functionName + '"]=function(){' +

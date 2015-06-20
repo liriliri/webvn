@@ -37,12 +37,12 @@ function default(text)
 
 function logo(src, duration)
 {
-    `t.duration=Number(duration);playNext();
     bg -d -du=3000 -src={{src}}
     if (duration)
     {
-        wait ${3000+t.duration}
-    } else {
+        wait ${3000+duration}
+    } else
+    {
         wait 3000
     }
     bg -d=false

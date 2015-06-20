@@ -96,10 +96,12 @@ WebVN.extend('select', function (exports, Class, util)
                 */
             hasClass: function (name)
             {
+                var regHasClass = new RegExp('(^|\\s)' + name + '(\\s|$)');
+
                 return emptyArr.some.call(this, function (element)
                 {
-                    return this.test(element.className);
-                }, new RegExp('(^|\\s)' + name + '(\\s|$)'));
+                    return regHasClass.test(element.className);
+                });
             },
 
             /**
