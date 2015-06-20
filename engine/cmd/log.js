@@ -19,15 +19,18 @@ WebVN.use(function (script, log)
             options: {
                 type    : { type: 'String' , short: 't' },
                 message : { type: 'String' , short: 'm' },
+                clear   : { type: 'Boolean', short: 'c' },
                 playNext: { type: 'Boolean', short: 'pn', default: true }
             },
 
             orders: [
+                'clear',
                 'type',
                 'message',
                 'playNext'
             ],
 
+            clear  : function (val) { val && log.clear() },
             type   : function (val) { type = val },
             message: function (val)
             {

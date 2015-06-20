@@ -31,12 +31,14 @@ WebVN.extend('util', function (exports)
      * @param str
      * @return {String}
      */
-    exports.trim = function (str, chars)
+    var trim = exports.trim = function (str, chars)
     {
         if (!chars) return str.replace(regTrimSpace, '');
 
         return rtrim(ltrim(str, chars), chars);
     };
+
+    exports.trimQuote = function (str) { return trim(str, ['"', "'"]) };
 
     var regTrimSpaceLeft = /^\s+/g;
 

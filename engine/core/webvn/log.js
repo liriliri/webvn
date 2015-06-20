@@ -35,21 +35,17 @@ WebVN.module('log', function (exports, config, util)
      * Display info in console.
      * @function webvn.log.info
      * @param {string} str info
-     * @param {boolean=} displayFile
+     * @param {boolean} [displayFile]
+     * @param {String} [color]
      */
-    exports.info = function (str, displayFile) {
+    exports.info = function (str, displayFile, color)
+    {
         displayFile = displayFile || false;
-        var fileInfo;
-        if (displayFile) {
-            fileInfo = ' ' + getFileInfo();
-        }
 
-        if (config.build === 'release') {
-            return;
-        }
+        if (config.build === 'release') return;
 
-        console.log('%c' + '> ' + str + (displayFile ? fileInfo : ''),
-            'color: ' + colors.info);
+        console.log('%c' + '> ' + str + (displayFile ? getFileInfo() : ''),
+            'color: ' + (color ? color : colors.info));
     };
 
     /**
@@ -68,7 +64,8 @@ WebVN.module('log', function (exports, config, util)
             'color: ' + colors.warn);
     };
 
-    // Get info of file that logs the message
+    exports.clear = function () { console.clear() };
+
     function getFileInfo() {
         var err = new Error,
             stack = err.stack;

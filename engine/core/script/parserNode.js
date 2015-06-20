@@ -32,14 +32,13 @@ WebVN.module('script', function (exports, Class, util)
 
     parserNode.command = function (command)
     {
-        command = formatParam(escapeQuote(command));
+        command = escapeQuote(command);
 
         return '"command", "' + util.trim(command) + '"';
     };
 
     parserNode.code = function (code)
     {
-        // Trim every line to make it look decent
         var lines = code.split('\n'),
             i, len;
 
@@ -49,7 +48,7 @@ WebVN.module('script', function (exports, Class, util)
         }
         code = lines.join('\n');
 
-        return '"code", function () {\n' + code + '\n}';
+        return '"code", "' + escapeQuote(code) + '"';
     };
 
     parserNode.block = function (block)
@@ -68,7 +67,7 @@ WebVN.module('script', function (exports, Class, util)
     {
         body = indent(body);
 
-        return '"if", function () {\n' + body + '}\n';
+        return '"if", "' + escapeQuote(body) + '"';
     };
 
     parserNode['if'] = function (condition, block)
@@ -113,12 +112,6 @@ WebVN.module('script', function (exports, Class, util)
         if (ret[len - 1] === '\t') ret = ret.substr(0, len - 1);
 
         return ret;
-    }
-
-    // Change {{param}} to " + param + "
-    function formatParam(text)
-    {
-        return text.replace(/\{\{/g, '" + ').replace(/}}/g, ' + "');
     }
 
     // https://github.com/joliss/js-string-escape/blob/master/index.js

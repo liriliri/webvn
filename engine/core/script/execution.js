@@ -10,14 +10,14 @@ WebVN.extend('script', function (exports, log, util, storage)
 
         var fileInfo = fileName ? fileName  + ':' + lineNum
                                 : 'Unknown' + ':' + '0';
-        log.info('Cmd: ' + text + ' ' + fileInfo);
 
-        var alias  = exports.alias,
-            define = exports.define,
-            func   = exports.func;
+        var alias   = exports.alias,
+            define  = exports.define,
+            func    = exports.func;
 
         text = alias.parse(text);
         text = define.parse(text);
+        text = evalVal(text);
 
         cmd = exports.command.parse(text);
 
@@ -26,6 +26,7 @@ WebVN.extend('script', function (exports, log, util, storage)
 
         if (func.has(name))
         {
+            log.info('Func: ' + text);
             func.call(name, cmd.parts);
             exports.play();
             return;
@@ -35,6 +36,7 @@ WebVN.extend('script', function (exports, log, util, storage)
 
         if (cmd)
         {
+            log.info('Cmd : ' + text + ' ' + fileInfo);
             cmd.execute(options, text);
         } else if (func.has('default'))
         {
@@ -46,11 +48,28 @@ WebVN.extend('script', function (exports, log, util, storage)
         }
     }
 
+    var regEvalVal = /\$\{([^}]*)}/g;
+
+    function evalVal(val)
+    {
+        var replace = {},
+            match = regEvalVal.exec(val);
+
+        while (match)
+        {
+            replace[match[0]] = exports.js.val(match[1]);
+            match = regEvalVal.exec(val);
+        }
+
+        util.each(replace, function (innerVal, key) { val = val.replace(key, innerVal) });
+
+        return val;
+    }
+
     function code(cmd)
     {
-        cmd[1]();
-
-        storage.createLocalStore('global').save();
+        log.info('Code: ' + cmd[1]);
+        exports.js.eval(cmd[1]);
     }
 
     function ret()
@@ -62,7 +81,7 @@ WebVN.extend('script', function (exports, log, util, storage)
     function ifBlock(cmd)
     {
         exports.stack.push('if');
-        cmd[1].call();
+        exports.js.eval(cmd[1]);
         exports.play();
     }
 

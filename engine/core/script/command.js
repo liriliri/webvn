@@ -124,8 +124,6 @@ WebVN.extend('script', function (exports, Class, log, util)
 
     function parseVal(type, val, range)
     {
-        val = evalVal(val);
-
         switch (val)
         {
             case 'null'     : return null;
@@ -151,20 +149,6 @@ WebVN.extend('script', function (exports, Class, log, util)
         return val;
     }
 
-    var regEvalVal = /\$\{([^}]*)}/g;
-
-    function evalVal(val)
-    {
-        var match = regEvalVal.exec(val);
-        while (match)
-        {
-            val = val.replace(match[0], exports.js.val(match[1]));
-            match = regEvalVal.exec(val);
-        }
-
-        return val;
-    }
-
     var regSplit = /(?:[^\s"']+|"[^"]*"|'[^']*')+/g;
 
     function parseCmd(cmdText)
@@ -180,7 +164,6 @@ WebVN.extend('script', function (exports, Class, log, util)
         util.each(parts, function (val, idx)
         {
             parts[idx] = val;
-            val = trimQuote(val);
             if (val[0] === '-')
             {
                 option = parseOpt(val);
@@ -197,13 +180,6 @@ WebVN.extend('script', function (exports, Class, log, util)
         return ret;
     }
 
-    var regTrimQuote = /^'|^"|'$|"$/g;
-
-    function trimQuote(str)
-    {
-        return str.replace(regTrimQuote, '');
-    }
-
     function parseOpt(text)
     {
         var ret      = [],
@@ -212,7 +188,7 @@ WebVN.extend('script', function (exports, Class, log, util)
         if (equalPos > -1)
         {
             ret.push(text.substr(0, equalPos));
-            ret.push(trimQuote(text.substr(equalPos + 1)));
+            ret.push(util.trimQuote(text.substr(equalPos + 1)));
         } else
         {
             ret.push(text);
@@ -248,7 +224,6 @@ WebVN.extend('script', function (exports, Class, log, util)
         create : create,
         get    : get,
         has    : has,
-        evalVal: evalVal,
         Command: Command
     };
 });

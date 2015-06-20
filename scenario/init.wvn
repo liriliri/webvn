@@ -7,22 +7,27 @@
 
 function showMenu(bgm, bg)
 {
-    menu -d -bgm={{bgm}} -bg={{bg}}
+    menu -d -bgm=${bgm} -bg=${bg}
 }
 
 function playVideo(src, click)
 {
-    video -dp -src={{src}} -c={{click}}
+    video -dp -src=${src} -c=${click}
 }
 
 function logInfo(msg)
 {
-    log -t=info -m='{{msg}}'
+    log -t=info -m='${msg}'
 }
 
 function wait(duration)
 {
-    script -w={{duration}}
+    script -w=${duration}
+}
+
+function clearLog()
+{
+    log -c
 }
 
 function clearDialogText()
@@ -32,12 +37,12 @@ function clearDialogText()
 
 function default(text)
 {
-    dialog -t='{{text}}' -ct
+    dialog -t='${text}' -ct
 }
 
 function logo(src, duration)
 {
-    bg -d -du=3000 -src={{src}}
+    bg -d -du=3000 -src=${src}
     if (duration)
     {
         wait ${3000+duration}
@@ -51,27 +56,27 @@ function logo(src, duration)
 
 function jump(label)
 {
-    script -j={{label}}
+    script -j=${label}
 }
 
 function playBgm(src)
 {
-    bgm -s={{src}}
+    bgm -s=${src}
 }
 
 function setAlias(name, value)
 {
-    alias -n={{name}} -v={{value}}
+    alias -n=${name} -v=${value}
 }
 
 function setDefine(name, value)
 {
-    define -n={{name}} -v={{value}}
+    define -n=${name} -v=${value}
 }
 
 function title(name)
 {
-    system -t={{name}}
+    system -t=${name}
 }
 
 function stopBgm()

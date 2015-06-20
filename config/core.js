@@ -17,9 +17,9 @@ WebVN.config({
     },
     "log": {
         "colors": {
-            "info": "#07a",
+            "info" : "#07a",
             "error": "#eb6864",
-            "warn": "#f9c621"
+            "warn" : "#f9c621"
         }
     },
     "media": {

@@ -66,8 +66,7 @@ WebVN.extend('script', function (exports, script, util)
             return ret;
         } catch (e) {}
 
-        ret = exports.command.evalVal(val);
-        return ret;
+        return util.trimQuote(val);
     }
 
     exports.func = {

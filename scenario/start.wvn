@@ -17,20 +17,28 @@ setAlias 别名 setAlias
 宏 波纹过渡效果 ripple
 宏 客厅背景 living_room
 宏 回廊背景 corridor
+clearLog
 
 ```
-t.x = 'I am going to do something big';
+x = 'I am going to do something big';
 playNext();
 ```
 
-logInfo ${t.x}
+function logSomething(msg)
+{
+    `console.log(msg);
+}
+
+logSomething 'Ok, I am just testing something'
+
+logInfo '${x}'
 
 logo logo 3000
 
 // 自定义函数
 function 温蒂(text)
 {
-    对话 -d -n=温蒂 -t='{{text}}' -ct
+    对话 -d -n=温蒂 -t='${text}' -ct
 }
 
 /* 播放OP

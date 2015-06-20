@@ -5,6 +5,7 @@
 WebVN.extend('script', function (exports, util, storage, log)
 {
     var globalStore = storage.createLocalStore('global'),
+        funcScope = {},
         s  = {},
         t  = {},
         js = {};
@@ -36,8 +37,7 @@ WebVN.extend('script', function (exports, util, storage, log)
 
         var functionName = util.uid('eval');
 
-        var scope = exports.scope.get(),
-            scopeStr = '';
+        var scope = exports.scope.get();
 
         util.mixIn(scope, {
             'g'       : globalStore.get(),
@@ -47,16 +47,11 @@ WebVN.extend('script', function (exports, util, storage, log)
             'playNext': exports.play
         });
 
-        util.each(scope, function (val, key)
-        {
-            scopeStr += 'var ' + key + '= scope["' + key + '"];';
-        });
-
-        code = 'scope["' + functionName + '"]=function(){' +
-               scopeStr +
-               (returnOrNot ? 'return (' : '') +
-               code +
-               (returnOrNot ? ');' : '') +'}';
+        code = 'funcScope["' + functionName + '"]=function(){' +
+                   'with(scope) {' +
+                       (returnOrNot ? 'return (' : '') + code + (returnOrNot ? ');' : '') +
+                   '}' +
+               '}';
 
         try
         {
@@ -69,7 +64,7 @@ WebVN.extend('script', function (exports, util, storage, log)
 
         setTimeout(function () { globalStore.save() }, 1000);
 
-        return scope[functionName]();
+        return funcScope[functionName]();
     }
 
     var save = storage.create('s');
