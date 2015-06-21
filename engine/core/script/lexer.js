@@ -4,25 +4,24 @@
  */
 WebVN.extend('script', function (exports, Class, log, util)
 {
-    var lexer = {};
-
     /**
      * @class Token
      * @memberof script.lexer
      * @param {string} tag tag name
-     * @param {string} value value
-     * @param {Object} locationData {first_line, first_column, last_line, last_column}
-     * @return {Array} result [tag, value, locationData]
+     * @param {string} val value
+     * @param {Object} pos {first_line, first_column, last_line, last_column}
+     * @return {Array} result [tag, value, pos]
      */
-    var Token = lexer.Token = Class.create(
+    var Token = Class.create(
         /** @lends script.lexer.Token.prototype */
         {
-            constructor: function (tag, value, locationData)
+            constructor: function (tag, val, pos)
             {
                 var token = [];
+
                 token[0] = tag;
-                token[1] = value;
-                token[2] = locationData;
+                token[1] = val;
+                token[2] = pos;
 
                 return token;
             }
@@ -31,477 +30,482 @@ WebVN.extend('script', function (exports, Class, log, util)
 
     var EOF = 'END_OF_FILE';
 
+    var charFilter = {
+        lBracket: function (c)
+        {
+            return isEmpty(c) || c === '(';
+        },
+        space: function (c)
+        {
+            return isEmpty(c);
+        }
+    };
+
     /**
      * @class Lexer
      * @memberof script.lexer
      * @property input
      * @property {Array.<Token>} tokens
-     * @property {Number} currentLine
-     * @property {Number} currentColumn
+     * @property {Number} curLine
+     * @property {Number} curColumn
      * @property {String} c
+     * @property {Number} i
      */
-    var Lexer = lexer.Lexer = Class.create(
+    var Lexer = Class.create(
         /** @lends script.lexer.Lexer.prototype */
         {
-            constructor: function Lexer() {},
-
-            reConfigure: function (code)
+            constructor: function Lexer(code)
             {
-                this.input         = code;
-                this.length        = code.length;
-                this.i             = 0;
-                this.c             = this.input.charAt(this.i);
-                this.currentLine   = 1;
-                this.currentColumn = 1;
-                this.tokens        = [];
+                this.input  = code;
+                this.length = code.length;
+
+                this.i = 0;
+                this.c = (code.length === 0 ? EOF : code[0]);
+
+                this.curLine   = 1;
+                this.curColumn = 1;
             },
 
-            tokenize: function (code)
+            tokenize: function ()
             {
-                this.reConfigure(code);
+                if (this.tokens) return this.tokens;
 
-                var token = this.nextToken();
-                while (token)
-                {
-                    this.pushToken(token);
-                    token = this.nextToken();
-                }
+                this.tokens = [];
+
+                var token;
+
+                while (token = this.nextToken()) this.tokens.push(token);
 
                 return this.tokens;
             },
 
-            lastTokenIs: function (target)
+            createToken: function (tag, val, pos)
             {
-                var token = this.tokens[this.tokens.length - 1];
-
-                return token && token[0] === target;
-            },
-
-            pushToken: function (token) { this.tokens.push(token) },
-
-            createToken: function (tag, value, locationData)
-            {
-                if (value === undefined)
+                if (!pos)
                 {
-                    value = tag;
-                    if (locationData === undefined)
-                    {
-                        locationData = {
-                            first_line  : this.currentLine,
-                            first_column: this.currentColumn - tag.length,
-                            last_line   : this.currentLine,
-                            last_column : this.currentColumn - 1
-                        };
+                    pos = {
+                        first_line  : this.curLine,
+                        first_column: this.curColumn - tag.length,
+                        last_line   : this.curLine,
+                        last_column : this.curColumn -1
                     }
                 }
 
-                return new Token(tag, value, locationData);
+                if (!val) val = tag;
+
+                return new Token(tag, val, pos);
             },
 
             nextToken: function ()
             {
+                var c;
+
                 while (this.c !== EOF)
                 {
-                    switch (this.c)
+                    c = this.c;
+                    if (isEmpty(c))
                     {
-                        case ' ': case '\t': case '\r': this.WS(); continue;
-                        case '/': {
-                            if (this.lookAhead(1, '/'))
+                        this.consume();
+                        continue;
+                    }
+
+                    if (c === '/')
+                    {
+                        if (this.lookAhead(1, '/'))
+                        {
+                            this.commentLine();
+                        } else if (this.lookAhead(1, '*'))
+                        {
+                            this.commentBlock();
+                        } else {
+                            this.advance();
+                        }
+                        continue;
+                    }
+
+                    if (c === '`')
+                    {
+                        if (this.lookAhead(2, '``'))
+                        {
+                            return this.codeBlock();
+                        } else {
+                            return this.codeLine();
+                        }
+                    }
+
+                    if (c === '(')
+                    {
+                        this.consume();
+                        if (this.lastToken('FUNCTION_NAME'))
+                        {
+                            if (this.c !== ')')
                             {
-                                this.commentLine();
-                            } else if (this.lookAhead(1, '*'))
-                            {
-                                this.commentBlock();
+                                return this.funcParam();
                             }
-                        } this.consume(); continue; // Comment
-                        case '`': {
-                            if (this.lookAhead(2, '``'))
-                            {
-                                this.consume();
-                                return this.codeBlock();
-                            } else
-                            {
-                                this.consume();
-                                return this.codeLine();
-                            }
+                        } else if (this.lastToken('IF'))
+                        {
+                            return this.jsBracket();
+                        } else if (this.lastToken('FOR'))
+                        {
+                            return this.jsBracket();
                         }
-                        case '(': {
-                            if (this.lastTokenIs('IF'))
-                            {
-                                this.consume();
-                                return this.condition();
-                            } else if (this.lastTokenIs('FUNCTION_NAME'))
-                            {
-                                this.consume();
-                                if (this.c !== ')') {
-                                    return this.functionParam();
-                                } else this.consume();
-                            } else this.consume();
-                            break;
+                        continue;
+                    }
+
+                    if (c === ',')
+                    {
+                        if (this.lastToken('PARAM'))
+                        {
+                            this.consume();
+                            return this.funcParam();
+                        } else
+                        {
+                            this.advance();
                         }
-                        case ',': {
-                            if (this.lastTokenIs('PARAM'))
-                            {
-                                this.consume();
-                                return this.functionParam();
-                            } else this.consume();
-                            break;
+                        continue;
+                    }
+
+                    if (c === '*')
+                    {
+                        return this.label();
+                    }
+
+                    if (c === ')')
+                    {
+                        this.advance();
+                        continue;
+                    }
+
+                    if (c === '{' ||
+                        c === '}')
+                    {
+                        this.advance();
+                        return this.createToken(c);
+                    }
+
+                    if (this.equal('function', charFilter.lBracket))
+                    {
+                        this.advance(8);
+                        return this.createToken('FUNCTION');
+                    }
+
+                    if (this.equal('if', charFilter.lBracket))
+                    {
+                        this.advance(2);
+                        return this.createToken('IF');
+                    }
+
+                    if (this.equal('else', charFilter.space))
+                    {
+                        this.advance(4);
+                        return this.createToken('ELSE');
+                    }
+
+                    if (this.equal('for', charFilter.lBracket))
+                    {
+                        this.advance(3);
+                        return this.createToken('FOR');
+                    }
+
+                    if (this.equal('return', charFilter.space))
+                    {
+                        this.advance(6);
+                        return this.createToken('RETURN');
+                    }
+
+                    if (this.lastToken('FUNCTION') && isLetter(c))
+                    {
+                        return this.funcName();
+                    }
+
+                    return this.command();
+                }
+            },
+
+            lastToken: function (target)
+            {
+                var token = util.last(this.tokens);
+
+                return token && token[0] === target;
+            },
+
+            consume: function (num)
+            {
+                num = num || 1;
+
+                while (num--)
+                {
+                    this.advance();
+                    this.whiteSpace();
+                }
+            },
+
+            advance: function (num)
+            {
+                num = num || 1;
+
+                while (num--)
+                {
+                    this.i++;
+
+                    if (this.i >= this.length)
+                    {
+                        this.c = EOF;
+                    } else
+                    {
+                        if (this.c === '\n')
+                        {
+                            this.curLine++;
+                            this.curColumn = 1;
+                        } else
+                        {
+                            this.curColumn++;
                         }
-                        case '{': this.consume(); return this.createToken('{');
-                        case '}': this.consume(); return this.createToken('}');
-                        default: {
-                            if (this.lastTokenIs('FUNCTION') && this.isLetter(this.c))
-                            {
-                                return this.functionName();
-                            } else if (this.c === 'i' && this.lookAhead(1, 'f'))
-                            {
-                                this.consumes(2);
-                                return this.createToken('IF');
-                            } else if (this.c === 'e' && this.lookAhead(3, 'lse'))
-                            {
-                                this.consumes(4);
-                                return this.createToken('ELSE');
-                            } else if (this.c === 'f' && this.lookAhead(7, 'unction'))
-                            {
-                                this.consumes(8);
-                                return this.createToken('FUNCTION');
-                            } else if (this.c === 'r' && this.lookAhead(5, 'eturn'))
-                            {
-                                this.consume(6);
-                                return this.createToken('RETURN');
-                            }else if (this.c === '*')
-                            {
-                                this.consume(1);
-                                return this.label();
-                            }else if (this.isLetter(this.c))
-                            {
-                                return this.command();
-                            } else this.consume();
-                        }
+
+                        this.c = this.input[this.i];
                     }
                 }
             },
 
-            /* WS: (' ' | '\t' | '\r')*; Ignore any white space.
-             * Line break is not part of the white space group
-             * since it is used to indicate the end of line comment and other stuff
-             */
-            WS: function ()
+            lookAhead: function (len, target, lastCharFilter)
             {
-                while (this.empty(this.c)) this.advance();
-            },
+                var ret = (this.input.substr(this.i + 1, len) === target);
 
-            empty: function (c)
-            {
-                return c === ' ' || c === '\t' || c === '\r';
-            },
-
-            // Move one character and detect end of file
-            advance: function ()
-            {
-                this.i++;
-                if (this.i >= this.length)
+                if (ret && lastCharFilter)
                 {
-                    this.c = EOF;
-                } else {
-                    if (this.c === '\n')
-                    {
-                        this.currentLine++;
-                        this.currentColumn = 1;
-                    } else this.currentColumn++;
-
-                    this.c = this.input.charAt(this.i);
-                }
-
-            },
-
-            // Move to next non-whitespace character
-            consume: function ()
-            {
-                this.advance();
-                this.WS();
-            },
-
-            // Consume several times
-            consumes: function (num)
-            {
-                for (var i = 0; i < num; i++) this.consume();
-            },
-
-            // Look ahead n character, and see if it resembles target
-            lookAhead: function (len, target)
-            {
-                var str = '', i;
-
-                for (i = 1; i <= len; i++)
+                    return lastCharFilter(this.input[this.i + 1 + len]);
+                } else
                 {
-                    str += this.input.charAt(this.i + i);
+                    return ret;
                 }
-
-                return str === target;
             },
 
-            isLetter: function (char)
+            equal: function (str, lastCharFilter)
             {
-                if (!util.isString(char) || char.length !== 1) return false;
-
-                var code = char.charCodeAt(0);
-                return ((code >= 65) && (code <= 90))   ||
-                        ((code >= 97) && (code <= 122)) ||
-                        // Chinese letter
-                        ((code >= 19968) && (code <= 40869)) ||
-                        // Number
-                        ((code >= 48) && (code <= 58)) ||
-                        // ", ', and [
-                        code === 34 || code === 39 || code === 91;
+                return this.c === str[0] && this.lookAhead(str.length - 1, str.substr(1), lastCharFilter);
             },
 
-            // Line comment, starts with '//' until the line break
+            whiteSpace: function ()
+            {
+                while (isEmpty(this.c)) this.advance();
+            },
+
             commentLine: function ()
             {
-                this.consumes(2);
+                this.advance(2);
 
-                while (!(this.c === '\n'))
+                while (!this.equal('\n'))
                 {
-                    this.consume();
+                    this.advance();
                     if (this.c === EOF) break;
                 }
             },
 
-            // Block comment, starts with '/*', ends with '*/'
             commentBlock: function ()
             {
-                this.consumes(2);
+                this.advance(2);
 
-                while (!(this.c === '*' && this.lookAhead(1, '/')))
+                while (!(this.equal('*/')))
                 {
-                    this.consume();
-                    if (this.c === EOF) throw new Error('The comment block must end with "*/"');
+                    this.advance();
+                    if (this.c === EOF) throw new Error('The comment block must end with "*/".');
                 }
-                this.consume();
+
+                this.advance();
             },
 
-            // Line code, starts with '`' until the line break
+            codeBlock: function ()
+            {
+                this.advance(3);
+
+                var val = '', pos = {};
+
+                pos.first_line   = this.curLine;
+                pos.first_column = this.curColumn;
+
+                while (!(this.equal('```')))
+                {
+                    val += this.c;
+                    this.advance();
+                    if (this.c === EOF) throw new Error('The code block must end with "```"');
+                }
+
+                pos.last_line   = this.curLine;
+                pos.last_column = this.currentColumn - 1;
+
+                this.advance(3);
+
+                return this.createToken('CODE', val, pos);
+            },
+
             codeLine: function ()
             {
-                var value = '',
-                    firstLine, firstColumn, lastLine, lastColumn;
+                this.advance();
 
-                firstLine   = this.currentLine;
-                firstColumn = this.currentColumn;
+                var val = '', pos = {};
 
-                while (!(this.c === '\n'))
+                pos.first_line   = this.curLine;
+                pos.first_column = this.curColumn;
+
+                while (!(this.equal('\n')))
                 {
-                    value += this.c;
-                    // Use advance() instead of consume() because white space should be keep
+                    val += this.c;
                     this.advance();
                     if (this.c === EOF) break;
                 }
 
-                lastLine   = this.currentLine;
-                lastColumn = this.currentColumn - 1;
+                pos.last_line   = this.curLine;
+                pos.last_column = this.curColumn - 1;
 
-                return this.createToken('CODE_LINE', value, {
-                    first_line  : firstLine,
-                    first_column: firstColumn,
-                    last_line   : lastLine,
-                    last_column : lastColumn
-                });
+                return this.createToken('CODE', val, pos);
             },
 
-            // Block code, starts with '```', ends with '```'
-            codeBlock: function ()
+            funcName: function ()
             {
-                var value = '',
-                    firstLine, firstColumn, lastLine, lastColumn;
+                var val = '', pos = {};
 
-                this.consumes(2);
+                pos.first_line   = this.curLine;
+                pos.first_column = this.curColumn;
 
-                firstLine   = this.currentLine;
-                firstColumn = this.currentColumn;
-
-                while (!(this.c === '`' && this.lookAhead(2, '``')))
+                while (isLetter(this.c))
                 {
-                    value += this.c;
+                    val += this.c;
                     this.advance();
-                    if (this.c === EOF) throw new Error('The code line must end with "```"');
                 }
 
-                lastLine   = this.currentLine;
-                lastColumn = this.currentColumn - 1;
+                pos.last_line   = this.curLine;
+                pos.last_column = this.curColumn - 1;
 
-                this.consumes(3);
-
-                return this.createToken('CODE_BLOCK', value, {
-                    first_line  : firstLine,
-                    first_column: firstColumn,
-                    last_line   : lastLine,
-                    last_column : lastColumn
-                });
+                return this.createToken('FUNCTION_NAME', val, pos);
             },
 
-            // Condition
-            condition: function ()
+            funcParam: function ()
             {
-                var value = '', leftBracket = 0,
-                    firstLine, firstColumn, lastLine, lastColumn;
+                var val = '', pos = {};
 
-                firstLine   = this.currentLine;
-                firstColumn = this.currentColumn;
+                pos.first_line   = this.curLine;
+                pos.first_column = this.curColumn;
 
-                while (!(this.c === ')' && leftBracket === 0))
+                while (isLetter(this.c))
                 {
-                    value += this.c;
+                    val += this.c;
+                    this.advance();
+                }
+
+                pos.last_line   = this.curLine;
+                pos.last_column = this.curColumn - 1;
+
+                return this.createToken('PARAM', val, pos);
+            },
+
+            command: function ()
+            {
+                var val = '', pos = {}, lastC = '';
+
+                pos.first_line   = this.curLine;
+                pos.first_column = this.curColumn;
+
+                while (!(this.equal('\n') && lastC !== '\\'))
+                {
+                    if (this.c === '\n' && lastC === '\\')
+                    {
+                        val = val.substr(0, val.length - 1) + this.c;
+                    } else
+                    {
+                        val += this.c;
+                    }
+
+                    lastC = this.c;
+                    this.advance();
+
+                    if (this.c === EOF) break;
+                }
+
+                pos.last_line   = this.curLine;
+                pos.last_column = this.curColumn - 1;
+
+                return this.createToken('COMMAND', val, pos);
+            },
+
+            jsBracket: function ()
+            {
+                var val = '', lBracket = 0, pos = {};
+
+                pos.first_line   = this.curLine;
+                pos.first_column = this.curColumn;
+
+                while (!(this.equal(')') && lBracket === 0))
+                {
+                    val += this.c;
                     if (this.c === '(')
                     {
-                        leftBracket++;
+                        lBracket++;
                     } else if (this.c === ')')
                     {
-                        leftBracket--;
+                        lBracket--;
                     }
                     this.advance();
-                    if (this.c === EOF) throw new Error("One right bracket is missing");
+                    if (this.c === EOF) throw new Error('One right bracket is missing.');
                 }
 
-                lastLine   = this.currentLine;
-                lastColumn = this.currentColumn - 1;
+                pos.last_line   = this.curLine;
+                pos.last_column = this.curColumn - 1;
 
-                this.consume();
+                this.advance();
 
-                return this.createToken('CONDITION', value, {
-                    first_line  : firstLine,
-                    first_column: firstColumn,
-                    last_line   : lastLine,
-                    last_column : lastColumn
-                });
-            },
-
-            functionName: function ()
-            {
-                var value = '',
-                    firstLine, firstColumn, lastLine, lastColumn;
-
-                firstLine   = this.currentLine;
-                firstColumn = this.currentColumn;
-
-                while (this.isLetter(this.c))
-                {
-                    value += this.c;
-                    this.advance();
-                }
-
-                lastLine   = this.currentLine;
-                lastColumn = this.currentColumn - 1;
-
-                return this.createToken('FUNCTION_NAME', value, {
-                    first_line  : firstLine,
-                    first_column: firstColumn,
-                    last_line   : lastLine,
-                    last_column : lastColumn
-                });
-            },
-
-            functionParam: function ()
-            {
-                var value = '',
-                    firstLine, firstColumn, lastLine, lastColumn;
-
-                firstLine   = this.currentLine;
-                firstColumn = this.currentColumn;
-
-                while (this.isLetter(this.c))
-                {
-                    value += this.c;
-                    this.advance();
-                }
-
-                lastLine   = this.currentLine;
-                lastColumn = this.currentColumn - 1;
-
-                return this.createToken('PARAM', value, {
-                    first_line  : firstLine,
-                    first_column: firstColumn,
-                    last_line   : lastLine,
-                    last_column : lastColumn
-                });
+                return this.createToken('CODE', val, pos);
             },
 
             label: function ()
             {
-                var value = '',
-                    firstLine, firstColumn, lastLine, lastColumn;
+                this.consume();
 
-                firstLine   = this.currentLine;
-                firstColumn = this.currentColumn;
+                var val = '', pos = {};
 
-                while (!(this.c === '\n') && this.isLetter(this.c))
+                pos.first_line   = this.curLine;
+                pos.first_column = this.curColumn;
+
+                while (isLetter(this.c))
                 {
-                    value += this.c;
-                    if (this.c === EOF) break;
+                    val += this.c;
                     this.advance();
-                }
-
-                lastLine   = this.currentLine;
-                lastColumn = this.currentColumn - 1;
-
-                return this.createToken('LABEL', value, {
-                    first_line  : firstLine,
-                    first_column: firstColumn,
-                    last_line   : lastLine,
-                    last_column : lastColumn
-                });
-            },
-
-            // Command, ends with line break;
-            command: function ()
-            {
-                var value = '',
-                    firstLine, firstColumn, lastLine, lastColumn;
-
-                firstLine   = this.currentLine;
-                firstColumn = this.currentColumn;
-
-                var lastC = '';
-
-                // If there is a '\' before line break, then it is not the end of command.
-                while (!(this.c === '\n' && lastC !== '\\'))
-                {
-                    if (this.c === '\n' && lastC === '\\')
-                    {
-                        value = value.substr(0, value.length - 1) + this.c;
-                    } else value += this.c;
-
-                    lastC = this.c;
-                    (lastC === '\\') ? this.consume()
-                                     : this.advance();
-
                     if (this.c === EOF) break;
                 }
 
-                lastLine   = this.currentLine;
-                lastColumn = this.currentColumn - 1;
+                pos.last_line   = this.curLine;
+                pos.last_column = this.curColumn - 1;
 
-                return this.createToken('COMMAND', value, {
-                    first_line  : firstLine,
-                    first_column: firstColumn,
-                    last_line   : lastLine,
-                    last_column : lastColumn
-                });
+                return this.createToken('LABEL', val, pos);
             }
         }
     );
 
-    var _lexer = new Lexer;
+    function isEmpty(c)
+    {
+        return c === ' ' || c === '\t' || c === '\r' || c === '\n';
+    }
+
+    function isLetter(c)
+    {
+        var code = c.charCodeAt(0);
+
+        return ((code >= 65) && (code <= 90))  ||
+               ((code >= 97) && (code <= 122)) ||
+               // Chinese letter
+               ((code >= 19968) && (code <= 40869)) ||
+               // Number
+               ((code >= 48) && (code <= 58));
+    }
 
     exports.lexer = function (code)
     {
-        var tokens;
+        var lexer = new Lexer(code);
 
         try
         {
-            tokens = _lexer.tokenize(code);
-            return tokens;
-        } catch (e) {
+            return lexer.tokenize();
+        } catch (e)
+        {
             log.error(e.message);
         }
     };

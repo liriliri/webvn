@@ -54,6 +54,7 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
      */
     var wvnEval = exports.eval = function (scenarioText)
     {
+        console.log(parse(scenarioText));
         exports.js.eval(parse(scenarioText));
     };
 

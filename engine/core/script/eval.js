@@ -6,8 +6,6 @@ WebVN.extend('script', function (exports, util, storage, log)
 {
     var globalStore = storage.createLocalStore('global'),
         funcScope = {},
-        s  = {},
-        t  = {},
         js = {};
 
     /**
@@ -28,12 +26,9 @@ WebVN.extend('script', function (exports, util, storage, log)
      */
     js.val = function (code) { return _jsEval(code, true) };
 
-    var emptyStr = '';
-
     function _jsEval(code, returnOrNot)
     {
-
-        if (util.trim(code) === '') return emptyStr;
+        if (util.trim(code) === '') return '';
 
         var functionName = util.uid('eval');
 
@@ -41,8 +36,6 @@ WebVN.extend('script', function (exports, util, storage, log)
 
         util.mixIn(scope, {
             'g'       : globalStore.get(),
-            's'       : s,
-            't'       : t,
             '$$'      : exports.stack.$$,
             'playNext': exports.play
         });
@@ -59,17 +52,19 @@ WebVN.extend('script', function (exports, util, storage, log)
         } catch (e)
         {
             log.error(e.message);
-            return emptyStr;
+            return '';
         }
 
-        setTimeout(function () { globalStore.save() }, 1000);
+        var ret = funcScope[functionName]();
 
-        return funcScope[functionName]();
+        globalStore.save();
+
+        return ret;
     }
 
-    var save = storage.create('s');
-    save.save(function () { return s })
-        .load(function (val) { s = val });
+    var save = storage.create('scope');
+    save.save(function () { })
+        .load(function (val) { });
 
     exports.js = js;
 });

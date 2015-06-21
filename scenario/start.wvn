@@ -19,6 +19,12 @@ setAlias 别名 setAlias
 宏 回廊背景 corridor
 clearLog
 
+for (i = 0, j = 15; i < 5; i++) {
+    if (true) {
+        `console.log(j); playNext();
+    }
+}
+
 ```
 x = 'I am going to do something big';
 playNext();
@@ -29,7 +35,7 @@ function logSomething(msg)
     `console.log(msg);
 }
 
-logSomething 'Ok, I am just testing something'
+// logSomething 'Ok, I am just testing something'
 
 logInfo '${x}'
 

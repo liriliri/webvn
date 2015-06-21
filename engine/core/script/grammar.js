@@ -18,8 +18,8 @@ var grammar = {
     ],
     Expression: [
         ['If', '$$ = yy.ifWrapper($1)'],
-        ['CodeLine', '$$ = yy.code($1)'],
-        ['CodeBlock', '$$ = yy.code($1)'],
+        ['For', '$$ = yy.forWrapper($1)'],
+        ['Code', '$$ = yy.code($1)'],
         ['Command', '$$ = yy.command($1)'],
         ['Return', '$$ = yy.ret($1)'],
         ['Label', '$$ = yy.label($1)'],
@@ -34,14 +34,14 @@ var grammar = {
     Command: [
         ['COMMAND', 'yy.lineNum(yylineno); $$ = $1']
     ],
-    CodeLine: [
-        ['CODE_LINE', 'yy.lineNum(yylineno); $$ = $1']
+    Code: [
+        ['CODE', 'yy.lineNum(yylineno); $$ = $1']
     ],
-    CodeBlock: [
-        ['CODE_BLOCK', 'yy.lineNum(yylineno); $$ = $1']
+    For: [
+        ['FOR CODE Block', 'yy.lineNum(yylineno); $$ = yy["for"]($2, $3)']
     ],
     If: [
-        ['IF CONDITION Block', 'yy.lineNum(yylineno); $$ = yy["if"]($2, $3)'],
+        ['IF CODE Block', 'yy.lineNum(yylineno); $$ = yy["if"]($2, $3)'],
         ['If ELSE If', '$$ = yy.ifElse($1, $3)'],
         ['If ELSE Block', '$$ = yy.ifElse($1, $3)']
     ],
@@ -59,7 +59,7 @@ var grammar = {
     ]
 };
 
-var tokens = 'CODE_BLOCK COMMAND FUNCTION FUNCTION_NAME PARAM IF RETURN';
+var tokens = 'CODE COMMAND FUNCTION FUNCTION_NAME PARAM IF RETURN';
 
 var operators = [
     ['nonassoc', '{', '}'],
