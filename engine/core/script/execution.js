@@ -85,13 +85,6 @@ WebVN.extend('script', function (exports, log, util, storage)
         exports.play();
     }
 
-    function forBlock(cmd)
-    {
-        exports.stack.push('for');
-        exports.js.eval(cmd[1]);
-        exports.play();
-    }
-
     function func(cmd)
     {
         exports.func.create(cmd[1], cmd[2]);
@@ -111,7 +104,6 @@ WebVN.extend('script', function (exports, log, util, storage)
             case 'command' : command(cmd); break;
             case 'code'    : code(cmd); break;
             case 'if'      : ifBlock(cmd); break;
-            case 'for'     : forBlock(cmd); break;
             case 'return'  : ret(); break;
             case 'label'   :
             case 'function': exports.play(); break;

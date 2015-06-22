@@ -18,7 +18,6 @@ var grammar = {
     ],
     Expression: [
         ['If', '$$ = yy.ifWrapper($1)'],
-        ['For', '$$ = yy.forWrapper($1)'],
         ['Code', '$$ = yy.code($1)'],
         ['Command', '$$ = yy.command($1)'],
         ['Return', '$$ = yy.ret($1)'],
@@ -36,9 +35,6 @@ var grammar = {
     ],
     Code: [
         ['CODE', 'yy.lineNum(yylineno); $$ = $1']
-    ],
-    For: [
-        ['FOR CODE Block', 'yy.lineNum(yylineno); $$ = yy["for"]($2, $3)']
     ],
     If: [
         ['IF CODE Block', 'yy.lineNum(yylineno); $$ = yy["if"]($2, $3)'],

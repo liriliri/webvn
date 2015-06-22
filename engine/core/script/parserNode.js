@@ -63,18 +63,6 @@ WebVN.module('script', function (exports, Class, util)
         return paramList + ', ' + param;
     };
 
-    parserNode.forWrapper = function (body)
-    {
-        body = indent(body);
-
-        return '"for", "' + escapeQuote(body) + '"';
-    };
-
-    parserNode['for'] = function (body, block)
-    {
-        return 'for (' + body + ')' + block;
-    };
-
     parserNode.ifWrapper = function (body)
     {
         body = indent(body);

@@ -201,17 +201,13 @@ WebVN.extend('script', function (exports, Class, log, util)
                         return this.createToken('ELSE');
                     }
 
-                    if (this.equal('for', charFilter.lBracket))
-                    {
-                        this.advance(3);
-                        return this.createToken('FOR');
-                    }
-
                     if (this.equal('return', charFilter.space))
                     {
                         this.advance(6);
                         return this.createToken('RETURN');
                     }
+
+                    /** @TODO For loop */
 
                     if (this.lastToken('FUNCTION') && isLetter(c))
                     {

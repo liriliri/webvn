@@ -2,10 +2,9 @@
  * @namespace func
  * @memberof script
  */
-WebVN.extend('script', function (exports, script, util)
+WebVN.extend('script', function (exports, script, util, log)
 {
-    var functions = {},
-        fn;
+    var fn;
 
     /**
      * Create a function.
@@ -20,8 +19,9 @@ WebVN.extend('script', function (exports, script, util)
         log.warn('You are overwriting command ' + name + '.');
 
         fn.params = util.getFnParams(fn);
+        fn.scope  = exports.scope.get();
 
-        functions[name] = fn;
+        exports.scope.set(name, fn);
     }
 
     /**
@@ -31,21 +31,26 @@ WebVN.extend('script', function (exports, script, util)
      * @param {string} name Function name.
      * @returns {boolean} Exists or not.
      */
-    function has(name) { return functions[name] !== undefined }
+    function has(name) { return exports.scope.get(name) !== undefined }
 
     function call(name, params)
     {
-        var scope = {};
+        fn = exports.scope.get(name);
 
-        exports.stack.push();
+        if (!util.isFunction(fn))
+        {
+            log.warn(name + ' is not a function.'); return;
+        }
 
-        fn = functions[name];
+        /** @TODO Scope assignment fix. */
+        var scope = util.createObj(fn.scope);
 
         util.each(params, function (val, idx)
         {
             scope[fn.params[idx]] = params[idx] = parseParam(val);
         });
 
+        exports.stack.push();
         exports.scope.push(scope);
         fn.apply(null, params);
     }
@@ -159,6 +164,9 @@ WebVN.extend('script', function (exports)
 });
 
 /**
+ * Scope is related to function,
+ * each function will have a corresponding scope.
+ * When the function reaches the end, the scope will be destroyed too.
  * @namespace scope
  * @memberof script
  */
@@ -184,14 +192,38 @@ WebVN.extend('script', function (exports, Class, util)
 
     function get(name)
     {
-        if (name) return current[name];
+        if (name)
+        {
+            if (current[name])
+            {
+                return current[name];
+            }
+            return;
+        }
 
         return current;
+    }
+
+    function set(key, value)
+    {
+        var attrs;
+
+        if (util.isObject(key))
+        {
+            attrs = key;
+        } else
+        {
+            attrs = {};
+            attrs[key] = value;
+        }
+
+        util.each(attrs, function (val, key) { current[key] = val });
     }
 
     exports.scope = {
         push: push,
         pop : pop,
-        get : get
+        get : get,
+        set : set
     };
 });

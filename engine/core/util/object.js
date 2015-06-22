@@ -50,6 +50,33 @@ WebVN.extend('util', function (exports)
         }
 
         return target;
-    }
+    };
 
+    var objCreate = Object.create;
+
+    /**
+     * Create a new object with prototype
+     * equals to object.create
+     * @method createObj
+     * @memberof util
+     */
+    exports.createObj = function (proto, constructor)
+    {
+        var newProto;
+
+        if (objCreate)
+        {
+            newProto = objCreate(proto);
+        } else
+        {
+            Empty.prototype = proto;
+            newProto        = new Empty();
+        }
+
+        if (constructor) newProto.constructor = constructor;
+
+        return newProto;
+    };
+
+    function Empty() {}
 });

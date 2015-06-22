@@ -19,14 +19,22 @@ setAlias 别名 setAlias
 宏 回廊背景 corridor
 clearLog
 
-for (i = 0, j = 15; i < 5; i++) {
-    if (true) {
-        `console.log(j); playNext();
+`scope.out = 'scopeOut'; playNext();
+
+function scopeTest()
+{
+    `out = 'scopeOut1'; playNext();
+    function scopeTest() {
+        `console.log(out);
     }
+    scopeTest
 }
 
+scopeTest
+`console.log(out);
+
 ```
-x = 'I am going to do something big';
+scope.x = 'I am going to do something big';
 playNext();
 ```
 

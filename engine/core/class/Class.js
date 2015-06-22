@@ -3,7 +3,6 @@
  */
 WebVN.module('Class', function (exports, util)
 {
-    var ObjCreate = Object.create;
 
     /* Create a new class using px's constructor if exists.
      * Also set static method of the class
@@ -43,34 +42,6 @@ WebVN.module('Class', function (exports, util)
         return _class;
     };
 
-    function Empty() {}
-
-    /**
-     * Create a new object with prototype
-     * equals to object.create
-     * @method createObj
-     * @memberof Class
-     */
-    function createObj(proto, constructor)
-    {
-        var newProto;
-
-        if (ObjCreate)
-        {
-            newProto = ObjCreate(proto);
-        } else
-        {
-            Empty.prototype = proto;
-            newProto        = new Empty();
-        }
-
-        if (constructor) newProto.constructor = constructor;
-
-        return newProto;
-    }
-
-    exports.createObj = createObj;
-
     /* Extend a class that already exist.
      * All it does is just to set the superClass's prototype into px's __proto__.
      */
@@ -79,7 +50,7 @@ WebVN.module('Class', function (exports, util)
         attrs = attrs || {};
 
         var _class = create(px, sx),
-            newPx  = createObj(superClass.prototype, _class),
+            newPx  = util.createObj(superClass.prototype, _class),
             keys   = util.keys(px),
             key, i, len;
 
@@ -95,7 +66,6 @@ WebVN.module('Class', function (exports, util)
             util.mix(newPx, obj);
         };
 
-        // Define getter and setter
         util.each(attrs, function (val, key)
         {
             if (!val.get)
@@ -109,7 +79,6 @@ WebVN.module('Class', function (exports, util)
         });
         Object.defineProperties(newPx, attrs);
 
-        // fn: Short name for prototype
         _class.fn        = newPx;
         _class.prototype = newPx;
 

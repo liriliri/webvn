@@ -102,5 +102,4 @@ WebVN.extend('util', function (exports)
 
         return (end >= 0) ? str.substring(0, end + 1) : '';
     }
-
 });
