@@ -131,22 +131,45 @@ WebVN.extend('script', function (exports, Class, log, util)
         }
 
         type = type.toLowerCase();
-        switch (type)
+
+        var types    = type.split('|'),
+            multiple = types.length > 1,
+            vals     = multiple ? val.split('|') : [val];
+
+        util.each(types, function (type, idx)
         {
-            case 'string' : val = String(val); break;
-            case 'boolean': val = !(val === 'false' || val === '0'); break;
-            case 'number' : val = Number(val); break;
-            case 'json'   : val = JSON.parse(val); break;
-        }
+            val = vals[idx];
+            switch (type)
+            {
+                case 'string' : val = parseString(val) ; break;
+                case 'boolean': val = parseBoolean(val); break;
+                case 'number' : val = parseNumber(val) ; break;
+                case 'json'   : val = parseJson(val)   ; break;
+            }
+            vals[idx] = val;
+        });
 
-        if (range)
-        {
-            if (util.inArray(type, val)) return val;
+        return multiple ? vals : vals[0];
+    }
 
-            return;
-        }
+    function parseString(val)
+    {
+        return String(val);
+    }
 
-        return val;
+    function parseNumber(val)
+    {
+        return Number(val);
+    }
+
+    function parseJson(val)
+    {
+        return JSON.parse(val);
+    }
+
+    function parseBoolean(val)
+    {
+        return !(val === 'false' || val === '0');
     }
 
     var regSplit = /(?:[^\s"']+|"[^"]*"|'[^']*')+/g;

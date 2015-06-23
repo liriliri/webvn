@@ -207,8 +207,6 @@ WebVN.extend('script', function (exports, Class, log, util)
                         return this.createToken('RETURN');
                     }
 
-                    /** @TODO For loop */
-
                     if (this.lastToken('FUNCTION') && isLetter(c))
                     {
                         return this.funcName();

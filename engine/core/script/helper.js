@@ -19,7 +19,6 @@ WebVN.extend('script', function (exports, script, util, log)
         log.warn('You are overwriting command ' + name + '.');
 
         fn.params = util.getFnParams(fn);
-        fn.scope  = exports.scope.get();
 
         exports.scope.set(name, fn);
     }
@@ -31,19 +30,18 @@ WebVN.extend('script', function (exports, script, util, log)
      * @param {string} name Function name.
      * @returns {boolean} Exists or not.
      */
-    function has(name) { return exports.scope.get(name) !== undefined }
+    function has(name)
+    {
+        fn = exports.scope.get(name);
+
+        return util.isFunction(fn);
+    }
 
     function call(name, params)
     {
         fn = exports.scope.get(name);
 
-        if (!util.isFunction(fn))
-        {
-            log.warn(name + ' is not a function.'); return;
-        }
-
-        /** @TODO Scope assignment fix. */
-        var scope = util.createObj(fn.scope);
+        var scope = util.createObj(exports.scope.get(), null, 'parent');
 
         util.each(params, function (val, idx)
         {
@@ -65,6 +63,8 @@ WebVN.extend('script', function (exports, script, util, log)
         if (val === 'false') return false;
 
         if (val === 'true') return true;
+
+        if (val === '_') return;
 
         try {
             ret = JSON.parse(val);

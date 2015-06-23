@@ -1,5 +1,4 @@
-/**
- * Initialization script.
+/* Initialization script.
  * Alias and macro function are defined here.
  * Creating your own alias and macro here is not recommended.
  * Please create another script file to define your own.
@@ -13,6 +12,16 @@ function showMenu(bgm, bg)
 function playVideo(src, click)
 {
     video -dp -src=${src} -c=${click}
+}
+
+function define(name, val)
+{
+    script -d='${name}|${val}' -pn
+}
+
+function alias(name, val)
+{
+    script -a='${name}|${val}' -pn
 }
 
 function logInfo(msg)
@@ -62,16 +71,6 @@ function jump(label)
 function playBgm(src)
 {
     bgm -s=${src}
-}
-
-function setAlias(name, value)
-{
-    alias -n=${name} -v=${value}
-}
-
-function setDefine(name, value)
-{
-    define -n=${name} -v=${value}
 }
 
 function title(name)

@@ -60,7 +60,7 @@ WebVN.extend('util', function (exports)
      * @method createObj
      * @memberof util
      */
-    exports.createObj = function (proto, constructor)
+    exports.createObj = function (proto, constructor, protoAlias)
     {
         var newProto;
 
@@ -74,6 +74,8 @@ WebVN.extend('util', function (exports)
         }
 
         if (constructor) newProto.constructor = constructor;
+
+        if (protoAlias) newProto[protoAlias] = proto;
 
         return newProto;
     };

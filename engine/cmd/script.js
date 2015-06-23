@@ -9,18 +9,25 @@ WebVN.use(function (script)
             constructor: function Script() { this.callSuper('script') },
 
             options: {
-                jump: { type: 'String', short: 'j' },
-                wait: { type: 'Number', short: 'w' }
+                jump    : { type: 'string', short: 'j' },
+                wait    : { type: 'number', short: 'w' },
+                define  : { type: 'string|string', short: 'd'},
+                alias   : { type: 'string|string', short: 'a'},
+                playNext: { type: 'boolean', short: 'pn'}
             },
 
             orders: [
                 'jump',
-                'wait'
+                'wait',
+                'define',
+                'alias',
+                'playNext'
             ],
 
-            jump: function (val) { script.jump(val) },
-
-            wait: function (val) { script.wait(val) }
+            jump  : function (val) { script.jump(val) },
+            wait  : function (val) { script.wait(val) },
+            define: function (val) { script.define.create(val[0], val[1]) },
+            alias : function (val) { script.alias.create(val[0], val[1]) }
         }
     );
 });

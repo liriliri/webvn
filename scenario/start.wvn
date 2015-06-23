@@ -1,5 +1,5 @@
 // 中文支持
-setAlias 别名 setAlias
+alias 别名 alias
 别名 播放视频 playVideo
 别名 显示标题画面 showMenu
 别名 背景乐 playBgm
@@ -11,7 +11,7 @@ setAlias 别名 setAlias
 别名 日志 logInfo
 别名 标题 title
 别名 跳转 jump
-别名 宏 setDefine
+别名 宏 define
 宏 背景乐： bgm=
 宏 线性模糊效果 linearBlur
 宏 波纹过渡效果 ripple
@@ -19,33 +19,41 @@ setAlias 别名 setAlias
 宏 回廊背景 corridor
 clearLog
 
-`scope.out = 'scopeOut'; playNext();
+/*
+```
+scope.i = 'outside i';
+// 你好
+scope.num = 5;
+play();
+```
 
 function scopeTest()
 {
-    `out = 'scopeOut1'; playNext();
+    `scope.i = 'inside i'; play();
     function scopeTest() {
-        `console.log(out);
+        `scope.i = 'inside i 2'; play();
+        `console.log(parent.parent.i); parent.parent.num = 10; play();
     }
     scopeTest
 }
 
 scopeTest
-`console.log(out);
+
+`console.log(num);
 
 ```
 scope.x = 'I am going to do something big';
-playNext();
+play();
 ```
 
-function logSomething(msg)
+function logSomething(msg, cool)
 {
     `console.log(msg);
 }
 
 // logSomething 'Ok, I am just testing something'
 
-logInfo '${x}'
+logInfo '${x}'*/
 
 logo logo 3000
 
@@ -58,14 +66,14 @@ function 温蒂(text)
 /* 播放OP
  * 第一次打开时无法跳过，之后点击跳过
  */
-/*if (g.firstPlay !== false)
+if (g.firstPlay !== false)
 {
     播放视频 op null
-    `g.firstPlay = false; playNext();
+    `g.firstPlay = false; play();
 } else
 {
     播放视频 op skip
-}*/
+}
 
 *menu
 

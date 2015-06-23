@@ -37,7 +37,7 @@ WebVN.extend('script', function (exports, util, storage, log)
         util.mixIn(scope, {
             'g'       : globalStore.get(),
             '$$'      : exports.stack.$$,
-            'playNext': exports.play
+            'play'    : exports.play
         });
 
         code = 'funcScope["' + functionName + '"]=function(){' +
