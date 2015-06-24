@@ -1,18 +1,17 @@
-WebVN.use(function (script, log, system)
+WebVN.use(function (script, system)
 {
-    var command = script.command;
-
     /**
      * @class System
      * @memberof script.command
      */
-    command.create(
+    script.command.create(
+        /** @lends script.command.System.prototype */
         {
             constructor: function System() {this.callSuper('system') },
 
             options: {
-                title   : { type: 'String',  short: 't' },
-                playNext: { type: 'Boolean', short: 'pn', default: true }
+                title   : { type: 'string',  short: 't' },
+                playNext: { type: 'boolean', short: 'pn', default: true }
             },
 
             orders: ['title', 'playNext'],
@@ -20,5 +19,4 @@ WebVN.use(function (script, log, system)
             title: function (val) { system.title(val) }
         }
     );
-
 });

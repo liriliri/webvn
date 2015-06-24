@@ -14,9 +14,9 @@ var grammar = {
         ['Body Line', '$$ = $1 + $2']
     ],
     Line: [
-        ['Expression', '$$ = yy.expression($1)']
+        ['Statement', '$$ = yy.statement($1)']
     ],
-    Expression: [
+    Statement: [
         ['If', '$$ = yy.ifWrapper($1)'],
         ['Code', '$$ = yy.code($1)'],
         ['Command', '$$ = yy.command($1)'],
@@ -38,12 +38,12 @@ var grammar = {
     ],
     If: [
         ['IF CODE Block', 'yy.lineNum(yylineno); $$ = yy["if"]($2, $3)'],
-        ['If ELSE If', '$$ = yy.ifElse($1, $3)'],
-        ['If ELSE Block', '$$ = yy.ifElse($1, $3)']
+        ['IF CODE Block ELSE Block', '$$ = yy.ifElse($2, $3, $5)']
     ],
     Block: [
         ['{ }', '$$ = yy.block("")'],
-        ['{ Body }', '$$ = yy.block($2)']
+        ['{ Body }', '$$ = yy.block($2)'],
+        ['Statement', '$$ = yy.block(yy.statement($1))']
     ],
     Function: [
         ['FUNCTION FUNCTION_NAME ParamList Block', '$$ = yy["function"]($2, $3, $4)'],

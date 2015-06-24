@@ -24,13 +24,13 @@ WebVN.use(function (script, ui)
              * @property {Number} duration(du) Fade in, fade out duration.
              */
             options: {
-                click   : { type: 'string',  short: 'c', range: ['pause', 'click']},
-                display : { type: 'boolean', short: 'd' },
-                fadeIn  : { type: 'string',  short: 'fi' },
-                fadeOut : { type: 'string',  short: 'fo' },
-                duration: { type: 'number',  short: 'du' },
-                play    : { type: 'boolean', short: 'p' },
-                source  : { type: 'string',  short: 'src'}
+                click   : { type: 'string' , short: 'c' , range: [['pause', 'skip']]},
+                duration: { type: 'number' , short: 'du', range: ['>=0&<=5000']},
+                display : { type: 'boolean', short: 'd'  },
+                fadeIn  : { type: 'boolean', short: 'fi' },
+                fadeOut : { type: 'boolean', short: 'fo' },
+                play    : { type: 'boolean', short: 'p'  },
+                source  : { type: 'string' , short: 'src'}
             },
 
             orders: [

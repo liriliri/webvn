@@ -13,10 +13,8 @@ WebVN.module('script', function (exports, Class, util)
 
     parserNode.lineNum = function (val) { lineNum = val };
 
-    parserNode.expression = function (content)
+    parserNode.statement = function (content)
     {
-        content = removeLastLineBreak(content);
-
         return '$$(' + content + ', "' + fileName + '", ' + lineNum + ');\n';
     };
 
@@ -53,9 +51,7 @@ WebVN.module('script', function (exports, Class, util)
 
     parserNode.block = function (block)
     {
-        block = indent(block);
-
-        return ' {\n' + block + '}\n';
+        return ' {\n' + block + '}';
     };
 
     parserNode.paramList = function (paramList, param)
@@ -65,8 +61,6 @@ WebVN.module('script', function (exports, Class, util)
 
     parserNode.ifWrapper = function (body)
     {
-        body = indent(body);
-
         return '"if", "' + escapeQuote(body) + '"';
     };
 
@@ -75,11 +69,9 @@ WebVN.module('script', function (exports, Class, util)
         return 'if (' + condition + ')' + block;
     };
 
-    parserNode.ifElse = function (former, latter)
+    parserNode.ifElse = function (condition, block, elseBlock)
     {
-        former = removeLastLineBreak(former);
-
-        return former + ' else ' + util.trim(latter) + '\n';
+        return 'if (' + condition + ')' + block + ' else ' + elseBlock;
     };
 
     parserNode['function'] = function (name, param, block)
@@ -92,27 +84,6 @@ WebVN.module('script', function (exports, Class, util)
 
         return '"function", "' + name + '", function (' + param + ')' + block;
     };
-
-    function removeLastLineBreak(text)
-    {
-        var len = text.length;
-
-        if (text[len - 1] === '\n') text = text.substr(0, len - 1);
-
-        return text;
-    }
-
-    function indent(text)
-    {
-        var ret = '\t' + text;
-
-        ret = ret.replace(/\n/g, '\n\t');
-
-        var len = ret.length;
-        if (ret[len - 1] === '\t') ret = ret.substr(0, len - 1);
-
-        return ret;
-    }
 
     // https://github.com/joliss/js-string-escape/blob/master/index.js
     var escapeQuote = parserNode.escapeQuote = function (text)

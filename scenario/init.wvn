@@ -4,81 +4,37 @@
  * Please create another script file to define your own.
  */
 
-function showMenu(bgm, bg)
-{
-    menu -d -bgm=${bgm} -bg=${bg}
-}
+function showMenu(bgm, bg) menu -d -bgm=${bgm} -bg=${bg}
 
-function playVideo(src, click)
-{
-    video -dp -src=${src} -c=${click}
-}
+function playVideo(src, click) video -dp -src=${src} -c=${click}
 
-function define(name, val)
-{
-    script -d='${name}|${val}' -pn
-}
+function define(name, val) script -d='${name}|${val}' -pn
 
-function alias(name, val)
-{
-    script -a='${name}|${val}' -pn
-}
+function alias(name, val) script -a='${name}|${val}' -pn
 
-function logInfo(msg)
-{
-    log -t=info -m='${msg}'
-}
+function logInfo(msg) log -t=info -m='${msg}'
 
-function wait(duration)
-{
-    script -w=${duration}
-}
+function wait(duration) script -w=${duration}
 
-function clearLog()
-{
-    log -c
-}
+function clearLog() log -c
 
-function clearDialogText()
-{
-    dialog -ct -pn
-}
+function clearDialogText() dialog -ct -pn
 
-function default(text)
-{
-    dialog -t='${text}' -ct
-}
+function default(text) dialog -t='${text}' -ct
 
 function logo(src, duration)
 {
     bg -d -du=3000 -src=${src}
-    if (duration)
-    {
-        wait ${3000+duration}
-    } else
-    {
-        wait 3000
-    }
+    if (duration) wait ${3000+duration}
+    else wait 3000
     bg -d=false
     wait 3000
 }
 
-function jump(label)
-{
-    script -j=${label}
-}
+function jump(label) script -j=${label}
 
-function playBgm(src)
-{
-    bgm -s=${src}
-}
+function playBgm(src) bgm -s=${src}
 
-function title(name)
-{
-    system -t=${name}
-}
+function title(name) system -t=${name}
 
-function stopBgm()
-{
-    bgm -p=false
-}
+function stopBgm() bgm -p=false

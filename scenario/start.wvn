@@ -68,7 +68,7 @@ function 温蒂(text)
  */
 if (g.firstPlay !== false)
 {
-    播放视频 op null
+    播放视频 op
     `g.firstPlay = false; play();
 } else
 {

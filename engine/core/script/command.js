@@ -80,7 +80,7 @@ WebVN.extend('script', function (exports, Class, log, util)
                 var ret = {},
                     options = this.options,
                     shorts = this.shorts,
-                    i, len, keys, key, option;
+                    i, len, keys, key, option, short;
 
                 util.each(values, function (val, key)
                 {
@@ -96,9 +96,15 @@ WebVN.extend('script', function (exports, Class, log, util)
                             ret[shorts[key]] = val;
                         } else
                         {
+                            short = '';
                             for (i = 0, len = key.length; i < len; i++)
                             {
-                                if (shorts[key[i]]) ret[shorts[key[i]]] = val;
+                                short += key[i];
+                                if (shorts[short])
+                                {
+                                    ret[shorts[short]] = val;
+                                    short = '';
+                                }
                             }
                         }
                     }
@@ -109,7 +115,7 @@ WebVN.extend('script', function (exports, Class, log, util)
                 {
                     key    = keys[i];
                     option = options[key];
-                    if (option) ret[key] = parseVal(option.type, ret[key], option.range);
+                    if (option) ret[key] = parse.val(option.type, ret[key], option.range);
                 }
 
                 return ret;
@@ -122,55 +128,81 @@ WebVN.extend('script', function (exports, Class, log, util)
         }
     );
 
-    function parseVal(type, val, range)
-    {
-        switch (val)
+    var parse = {
+        val: function (types, vals, ranges)
         {
-            case 'null'     : return null;
-            case 'undefined': return;
-        }
-
-        type = type.toLowerCase();
-
-        var types    = type.split('|'),
-            multiple = types.length > 1,
-            vals     = multiple ? val.split('|') : [val];
-
-        util.each(types, function (type, idx)
-        {
-            val = vals[idx];
-            switch (type)
+            switch (vals)
             {
-                case 'string' : val = parseString(val) ; break;
-                case 'boolean': val = parseBoolean(val); break;
-                case 'number' : val = parseNumber(val) ; break;
-                case 'json'   : val = parseJson(val)   ; break;
+                case 'null'     : return null;
+                case 'undefined': return;
             }
-            vals[idx] = val;
-        });
 
-        return multiple ? vals : vals[0];
-    }
+            types = types.toLowerCase().split('|');
 
-    function parseString(val)
-    {
-        return String(val);
-    }
+            var multiple = types.length > 1,
+                val, range;
 
-    function parseNumber(val)
-    {
-        return Number(val);
-    }
+            vals = multiple ? vals.split('|') : [vals];
 
-    function parseJson(val)
-    {
-        return JSON.parse(val);
-    }
+            if (!ranges) ranges = [];
 
-    function parseBoolean(val)
-    {
-        return !(val === 'false' || val === '0');
-    }
+            util.each(types, function (type, idx)
+            {
+                val   = vals[idx];
+                range = ranges[idx];
+
+                switch (type)
+                {
+                    case 'string' : val = parse.string(val, range) ; break;
+                    case 'boolean': val = parse.boolean(val, range); break;
+                    case 'number' : val = parse.number(val, range) ; break;
+                    case 'json'   : val = parse.json(val, range)   ; break;
+                }
+                vals[idx] = val;
+            });
+
+            return multiple ? vals : vals[0];
+        },
+        string: function (val, range)
+        {
+            val = String(val);
+
+            if (!range) return val;
+
+            if (util.inArray(range, val))
+            {
+                return val;
+            } else
+            {
+                log.warn(val + ' is not inside [' + range.join(',') + '].');
+            }
+        },
+        number: function (val, range)
+        {
+            val = Number(val);
+
+            if (!range) return val;
+
+            range = range.replace(/>/g, 'val>').replace(/</, 'val<')
+                .replace(/&/g, '&&').replace(/\|/g, '|');
+
+            if (eval(range))
+            {
+                return val;
+            } else
+            {
+                log.warn(val + ' is out of number range.');
+            }
+        },
+        json: function (val)
+        {
+            return JSON.parse(val);
+        },
+        boolean: function (val)
+        {
+            return !(val === 'false' || val === '0');
+        }
+    };
 
     var regSplit = /(?:[^\s"']+|"[^"]*"|'[^']*')+/g;
 

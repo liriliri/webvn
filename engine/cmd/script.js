@@ -5,15 +5,16 @@ WebVN.use(function (script)
      * @memberof script.command
      */
     script.command.create(
+        /** @lends script.command.Script.prototype */
         {
             constructor: function Script() { this.callSuper('script') },
 
             options: {
                 jump    : { type: 'string', short: 'j' },
                 wait    : { type: 'number', short: 'w' },
-                define  : { type: 'string|string', short: 'd'},
-                alias   : { type: 'string|string', short: 'a'},
-                playNext: { type: 'boolean', short: 'pn'}
+                define  : { type: 'string|string', short: 'd' },
+                alias   : { type: 'string|string', short: 'a' },
+                playNext: { type: 'boolean', short: 'pn' }
             },
 
             orders: [
