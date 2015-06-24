@@ -1,40 +1,30 @@
 /* Initialization script.
- * Alias and macro function are defined here.
+ * Alias and macro func are defined here.
  * Creating your own alias and macro here is not recommended.
  * Please create another script file to define your own.
  */
 
-function showMenu(bgm, bg) menu -d -bgm=${bgm} -bg=${bg}
+showMenu(bgm, bg)    => menu -d -bgm=${bgm} -bg=${bg}
+playVideo(src, click)=> video -dp -src=${src} -c=${click}
+define(name, val)    => script -pn -d='${name}|${val}' -pn
+alias(name, val)     => script -a='${name}|${val}' -pn
+logInfo(msg)         => log -t=info -m='${msg}'
+wait(duration)       => script -w=${duration}
+default(text)        => dialog -t='${text}' -ct
+jump(label)          => script -j=${label}
+playBgm(src)         => bgm -s=${src}
+title(name)          => system -t=${name}
+clearLog             => log -c
+clearDialogText      => dialog -ct -pn
+stopBgm              => bgm -p=false
 
-function playVideo(src, click) video -dp -src=${src} -c=${click}
-
-function define(name, val) script -d='${name}|${val}' -pn
-
-function alias(name, val) script -a='${name}|${val}' -pn
-
-function logInfo(msg) log -t=info -m='${msg}'
-
-function wait(duration) script -w=${duration}
-
-function clearLog() log -c
-
-function clearDialogText() dialog -ct -pn
-
-function default(text) dialog -t='${text}' -ct
-
-function logo(src, duration)
+func logo(src, duration)
 {
     bg -d -du=3000 -src=${src}
-    if (duration) wait ${3000+duration}
-    else wait 3000
+
+    if(duration) wait ${3000+duration}
+    else         wait 3000
+
     bg -d=false
     wait 3000
 }
-
-function jump(label) script -j=${label}
-
-function playBgm(src) bgm -s=${src}
-
-function title(name) system -t=${name}
-
-function stopBgm() bgm -p=false

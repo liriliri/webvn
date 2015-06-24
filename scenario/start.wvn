@@ -27,7 +27,7 @@ scope.num = 5;
 play();
 ```
 
-function scopeTest()
+func scopeTest()
 {
     `scope.i = 'inside i'; play();
     function scopeTest() {
@@ -46,7 +46,7 @@ scope.x = 'I am going to do something big';
 play();
 ```
 
-function logSomething(msg, cool)
+func logSomething(msg, cool)
 {
     `console.log(msg);
 }
@@ -58,10 +58,7 @@ logInfo '${x}'*/
 logo logo 3000
 
 // 自定义函数
-function 温蒂(text)
-{
-    对话 -d -n=温蒂 -t='${text}' -ct
-}
+温蒂(text) => 对话 -d -n=温蒂 -t='${text}' -ct
 
 /* 播放OP
  * 第一次打开时无法跳过，之后点击跳过

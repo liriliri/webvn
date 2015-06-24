@@ -46,8 +46,10 @@ var grammar = {
         ['Statement', '$$ = yy.block(yy.statement($1))']
     ],
     Function: [
-        ['FUNCTION FUNCTION_NAME ParamList Block', '$$ = yy["function"]($2, $3, $4)'],
-        ['FUNCTION FUNCTION_NAME Block', '$$ = yy["function"]($2, $3)']
+        ['FUNC FUNC_NAME ParamList Block', '$$ = yy["function"]($2, $3, $4)'],
+        ['FUNC_NAME ParamList => Block', '$$ = yy["function"]($1, $2, $4)'],
+        ['FUNC FUNC_NAME Block', '$$ = yy["function"]($2, $3)'],
+        ['FUNC_NAME => Block', '$$ = yy["function"]($1, $3)']
     ],
     ParamList: [
         ['PARAM', '$$ = $1'],
@@ -55,7 +57,7 @@ var grammar = {
     ]
 };
 
-var tokens = 'CODE COMMAND FUNCTION FUNCTION_NAME PARAM IF RETURN';
+var tokens = 'CODE COMMAND DEF FUNC_NAME PARAM IF RETURN';
 
 var operators = [
     ['nonassoc', '{', '}'],

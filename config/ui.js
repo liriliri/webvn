@@ -3,8 +3,8 @@ WebVN.config({
         "path": "asset/bg/",
         "extension": "jpg",
         "duration": 300,
-        "fadeIn": false,
-        "fadeOut": false,
+        "fadeIn": true,
+        "fadeOut": true,
         "transition": "linear"
     },
     "uiMenu": {

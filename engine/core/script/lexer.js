@@ -118,7 +118,7 @@ WebVN.extend('script', function (exports, Class, log, util)
                         {
                             this.commentBlock();
                         } else {
-                            this.advance();
+                            this.forward();
                         }
                         continue;
                     }
@@ -136,11 +136,11 @@ WebVN.extend('script', function (exports, Class, log, util)
                     if (c === '(')
                     {
                         this.consume();
-                        if (this.lastToken('FUNCTION_NAME'))
+                        if (this.lastToken('FUNC_NAME'))
                         {
                             if (this.c !== ')')
                             {
-                                return this.funcParam();
+                                return this.identifier('PARAM');
                             }
                         } else if (this.lastToken('IF'))
                         {
@@ -157,10 +157,10 @@ WebVN.extend('script', function (exports, Class, log, util)
                         if (this.lastToken('PARAM'))
                         {
                             this.consume();
-                            return this.funcParam();
+                            return this.identifier('PARAM');
                         } else
                         {
-                            this.advance();
+                            this.forward();
                         }
                         continue;
                     }
@@ -172,44 +172,56 @@ WebVN.extend('script', function (exports, Class, log, util)
 
                     if (c === ')')
                     {
-                        this.advance();
+                        this.forward();
                         continue;
                     }
 
                     if (c === '{' ||
                         c === '}')
                     {
-                        this.advance();
+                        this.forward();
                         return this.createToken(c);
                     }
 
-                    if (this.equal('function', charFilter.lBracket))
+                    if (this.equal('=>'))
                     {
-                        this.advance(8);
-                        return this.createToken('FUNCTION');
+                        this.forward(2);
+                        return this.createToken('=>');
+                    }
+
+                    if (this.equal('func', charFilter.space))
+                    {
+                        this.forward(4);
+                        return this.createToken('FUNC');
                     }
 
                     if (this.equal('if', charFilter.lBracket))
                     {
-                        this.advance(2);
+                        this.forward(2);
                         return this.createToken('IF');
                     }
 
                     if (this.equal('else', charFilter.space))
                     {
-                        this.advance(4);
+                        this.forward(4);
                         return this.createToken('ELSE');
                     }
 
                     if (this.equal('return', charFilter.space))
                     {
-                        this.advance(6);
+                        this.forward(6);
                         return this.createToken('RETURN');
                     }
 
-                    if (this.lastToken('FUNCTION') && isLetter(c))
+                    if (this.lastToken('FUNC') && isLetter(c))
                     {
-                        return this.funcName();
+                        return this.identifier('FUNC_NAME');
+                    }
+
+                    if (this.lastToken('ARROW_FUNC') && isLetter(c))
+                    {
+                        this.tokens.pop();
+                        return this.identifier('FUNC_NAME')
                     }
 
                     return this.command();
@@ -229,12 +241,41 @@ WebVN.extend('script', function (exports, Class, log, util)
 
                 while (num--)
                 {
-                    this.advance();
+                    this.forward();
                     this.whiteSpace();
                 }
             },
 
-            advance: function (num)
+            backward: function (num)
+            {
+                num = num || 1;
+
+                while (num--)
+                {
+                    if (this.i == 0) return;
+
+                    this.i--;
+
+                    if (this.c === '\n')
+                    {
+                        this.curLine--;
+                        this.curColumn = 0;
+                        var k = this.i - this.curColumn;
+                        while (this.input[k] != '\n' && k > 0)
+                        {
+                            this.curColumn++;
+                            k -= this.curColumn;
+                        }
+                    } else
+                    {
+                        this.curColumn--;
+                    }
+
+                    this.c = this.input[this.i];
+                }
+            },
+
+            forward: function (num)
             {
                 num = num || 1;
 
@@ -281,36 +322,36 @@ WebVN.extend('script', function (exports, Class, log, util)
 
             whiteSpace: function ()
             {
-                while (isEmpty(this.c)) this.advance();
+                while (isEmpty(this.c)) this.forward();
             },
 
             commentLine: function ()
             {
-                this.advance(2);
+                this.forward(2);
 
                 while (!this.equal('\n'))
                 {
-                    this.advance();
+                    this.forward();
                     if (this.c === EOF) break;
                 }
             },
 
             commentBlock: function ()
             {
-                this.advance(2);
+                this.forward(2);
 
                 while (!(this.equal('*/')))
                 {
-                    this.advance();
+                    this.forward();
                     if (this.c === EOF) throw new Error('The comment block must end with "*/".');
                 }
 
-                this.advance();
+                this.forward();
             },
 
             codeBlock: function ()
             {
-                this.advance(3);
+                this.forward(3);
 
                 var val = '', pos = {};
 
@@ -320,21 +361,21 @@ WebVN.extend('script', function (exports, Class, log, util)
                 while (!(this.equal('```')))
                 {
                     val += this.c;
-                    this.advance();
+                    this.forward();
                     if (this.c === EOF) throw new Error('The code block must end with "```"');
                 }
 
                 pos.last_line   = this.curLine;
                 pos.last_column = this.currentColumn - 1;
 
-                this.advance(3);
+                this.forward(3);
 
                 return this.createToken('CODE', val, pos);
             },
 
             codeLine: function ()
             {
-                this.advance();
+                this.forward();
 
                 var val = '', pos = {};
 
@@ -344,7 +385,7 @@ WebVN.extend('script', function (exports, Class, log, util)
                 while (!(this.equal('\n')))
                 {
                     val += this.c;
-                    this.advance();
+                    this.forward();
                     if (this.c === EOF) break;
                 }
 
@@ -354,7 +395,7 @@ WebVN.extend('script', function (exports, Class, log, util)
                 return this.createToken('CODE', val, pos);
             },
 
-            funcName: function ()
+            identifier: function (tokenName)
             {
                 var val = '', pos = {};
 
@@ -364,17 +405,48 @@ WebVN.extend('script', function (exports, Class, log, util)
                 while (isLetter(this.c))
                 {
                     val += this.c;
-                    this.advance();
+                    this.forward();
                 }
 
                 pos.last_line   = this.curLine;
                 pos.last_column = this.curColumn - 1;
 
-                return this.createToken('FUNCTION_NAME', val, pos);
+                return this.createToken((tokenName ? tokenName : 'IDENTIFIER'), val, pos);
             },
 
-            funcParam: function ()
+            jsBracket: function ()
             {
+                var val = '', lBracket = 0, pos = {};
+
+                pos.first_line   = this.curLine;
+                pos.first_column = this.curColumn;
+
+                while (!(this.equal(')') && lBracket === 0))
+                {
+                    val += this.c;
+                    if (this.c === '(')
+                    {
+                        lBracket++;
+                    } else if (this.c === ')')
+                    {
+                        lBracket--;
+                    }
+                    this.forward();
+                    if (this.c === EOF) throw new Error('One right bracket is missing.');
+                }
+
+                pos.last_line   = this.curLine;
+                pos.last_column = this.curColumn - 1;
+
+                this.forward();
+
+                return this.createToken('CODE', val, pos);
+            },
+
+            label: function ()
+            {
+                this.consume();
+
                 var val = '', pos = {};
 
                 pos.first_line   = this.curLine;
@@ -383,13 +455,14 @@ WebVN.extend('script', function (exports, Class, log, util)
                 while (isLetter(this.c))
                 {
                     val += this.c;
-                    this.advance();
+                    this.forward();
+                    if (this.c === EOF) break;
                 }
 
                 pos.last_line   = this.curLine;
                 pos.last_column = this.curColumn - 1;
 
-                return this.createToken('PARAM', val, pos);
+                return this.createToken('LABEL', val, pos);
             },
 
             command: function ()
@@ -410,69 +483,31 @@ WebVN.extend('script', function (exports, Class, log, util)
                     }
 
                     lastC = this.c;
-                    this.advance();
+                    this.forward();
 
                     if (this.c === EOF) break;
                 }
 
                 pos.last_line   = this.curLine;
                 pos.last_column = this.curColumn - 1;
+
+                if (isArrowFunc(val))
+                {
+                    this.backward(val.length);
+                    return this.createToken('ARROW_FUNC');
+                }
 
                 return this.createToken('COMMAND', val, pos);
-            },
-
-            jsBracket: function ()
-            {
-                var val = '', lBracket = 0, pos = {};
-
-                pos.first_line   = this.curLine;
-                pos.first_column = this.curColumn;
-
-                while (!(this.equal(')') && lBracket === 0))
-                {
-                    val += this.c;
-                    if (this.c === '(')
-                    {
-                        lBracket++;
-                    } else if (this.c === ')')
-                    {
-                        lBracket--;
-                    }
-                    this.advance();
-                    if (this.c === EOF) throw new Error('One right bracket is missing.');
-                }
-
-                pos.last_line   = this.curLine;
-                pos.last_column = this.curColumn - 1;
-
-                this.advance();
-
-                return this.createToken('CODE', val, pos);
-            },
-
-            label: function ()
-            {
-                this.consume();
-
-                var val = '', pos = {};
-
-                pos.first_line   = this.curLine;
-                pos.first_column = this.curColumn;
-
-                while (isLetter(this.c))
-                {
-                    val += this.c;
-                    this.advance();
-                    if (this.c === EOF) break;
-                }
-
-                pos.last_line   = this.curLine;
-                pos.last_column = this.curColumn - 1;
-
-                return this.createToken('LABEL', val, pos);
             }
         }
     );
+
+    var regArrowFunc = /=>/;
+
+    function isArrowFunc(str)
+    {
+        return regArrowFunc.test(str);
+    }
 
     function isEmpty(c)
     {
