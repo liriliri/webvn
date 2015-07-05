@@ -3,7 +3,7 @@
  */
 WebVN.extend('script', function (exports, config, util, loader, log, storage, event, state)
 {
-    var conf     = config.create('script'),
+    var cfg      = config.create('script'),
         parser   = exports.parser,
         lexer    = exports.lexer;
 
@@ -57,34 +57,22 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
         exports.js.eval(parse(scenarioText));
     };
 
-    var asset = storage.asset.create(conf.get('path'), conf.get('extension'));
-
-    // Load scenarios and begin executing them
-    exports.load = function (scenarios)
-    {
-        scenarios = scenarios || conf.get('scenarios');
-
-        if (!util.isArray(scenarios)) scenarios = [scenarios];
-
-        scenarios = scenarios.map(function (value) { return asset.get(value) });
-
-        loader.scenario(scenarios, function (data, isLast, fileName)
-        {
-            loadText(data, isLast, fileName);
-        });
-
-    };
+    var asset = storage.asset.create(cfg.get('path'), cfg.get('extension'));
 
     /**
-     * @function webvn.script.loadText
-     * @param {string} str
-     * @param {boolean=} startGame
+     * Load first scenario and begin executing it.
      */
-    var loadText = exports.loadText = function (str, startGame, fileName)
+    var load = exports.load = function (scenario)
     {
-        exports.parserNode.file(fileName);
-        wvnEval(str);
-        if (startGame) start();
+        scenario = scenario || cfg.get('scenario');
+
+        loader.get(asset.get(scenario), {}, function (data)
+        {
+            exports.parserNode.file(scenario + '.wvn');
+            exports.stack.setFile(scenario);
+            wvnEval(data);
+            start();
+        });
     };
 
     var State = state.create('pause', [
@@ -111,9 +99,10 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
      * @memberof script
      * @param labelName
      */
-    exports.jump = function (labelName)
+    exports.jump = function (fileName, labelName)
     {
-        var label = exports.label;
+        load(fileName);
+        /*var label = exports.label;
 
         if (!label.has(labelName))
         {
@@ -123,7 +112,7 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
 
         exports.stack.jump(label.get(labelName));
 
-        resume();
+        resume();*/
     };
 
     /**

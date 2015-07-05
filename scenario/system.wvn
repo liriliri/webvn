@@ -1,21 +1,21 @@
 /* Initialization script.
- * Alias and macro func are defined here.
+ * Alias and macros are defined here.
  * Creating your own alias and macro here is not recommended.
  * Please create another script file to define your own.
  */
 
 showMenu(bgm, bg)    => menu -d -bgm=${bgm} -bg=${bg}
+showDialog()         => dialog -d -pn
 playVideo(src, click)=> video -dp -src=${src} -c=${click}
 define(name, val)    => script -pn -d='${name}|${val}' -pn
 alias(name, val)     => script -a='${name}|${val}' -pn
 logInfo(msg)         => log -t=info -m='${msg}'
 wait(duration)       => script -w=${duration}
-default(text)        => dialog -t='${text}' -ct
-jump(label)          => script -j=${label}
+jump(file, label)    => script -j=${file}|${label} -pn=false
 playBgm(src)         => bgm -s=${src}
 title(name)          => system -t=${name}
 clearLog             => log -c
-clearDialogText      => dialog -ct -pn
+clearText            => dialog -ct -pn
 stopBgm              => bgm -p=false
 
 func logo(src, duration)
@@ -28,3 +28,19 @@ func logo(src, duration)
     bg -d=false
     wait 3000
 }
+
+func default(text)
+{
+    `scope.regName = /^\s*【([^】]*)】\s*$/; play();
+
+    if (regName.test(text))
+    {
+        `scope.name = text.match(regName)[1]; play();
+        dialog -n='${name}' -pn
+    } else
+    {
+        dialog -t='${text}'
+    }
+}
+
+jump start start

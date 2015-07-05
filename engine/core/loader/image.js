@@ -35,7 +35,6 @@ WebVN.extend('loader', function (exports, util)
 
                 image.src = source;
             });
-
         });
     };
 });

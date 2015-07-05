@@ -44,11 +44,41 @@ WebVN.extend('script', function (exports, Class, util, log)
         }
     );
 
+    var MainFrame = Frame.extend(
+        {
+            constructor: function MainFrame()
+            {
+                this.callSuper();
+                this.files = {};
+            }
+        },
+        {
+            file: {
+                set: function (val)
+                {
+                    var files = this.files;
+
+                    files[val] ? this.commands = files[val] :
+                                 this.commands = files[val] = [];
+
+                    this.len = 0;
+                    this.pointer = -1;
+                    reset();
+                }
+            }
+        }
+    );
+
     var stacks    = [],
-        current  = new Frame,
+        current   = new MainFrame,
         mainFrame = current;
 
     stacks.push(current);
+
+    function setFile(fileName)
+    {
+        mainFrame.file = fileName;
+    }
 
     function $$()
     {
@@ -96,9 +126,14 @@ WebVN.extend('script', function (exports, Class, util, log)
         stacks.push(current);
     }
 
-    function pop()
+    function pop(target)
     {
-        while (current.type !== 'function') {
+        if (stacks.length === 0) return;
+
+        target = target || 'function';
+
+        while (current.type !== target)
+        {
             stacks.pop();
             current = util.last(stacks);
         }
@@ -118,15 +153,15 @@ WebVN.extend('script', function (exports, Class, util, log)
     {
         stacks = [mainFrame];
         current = mainFrame;
-        current.pointer = -1;
     }
 
     exports.stack = {
-        $$    : $$,
-        getCmd: getCmd,
-        push  : push,
-        pop   : pop,
-        jump  : jump,
-        reset : reset
+        $$     : $$,
+        getCmd : getCmd,
+        push   : push,
+        pop    : pop,
+        jump   : jump,
+        reset  : reset,
+        setFile: setFile
     };
 });

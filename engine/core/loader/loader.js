@@ -1,20 +1,13 @@
 WebVN.extend('loader', function (exports, util)
 {
     var ajaxSettings = {
-        // Default type of request
         type: 'GET',
-        // Callback that is executed before request
         beforeSend: empty,
-        // Callback that is executed if the request succeeds
         success: empty,
-        // Callback that is executed the the server drops error
         error: empty,
-        // The context for the callbacks
         context: null,
         async: true,
-        // Transport
         xhr: function () { return new window.XMLHttpRequest() },
-        // Default timeout
         timeout: 0
     };
 
@@ -56,7 +49,6 @@ WebVN.extend('loader', function (exports, util)
 
             if (settings.beforeSend.call(context, xhr, settings) === false) abort();
 
-            // Request error
             xhr.onerror = error;
 
             if (settings.timeout > 0)
@@ -84,7 +76,7 @@ WebVN.extend('loader', function (exports, util)
         });
     };
 
-    ajax.get = function (url, data, success, dataType)
+    exports.get = function (url, data, success, dataType)
     {
         return ajax({
             type    : 'get',
@@ -95,7 +87,7 @@ WebVN.extend('loader', function (exports, util)
         });
     };
 
-    ajax.post = function (url, data, success, dataType)
+    exports.post = function (url, data, success, dataType)
     {
         return ajax({
             type    : 'post',
@@ -104,21 +96,7 @@ WebVN.extend('loader', function (exports, util)
             success : success,
             dataType: dataType
         });
-
     };
 
     function empty() {}
-
-    exports.scenario = function (scenes, cb) { _scenario(scenes, 0, cb) };
-
-    // Private function
-    function _scenario (scenes, i, cb)
-    {
-        ajax.get(scenes[i]).then(function (value)
-        {
-            cb(value, i === scenes.length - 1, scenes[i]);
-            if (i < scenes.length - 1) _scenario(scenes, i + 1, cb);
-        });
-    }
-
 });

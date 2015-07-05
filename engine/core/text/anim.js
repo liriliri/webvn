@@ -85,6 +85,7 @@ WebVN.extend('text', function (exports, util, Class, select, state, event)
             {
                 var ret     = '',
                     text    = this.text,
+                    $target = this.$target,
                     index   = 0,
                     style   = 'display:none',
                     i, len, char;
@@ -98,6 +99,7 @@ WebVN.extend('text', function (exports, util, Class, select, state, event)
                     switch (val)
                     {
                         case 'br': ret += '<br>'; return;
+                        case 'p': $target.html = ''; return;
                     }
 
                     for (i = 0, len = val.length; i < len; i++)
