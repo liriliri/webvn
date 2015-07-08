@@ -105,15 +105,15 @@ showDialog
 [p]标题 滤镜和过渡效果
 [p]一、丰富的滤镜和过渡效果
 [p]WebVN可以在游戏中对图片的亮度、对比度进行调节，比如背景变成灰白色、浮雕效果。
-[p]背景 -f='{"name":"desaturate"}' -pn=false
-[p]背景 -f='{"name":"emboss","value":2}' -pn=false
+背景 -f='{"name":"desaturate"}' -pn=false
+背景 -f='{"name":"emboss","value":2}' -pn=false
 [p]又比如调节对比度和亮度。
-[p]背景 -f='{"name":"brightness", "value":0.8}' -pn=false
-[p]背景 -f='{"name":"contrast", "value":1.2}' -pn=false
-[p]背景 -f=null
+背景 -f='{"name":"brightness", "value":0.8}' -pn=false
+背景 -f='{"name":"contrast", "value":1.2}' -pn=false
+背景 -f=null
 [p]WebVN内置了超过二十种的图片过渡效果，比如线性模糊，水波。
-[p]背景 -t=线性模糊效果 -s=living_room -du=2000 -pn=false
-[p]背景 -t=波纹过渡效果 -s=corridor -pn=false -wt
+背景 -t=线性模糊效果 -s=living_room -du=2000 -pn=false
+背景 -t=波纹过渡效果 -s=corridor -pn=false -wt
 [p]这些效果是通过webgl shader实现的。如果需要扩展过渡方法，你可以自行编写shader来实现。
 [p]此外，传统的利用遮罩图片来实现过渡效果的方法也是支持的，比如下面这个。
 // 背景 -t=lumaWipe -s=living_room -pn=false -wt

@@ -64,12 +64,12 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
      */
     var load = exports.load = function (scenario)
     {
-        scenario = scenario || cfg.get('scenario');
+        scenario = scenario || cfg.get('startScenario');
 
         loader.get(asset.get(scenario), {}, function (data)
         {
             exports.parserNode.file(scenario + '.wvn');
-            exports.stack.setFile(scenario);
+            exports.stack.file = scenario;
             wvnEval(data);
             start();
         });
@@ -101,18 +101,26 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
      */
     exports.jump = function (fileName, labelName)
     {
-        load(fileName);
-        /*var label = exports.label;
+        if (!labelName)
+        {
+            labelName = fileName;
+            fileName = '';
+        } else
+        {
+            load(fileName);
+        }
 
-        if (!label.has(labelName))
+        var label = exports.label;
+
+        if (!label.has(fileName, labelName))
         {
             log.warn('Label ' + labelName + ' not found');
             return;
         }
 
-        exports.stack.jump(label.get(labelName));
+        exports.stack.jump(label.get(fileName, labelName));
 
-        resume();*/
+        resume();
     };
 
     /**

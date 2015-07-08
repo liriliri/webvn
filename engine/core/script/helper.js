@@ -150,11 +150,22 @@ WebVN.extend('script', function (exports)
 {
     var labels = {};
 
-    function create(name, lineNum) { labels[name] = lineNum }
+    function create(name, lineNum) { labels[fullName(name)] = labels[name] = lineNum }
 
-    function has(name) { return labels[name] !== undefined }
+    function has(file, name) { return labels[fullName(file, name)] !== undefined }
 
-    function get(name) { return labels[name] }
+    function get(file, name) { return labels[fullName(file, name)] }
+
+    function fullName(file, name)
+    {
+        if (!name)
+        {
+            name = file;
+            file = exports.stack.file;
+        }
+
+        return file + (file === '' ? '' : '.') + name;
+    }
 
     exports.label = {
         create: create,

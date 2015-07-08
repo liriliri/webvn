@@ -254,7 +254,7 @@ var WebVN = window.WebVN = (function(exports)
      * Functions to be called when all file is loaded.
      * @method call
      * @memberof WebVN
-     * @param {function} module
+     * @param {function} [module]
      */
     WebVN.call = function (module)
     {

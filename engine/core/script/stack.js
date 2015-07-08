@@ -61,9 +61,15 @@ WebVN.extend('script', function (exports, Class, util, log)
                     files[val] ? this.commands = files[val] :
                                  this.commands = files[val] = [];
 
-                    this.len = 0;
+                    this.len     = 0;
                     this.pointer = -1;
+                    this._file   = val;
+
                     reset();
+                },
+                get: function ()
+                {
+                    return this._file;
                 }
             }
         }
@@ -74,11 +80,6 @@ WebVN.extend('script', function (exports, Class, util, log)
         mainFrame = current;
 
     stacks.push(current);
-
-    function setFile(fileName)
-    {
-        mainFrame.file = fileName;
-    }
 
     function $$()
     {
@@ -143,10 +144,10 @@ WebVN.extend('script', function (exports, Class, util, log)
         current = util.last(stacks);
     }
 
-    function jump(num)
+    function jump(lineNum)
     {
         reset();
-        current.pointer = num;
+        current.pointer = lineNum;
     }
 
     function reset()
@@ -155,13 +156,25 @@ WebVN.extend('script', function (exports, Class, util, log)
         current = mainFrame;
     }
 
-    exports.stack = {
+    var stack = {
         $$     : $$,
         getCmd : getCmd,
         push   : push,
         pop    : pop,
         jump   : jump,
-        reset  : reset,
-        setFile: setFile
+        reset  : reset
     };
+
+    Object.defineProperty(stack, 'file', {
+        set: function (val)
+        {
+            mainFrame.file = val;
+        },
+        get: function ()
+        {
+            return mainFrame.file;
+        }
+    });
+
+    exports.stack = stack;
 });
