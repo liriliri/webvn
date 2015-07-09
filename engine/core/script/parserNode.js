@@ -35,6 +35,13 @@ WebVN.module('script', function (exports, Class, util)
         return '"command", "' + util.trim(command) + '"';
     };
 
+    parserNode.style = function (style)
+    {
+        style = escapeQuote(style);
+
+        return '"style", "' + util.trim(style) + '"';
+    };
+
     parserNode.code = function (code)
     {
         var lines = code.split('\n'),

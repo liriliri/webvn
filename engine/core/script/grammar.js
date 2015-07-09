@@ -22,7 +22,8 @@ var grammar = {
         ['Command', '$$ = yy.command($1)'],
         ['Return', '$$ = yy.ret($1)'],
         ['Label', '$$ = yy.label($1)'],
-        ['Function', '$$ = $1']
+        ['Function', '$$ = $1'],
+        ['Style', '$$ = yy.style($1)']
     ],
     Label: [
         ['LABEL', '$$ = $1']
@@ -32,6 +33,9 @@ var grammar = {
     ],
     Command: [
         ['COMMAND', 'yy.lineNum(yylineno); $$ = $1']
+    ],
+    Style: [
+        ['STYLE', 'yy.lineNum(yylineno); $$ = $1']
     ],
     Code: [
         ['CODE', 'yy.lineNum(yylineno); $$ = $1']

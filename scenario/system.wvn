@@ -43,4 +43,4 @@ func default(text)
     }
 }
 
-jump start start
+jump start head

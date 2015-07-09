@@ -1,4 +1,4 @@
-WebVN.extend('script', function (exports, log, util, storage)
+WebVN.extend('script', function (exports, log, util)
 {
     function command(cmd)
     {
@@ -72,6 +72,11 @@ WebVN.extend('script', function (exports, log, util, storage)
         exports.js.eval(cmd[1]);
     }
 
+    function style(cmd)
+    {
+        WebVN.ui.style(cmd[1]);
+    }
+
     function ret()
     {
         exports.stack.pop();
@@ -105,6 +110,7 @@ WebVN.extend('script', function (exports, log, util, storage)
             case 'code'    : code(cmd); break;
             case 'if'      : ifBlock(cmd); break;
             case 'return'  : ret(); break;
+            case 'style'   :
             case 'label'   :
             case 'function': exports.play(); break;
         }
@@ -117,6 +123,7 @@ WebVN.extend('script', function (exports, log, util, storage)
         switch (type)
         {
             case 'function': func(cmd); break;
+            case 'style'   : style(cmd); break;
             case 'label'   : label(cmd, lineNum); break;
         }
     }

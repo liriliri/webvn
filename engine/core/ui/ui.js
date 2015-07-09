@@ -38,7 +38,6 @@ WebVN.module('ui', function (exports, Class, select, config, util, script, event
         height: cfgHeight
     }).on('click', function () { script.play() });
 
-    // Auto fill windows
     exports.scale = 1;
 
     var ratio = cfgWidth / cfgHeight;
@@ -62,7 +61,12 @@ WebVN.module('ui', function (exports, Class, select, config, util, script, event
         resize();
     }
 
-    // Base class for all ui class
+    var $style = select.create('style');
+
+    select.get('head').append($style);
+
+    exports.style = function (css) { $style.text = $style.text + css };
+
     var BaseUi = Class.create(
         {
             constructor: function BaseUi()
@@ -140,7 +144,6 @@ WebVN.module('ui', function (exports, Class, select, config, util, script, event
         }
     );
 
-    // Canvas element
     var CanvasUi = BaseUi.extend(
         {
             constructor: function CanvasUi(name)

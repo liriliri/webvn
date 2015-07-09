@@ -35,6 +35,10 @@ WebVN.extend('script', function (exports, Class, log, util)
         {
             return isEmpty(c) || c === '(';
         },
+        lBrace: function (c)
+        {
+            return isEmpty(c) || c === '{';
+        },
         space: function (c)
         {
             return isEmpty(c);
@@ -199,6 +203,11 @@ WebVN.extend('script', function (exports, Class, log, util)
                     {
                         this.forward(2);
                         return this.createToken('IF');
+                    }
+
+                    if (this.equal('style', charFilter.lBrace))
+                    {
+                        return this.style('STYLE');
                     }
 
                     if (this.equal('else', charFilter.space))
@@ -393,6 +402,39 @@ WebVN.extend('script', function (exports, Class, log, util)
                 pos.last_column = this.curColumn - 1;
 
                 return this.createToken('CODE', val, pos);
+            },
+
+            style: function ()
+            {
+                this.forward(5);
+                this.whiteSpace();
+                this.forward();
+
+                var val = '', lBrace = 0, pos = {};
+
+                pos.first_line   = this.curLine;
+                pos.first_column = this.curColumn;
+
+                while (!(this.equal('}') && lBrace === 0))
+                {
+                    val += this.c;
+                    if (this.c === '{')
+                    {
+                        lBrace++;
+                    } else if (this.c === '}')
+                    {
+                        lBrace--;
+                    }
+                    this.forward();
+                    if (this.c === EOF) throw new Error('One right brace is missing.');
+                }
+
+                pos.last_line   = this.curLine;
+                pos.last_column = this.curColumn - 1;
+
+                this.forward();
+
+                return this.createToken('STYLE', val, pos);
             },
 
             identifier: function (tokenName)

@@ -1,3 +1,11 @@
+*head
+
+style {
+    body {
+        background-color: red;
+    }
+}
+
 // 中文支持
 alias 别名 alias
 别名  播放视频 playVideo
@@ -18,7 +26,7 @@ alias 别名 alias
 宏    客厅背景 living_room
 宏    回廊背景 corridor
 宏    背景乐 bgm=
-clearLog
+// clearLog
 
 /*for (scope.i = 0; i < 5; i++)
 {
