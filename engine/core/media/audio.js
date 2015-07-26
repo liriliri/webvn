@@ -1,9 +1,9 @@
-WebVN.extend('media', function (exports, storage, config, state, module)
+WebVN.extend('media', function (exports, storage, config, module, Class)
 {
     var Base  = exports.Base,
         asset = storage.asset;
 
-    var State = state.create('empty', [
+    var State = Class.State.create('empty', [
         { name: 'load',   from: 'empty', to: 'pause' },
         { name: 'play',   from: 'pause', to: 'play' },
         { name: 'pause',  from: ['play', 'empty'], to: 'pause' },

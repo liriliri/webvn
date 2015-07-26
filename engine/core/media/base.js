@@ -1,9 +1,9 @@
 /**
  * @namespace media
  */
-WebVN.module('media', function (exports, Class, log, util, state, module)
+WebVN.module('media', function (exports, Class, log, util, module)
 {
-    var State = state.create('empty', [
+    var State = Class.State.create('empty', [
         { name: 'load',   from: 'empty', to: 'pause' },
         { name: 'play',   from: 'pause', to: 'play' },
         { name: 'pause',  from: ['play', 'empty'], to: 'pause' },

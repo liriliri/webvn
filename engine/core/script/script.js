@@ -1,11 +1,11 @@
 /**
  * @namespace script
  */
-WebVN.extend('script', function (exports, config, util, loader, log, storage, event, state)
+WebVN.extend('script', function (exports, config, util, loader, log, storage, event, Class)
 {
-    var cfg      = config.create('script'),
-        parser   = exports.parser,
-        lexer    = exports.lexer;
+    var cfg    = config.create('script'),
+        parser = exports.parser,
+        lexer  = exports.lexer;
 
     event.observer.create(exports);
 
@@ -14,7 +14,7 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
         lex: function ()
         {
             var token = parser.tokens[this.pos++],
-                tag;
+                tag   = '';
 
             if (token)
             {
@@ -22,7 +22,7 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
                 this.yytext   = token[1];
                 this.yyloc    = token[2];
                 this.yylineno = this.yyloc.first_line;
-            } else tag = '';
+            }
 
             return tag;
         },
@@ -36,93 +36,110 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
 
     /**
      * Parse scenario into javaScript.
-     * @method parse
+     * @method   parse
      * @memberof script
-     * @param {string} scenarioText Pure scenario text.
-     * @return {string} JavaScript code converted from scenario text.
+     * @param    {String} text Pure scenario text.
+     * @return   {String} JavaScript code converted from scenario text.
      */
-    var parse = exports.parse = function (scenarioText)
+    var parse = exports.parse = function (text)
     {
-        return parser.parse(lexer(scenarioText));
+        return parser.parse(lexer(text));
     };
 
     /**
-     * Parse the scenario into javaScript and eval it, just a wrapper of parse.
-     * @method eval
+     * Parse the scenario into javaScript and eval it, a wrapper of parse method.
+     * @method   eval
      * @memberof script
-     * @param {string} scenarioText Pure scenario text.
+     * @param    {string} text Pure scenario text.
      */
-    var wvnEval = exports.eval = function (scenarioText)
+    var eval = exports.eval = function (text)
     {
-        // console.log(parse(scenarioText));
-        exports.js.eval(parse(scenarioText));
+        exports.js.eval(parse(text));
+
+        return exports;
     };
 
     var asset = storage.asset.create(cfg.get('path'), cfg.get('extension'));
 
     /**
-     * Load first scenario and begin executing it.
+     * Load scenario. If scenario is not specified, the default one will be loaded.
+     * @method   load
+     * @memberof script
+     * @param {String}   [scenario] Scenario file name without 'wvn' extension.
+     * @param {Function} [cb]       Callback when scenario file is loaded.
      */
-    var load = exports.load = function (scenario)
+    var load = exports.load = function (scenario, cb)
     {
+        if (util.isFunction(scenario))
+        {
+            cb = scenario;
+            scenario = cfg.get('startScenario');
+        }
+
         scenario = scenario || cfg.get('startScenario');
 
         loader.get(asset.get(scenario), {}, function (data)
         {
             exports.parserNode.file(scenario + '.wvn');
             exports.stack.file = scenario;
-            wvnEval(data);
-            start();
+            eval(data);
+            cb && cb();
         });
+
+        return exports;
     };
 
-    var State = state.create('pause', [
+    var State = Class.State.create('pause', [
         { name: 'play',  from: 'pause', to: 'play' },
         { name: 'pause', from: 'play',  to: 'pause'}
-    ]);
-
-    state = new State;
+    ]),
+        state = new State;
 
     /**
      * Start executing the scripts from beginning.
      * @method start
      * @memberof script
      */
-    var start = exports.start = function ()
+    exports.start = function ()
     {
         reset();
         play();
+
+        return exports;
     };
 
     /**
      * Jump to specified label.
-     * @method jump
+     * @method   jump
      * @memberof script
-     * @param labelName
+     * @param    fileName
+     * @param    labelName
      */
     exports.jump = function (fileName, labelName)
     {
-        if (!labelName)
+        load(fileName, function ()
         {
-            labelName = fileName;
-            fileName = '';
-        } else
-        {
-            load(fileName);
-        }
+            jump(fileName, labelName);
+        });
+    };
 
-        var label = exports.label;
+    function jump(fileName, labelName)
+    {
+        var label = exports.label,
+            lineNum = 0;
 
         if (!label.has(fileName, labelName))
         {
             log.warn('Label ' + labelName + ' not found');
-            return;
+        } else
+        {
+            lineNum = label.get(fileName, labelName);
         }
 
-        exports.stack.jump(label.get(fileName, labelName));
+        exports.stack.jump(lineNum);
 
         resume();
-    };
+    }
 
     /**
      * Reset everything to initial state
@@ -162,10 +179,10 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
 
     /**
      * Pause script.
-     * @method pause
+     * @method   pause
      * @memberof script
-     * @param {Number} [duration]
-     * @param {Function} [cb]
+     * @param    {Number}   [duration]
+     * @param    {Function} [cb]
      */
     var pause = exports.pause = function (duration, cb)
     {
@@ -183,9 +200,9 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
 
     /**
      * Pause script for a time and execute script when finished.
-     * @method wait
+     * @method   wait
      * @memberof script
-     * @param duration
+     * @param    duration
      */
     exports.wait = function (duration)
     {
@@ -194,9 +211,9 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
 
     /**
      * Insert Command to current stack.
-     * @method insert
+     * @method   insert
      * @memberof script
-     * @param {Array.<Array>|Array} commands
+     * @param    {Array.<Array>|Array} commands
      */
     exports.insert = function (commands)
     {
@@ -207,9 +224,8 @@ WebVN.extend('script', function (exports, config, util, loader, log, storage, ev
 
         stack.push('insertion');
 
-        for (i = 0, len = commands.length; i < len; i++)
-        {
-            stack.$$.apply(null, commands[i]);
-        }
+        len = commands.length;
+
+        for (i = 0; i < len; i++) stack.$$(commands[i]);
     };
 });

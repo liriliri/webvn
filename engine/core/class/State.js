@@ -1,15 +1,12 @@
-/**
- * @namespace state
- */
-WebVN.module('state', function (exports, Class, util, event)
+WebVN.extend('Class', function (exports, util, event)
 {
     /**
-     * @class State
-     * @memberof state
+     * @class
+     * @memberof Class
      * @property {String} current Current state.
      */
-    var State = exports.state = Class.create(
-        /** @lends state.State.prototype */
+    var State = exports.State = exports.create(
+        /** @lends Class.State.prototype */
         {
             constructor: function State(initial)
             {
@@ -30,22 +27,14 @@ WebVN.module('state', function (exports, Class, util, event)
 
     State.extendFn(event.observer.Event);
 
-    /**
-     * Create state class.
-     * @method create
-     * @memberof state
-     * @param {String} initial
-     * @param {Object} events
-     * @returns {State}
-     */
-    exports.create = function (initial, events)
+    State.create = function (initial, events)
     {
         var proto = {
-                constructor: function ()
-                {
-                    this.callSuper(initial);
-                }
-            };
+            constructor: function ()
+            {
+                this.callSuper(initial);
+            }
+        };
 
         util.each(events, function (val)
         {
@@ -57,7 +46,10 @@ WebVN.module('state', function (exports, Class, util, event)
 
             proto[name] = function ()
             {
-                var exits = from.some(function (val) { return this.current === val }, this);
+                var exits = from.some(function (val)
+                {
+                    return this.current === val;
+                }, this);
 
                 if (exits)
                 {

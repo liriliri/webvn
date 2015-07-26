@@ -33,7 +33,7 @@
             "files": [
                 "webvn/log",
                 "class/Class",
-                "class/base",
+                "class/Base",
                 "storage/storage",
                 "storage/save",
                 "webvn/config",
@@ -45,7 +45,7 @@
                 "loader/image",
                 "event/event",
                 "event/observer",
-                "webvn/state",
+                "Class/State",
                 "script/parserNode",
                 "script/parser",
                 "script/lexer",

@@ -1,22 +1,21 @@
-/* Initialization script.
- * Alias and macros are defined here.
- * Creating your own alias and macro here is not recommended.
- * Please create another script file to define your own.
- */
+/*
+This is the initialization script where system alias and macros are defined. Creating your own alias and macro here is not recommended. Please create another
+script file to define your own.
+*/
 
 showMenu(bgm, bg)    => menu -d -bgm=${bgm} -bg=${bg}
-showDialog()         => dialog -d -pn
+showDialog()         => dialog -dpn
 playVideo(src, click)=> video -dp -src=${src} -c=${click}
-define(name, val)    => script -pn -d='${name}|${val}' -pn
+define(name, val)    => script -d='${name}|${val}' -pn
 alias(name, val)     => script -a='${name}|${val}' -pn
 logInfo(msg)         => log -t=info -m='${msg}'
 wait(duration)       => script -w=${duration}
-jump(file, label)    => script -j=${file}|${label} -pn=false
 playBgm(src)         => bgm -s=${src}
 title(name)          => system -t=${name}
 clearLog             => log -c
 clearText            => dialog -ct -pn
 stopBgm              => bgm -p=false
+jump(file, label)    => script -j=${file}|${label} -pn=false
 
 func logo(src, duration)
 {
@@ -43,4 +42,4 @@ func default(text)
     }
 }
 
-jump start head
+jump start start

@@ -11,7 +11,6 @@ WebVN.config({
         "duration": 300,
         "fadeIn": false,
         "fadeOut": true,
-        "startLabel": "start",
         "path": "asset/image/",
         "extension": "jpg"
     },

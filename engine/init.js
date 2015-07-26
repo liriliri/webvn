@@ -4,5 +4,8 @@ WebVN.use(function (script, config)
 
     WebVN.call();
 
-    if (config.build !== 'test') script.load();
+    if (config.build !== 'test')
+    {
+        script.load(function () { script.start() });
+    }
 });

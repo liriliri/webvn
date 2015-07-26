@@ -1,11 +1,11 @@
 /**
  * @namespace anim
  */
-WebVN.module('anim', function (exports, Class, util, select, state)
+WebVN.module('anim', function (exports, Class, util, select)
 {
     var reqAnim = window.requestAnimationFrame;
 
-    var State = state.create('pause', [
+    var State = Class.State.create('pause', [
         { name: 'play',  from: 'pause', to: 'play' },
         { name: 'pause', from: 'play',  to: 'pause'}
     ]);

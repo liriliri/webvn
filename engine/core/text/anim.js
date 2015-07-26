@@ -2,9 +2,9 @@
  * @namespace anim
  * @memberof text
  */
-WebVN.extend('text', function (exports, util, Class, select, state, event)
+WebVN.extend('text', function (exports, util, Class, select)
 {
-    var State = state.create('pause', [
+    var State = Class.State.create('pause', [
         { name: 'play',  from: 'pause',  to: 'play' },
         { name: 'pause', from: 'play',   to: 'pause'}
     ]);

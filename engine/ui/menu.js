@@ -15,8 +15,7 @@ WebVN.use(function (ui, script, media, util, config, storage)
         tpl     = ui.template.get(uiName),
         save    = storage.create(uiName);
 
-    var cfg           = config.create('uiMenu'),
-        cfgStartLabel = cfg.get('startLabel');
+    var cfg = config.create('uiMenu');
 
     $el.addClass('fill');
     $el.html = tpl({
@@ -56,12 +55,12 @@ WebVN.use(function (ui, script, media, util, config, storage)
             {
                 $el.fadeOut(exports.duration, function ()
                 {
-                    script.jump(cfgStartLabel);
+                    script.resume();
                 });
             } else
             {
                 $el.hide();
-                script.jump(cfgStartLabel);
+                script.resume();
             }
         },
 
