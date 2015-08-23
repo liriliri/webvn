@@ -11,3 +11,4 @@
 /dist/
 /engine/ui/**/*.css
 /node_modules/
+*.html

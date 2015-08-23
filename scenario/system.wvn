@@ -1,6 +1,7 @@
 /*
-This is the initialization script where system alias and macros are defined. Creating your own alias and macro here is not recommended. Please create another
-script file to define your own.
+This is the initialization script where system alias and macros are defined.
+Creating your own alias and macro here is not recommended.
+Please create another script file to define your own.
 */
 
 showMenu(bgm, bg)    => menu -d -bgm=${bgm} -bg=${bg}

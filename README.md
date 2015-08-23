@@ -4,6 +4,9 @@
 
 A HTML5 game engine designed specifically for making visual novels.
 
+Note: This project is currently on its early stage and still under development.
+Hopefully, it's going to be released by the end of 2015:)
+
 ### Demos
 
 * [Official Demo](http://surunzi.github.io/WebVN-demo/)
